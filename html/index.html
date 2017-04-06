@@ -17,9 +17,9 @@
 </div>
 
 <div class="w3-bar w3-light-grey">
-	<a class="w3-bar-item w3-button" href="/index.html"><i class="fa fa-home"></i> Home</a>
+	<a class="w3-bar-item w3-button w3-mobile" href="/index.html"><i class="fa fa-home"></i> Home</a>
 	
-	<div class="w3-dropdown-hover">
+	<div class="w3-dropdown-hover w3-mobile">
 		<button class="w3-button" onclick="dropd('radio')">
 			<i class="fa fa-podcast"></i> Radio <i class="fa fa-caret-down"></i>
 		</button>
@@ -32,7 +32,7 @@
 	</div>
 
 	
-	<div class="w3-dropdown-hover">
+	<div class="w3-dropdown-hover w3-mobile">
 		<button class="w3-button" onclick="dropd('camera')">
 			<i class="fa fa-camera"></i> Cam <i class="fa fa-caret-down"></i>
 		</button>
@@ -43,7 +43,7 @@
 	</div>
 
 	
-	<div class="w3-dropdown-hover">
+	<div class="w3-dropdown-hover w3-mobile">
 		<button class="w3-button" onclick="dropd('mic')">
 			<i class="fa fa-microphone"></i> Mic <i class="fa fa-caret-down"></i>
 		</button>
@@ -53,45 +53,65 @@
 		</div>
 	</div>
 		
+	<div class="w3-dropdown-hover w3-mobile">
+		<button class="w3-button" onclick="dropd('gps')">
+			<i class="fa fa-compass"></i> GPS <i class="fa fa-caret-down"></i>
+		</button>
+		<div id="gps" class="w3-dropdown-content w3-bar-block w3-card-4" style="width:100px">
+			<a href="/connect/connect.php">Start</a>
+			<a href="/connect/umts_setup.php">Setup</a>
+		</div>
+	</div>
 		
-	<div class="w3-bar-item w3-button" onclick="myAccFunc('gps')">
-		<i class="fa fa-compass"></i> GPS <i class="fa fa-caret-down"></i></div>
-		<div id="gps" class="w3-hide w3-white w3-card-4">
+		
+	<div class="w3-dropdown-hover w3-mobile">
+		<button class="w3-button" onclick="dropd('data')">
+			<i class="fa fa-database "></i> Data <i class="fa fa-caret-down"></i>
+		</button>
+		<div id="data" class="w3-dropdown-content w3-bar-block w3-card-4" style="width:100px">
 			<a href="/connect/connect.php">Start</a>
 			<a href="/connect/umts_setup.php">Setup</a>
 		</div>
-	<div class="w3-bar-item w3-button" onclick="myAccFunc('wifi')">
-		<i class="fa fa-database "></i> Data <i class="fa fa-caret-down"></i></div>
-		<div id="wifi" class="w3-hide w3-white w3-card-4">
+	</div>
+		
+	<div class="w3-dropdown-hover w3-mobile">
+		<button class="w3-button" onclick="dropd('wifi')">
+			<i class="fa fa-wifi"></i> WiFi <i class="fa fa-caret-down"></i>
+		</button>
+		<div id="wifi" class="w3-dropdown-content w3-bar-block w3-card-4" style="width:100px">
 			<a href="/connect/connect.php">Start</a>
 			<a href="/connect/umts_setup.php">Setup</a>
 		</div>
-	<div class="w3-bar-item w3-button" onclick="myAccFunc('wifi')">
-		<i class="fa fa-wifi"></i> WiFi <i class="fa fa-caret-down"></i></div>
-		<div id="wifi" class="w3-hide w3-white w3-card-4">
-			<a href="/connect/connect.php">Start</a>
-			<a href="/connect/umts_setup.php">Setup</a>
-		</div>
-	<div class="w3-bar-item w3-button" onclick="myAccFunc('remote')">
-		<i class="fa fa-exchange"></i> Remote <i class="fa fa-caret-down"></i></div>
-		<div id="remote" class="w3-hide w3-white w3-card-4">
+	</div>
+		
+	<div class="w3-dropdown-hover w3-mobile">
+		<button class="w3-button" onclick="dropd('remote')">
+			<i class="fa fa-exchange"></i> Remote <i class="fa fa-caret-down"></i>
+		</button>
+		<div id="remote" class="w3-dropdown-content w3-bar-block w3-card-4" style="width:100px">
 			<a href="/connect/connect.php">Start</a>
 			<a href="/connect/umts_setup.php">UMTS Setup</a>
 			<a href="/connect/vpn_setup.php">VPN Setup</a>
 		</div>
-	<div class="w3-bar-item w3-button" onclick="myAccFunc('system')">
-		<i class="fa fa-wrench"></i> Sys <i class="fa fa-caret-down"></i></div>
-		<div id="system" class="w3-hide w3-white w3-card-4">
+	</div>
+		
+	<div class="w3-dropdown-hover w3-mobile">
+		<button class="w3-button" onclick="dropd('system')">
+			<i class="fa fa-wrench"></i> Sys <i class="fa fa-caret-down"></i>
+		</button>
+		<div id="system" class="w3-dropdown-content w3-bar-block w3-card-4" style="width:100px">
 			<a href="/git/gitlab.php">Software</a>
 			<a href="/git/system.php">System</a>
 			<a href="/connect/umts_setup.php">Documentation</a>
 		</div>
-	<a class="w3-bar-item w3-button" href="/license.html"><i class="fa fa-registered"></i> License</a>
+	</div>
+	
+	<a class="w3-bar-item w3-button w3-mobile" href="/license.html"><i class="fa fa-registered"></i> License</a>
 </div>
 
 <div style="margin-left:0px">
 
-<div class="w3-bar w3-black">
+<div class="w3-bar w3-grey">
   <button class="w3-bar-item w3-button" onclick="openCity('welcome')">Welcome</button>
   <button class="w3-bar-item w3-button" onclick="openCity('introduction')">Introduction</button>
 </div>
