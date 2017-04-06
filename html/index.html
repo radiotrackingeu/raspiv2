@@ -15,32 +15,45 @@
  <br><br>
  
 </div>
- 
 
-<nav class="w3-sidenav w3-bar-block w3-light-grey w3-card-2" style="width:15%">
-	<h4> <b> Options to choose:</b></h4>
-	<a class="w3-green w3-bar-item w3-button" href="/index.html"><i class="fa fa-home"></i> Home</a>
-	<div class="w3-bar-item w3-button" onclick="myAccFunc('radio')">
-		<i class="fa fa-podcast"></i> Radio <i class="fa fa-caret-down"></i></div>
-		<div id="radio" class="w3-hide w3-white w3-card-4">
+<div class="w3-bar w3-light-grey">
+	<a class="w3-bar-item w3-button" href="/index.html"><i class="fa fa-home"></i> Home</a>
+	
+	<div class="w3-dropdown-hover">
+		<button class="w3-button" onclick="dropd('radio')">
+			<i class="fa fa-podcast"></i> Radio <i class="fa fa-caret-down"></i>
+		</button>
+		<div id="radio" class="w3-dropdown-content w3-bar-block w3-card-4" style="width:100px">
 			<a href="/sdr/rtl_fm.php">WebRadio</a>
 			<a href="/sdr/rtl_fftw.php">Recorder</a>
 			<a href="/sdr/rtl_tcp.php">SDR#-Server</a>
 			<a href="/sdr/websdr.php">WebRX</a>
 		</div>
+	</div>
 
-	<div class="w3-bar-item w3-button" onclick="myAccFunc('camera')">
-		<i class="fa fa-camera"></i> Camera <i class="fa fa-caret-down"></i></div>
-		<div id="camera" class="w3-hide w3-white w3-card-4">
+	
+	<div class="w3-dropdown-hover">
+		<button class="w3-button" onclick="dropd('camera')">
+			<i class="fa fa-camera"></i> Cam <i class="fa fa-caret-down"></i>
+		</button>
+		<div id="camera" class="w3-dropdown-content w3-bar-block w3-card-4" style="width:100px">
 			<a href="/picam/picam.php">Start</a>
-			<a href="/connect/umts_setup.php">Setup</a>
+			<a href="/picam/setup_picam.php">Setup</a>
 		</div>
-	<div class="w3-bar-item w3-button" onclick="myAccFunc('mic')">
-		<i class="fa fa-microphone"></i> Micro <i class="fa fa-caret-down"></i></div>
-		<div id="mic" class="w3-hide w3-white w3-card-4">
+	</div>
+
+	
+	<div class="w3-dropdown-hover">
+		<button class="w3-button" onclick="dropd('mic')">
+			<i class="fa fa-microphone"></i> Mic <i class="fa fa-caret-down"></i>
+		</button>
+		<div id="mic" class="w3-dropdown-content w3-bar-block w3-card-4" style="width:100px">
 			<a href="/connect/connect.php">Start</a>
 			<a href="/connect/umts_setup.php">Setup</a>
 		</div>
+	</div>
+		
+		
 	<div class="w3-bar-item w3-button" onclick="myAccFunc('gps')">
 		<i class="fa fa-compass"></i> GPS <i class="fa fa-caret-down"></i></div>
 		<div id="gps" class="w3-hide w3-white w3-card-4">
@@ -67,16 +80,16 @@
 			<a href="/connect/vpn_setup.php">VPN Setup</a>
 		</div>
 	<div class="w3-bar-item w3-button" onclick="myAccFunc('system')">
-		<i class="fa fa-wrench"></i> System <i class="fa fa-caret-down"></i></div>
+		<i class="fa fa-wrench"></i> Sys <i class="fa fa-caret-down"></i></div>
 		<div id="system" class="w3-hide w3-white w3-card-4">
 			<a href="/git/gitlab.php">Software</a>
 			<a href="/git/system.php">System</a>
 			<a href="/connect/umts_setup.php">Documentation</a>
 		</div>
-	<a href="/license.html"><i class="fa fa-registered"></i> License</a>
-</nav>
+	<a class="w3-bar-item w3-button" href="/license.html"><i class="fa fa-registered"></i> License</a>
+</div>
 
-<div style="margin-left:15%">
+<div style="margin-left:0px">
 
 <div class="w3-bar w3-black">
   <button class="w3-bar-item w3-button" onclick="openCity('welcome')">Welcome</button>
@@ -143,6 +156,14 @@ function openCity(cityName) {
        x[i].style.display = "none";  
     }
     document.getElementById(cityName).style.display = "block";  
+}
+function dropd(name) {
+    var x = document.getElementById(name);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
 }
 </script>
 
