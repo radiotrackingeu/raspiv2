@@ -1,0 +1,33 @@
+#Localhost
+auto lo
+iface lo inet loopback
+
+#Ethernet
+auto eth0
+allow-hotplug eth0
+iface eth0 inet manual
+
+#Wlan
+auto wlan0
+#allow-hotplug wlan0
+iface wlan0 inet static
+address 192.168.1.1
+netmask 255.255.255.0
+# gateway 192.168.1.1
+
+
+#NAT
+up /sbin/iptables -A FORWARD -o eth0 -i wlan0 -m conntrack --ctstate NEW -j ACCEPT
+up /sbin/iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+up /sbin/iptables -t nat -F POSTROUTING
+up /sbin/iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+#IP-FORWARDING
+up sysctl -w net.ipv4.ip_forward=1
+up sysctl -w net.ipv6.conf.all.forwarding=1
+
+
+#hostapd und dnsmasq neu starten
+up service hostapd restart
+up service dnsmasq restart
+
