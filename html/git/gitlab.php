@@ -170,32 +170,32 @@
 			ini_set('display_errors', 1);
 			if (isset($_POST["update_rep"])){
 				echo '<pre>';
-				$test = system('sudo docker run -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/radio-tracking.eu_v2/Docker/gitlab/update_html.sh 2>&1', $ret);
+				$test = system('sudo docker run -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["update_docker_git"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t git /home/pi/gitrep/radio-tracking.eu_v2/Docker/gitlab/. 2>&1', $ret);
+				$test = system('sudo docker build -t git /home/pi/gitrep/raspiv2/Docker/gitlab/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["update_docker_umts"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t umts /home/pi/gitrep/radio-tracking.eu_v2/Docker/umts/. 2>&1', $ret);
+				$test = system('sudo docker build -t umts /home/pi/gitrep/raspiv2/Docker/umts/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_wifi"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t wifi /home/pi/gitrep/radio-tracking.eu_v2/Docker/wifi/. 2>&1', $ret);
+				$test = system('sudo docker build -t wifi /home/pi/gitrep/raspiv2/Docker/wifi/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_rtlsdr"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t rtlsdr /home/pi/gitrep/radio-tracking.eu_v2/Docker/rtlsdr/. 2>&1', $ret);
+				$test = system('sudo docker build -t rtlsdr /home/pi/gitrep/raspiv2/Docker/rtlsdr/. 2>&1', $ret);
 			echo '</pre>';
 			}
 			if (isset($_POST["install_webrx"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t webrx /home/pi/gitrep/radio-tracking.eu_v2/Docker/webrx/. 2>&1', $ret);
+				$test = system('sudo docker build -t webrx /home/pi/gitrep/raspiv2/Docker/webrx/. 2>&1', $ret);
 			echo '</pre>';
 			}
 			error_reporting(E_ALL);
