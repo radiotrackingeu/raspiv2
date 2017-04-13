@@ -152,6 +152,9 @@
 		<input type="submit" class="w3-btn" value="WebRX" name="install_webrx"/> <br> <br>
 		
 		<hr>
+		<input type="submit" class="w3-btn" value="WebRX" name="install_picam"/> <br> <br>
+		
+		<hr>
 
 		</form>
 		</div>
@@ -234,6 +237,11 @@
 			if (isset($_POST["install_webrx"])){
 				echo '<pre>';
 				$test = system('sudo docker build -t webrx /home/pi/gitrep/raspiv2/Docker/webrx/. 2>&1', $ret);
+			echo '</pre>';
+			}
+			if (isset($_POST["install_picam"])){
+				echo '<pre>';
+				$test = system('sudo docker build -t picam /home/pi/gitrep/raspiv2/Docker/picam/. 2>&1', $ret);
 			echo '</pre>';
 			}
 			error_reporting(E_ALL);

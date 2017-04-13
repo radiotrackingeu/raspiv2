@@ -165,7 +165,7 @@
 			
 			
 			if (isset($_POST["run_motion"])){
-				$test = system("sudo docker run --rm -t -p ".($_SERVER['SERVER_PORT']+2).":8765 -v /var/www/html/picam/record/:/var/lib/motioneye/ -v /var/www/html/picam/config/:/etc/motioneye/ --device=/dev/video0 vividboarder/rpi-motioneye", $ret);
+				$test = system("sudo docker run --rm -t -p ".($_SERVER['SERVER_PORT']+2).":8765 -v /var/www/html/picam/record/:/var/lib/motioneye/ -v /var/www/html/picam/config/:/etc/motioneye/ --device=/dev/video0 picam", $ret);
 			}
 			if (isset($_POST["stop_motion"])){
 				echo '<pre>';
