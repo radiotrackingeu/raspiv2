@@ -131,7 +131,7 @@
 		<br>First download then install the feature - installing requires also an internet connection and requires some time. <br><br>
 		<form method="POST" onsubmit="return openCity('GIT');">
 		<input class="w3-btn" type="submit" value="Download Recepies and HTML Files" name="update_rep" onclick="openCity('GIT')"/>
-
+		<input class="w3-btn" type="submit" value="Reboot" name="reboot" "/>
 		</form>
 	</div>
 	<div id="install" class="w3-container city" style="display:none">
@@ -212,6 +212,11 @@
 			if (isset($_POST["update_rep"])){
 				echo '<pre>';
 				$test = system('sudo docker run -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh 2>&1', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["reboot"])){
+				echo '<pre>';
+				$test = system('sudo reboot', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["update_docker_git"])){
