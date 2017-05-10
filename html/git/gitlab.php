@@ -152,7 +152,7 @@
 		<input type="submit" class="w3-btn" value="WebRX" name="install_webrx"/> <br> <br>
 		
 		<hr>
-		<input type="submit" class="w3-btn" value="WebRX" name="install_picam"/> <br> <br>
+		<input type="submit" class="w3-btn" value="Picam" name="install_picam"/> <br> <br>
 		
 		<hr>
 
