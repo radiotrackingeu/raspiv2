@@ -120,7 +120,7 @@
 
 
  <div class="w3-bar w3-brown">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('Both')">Both</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('Both')">Connect</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('UMTS')">UMTS</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('VPN')">VPN</button>
 </div>
@@ -139,12 +139,6 @@
 	</div>
 
 	<div id="Both" class="w3-container city" style="display:none">
-		<div class="w3-panel w3-green w3-round-xlarge">
-			<p>First UMTS will be connected then the VPN</p>
-			<input type="submit" class="w3-btn w3-brown" value="Start Both" name="start_umts_vpn">
-			<input type="submit" class="w3-btn w3-brown" value="Stop Both" name="stop_umts_vpn">
-			<br><br>
-		</div>
 		<div class="w3-panel w3-green w3-round-xlarge">
 			<p>First UMTS will be connected then the VPN</p>
 			<input type="submit" class="w3-btn w3-brown" value="Start Both" name="start_umts_vpn">

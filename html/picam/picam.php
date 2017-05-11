@@ -117,30 +117,64 @@
 </div>
 
 <div class="w3-bar w3-brown">
-  <button class="w3-bar-item w3-button" onclick="openCity('activate')">Start</button>
-  <button class="w3-bar-item w3-button" onclick="openCity('introduction')">Activate</button>
+  <button class="w3-bar-item w3-button" onclick="openCity('output')">Links</button>
+  <button class="w3-bar-item w3-button" onclick="openCity('start_cam')">Start</button>
+  <button class="w3-bar-item w3-button" onclick="openCity('activate_cam')">Activate</button>
 </div>
 
-<div id="activate" class="w3-container city" style="display:none">
+<div id="start_cam" class="w3-container city" style="display:none">
 
 <!-- Enter text here-->
-<br>
+	<div class="w3-panel w3-green w3-round">
+	<br>
+	Start the software, if it isn't already running (just try by clicking on the link).
+	<br><br>
+
 	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-			<input type="submit" class="w3-btn" value="Activate PiCam" name="activate">
-			<input type="submit" class="w3-btn" value="Deactivate PiCam" name="deactivate">
-			<input type="submit" class="w3-btn" value="Start PiCam" name="run_motion">
-			<input type="submit" class="w3-btn" value="Stop PiCam" name="stop_motion">
+			<input type="submit" class="w3-btn w3-brown" value="Start PiCam" name="run_motion">
+			<input type="submit" class="w3-btn w3-brown" value="Stop PiCam" name="stop_motion">
 
 			<br><br>
-			<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+2)?>"> Link to Camera Server</a>
-	</form>				
+	</form>
+	</div>
 </div>
-<br>
+
+<div id="activate_cam" class="w3-container city" style="display:none">
+
+	
+	<div class="w3-panel w3-green w3-round">
+	<br>
+	A reboot is required after the activation. <br><br>
+	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<input type="submit" class="w3-btn w3-brown" value="Activate PiCam" name="activate">
+			<input type="submit" class="w3-btn w3-brown" value="Deactivate PiCam" name="deactivate">
+			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot">
+			
+			<br><br>
+	</form>	
+	</div>	
+</div>
+
+
+
+
 
 <!-- <iframe src="http://192.168.8.103:82/picture/1/frame/" height="300" width="432" style="border:none; ></iframe> -->
 
 
-<div id="ouput" class="w3-container" style="display:block">
+<div id="output" class="w3-container city" style="display:block">
+	<div class="w3-panel w3-green w3-round">
+	<br>
+	If you are using the raspberry pi cam, please first activate it. This will reserve more memory for the GPU. If the server has been already started, just click on the link: <br><br>
+	<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+2)?>"> Link to Camera Server</a><br><br>
+	To download the images of video files either use the software or the following directory:<br><br>
+	<a target="_blank" href="/picam/record/"> Images/Videos</a><br>
+	
+	<br>
+	
+	</div>
+	
+	
 	<p>
 	<?php
 			error_reporting(E_ALL);
@@ -163,6 +197,11 @@
 				echo '</pre>';
 			}
 			
+			if (isset($_POST["reboot"])){
+				echo '<pre>';
+				$test = system('sudo reboot', $ret);
+				echo '</pre>';
+			}
 			
 			if (isset($_POST["run_motion"])){
 				$test = system("sudo docker run --rm -t -p ".($_SERVER['SERVER_PORT']+2).":8765 -v /var/www/html/picam/record/:/var/lib/motioneye/ -v /var/www/html/picam/config/:/etc/motioneye/ --device=/dev/video0 picam", $ret);
