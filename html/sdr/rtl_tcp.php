@@ -204,6 +204,14 @@ function liveExecuteCommand3($cmd){
 	ob_end_flush();
 
     while (@ ob_end_flush()); // end all output buffers if any
+	
+	for($i = 0; $i < 1000; $i++)
+{
+echo ' ';
+}
+		
+ob_flush();
+flush();
 
     $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
 
