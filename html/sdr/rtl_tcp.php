@@ -191,6 +191,9 @@ function liveExecuteCommand2($cmd){
 	echo '</pre>';
 }
 function liveExecuteCommand3($cmd){
+	
+	ob_implicit_flush(true);
+	ob_end_flush();
 
     while (@ ob_end_flush()); // end all output buffers if any
 
