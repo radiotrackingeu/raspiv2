@@ -147,7 +147,7 @@ Port:<?php echo ($_SERVER['SERVER_PORT']+1); ?>
 	if (isset($_POST["rtl_tcp_stop"])){
 		echo '<pre>';
 		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtlsdr) 2>&1";
-		$result = liveExecuteCommand($cmd);
+		$result = liveExecuteCommand2($cmd);
 		echo $result;
 		echo '</pre>';
 	}
@@ -180,6 +180,19 @@ function w3_switch(name) {
 </html>
 
 <?php 
+
+function liveExecuteCommand2($cmd){
+	while (@ ob_end_flush()); // end all output buffers if any
+	$proc = popen($cmd, 'r');
+	echo '<pre>';
+	while (!feof($proc))
+	{
+		echo fread($proc, 4096);
+		@ flush();
+	}
+	echo '</pre>';
+}
+{
 
 function liveExecuteCommand($cmd)
 {

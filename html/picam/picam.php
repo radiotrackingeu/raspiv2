@@ -180,13 +180,14 @@
 			error_reporting(E_ALL);
 			ini_set('display_errors', 1);
 			
-			system("grep 'gpu_mem=' /boot/config.txt ", $gpu);		
-			system("grep 'start_x=' /boot/config.txt ", $cam);
+			#system("grep 'gpu_mem=' /boot/config.txt ", $gpu);		
+			#system("grep 'start_x=' /boot/config.txt ", $cam);
 			
 			if (isset($_POST["activate"])){
 				echo '<pre>';
 				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/start_x=0/start_x=1/g' /boot/config.txt 2>&1", $ret);
 				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/gpu_mem=16/gpu_mem=256/g' /boot/config.txt 2>&1", $ret);
+				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/#bcm2835-v4l2/bcm2835-v4l2/g' /etc/modules 2>&1", $ret);
 				echo '</pre>';
 			}
 			
@@ -194,6 +195,7 @@
 				echo '<pre>';
 				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/start_x=1/start_x=0/g' /boot/config.txt 2>&1", $ret);
 				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/gpu_mem=256/gpu_mem=16/g' /boot/config.txt 2>&1", $ret);
+				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/bcm2835-v4l2/#bcm2835-v4l2/g' /etc/modules 2>&1", $ret);
 				echo '</pre>';
 			}
 			
