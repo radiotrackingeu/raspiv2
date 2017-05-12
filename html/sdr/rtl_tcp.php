@@ -139,7 +139,7 @@ Port:<?php echo ($_SERVER['SERVER_PORT']+1); ?>
 	if (isset($_POST["rtl_tcp_start"])){
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
-		$cmd = "sudo docker run -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234' 2>&1";
+		$cmd = "sudo docker run -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234'";
 		$result = liveExecuteCommand3($cmd);
 	}
 	if (isset($_POST["rtl_tcp_stop"])){
@@ -197,7 +197,7 @@ function liveExecuteCommand3($cmd){
 	ini_set('zlib.output_compression', false);
 	
 	//prevent apache from buffering it for deflate/gzip
-	header("Content-type: text/plain");
+	//header("Content-type: text/plain");
 	header('Cache-Control: no-cache'); // recommended to prevent caching of event data.
 
 	ob_implicit_flush(true);
