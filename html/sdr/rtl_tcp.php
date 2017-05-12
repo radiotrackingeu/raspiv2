@@ -192,8 +192,6 @@ function liveExecuteCommand2($cmd){
 	}
 	echo '</pre>';
 }
-{
-
 function liveExecuteCommand($cmd)
 {
 
