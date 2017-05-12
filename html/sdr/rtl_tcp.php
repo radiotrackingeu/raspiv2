@@ -137,16 +137,13 @@ Port:<?php echo ($_SERVER['SERVER_PORT']+1); ?>
 </div>
 <?php
 	if (isset($_POST["rtl_tcp_start"])){
-		ob_implicit_flush();
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234' 2>&1";
-		if (ob_get_level())
-			ob_end_clean();
-		$result = passthru($cmd);
+		$result = system($cmd);
 	}
 	if (isset($_POST["rtl_tcp_stop"])){
-		echo '<pre>';
 		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtlsdr) 2>&1";
-		$result = passthru($cmd);
+		echo '<pre>';
+		$result = system($cmd);
 		echo '</pre>';
 	}
 ?>
@@ -176,117 +173,3 @@ function w3_switch(name) {
 </body>
 
 </html>
-
-<?php 
-
-function executeAsyncShellCommand($comando = null){
-   if(!$comando){
-       throw new Exception("No command given");
-   }
-   // If windows, else
-   if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-       system($comando." > NUL");
-   }else{
-       shell_exec("/usr/bin/nohup ".$comando." >/dev/null 2>&1 &");
-   }
-}
-
-function liveExecuteCommand2($cmd){
-	while (@ ob_end_flush()); // end all output buffers if any
-	$proc = popen($cmd, 'r');
-	echo '<pre>';
-	while (!feof($proc))
-	{
-		echo fread($proc, 4096);
-		@ flush();
-	}
-	echo '</pre>';
-}
-function liveExecuteCommand3($cmd){
-	// Turn off output buffering
-	ini_set('output_buffering', 'off');
-	// Turn off PHP output compression
-	ini_set('zlib.output_compression', false);
-	
-	//prevent apache from buffering it for deflate/gzip
-	//header("Content-type: text/plain");
-	header('Cache-Control: no-cache'); // recommended to prevent caching of event data.
-
-	ob_implicit_flush(true);
-	ob_end_flush();
-
-    while (@ ob_end_flush()); // end all output buffers if any
-	
-	for($i = 0; $i < 1000; $i++)
-{
-echo ' ';
-}
-		
-ob_flush();
-flush();
-
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-
-    $live_output     = "";
-    $complete_output = "";
-
-    while (!feof($proc))
-    {
-        $live_output     = fread($proc, 4096);
-        $complete_output = $complete_output . $live_output;
-        echo "$live_output";
-        @ flush();
-    }
-
-    pclose($proc);
-
-    // get exit status
-    preg_match('/[0-9]+$/', $complete_output, $matches);
-
-    // return exit status and intended output
-    return array (
-                    'exit_status'  => intval($matches[0]),
-                    'output'       => str_replace("Exit status : " . $matches[0], '', $complete_output)
-                 );
-}
-
-
-
-
-function liveExecuteCommand($cmd)
-{
-
-    while (@ ob_end_flush()); // end all output buffers if any
-
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-
-    $live_output     = "";
-    $complete_output = "";
-
-    while (!feof($proc))
-    {
-        $live_output     = fread($proc, 4096);
-        $complete_output = $complete_output . $live_output;
-        echo "$live_output";
-        @ flush();
-    }
-
-    pclose($proc);
-
-    // get exit status
-    preg_match('/[0-9]+$/', $complete_output, $matches);
-
-    // return exit status and intended output
-    return array (
-                    'exit_status'  => intval($matches[0]),
-                    'output'       => str_replace("Exit status : " . $matches[0], '', $complete_output)
-                 );
-}
-function unliveExecuteCommand($cmd)
-{
-    while (@ ob_end_flush()); // end all output buffers if any
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-    pclose($proc);
-}
-
-?>
