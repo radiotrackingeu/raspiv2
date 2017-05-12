@@ -140,7 +140,7 @@ Port:<?php echo ($_SERVER['SERVER_PORT']+1); ?>
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 		$cmd = "sudo docker run -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234'";
-		$result = liveExecuteCommand3($cmd);
+		$result = executeAsyncShellCommand($cmd);
 	}
 	if (isset($_POST["rtl_tcp_stop"])){
 		echo '<pre>';
@@ -178,6 +178,18 @@ function w3_switch(name) {
 </html>
 
 <?php 
+
+function executeAsyncShellCommand($comando = null){
+   if(!$comando){
+       throw new Exception("No command given");
+   }
+   // If windows, else
+   if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+       system($comando." > NUL");
+   }else{
+       shell_exec("/usr/bin/nohup ".$comando." >/dev/null 2>&1 &");
+   }
+}
 
 function liveExecuteCommand2($cmd){
 	while (@ ob_end_flush()); // end all output buffers if any
