@@ -140,7 +140,7 @@ Port:<?php echo ($_SERVER['SERVER_PORT']+1); ?>
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 		$cmd = "sudo docker run -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234'";
-		liveExecuteCommand2($cmd);
+		$result = liveExecuteCommand($cmd);
 	}
 	if (isset($_POST["rtl_tcp_stop"])){
 		echo '<pre>';
@@ -190,6 +190,39 @@ function liveExecuteCommand2($cmd){
 	}
 	echo '</pre>';
 }
+function liveExecuteCommand($cmd)
+{
+
+    while (@ ob_end_flush()); // end all output buffers if any
+
+    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
+
+    $live_output     = "";
+    $complete_output = "";
+
+    while (!feof($proc))
+    {
+        $live_output     = fread($proc, 4096);
+        $complete_output = $complete_output . $live_output;
+        echo "$live_output";
+        @ flush();
+    }
+
+    pclose($proc);
+
+    // get exit status
+    preg_match('/[0-9]+$/', $complete_output, $matches);
+
+    // return exit status and intended output
+    return array (
+                    'exit_status'  => intval($matches[0]),
+                    'output'       => str_replace("Exit status : " . $matches[0], '', $complete_output)
+                 );
+}
+
+
+
+
 function liveExecuteCommand($cmd)
 {
 
