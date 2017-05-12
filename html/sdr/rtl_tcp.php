@@ -138,8 +138,10 @@ Port:<?php echo ($_SERVER['SERVER_PORT']+1); ?>
 <?php
 	if (isset($_POST["rtl_tcp_start"])){
 		error_reporting(E_ALL);
+		ob_implicit_flush(true);
+		ob_end_flush();
 		ini_set('display_errors', 1);
-		$cmd = "sudo docker run -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234'";
+		$cmd = "sudo docker run -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234' 2>&1";
 		echo '<pre>';
 		$result = passthru($cmd);
 		echo '</pre>';
