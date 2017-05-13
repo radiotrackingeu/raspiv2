@@ -202,7 +202,7 @@
 		echo '</pre>';
 	}
 	if (isset($_POST["log_start"])){
-		$cmd = "rtl_433 -f 150100000 -q -A -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"];
+		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod rtl_433 -f 150100000 -q -A -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"];
 		echo $cmd;
 		$result = system($cmd, $ret);
 	}
