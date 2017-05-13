@@ -202,7 +202,8 @@
 		echo '</pre>';
 	}
 	if (isset($_POST["log_start"])){
-		$cmd = "rtl_433 -f 15010000 -q -A -g " . $_POST["log_gain"]. " 2>1 /home/" . $_POST["log_name"];
+		$cmd = "rtl_433 -f 150100000 -q -A -g " . $_POST["log_gain"]. " 2>1 /home/" . $_POST["log_name"];
+		echo $cmd;
 		$result = system($cmd, $ret);
 	}
 	if (isset($_POST["log_stop"])){
