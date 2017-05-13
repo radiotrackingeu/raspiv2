@@ -171,12 +171,12 @@
 			<table style="width:90%">
 				<tr>
 					<td>Gain in DB:</td>
-					<td><input type="text" name="gain" value="20"></td>
+					<td><input type="text" name="log_gain" value="20"></td>
 					<td>Gain of the recording device. Higher gain results in more noise.</td>
 				</tr>
 				<tr>
 					<td>Record Name:</td>
-					<td><input type="text" name="rname" value="<?php echo date('Y-m-d_H:i:s')?>"></td>
+					<td><input type="text" name="log_name" value="<?php echo date('Y-m-d_H:i:s')?>"></td>
 					<td>Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a></td>
 				</tr>
 			</table>
