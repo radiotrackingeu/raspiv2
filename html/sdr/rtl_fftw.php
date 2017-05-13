@@ -117,50 +117,76 @@
 </div>
 
 <!-- Enter text here-->
+<div class="w3-bar w3-brown w3-mobile">
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('spectrum')">Spectrum</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('logger')">Logger</button>
+</div>
 
+<div id="spectrum" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<br>
+		To record a Frequency Spektrum for a given time, just modify the entries below and press Start.
+		<h3>Record properties</h3><br>
+		<form method='POST' enctype="multipart/form-data"> 
+			<table style="width:90%">
+				<tr>
+					<td>Center Frequency:</td>
+					<td><input type="text" name="cfreq" value="150190k"></td>
+					<td>Frequency in the middle of the frequency range of 250 kHz</td>
+				</tr>
+				<tr>
+					<td>Gain in mDB:</td>
+					<td><input type="text" name="gain" value="400"></td>
+					<td>Gain of the recording device. Higher gain results in more noise.</td>
+				</tr>
+				<tr>
+					<td>Record Time:</td>
+					<td><input type="text" name="rtime" value="1m"></td>
+					<td>The is the actual overall recording time. You can use units like m for minutes and h for hours.</td>
+				</tr>
+				<tr>
+					<td>Record Name:</td>
+					<td><input type="text" name="rname" value="d0"></td>
+					<td>Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a></td>
+				</tr>
+			</table>
+			<br>
+			<br>
+			Start or stop recording/s: 
+			<br>
+			<br>
+			<input type="submit" class="w3-btn w3-brown" value="Start" name="fftw_start" />
+			<input type="submit" class="w3-btn w3-brown" value="Stop" name="fftw_stop" />
+		</form> 
+		<br>
+	</div>
+</div>
 
+<div id="logger" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<br>
+		To record a Frequency Spektrum for a given time, just modify the entries below and press Start.
+		<h3>Record properties</h3><br>
+		<form method='POST' enctype="multipart/form-data">
+			<table style="width:90%">
+				<tr>
+					<td>Gain in DB:</td>
+					<td><input type="text" name="gain" value="20"></td>
+					<td>Gain of the recording device. Higher gain results in more noise.</td>
+				</tr>
+				<tr>
+					<td>Record Name:</td>
+					<td><input type="text" name="rname" value="<?php echo date('Y-m-d_H:i:s')?>"></td>
+					<td>Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a></td>
+				</tr>
+			</table>
+			<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start" />
+			<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop" />
+		</form>
+		<br>
+	</div>
+</div>
 
-<br>
-<br>To record a Frequency Spektrum for a given time, just modify the entries below and press Start.
-
-<h3>Record properties</h3><br>
-
-<form method='POST' enctype="multipart/form-data"> 
-<table style="width:90%">
-
-	<tr>
-		<td>Center Frequency:</td>
-		<td><input type="text" name="cfreq" value="150190k"></td>
-		<td>Frequency in the middle of the frequency range of 250 kHz</td>
-	</tr>
-	</tr>
-	<tr>
-		<td>Gain in mDB:</td>
-		<td><input type="text" name="gain" value="400"></td>
-		<td>Gain of the recording device. Higher gain results in more noise.</td
-	</tr>
-	<tr>
-		<td>Record Time:</td>
-		<td><input type="text" name="rtime" value="1m"></td>
-		<td>The is the actual overall recording time. You can use units like m for minutes and h for hours.</td>
-	</tr>
-	<tr>
-		<td>Record Name:</td>
-		<td><input type="text" name="rname" value="d0"></td>
-		<td>Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/barbastella/sdr/record/">Record Folder</a></td>
-	</tr>
-</table>
-
-<br>
-<br>
-Start or stop recording/s: 
-<br>
-<br>
-
-
-	<input type="submit" value="Start" name="fftw_start" />
-	<input type="submit" value="Stop" name="fftw_stopt" />
-</form> 
 <?php
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
@@ -169,11 +195,19 @@ Start or stop recording/s:
 		echo '<pre>';
 		$test = system("sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtlsdr ".$cmd." 2>&1", $ret);
 		echo '</pre>';
-		echo "sudo docker run -t -v /var/www/html/sdr/record/:/home/ rtlsdr ".$cmd;
 	}
-	if (isset($_POST["fftw_stopt"])){
+	if (isset($_POST["fftw_stop"])){
 		echo '<pre>';
 		$result = system("sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtlsdr) 2>&1", $ret);
+		echo '</pre>';
+	}
+	if (isset($_POST["log_start"])){
+		$cmd = "rtl_433 -f 15010000 -q -A -g " . $_POST["log_gain"]. " 2>1 /home/" . $_POST["log_name"];
+		$result = system($cmd, $ret);
+	}
+	if (isset($_POST["log_stop"])){
+		echo '<pre>';
+		$result = system("sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtl_433_mod) 2>&1", $ret);
 		echo '</pre>';
 	}
 ?>
