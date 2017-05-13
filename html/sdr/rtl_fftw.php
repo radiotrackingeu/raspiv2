@@ -176,7 +176,7 @@
 				</tr>
 				<tr>
 					<td>Record Name:</td>
-					<td><input type="text" name="log_name" value="<?php echo date('Y-m-d_H:i:s')?>"></td>
+					<td><input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"></td>
 					<td>Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a></td>
 				</tr>
 			</table>
@@ -202,7 +202,7 @@
 		echo '</pre>';
 	}
 	if (isset($_POST["log_start"])){
-		$cmd = "rtl_433 -f 150100000 -q -A -g " . $_POST["log_gain"]. " 2>1 /home/" . $_POST["log_name"];
+		$cmd = "rtl_433 -f 150100000 -q -A -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"];
 		echo $cmd;
 		$result = system($cmd, $ret);
 	}
