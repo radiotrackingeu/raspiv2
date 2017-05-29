@@ -7,14 +7,14 @@
     // So I set output_buffering to Off in my php.ini,
     // which normally, on Linux, you can find at the following location: /etc/php5/apache2/php.ini
 
-    @ini_set('output_buffering','Off');
-    @ini_set('zlib.output_compression',Off);
-    @ini_set('implicit_flush',1);
-    @ini_set('output_handler', '');
-    @apache_setenv('no-gzip', 1);	
-    @ob_end_clean();
-    set_time_limit(0);
-    apache_setenv('no-gzip', '1');
+    //@ini_set('output_buffering','Off');
+    //@ini_set('zlib.output_compression',Off);
+    //@ini_set('implicit_flush',1);
+    //@ini_set('output_handler', '');
+    //@apache_setenv('no-gzip', 1);	
+    //@ob_end_clean();
+    //set_time_limit(0);
+    //apache_setenv('no-gzip', '1');
 
 ob_start();
 

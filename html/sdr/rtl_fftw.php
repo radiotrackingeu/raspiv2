@@ -11,7 +11,7 @@
 <div class="w3-container w3-green">
 <h1>radio-tracking.eu</h1>
   <img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:25%"><br>
- <button class="w3-button w3-green w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
+ <button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
 </div>
  
 
@@ -189,6 +189,8 @@
 
 <?php
 	error_reporting(E_ALL);
+	ob_implicit_flush(true);
+    ob_end_flush();
 	ini_set('display_errors', 1);
 	if (isset($_POST["fftw_start"])){
 		$cmd = "rtl_power_fftw -r 250000 -f " . $_POST["cfreq"]. " -b 300 -t 0.1 -g " . $_POST["gain"]. " -q -d 0 -e " . $_POST["rtime"]. " -m /home/" . $_POST["rname"];
@@ -203,12 +205,17 @@
 	}
 	if (isset($_POST["log_start"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f 150100000 -q -A -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
-		echo $cmd;
 		$result = system($cmd, $ret);
 	}
 	if (isset($_POST["log_stop"])){
 		echo '<pre>';
 		$result = system("sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtl_433_mod) 2>&1", $ret);
+		echo '</pre>';
+	}
+	if (isset($_POST["log_start"])){
+		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f 150100000 -q -A -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
+		echo '<pre>';
+		$result = system($cmd, $ret);
 		echo '</pre>';
 	}
 ?>
