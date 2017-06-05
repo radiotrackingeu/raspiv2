@@ -148,6 +148,8 @@
 	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="submit" class="w3-btn w3-brown" value="Activate PiCam" name="activate">
 			<input type="submit" class="w3-btn w3-brown" value="Deactivate PiCam" name="deactivate">
+			<input type="submit" class="w3-btn w3-brown" value="Deactivate I2C" name="activate_i2c">
+			<input type="submit" class="w3-btn w3-brown" value="Deactivate I2C" name="deactivate_i2c">
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot">
 			
 			<br><br>
@@ -196,6 +198,18 @@
 				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/start_x=1/start_x=0/g' /boot/config.txt 2>&1", $ret);
 				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/gpu_mem=256/gpu_mem=16/g' /boot/config.txt 2>&1", $ret);
 				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/bcm2835-v4l2/#bcm2835-v4l2/g' /etc/modules 2>&1", $ret);
+				echo '</pre>';
+			}
+			
+			if (isset($_POST["activate_i2c"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm --privileged -v /boot/:/tmp1/ -v /etc/:/tmp2/ -v /var/www/html/picam/:/tmp3/ i2c sh /tmp3/start_i2c.sh 2>&1", $ret);
+				echo '</pre>';
+			}
+			
+			if (isset($_POST["deactivate_i2c"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm --privileged -v /boot/:/tmp1/ -v /etc/:/tmp2/ -v /var/www/html/picam/:/tmp3/ i2c sh /tmp3/stop_i2c.sh 2>&1", $ret);
 				echo '</pre>';
 			}
 			
