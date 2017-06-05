@@ -11,14 +11,14 @@ NEWSTRING="dtparam=i2c1=on"
 FILE="/tmp1/config.txt"
 
 grep -q $OLDSTRING $FILE && 
-    sed -i 's/$OLDSTRING/$NEWSTRING/' $FILE || echo "$NEWSTRING" >> $FILE
+    sed -i "s/$OLDSTRING/$NEWSTRING/" $FILE || echo "$NEWSTRING" >> $FILE
 
 OLDSTRING="#dtparam=i2c_arm=on"
 NEWSTRING="dtparam=i2c_arm=on"
 FILE="/tmp1/config.txt"
 
 grep -q $OLDSTRING $FILE && 
-    sed -i 's/$OLDSTRING/$NEWSTRING/' $FILE || echo "$NEWSTRING" >> $FILE
+    sed -i "s/$OLDSTRING/$NEWSTRING/" $FILE || echo "$NEWSTRING" >> $FILE
 
 #Add the modules to /etc/modules
 
