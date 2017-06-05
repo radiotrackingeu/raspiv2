@@ -3,7 +3,9 @@ FROM rtlsdr
 MAINTAINER ralf.zeidler@radio-tracking.eu
 
 RUN apt-get update && \
-    apt-get install -y libtool libusb-1.0.0-dev librtlsdr-dev rtl-sdr
+    apt-get install -y libtool libusb-1.0.0-dev librtlsdr-dev 
+	
+	#rtl-sdr
 
 RUN mkdir rtl_433 && \
 	cd rtl_433 && \
