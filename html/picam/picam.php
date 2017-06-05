@@ -119,6 +119,7 @@
 <div class="w3-bar w3-brown">
   <button class="w3-bar-item w3-button" onclick="openCity('output')">Links</button>
   <button class="w3-bar-item w3-button" onclick="openCity('start_cam')">Start</button>
+  <button class="w3-bar-item w3-button" onclick="openCity('activate_light')">Light</button>
   <button class="w3-bar-item w3-button" onclick="openCity('activate_cam')">Activate</button>
 </div>
 
@@ -148,10 +149,10 @@
 	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="submit" class="w3-btn w3-brown" value="Activate PiCam" name="activate">
 			<input type="submit" class="w3-btn w3-brown" value="Deactivate PiCam" name="deactivate">
-			<br>
+			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Activate I2C" name="activate_i2c">
 			<input type="submit" class="w3-btn w3-brown" value="Deactivate I2C" name="deactivate_i2c">
-			<br>
+			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot">
 			
 			<br><br>
@@ -159,6 +160,19 @@
 	</div>	
 </div>
 
+<div id="activate_light" class="w3-container city" style="display:none">
+
+	
+	<div class="w3-panel w3-green w3-round">
+	<br>
+	A reboot is required after the activation. <br><br>
+	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<input type="submit" class="w3-btn w3-brown" value="IR-Light on" name="activate_light">
+			<input type="submit" class="w3-btn w3-brown" value="IR-Light off" name="deactivate_light">
+			<br><br>
+	</form>	
+	</div>	
+</div>
 
 
 
@@ -208,6 +222,19 @@
 			if (isset($_POST["deactivate_i2c"])){
 				echo '<pre>';
 				$test = system("sudo docker run -t --rm --privileged -v /boot/:/tmp1/ -v /etc/:/tmp2/ -v /var/www/html/picam/:/tmp3/ i2c sh /tmp3/stop_i2c.sh 2>&1", $ret);
+				echo '</pre>';
+			}
+			
+			if (isset($_POST["activate_light"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm --privileged i2c i2cset -y 1 0x70 0x00 0xa5 2>&1", $ret);
+				$test = system("sudo docker run -t --rm --privileged i2c i2cset -y 1 0x70 0x09 0x0f 2>&1", $ret);
+				echo '</pre>';
+			}
+			
+			if (isset($_POST["deactivate_light"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm --privileged i2cset -y 1 0x70 0x00 0x00 2>&1", $ret);
 				echo '</pre>';
 			}
 			
