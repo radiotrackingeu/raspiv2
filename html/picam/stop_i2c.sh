@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Activate I2C
+#Deactivate I2C
 
 #Change /boot/config.txt
 
@@ -9,14 +9,12 @@
 OLDSTRING="dtparam=i2c1=on"
 NEWSTRING="#dtparam=i2c1=on"
 FILE="/tmp1/config.txt"
-
 grep -q $OLDSTRING $FILE && 
     sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
 
 OLDSTRING="dtparam=i2c_arm=on"
 NEWSTRING="#dtparam=i2c_arm=on"
 FILE="/tmp1/config.txt"
-
 grep -q $OLDSTRING $FILE && 
     sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
 
@@ -25,14 +23,12 @@ grep -q $OLDSTRING $FILE &&
 OLDSTRING="i2c-bcm2708"
 NEWSTRING="#i2c-bcm2708"
 FILE="/tmp2/modules"
-
 grep -q $OLDSTRING $FILE && 
     sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
 
 OLDSTRING="i2c-dev"
 NEWSTRING="#i2c-dev"
 FILE="/tmp2/modules"
-
 grep -q $OLDSTRING $FILE && 
     sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
 	

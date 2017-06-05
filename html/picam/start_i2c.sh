@@ -20,15 +20,15 @@ grep -q $OLDSTRING $FILE &&
 
 #Add the modules to /etc/modules
 
-OLDSTRING='#i2c-bcm2708'
-NEWSTRING='i2c-bcm2708'
-FILE='/tmp2/modules'
+OLDSTRING="#i2c-bcm2708"
+NEWSTRING="i2c-bcm2708"
+FILE="/tmp2/modules"
 grep -q $OLDSTRING $FILE && 
     sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
 
-OLDSTRING='#i2c-dev'
-NEWSTRING='i2c-dev'
-FILE='/tmp2/modules'
+OLDSTRING="#i2c-dev"
+NEWSTRING="i2c-dev"
+FILE="/tmp2/modules"
 grep -q $OLDSTRING $FILE && 
     sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
 
