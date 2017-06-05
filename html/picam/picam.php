@@ -187,17 +187,13 @@
 			
 			if (isset($_POST["activate"])){
 				echo '<pre>';
-				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/start_x=0/start_x=1/g' /boot/config.txt 2>&1", $ret);
-				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/gpu_mem=16/gpu_mem=256/g' /boot/config.txt 2>&1", $ret);
-				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/#bcm2835-v4l2/bcm2835-v4l2/g' /etc/modules 2>&1", $ret);
+				$test = system("sudo docker run -t --rm --privileged -v /boot/:/tmp1/ -v /etc/:/tmp2/ -v /var/www/html/picam/:/tmp3/ i2c sh /tmp3/start_picam.sh 2>&1", $ret);
 				echo '</pre>';
 			}
 			
 			if (isset($_POST["deactivate"])){
 				echo '<pre>';
-				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/start_x=1/start_x=0/g' /boot/config.txt 2>&1", $ret);
-				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/gpu_mem=256/gpu_mem=16/g' /boot/config.txt 2>&1", $ret);
-				$test = system("sudo docker run --rm -t --privileged -v /boot/:/boot/ git sed -i 's/bcm2835-v4l2/#bcm2835-v4l2/g' /etc/modules 2>&1", $ret);
+				$test = system("sudo docker run -t --rm --privileged -v /boot/:/tmp1/ -v /etc/:/tmp2/ -v /var/www/html/picam/:/tmp3/ i2c sh /tmp3/stop_picam.sh 2>&1", $ret);
 				echo '</pre>';
 			}
 			
