@@ -148,7 +148,7 @@
 	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="submit" class="w3-btn w3-brown" value="Activate PiCam" name="activate">
 			<input type="submit" class="w3-btn w3-brown" value="Deactivate PiCam" name="deactivate">
-			<input type="submit" class="w3-btn w3-brown" value="Deactivate I2C" name="activate_i2c">
+			<input type="submit" class="w3-btn w3-brown" value="Activate I2C" name="activate_i2c">
 			<input type="submit" class="w3-btn w3-brown" value="Deactivate I2C" name="deactivate_i2c">
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot">
 			
