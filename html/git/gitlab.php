@@ -155,6 +155,9 @@
 		<input type="submit" class="w3-btn" value="Picam" name="install_picam"/> <br> <br>
 		
 		<hr>
+		<input type="submit" class="w3-btn" value="I2C" name="install_i2c"/> <br> <br>
+		
+		<hr>
 
 		</form>
 		</div>
@@ -247,6 +250,11 @@
 			if (isset($_POST["install_picam"])){
 				echo '<pre>';
 				$test = system('sudo docker build -t picam /home/pi/gitrep/raspiv2/Docker/picam/. 2>&1', $ret);
+			echo '</pre>';
+			}
+			if (isset($_POST["install_i2c"])){
+				echo '<pre>';
+				$test = system('sudo docker build -t i2c /home/pi/gitrep/raspiv2/Docker/i2c/. 2>&1', $ret);
 			echo '</pre>';
 			}
 			error_reporting(E_ALL);
