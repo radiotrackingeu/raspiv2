@@ -234,7 +234,7 @@
 			
 			if (isset($_POST["deactivate_light"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged i2cset -y 1 0x70 0x00 0x00 2>&1", $ret);
+				$test = system("sudo docker run -t --rm --privileged i2c i2cset -y 1 0x70 0x00 0x00 2>&1", $ret);
 				echo '</pre>';
 			}
 			
