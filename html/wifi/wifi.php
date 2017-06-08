@@ -154,10 +154,10 @@
 			<input type="submit" class="w3-btn w3-brown" value="Connect" name="change_hotspot" />
 			<br><br>
 			WiFi-Name: <br>
-			<input type="text" name="log_name" value="<?php echo system("grep 'ssid=' /var/www/wifi/hostapd.conf", $cam);?>">
+			<input type="text" name="log_name" value="<?php $out=shell_exec("iwgetid -r"); echo $out; ?>">
 			<br><br>
 			Password: <br>
-			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam);?>">
+			<input type="text" name="log_name" value="<?php $out=shell_exec("/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"); echo $out; ?>">
 			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Change" name="change_wifi" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
@@ -177,15 +177,12 @@
 			<input type="submit" class="w3-btn w3-brown" value="Manual" name="change_man" />
 			<br><br>
 			IP4-Address: <br>
-			<input type="text" name="log_name" value="<?php $out=shell_exec("/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"); echo $out; ?>">
-			<br><br>
-			Netmask: <br>
-			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam);?>">
+			<input type="text" name="lan_ip" value="<?php $out=shell_exec("/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"); echo $out; ?>">
 			<br><br>
 			Gateway: <br>
-			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam);?>">
+			<input type="text" name="lan_gate" value="<?php echo $out=shell_exec("ip route show default | grep default | grep eth0 | awk {'print $3'}"); echo $out;?>">
 			<br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Change" name="change_hotspot" />
+			<input type="submit" class="w3-btn w3-brown" value="Change" name="change_lan" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
 			<br><br>
 		</form>
@@ -193,6 +190,23 @@
 
 </div>
 <!-- Enter text here-->
+
+<?php
+			error_reporting(E_ALL);
+			ini_set('display_errors', 1);
+
+			
+			if (isset($_POST["change_lan"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/wifi/:/tmp/ git sh /tmp/static_lan.sh ".$_POST("lan_ip")." ".$_POST("lan_gate"), $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["change_auto"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/wifi/:/tmp/ git sh /tmp/dhcp_lan.sh", $ret);
+				echo '</pre>';
+			}
+	?>
 
 
 <script>
