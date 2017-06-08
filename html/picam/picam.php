@@ -227,7 +227,7 @@
 			
 			if (isset($_POST["activate_light"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged i2c i2cset -y 1 0x70 0x00 0xff 2>&1", $ret);
+				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ i2c sh /tmp/start_all_lights.sh 2>&1", $ret);
 				echo '</pre>';
 			}
 			
