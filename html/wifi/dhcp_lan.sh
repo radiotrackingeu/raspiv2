@@ -8,7 +8,7 @@
 OLDSTRING='interface eth0'
 NEWSTRING='#interface eth0'
 FILE="/tmp2/dhcpcd.conf"
-grep -q $OLDSTRING $FILE && 
+grep -q "$OLDSTRING" $FILE && 
     sed -i "s/^$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
 	
 OLDSTRING=$(sudo grep 'static ip' /tmp2/dhcpcd.conf)
@@ -17,8 +17,9 @@ echo $NEWSTRING | grep "^##"
 if [ $? -eq 0 ];then  NEWSTRING=$OLDSTRING; fi
 FILE="/tmp2/dhcpcd.conf"
 echo $OLDSTRING
-grep -q "static ip_adress=" $FILE && 
-    sed -i "s/^$OLDSTRING/$NEWSTRING/g" $FILE || echo "static ip_address=$1/24" >> $FILE
+echo $NEWSTRING
+grep -q "static ip_address=" $FILE && 
+    sed -i "s|^$OLDSTRING|$NEWSTRING|g" $FILE || echo "static ip_address=$1/24" >> $FILE
 	
 OLDSTRING=$(sudo grep 'static routers' /tmp2/dhcpcd.conf)
 NEWSTRING="#$OLDSTRING"
