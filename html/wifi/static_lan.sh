@@ -13,7 +13,7 @@ NEWSTRING="static ip_address=$1/24"
 echo "$NEWSTRING" | grep "^##"
 if [ $? -eq 0 ];then  NEWSTRING=$OLDSTRING; fi
 FILE="/tmp2/dhcpcd.conf"
-grep -q "static ip_adress" $FILE && 
+grep -q "static ip_address" $FILE && 
     sed -i "s|^$OLDSTRING|$NEWSTRING|g" $FILE || echo "$NEWSTRING" >> $FILE
 	
 OLDSTRING=$(sudo grep 'static routers' /tmp2/dhcpcd.conf)
