@@ -8,7 +8,7 @@ FILE="/tmp2/dhcpcd.conf"
 grep -q "$OLDSTRING" $FILE && 
     sed -i "s/^$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
 	
-OLDSTRING=$(sudo grep 'static ip_adress' /tmp2/dhcpcd.conf)
+OLDSTRING=$(sudo grep 'static ip_address' /tmp2/dhcpcd.conf)
 NEWSTRING="static ip_address=$1/24"
 echo "$NEWSTRING" | grep "^##"
 if [ $? -eq 0 ];then  NEWSTRING=$OLDSTRING; fi
