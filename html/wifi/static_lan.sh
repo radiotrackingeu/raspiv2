@@ -13,7 +13,7 @@ NEWSTRING="static ip_address=$1/24"
 echo "$NEWSTRING" | grep "^##"
 if [ $? -eq 0 ];then  NEWSTRING=$OLDSTRING; fi
 FILE="/tmp2/dhcpcd.conf"
-grep -q "$OLDSTRING" $FILE && 
+grep -q "static ip_adress" $FILE && 
     sed -i "s|^$OLDSTRING|$NEWSTRING|g" $FILE || echo "$NEWSTRING" >> $FILE
 	
 OLDSTRING=$(sudo grep 'static routers' /tmp2/dhcpcd.conf)
@@ -21,7 +21,7 @@ NEWSTRING="static routers=$2"
 echo "$NEWSTRING" | grep "^##"
 if [ $? -eq 0 ];then  NEWSTRING=$OLDSTRING; fi
 FILE="/tmp2/dhcpcd.conf"
-grep -q "$OLDSTRING" $FILE && 
+grep -q "static routers" $FILE && 
     sed -i "s/^$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
 	
 #Use google's DNS Server
@@ -29,7 +29,7 @@ grep -q "$OLDSTRING" $FILE &&
 OLDSTRING=$(sudo grep 'static domain_name_servers' /tmp2/dhcpcd.conf)
 NEWSTRING="static domain_name_servers=8.8.8.8"
 FILE="/tmp2/dhcpcd.conf"
-grep -q "$OLDSTRING" $FILE && 
+grep -q "static domain_name_servers" $FILE && 
     sed -i "s/^$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
 
 sysctl -w net.ipv4.ip_forward=1
