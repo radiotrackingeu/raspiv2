@@ -133,10 +133,10 @@
 			<input type="submit" class="w3-btn w3-brown" value="Activate" name="change_hotspot" />
 			<br><br>
 			Hotspot-Name: <br>
-			<input type="text" name="log_name" value="<?php echo system("grep 'ssid=' /var/www/wifi/hostapd.conf", $cam)?>">
+			<input type="text" name="log_name" value="<?php echo system("grep 'ssid=' /var/www/wifi/hostapd.conf", $cam);?>">
 			<br><br>
 			Password: <br>
-			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam)?>">
+			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam);?>">
 			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Change" name="change_hotspot" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
@@ -154,10 +154,10 @@
 			<input type="submit" class="w3-btn w3-brown" value="Connect" name="change_hotspot" />
 			<br><br>
 			WiFi-Name: <br>
-			<input type="text" name="log_name" value="<?php echo system("grep 'ssid=' /var/www/wifi/hostapd.conf", $cam)?>">
+			<input type="text" name="log_name" value="<?php echo system("grep 'ssid=' /var/www/wifi/hostapd.conf", $cam);?>">
 			<br><br>
 			Password: <br>
-			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam)?>">
+			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam);?>">
 			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Change" name="change_wifi" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
@@ -180,10 +180,10 @@
 			<input type="text" name="log_name" value="<?php echo shell_exec("hostname --ip-address"; ?>">
 			<br><br>
 			Netmask: <br>
-			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam)?>">
+			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam);?>">
 			<br><br>
 			Gateway: <br>
-			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam)?>">
+			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam);?>">
 			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Change" name="change_hotspot" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
