@@ -22,4 +22,4 @@ OLDSTRING="#bcm2835-v4l2"
 NEWSTRING="bcm2835-v4l2"
 FILE="/tmp2/modules"
 grep -q $NEWSTRING $FILE && 
-    sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
+    sed -i "s/^$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE

@@ -174,10 +174,10 @@
 		<form method='POST' enctype="multipart/form-data">
 			<br>
 			<input type="submit" class="w3-btn w3-brown" value="Automatic" name="change_auto" />
-			<input type="submit" class="w3-btn w3-brown" value="Manual" name="change_auto" />
+			<input type="submit" class="w3-btn w3-brown" value="Manual" name="change_man" />
 			<br><br>
 			IP4-Address: <br>
-			<input type="text" name="log_name" value="<?php echo system("grep 'ssid=' /var/www/wifi/hostapd.conf", $cam)?>">
+			<input type="text" name="log_name" value="<?php echo shell_exec("hostname --ip-address"?>">
 			<br><br>
 			Netmask: <br>
 			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam)?>">
