@@ -203,7 +203,7 @@
 			}
 			if (isset($_POST["change_auto"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp2/ wifi sh /tmp1/dhcp_lan.sh", $ret);
+				$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp2/ wifi sh /tmp1/dhcp_lan.sh ".$_POST["lan_ip"]." ".$_POST["lan_gate"], $ret);
 				echo '</pre>';
 			}
 	?>
