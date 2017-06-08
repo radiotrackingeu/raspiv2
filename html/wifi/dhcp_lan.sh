@@ -13,13 +13,13 @@ grep -q $OLDSTRING $FILE &&
 	
 echo $1
 	
-OLDSTRING=$(sudo grep 'static ip' /etc/dhcpcd.conf)
+OLDSTRING=$(sudo grep 'static ip' /tmp2/dhcpcd.conf)
 NEWSTRING="#$OLDSTRING"
 FILE="/tmp2/dhcpcd.conf"
 grep -q $OLDSTRING $FILE && 
     sed -i "s/^$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
 	
-OLDSTRING=$(sudo grep 'static routers' /etc/dhcpcd.conf)
+OLDSTRING=$(sudo grep 'static routers' /tmp2/dhcpcd.conf)
 NEWSTRING="#$OLDSTRING"
 FILE="/tmp2/dhcpcd.conf"
 grep -q $OLDSTRING $FILE && 
@@ -27,7 +27,7 @@ grep -q $OLDSTRING $FILE &&
 	
 #Use google's DNS Server
 	
-OLDSTRING=$(sudo grep 'static domain_name_servers' /etc/dhcpcd.conf)
+OLDSTRING=$(sudo grep 'static domain_name_servers' /tmp2/dhcpcd.conf)
 NEWSTRING="#static domain_name_servers=8.8.8.8"
 FILE="/tmp2/dhcpcd.conf"
 grep -q $OLDSTRING $FILE && 

@@ -180,7 +180,7 @@
 			<input type="text" name="lan_ip" value="<?php $out=shell_exec("/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"); echo $out; ?>">
 			<br><br>
 			Gateway: <br>
-			<input type="text" name="lan_gate" value="<?php echo $out=shell_exec("ip route show default | grep default | grep eth0 | awk {'print $3'}"); echo $out;?>">
+			<input type="text" name="lan_gate" value="<?php echo $out=shell_exec("ip route show default | grep default | grep eth0 | awk {'print $3'}");?>">
 			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Change" name="change_lan" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
