@@ -203,7 +203,7 @@
 			}
 			if (isset($_POST["change_auto"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/wifi/:/tmp/ git sh /tmp/dhcp_lan.sh", $ret);
+				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp2/ git sh /tmp1/dhcp_lan.sh", $ret);
 				echo '</pre>';
 			}
 	?>
