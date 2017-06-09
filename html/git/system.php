@@ -122,16 +122,17 @@
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('date')">Time/Date</button>
 </div>
 	
-		<div id="date" class="w3-container city" style="display:none">
+<div id="date" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
 		<form method="POST">
 			<br>
-			You can leave the weekday
-			<input type="text" name="new_date" value="<?php echo shell_exec("date")?>">
-			<input type="submit" class="w3-btn w3-brown" value="Update date and Time" name="update_date">
+			You can leave the weekday <br><br>
+			<input type="text" name="new_date" value="<?php echo shell_exec("date")?>"> <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Update date and Time" name="update_date"><br>
 			<br>
 		</form>
-		</div>
-		
+	</div>
+</div>	
 
 		<div id="output" class="w3-container city" style="display:block">
 		<br> Please choose one of the option shown above - the result will be displayed here:
@@ -140,7 +141,7 @@
 			ini_set('display_errors', 1);
 			if (isset($_POST["update_date"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged git date ".$_POST["new_date"]." 2>&1", $ret);
+				$test = system("sudo docker run -t --rm --privileged git date -s ".$_POST["new_date"]." 2>&1", $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["reboot"])){
