@@ -119,100 +119,77 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('welcome')">Welcome</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('introduction')">Introduction</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('camera1')">Camera</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('radio1')">Radio</button>
 </div>
 
-<div id="welcome" class="w3-container city">
+<div id="camera1" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<br>
 
-<div class="w3-panel w3-green w3-round">
+		<h3>Zip Camera's record folder</h3><br>
+		<form method='POST' enctype="multipart/form-data">
+			<input type="text" name="zip_name" value="<?php echo date('Y_m_d_H_i')?>">
+			<input type="submit" class="w3-btn w3-brown" value="Zip All Camera Recordings" name="zip_camera" /> <br><br>
+			You can find the zipped files here: <a href="/picam/zipped/">Record Folder</a> <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Delete all recordings" name="rm_record_folder" />
+			<input type="submit" class="w3-btn w3-brown" value="Delete all zipped files" name="rm_zip_folder" /><br><br>
 
-<p>
-If you got Questions, don't hesitate to contact me: <a href= "mailto:ralf.zeidler@fridata.de">ralf.zeidler@fridata.de</a>
-</p>
-<h4>HTML Version 2.3 aka vespertilio</h4>
-
-<p>
-Supported right now:
-<br><br>
-- Single Frequency Radio for VHF tags using the browser (will be modified for coded tags)<br>
-- SDR#-Server to monitor live a specturm using SDR#<br>
-- WebRX to monitor live a specturm using the browser <br>
-- Remote Control using 2G/3G/4G (certificate required)<br>
-- Camera with motion detection<br>
-
-</p>
+		</form>
+		<br>
+	</div>
 </div>
-</div>
-<div id="introduction" class="w3-container city" style="display:none">
-
-<div class="w3-panel w3-green w3-round">
-<p>
-If you managed to get this page running on a Rasberry-Pi: congratulations!
-<br><br>
-The aim of the whole project is to locate the transmitters and show them on a map. The software is still in development.
-In the following boxes you will find an overview of the supported featuers. For more details please visit the pages.<br>
-</p>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-
-<h3>Radio</h3>
-To receive the signal of the transmitters, you got the following options.<br>
-
-<b>WebRadio:</b> Listen to a single, preset frequency<br>
-<b>Recorder:</b> Records the frequency-time-signal spectrum<br>
-<b>SDR#-Server:</b> Sets up a server which can be used with SDR# to monitor live the frequency-time-signal spectrum<br>
-<b>WebRX:</b> To monitor live the frequency-time-signal spectrum within a browser application<br>
+<div id="radio1" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<br>
+		To record a Frequency Spektrum for a given time, just modify the entries below and press Start.
+		<h3>Record properties</h3><br>
+		<form method='POST' enctype="multipart/form-data">
+			<table style="width:90%">
+				<tr>
+					<td>Gain in DB:</td>
+					<td><input type="text" name="log_gain" value="20"></td>
+					<td>Gain of the recording device. Higher gain results in more noise.</td>
+				</tr>
+				<tr>
+					<td>Zip Name:</td>
+					<td><input type="text" name="zipasd_name" value="<?php echo date('Y_m_d_H_i')?>"></td>
+					<td>You can find the results here: <a href="/picam/zipped/">Record Folder</a></td>
+				</tr>
+			</table>
+			<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start" />
+			<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop" />
+		</form>
+		<br>
+	</div>
 </div>
 
-<div class="w3-panel w3-green w3-round">
-<h3>Camera</h3>
-Use it to setup and run a camera.<br>
 
-<b>Start:</b> Activate and start the camera<br>
-<b>Setup:</b> No setup options yet<br>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-<h3>Microphone</h3>
-Will be supported soon.<br>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-<h3>GPS</h3>
-Will be supported soon.<br>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-<h3>Data</h3>
-Use it to manage the storage of the data.<br>
-<b>Start:</b> Just a bunch of links right now<br>
-<b>Setup:</b> No setup options yet<br>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-<h3>Wifi</h3>
-Will be supported soon.<br>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-<h3>Remote</h3>
-Use it to connect the system to a mobile network, so you can access it via the world wide web.<br>
-
-<b>Start:</b> Read the introdution on the page<br>
-<b>UMTS-Setup:</b> Mobile Network Modifications <br>
-<b>VPN-Setup:</b> VPN-Tunnel Modifications<br>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-<h3>System</h3>
-<b>Software:</b> Update and Debug options<br>
-<b>System:</b> Nothing here yet<br>
-<b>Documentation:</b> Nope<br>
-</div>
-</div>
 <!-- Enter text here-->
+
+	<?php
+			error_reporting(E_ALL);
+			ini_set('display_errors', 1);
+			
+			
+			if (isset($_POST["zip_camera"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip_name"]." /tmp/record/ 2>&1", $ret);
+				echo '</pre>';
+			}
+			
+			if (isset($_POST["rm_zip_folder"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git rm /tmp/zipped/* 2>&1", $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["rm_record_folder"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git rm /tmp/record/* 2>&1", $ret);
+				echo '</pre>';
+			}
+
+	?>
 
 
 <script>
