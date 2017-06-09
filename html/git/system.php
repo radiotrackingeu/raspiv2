@@ -126,7 +126,7 @@
 	<div class="w3-panel w3-green w3-round">
 		<form method="POST">
 			<br>
-			You can leave the weekday <br><br>
+			You can leave out the weekday <br><br>
 			<input type="text" name="new_date" value="<?php echo shell_exec("date")?>"> <br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Update date and Time" name="update_date"><br>
 			<br>
