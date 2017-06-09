@@ -180,12 +180,12 @@
 			
 			if (isset($_POST["rm_zip_folder"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git rm /tmp/zipped/* 2>&1", $ret);
+				$test = system("rm -rf /var/www/html/picam/zipped/* 2>&1", $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["rm_record_folder"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git rm /tmp/record/* 2>&1", $ret);
+				$test = system("rm -rf /var/www/html/picam/record/* 2>&1", $ret);
 				echo '</pre>';
 			}
 
