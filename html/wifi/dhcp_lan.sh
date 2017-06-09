@@ -16,8 +16,6 @@ NEWSTRING="#$OLDSTRING"
 echo $NEWSTRING | grep "^##"
 if [ $? -eq 0 ];then  NEWSTRING=$OLDSTRING; fi
 FILE="/tmp2/dhcpcd.conf"
-echo $OLDSTRING
-echo $NEWSTRING
 grep -q "static ip_address=" $FILE && 
     sed -i "s|^$OLDSTRING|$NEWSTRING|g" $FILE || echo "#static ip_address=$1/24" >> $FILE
 	

@@ -3,7 +3,7 @@ FROM resin/rpi-raspbian:jessie
 MAINTAINER ralf.zeidler@radio-tracking.eu
 
 RUN apt-get update && \
-    apt-get install git ssh
+    apt-get install git ssh zip
 
 RUN mkdir /root/.ssh/
 	

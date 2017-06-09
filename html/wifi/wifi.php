@@ -174,7 +174,6 @@
 		<form method='POST' enctype="multipart/form-data">
 			<br>
 			<input type="submit" class="w3-btn w3-brown" value="Automatic" name="change_auto" />
-			<input type="submit" class="w3-btn w3-brown" value="Manual" name="change_man" />
 			<br><br>
 			IP4-Address: <br>
 			<input type="text" name="lan_ip" value="<?php $out=shell_exec("/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"); echo $out; ?>">
@@ -182,7 +181,7 @@
 			Gateway: <br>
 			<input type="text" name="lan_gate" value="<?php echo $out=shell_exec("ip route show default | grep default | grep eth0 | awk {'print $3'}");?>">
 			<br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Change" name="change_lan" />
+			<input type="submit" class="w3-btn w3-brown" value="Change to static" name="change_lan" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
 			<br><br>
 		</form>
@@ -204,6 +203,11 @@
 			if (isset($_POST["change_auto"])){
 				echo '<pre>';
 				$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp2/ wifi sh /tmp1/dhcp_lan.sh ".$_POST["lan_ip"]." ".$_POST["lan_gate"], $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["reboot"])){
+				echo '<pre>';
+				$test = system('sudo reboot', $ret);
 				echo '</pre>';
 			}
 	?>
