@@ -1,6 +1,17 @@
 #!/bin/bash
 
-do_expand_rootfs
+
+get_init_sys() {
+  if command -v systemctl > /dev/null && systemctl | grep -q '\-\.mount'; then
+    SYSTEMD=1
+  elif [ -f /etc/init.d/cron ] && [ ! -h /etc/init.d/cron ]; then
+    SYSTEMD=0
+  else
+    echo "Unrecognised init system"
+    return 1
+  fi
+}
+
 
 get_can_expand() {
   get_init_sys
@@ -120,4 +131,6 @@ EOF
     whiptail --msgbox "Root partition has been resized.\nThe filesystem will be enlarged upon the next reboot" 20 60 2
   fi
 }
+
+do_expand_rootfs
 
