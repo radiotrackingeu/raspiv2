@@ -141,7 +141,7 @@
 			ini_set('display_errors', 1);
 			if (isset($_POST["update_date"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged git date -s \"".$_POST["new_date"]."\" 2>&1", $ret);
+				$test = system("sudo docker run -t --rm --privileged git date --set \"".$_POST["new_date"]."\" 2>&1", $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["reboot"])){
