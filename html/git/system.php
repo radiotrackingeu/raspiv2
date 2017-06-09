@@ -127,7 +127,7 @@
 			<br>
 			You can leave the weekday
 			<input type="text" name="new_date" value="<?php echo shell_exec("date")?>">
-			<input type="submit" class="w3-btn w3-brown" value="Runnning" name="running_containers">
+			<input type="submit" class="w3-btn w3-brown" value="Runnning" name="update_date">
 			<br>
 		</form>
 		</div>
@@ -138,7 +138,7 @@
 		<?php
 			error_reporting(E_ALL);
 			ini_set('display_errors', 1);
-			if (isset($_POST["update_rep"])){
+			if (isset($_POST["update_date"])){
 				echo '<pre>';
 				$test = system("sudo docker run -t --rm --privileged git date".$_POST["new_date"]." 2>&1", $ret);
 				echo '</pre>';
