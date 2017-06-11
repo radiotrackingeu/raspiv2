@@ -118,8 +118,8 @@
 
 <!-- Enter text here-->
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('spectrum')">Spectrum</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('logger')">Logger</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('logger')">Logger</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('spectrum')">Spectrum</button>
 </div>
 
 <div id="spectrum" class="w3-container city" style="display:none">
@@ -165,21 +165,22 @@
 <div id="logger" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
-		To record a Frequency Spektrum for a given time, just modify the entries below and press Start.
-		<h3>Record properties</h3><br>
+		<h3>Logger settings</h3><br>
 		<form method='POST' enctype="multipart/form-data">
-			<table style="width:90%">
-				<tr>
-					<td>Gain in DB:</td>
-					<td><input type="text" name="log_gain" value="20"></td>
-					<td>Gain of the recording device. Higher gain results in more noise.</td>
-				</tr>
-				<tr>
-					<td>Record Name:</td>
-					<td><input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"></td>
-					<td>Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a></td>
-				</tr>
-			</table>
+
+				Gain in DB:<br>
+				<input type="text" name="log_gain" value="20"><br>
+				Gain of the recording device. Higher gain results in more noise. max 42DB
+				<br><br>
+				Log Detection Level:<br>
+				<input type="text" name="log_level" value="0"><br>
+				0 means automatic - level up to 16384
+				<br><br>
+				Record Name:<br>
+				<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
+				Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a><br><br>
+				
+				
 			<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start" />
 			<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop" />
 		</form>
@@ -189,8 +190,6 @@
 
 <?php
 	error_reporting(E_ALL);
-	ob_implicit_flush(true);
-    ob_end_flush();
 	ini_set('display_errors', 1);
 	if (isset($_POST["fftw_start"])){
 		$cmd = "rtl_power_fftw -r 250000 -f " . $_POST["cfreq"]. " -b 300 -t 0.1 -g " . $_POST["gain"]. " -q -d 0 -e " . $_POST["rtime"]. " -m /home/" . $_POST["rname"];
@@ -204,7 +203,7 @@
 		echo '</pre>';
 	}
 	if (isset($_POST["log_start"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f 150100000 -q -A -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
+		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f 150100000 -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
 		$result = system($cmd, $ret);
 	}
 	if (isset($_POST["log_stop"])){
