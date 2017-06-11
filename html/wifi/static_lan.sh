@@ -5,8 +5,8 @@
 OLDSTRING="#interface eth0"
 NEWSTRING="interface eth0"
 FILE="/tmp2/dhcpcd.conf"
-grep -q "$OLDSTRING" $FILE && 
-    sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
+grep -q "$NEWSTRING" $FILE && 
+    sed -i "s/^$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
 	
 OLDSTRING=$(sudo grep 'static ip_address' /tmp2/dhcpcd.conf)
 NEWSTRING="static ip_address=$1/24"

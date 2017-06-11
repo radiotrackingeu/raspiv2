@@ -10,9 +10,10 @@
 
 <div class="w3-container w3-green">
 <h1>radio-tracking.eu</h1>
-  <img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:25%"><br>
- <button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
-</div>
+	<img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:25%"><br>
+	<button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
+	<i class="fa fa-wrench"></i> System
+ </div>
  
 
 <div class="w3-bar w3-light-grey" style="display:none" id="sidebar">
@@ -119,9 +120,25 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('schedule')">Schedule</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('date')">Time/Date</button>
 </div>
-	
+
+<div id="schedule" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<form method="POST">
+			<br>
+			You can leave out the weekday <br><br>
+			<input type="text" name="new_date" value="* * * * *"> <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Light on" name="cron_light_on"><br>
+			<input type="text" name="new_date" value="* * * * *"> <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Light off" name="cron_light_off"><br>
+			<br>
+		</form>
+	</div>
+</div>	
+
+
 <div id="date" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<form method="POST">
@@ -134,8 +151,8 @@
 	</div>
 </div>	
 
-		<div id="output" class="w3-container city" style="display:block">
-		<br> Please choose one of the option shown above - the result will be displayed here:
+<div id="output" class="w3-container city" style="display:block">
+	<br> Please choose one of the option shown above - the result will be displayed here:
 		<?php
 			error_reporting(E_ALL);
 			ini_set('display_errors', 1);
@@ -144,13 +161,22 @@
 				$test = system("sudo docker run -t --rm --privileged git date --set \"".$_POST["new_date"]."\" 2>&1", $ret);
 				echo '</pre>';
 			}
+			
+			if (isset($_POST["cron_light_on"])){
+				echo '<pre>';
+				$cmd = $_POST["cron_lights"]."root       sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ i2c sh /tmp/start_all_lights.sh 2>&1";
+				$file = "/etc/crontab";
+				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/git/:/tmp/ git sh /tmp/add_cronjob.sh ".$cmd." ".$file , $ret);
+				echo '</pre>';
+			}
+			
 			if (isset($_POST["reboot"])){
 				echo '<pre>';
 				$test = system('sudo reboot', $ret);
 				echo '</pre>';
 			}
 		?>
-	</div>
+</div>
 
 
 

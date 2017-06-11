@@ -13,7 +13,7 @@
   <img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:20%"><br>
   <button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
   <i class="fa fa-wifi"></i> WiFi
- </div>
+</div>
  
 
 <div class="w3-bar w3-light-grey" style="display:none" id="sidebar">
