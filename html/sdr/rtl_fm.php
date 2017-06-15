@@ -1,4 +1,4 @@
-DOCTYPE html>
+<DOCTYPE html>
 <html>
 
 <title>radio-tracking.eu</title>
