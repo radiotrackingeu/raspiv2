@@ -144,13 +144,19 @@
 Start and Stop receiver - to set a new frequency/gain, first stop and restart: 
 <br>
 <br>
-<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_fm_start_l"/>
+<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_fm_start_s"/>
+<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_fm_start_l"/>
 <input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_stop"/>
+
 <?php
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
-	if (isset($_POST["rtl_fm_start_l"])){
+	if (isset($_POST["rtl_fm_start_s"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["freq"]. " -g " . $_POST["gain"]. " -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
+		$result = unliveExecuteCommand($cmd);
+	}
+	if (isset($_POST["rtl_fm_start_l"])){
+		$cmd = "sudo docker run --rm -t --privileged rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["freq"]. " -g " . $_POST["gain"]. " -d 0'";
 		$result = unliveExecuteCommand($cmd);
 	} 
 	if (isset($_POST["rtl_stop"])){
