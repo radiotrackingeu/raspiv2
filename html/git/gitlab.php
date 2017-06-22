@@ -130,7 +130,7 @@
 	<div id="GIT" class="w3-container city" style="display:none">
 		<br>First download then install the feature - installing requires also an internet connection and requires some time. <br><br>
 		<form method="POST" onsubmit="return openCity('GIT');">
-		<input class="w3-btn" type="submit" value="Download Recepies and HTML Files" name="update_rep" onclick="openCity('GIT')"/>
+		<input class="w3-btn" type="submit" value="Download Recipes and HTML Files" name="update_rep" onclick="openCity('GIT')"/>
 		<input class="w3-btn" type="submit" value="Reboot" name="reboot" "/>
 		</form>
 	</div>
