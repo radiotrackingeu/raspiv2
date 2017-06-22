@@ -156,7 +156,7 @@ Start and Stop receiver - to set a new frequency/gain, first stop and restart:
 		$result = unliveExecuteCommand($cmd);
 	}
 	if (isset($_POST["rtl_fm_start_l"])){
-		$cmd = "sudo docker run --rm -t --privileged rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["freq"]. " -g " . $_POST["gain"]. " -d 0 | play -r 32k -t raw -e s -b 16 -c 1 -V1 -'";
+		$cmd = "sudo docker run --rm -t --privileged rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["freq"]. " -g " . $_POST["gain"]. " -d 0 | play -r 32k -t raw -v 5 -e s -b 16 -c 1 -V1 -'";
 		$result = unliveExecuteCommand($cmd);
 	} 
 	if (isset($_POST["rtl_stop"])){
