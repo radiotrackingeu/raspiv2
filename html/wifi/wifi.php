@@ -175,6 +175,7 @@
 		<form method='POST' enctype="multipart/form-data">
 			<br>
 			<input type="submit" class="w3-btn w3-brown" value="Automatic" name="change_auto" />
+			<input type="submit" class="w3-btn w3-brown" value="Show Settings" name="ifconfig_all" />
 			<br><br>
 			IP4-Address: <br>
 			<input type="text" name="lan_ip" value="<?php $out=shell_exec("/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"); echo $out; ?>">
@@ -209,6 +210,11 @@
 			if (isset($_POST["reboot"])){
 				echo '<pre>';
 				$test = system('sudo reboot', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["ifconfig_all"])){
+				echo '<pre>';
+				$test = system('ifconfig -a', $ret);
 				echo '</pre>';
 			}
 	?>
