@@ -211,12 +211,6 @@
 		$result = system("sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtl_433_mod) 2>&1", $ret);
 		echo '</pre>';
 	}
-	if (isset($_POST["log_start"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f 150100000 -q -A -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
-		echo '<pre>';
-		$result = system($cmd, $ret);
-		echo '</pre>';
-	}
 ?>
 
 <!-- Enter text here-->
