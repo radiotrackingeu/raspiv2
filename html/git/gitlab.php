@@ -158,6 +158,9 @@
 		<input type="submit" class="w3-btn" value="I2C" name="install_i2c"/> <br> <br>
 		
 		<hr>
+		<input type="submit" class="w3-btn" value="SoX" name="install_sox"/> <br> <br>
+		
+		<hr>
 
 		</form>
 		</div>
@@ -240,22 +243,27 @@
 			if (isset($_POST["install_rtlsdr"])){
 				echo '<pre>';
 				$test = system('sudo docker build -t rtlsdr /home/pi/gitrep/raspiv2/Docker/rtlsdr/. 2>&1', $ret);
-			echo '</pre>';
+				echo '</pre>';
 			}
 			if (isset($_POST["install_webrx"])){
 				echo '<pre>';
 				$test = system('sudo docker build -t webrx /home/pi/gitrep/raspiv2/Docker/webrx/. 2>&1', $ret);
-			echo '</pre>';
+				echo '</pre>';
 			}
 			if (isset($_POST["install_picam"])){
 				echo '<pre>';
 				$test = system('sudo docker build -t picam /home/pi/gitrep/raspiv2/Docker/picam/. 2>&1', $ret);
-			echo '</pre>';
+				echo '</pre>';
 			}
 			if (isset($_POST["install_i2c"])){
 				echo '<pre>';
 				$test = system('sudo docker build -t i2c /home/pi/gitrep/raspiv2/Docker/i2c/. 2>&1', $ret);
-			echo '</pre>';
+				echo '</pre>';
+			}
+			if (isset($_POST["install_sox"])){
+				echo '<pre>';
+				$test = system('sudo docker build -t mircophone /home/pi/gitrep/raspiv2/Docker/microphone/. 2>&1', $ret);
+				echo '</pre>';
 			}
 			error_reporting(E_ALL);
 			ini_set('display_errors', 1);
