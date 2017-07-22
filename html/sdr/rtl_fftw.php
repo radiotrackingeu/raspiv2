@@ -203,7 +203,7 @@
 		echo '</pre>';
 	}
 	if (isset($_POST["log_start"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f 150100000 -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
+		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rmmod dvb_usb_rtl28xxu rtl2832 && rtl_433 -f 150100000 -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
 		$result = system($cmd, $ret);
 	}
 	if (isset($_POST["log_stop"])){
