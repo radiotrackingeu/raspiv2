@@ -9,14 +9,15 @@
 <body>
 
 <div class="w3-container w3-green w3-mobile">
-<h1>radio-tracking.eu</h1>
-  <img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:40vmin"><br>
- <button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
+	<h2>radio-tracking.eu</h2>	
+	<img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:40vmin"> <br>
+	<button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
+	<i class="fa fa-home"></i>
 </div>
- 
 
 <div class="w3-bar w3-light-grey" style="display:none" id="sidebar">
 	<!-- Home -->
+	
 	<a class="w3-bar-item w3-button w3-mobile" href="/index.html"><i class="fa fa-home"></i> Home</a>
 	
 	<!-- Radio -->
@@ -119,25 +120,33 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('welcome')">Welcome</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('introduction')">Introduction</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('instructions')">Setup Instructions</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('welcome')">Welcome</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('introduction')">Introduction</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('instructions')">Setup Instructions</button>
 </div>
 
 <div id="welcome" class="w3-container city">
 
 <div class="w3-panel w3-green w3-round">
 
-<h4>HTML Version 2.3 aka vespertilio</h4>
+<h4>HTML Version 2.4 aka plecotus</h4>
 
 <p>
-Supported right now:
+List of features:
 <br><br>
-- Single Frequency Radio for VHF tags using the browser (will be modified for coded tags)<br>
-- SDR#-Server to monitor live a specturm using SDR#<br>
+- Signal logging within 250 kHz Frequency Range (detection range is still limited)<br>
+- Single Frequency Radio for VHF tags using the browser and local audio output<br>
+- wav or mp3 recording on several frequencies<br>
+- SDR# support to monitor a frequency range of 2MHz<br>
 - WebRX to monitor live a specturm using the browser <br>
-- Remote Control using 2G/3G/4G (certificate required)<br>
-- Camera with motion detection<br>
+- Remote Access using 2G/3G/4G (certificate required)<br>
+- Camera with motion detection fully supported<br>
+- Automated Microphone Recordings<br>
+- GPS Logging<br>
+- Data Management<br>
+- WiFi Hotspot or login to specific WiFi<br>
+- Time triggered job management<br>
+- Global Setup-File to easily duplicate settings<br>
 
 </p>
 </div>

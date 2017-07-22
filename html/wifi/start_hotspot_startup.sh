@@ -1,13 +1,9 @@
 #!/bin/bash
 
-#Activate I2C
+#Activate Hotspot and delete SSID in wpaconfig
 
-#Change /boot/config.txt
-
-#Change dtparam=i2c1=on and dtparam=i2c_arm=on
-
-OLDSTRING="#dtparam=i2c1=on"
-NEWSTRING="dtparam=i2c1=on"
+OLDSTRING="#sudo docker run -d --rm --privileged --net=host wifi"
+NEWSTRING="sudo docker run -d --rm --privileged --net=host wifi"
 FILE="/tmp1/config.txt"
 grep -q $NEWSTRING $FILE && 
     sed -i "s/^$OLDSTRING/$NEWSTRING/g" $FILE || echo "$NEWSTRING" >> $FILE
