@@ -161,6 +161,10 @@
 		<input type="submit" class="w3-btn" value="SoX" name="install_sox"/> <br> <br>
 		
 		<hr>
+		<hr>
+		<input type="submit" class="w3-btn" value="SoX" name="install_rtl_433"/> <br> <br>
+		
+		<hr>
 
 		</form>
 		</div>
@@ -253,6 +257,12 @@
 			if (isset($_POST["install_picam"])){
 				echo '<pre>';
 				$test = system('sudo docker build -t picam /home/pi/gitrep/raspiv2/Docker/picam/. 2>&1', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["install_rtl_433"])){
+				echo '<pre>';
+				test = system('sudo docker build --no-cache -t rtl_433 /home/pi/gitrep/raspiv2/Docker/rtl_433/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t rtl_433_mod /home/pi/gitrep/raspiv2/Docker/rtl_433_mod/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_i2c"])){
