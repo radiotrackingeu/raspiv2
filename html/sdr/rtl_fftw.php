@@ -189,6 +189,12 @@
 </div>
 
 <?php
+function unliveExecuteCommand($cmd)
+{
+    while (@ ob_end_flush()); // end all output buffers if any
+    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
+    pclose($proc);
+}
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 	if (isset($_POST["fftw_start"])){
@@ -204,7 +210,7 @@
 	}
 	if (isset($_POST["log_start"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f 150100000 -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
-		$result = system($cmd, $ret);
+		unliveExecuteCommand($cmd, $ret);
 	}
 	if (isset($_POST["log_stop"])){
 		echo '<pre>';
