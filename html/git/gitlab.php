@@ -261,8 +261,8 @@
 			}
 			if (isset($_POST["install_rtl_433"])){
 				echo '<pre>';
-				test = system('sudo docker build --no-cache -t rtl_433 /home/pi/gitrep/raspiv2/Docker/rtl_433/. 2>&1', $ret);
-				$test = system('sudo docker build --no-cache -t rtl_433_mod /home/pi/gitrep/raspiv2/Docker/rtl_433_mod/. 2>&1', $ret);
+				$test1 = system('sudo docker build --no-cache -t rtl_433 /home/pi/gitrep/raspiv2/Docker/rtl_433/. 2>&1', $ret);
+				$test2 = system('sudo docker build --no-cache -t rtl_433_mod /home/pi/gitrep/raspiv2/Docker/rtl_433_mod/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_i2c"])){
