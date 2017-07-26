@@ -162,7 +162,7 @@
 		
 		<hr>
 		<hr>
-		<input type="submit" class="w3-btn" value="SoX" name="install_rtl_433"/> <br> <br>
+		<input type="submit" class="w3-btn" value="Logger" name="install_rtl_433"/> <br> <br>
 		
 		<hr>
 
