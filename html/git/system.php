@@ -145,7 +145,7 @@
 		<form method="POST">
 			<br>
 			You can leave out the weekday <br><br>
-			<input type="text" name="new_date" value="<?php echo shell_exec("date"))?>"> <br><br>
+			<input type="text" name="new_date" value="<?php echo shell_exec("date")?>"> <br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Update date and time" name="update_date"><br>
 			<br>
 		</form>
