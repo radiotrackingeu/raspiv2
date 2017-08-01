@@ -161,8 +161,9 @@
 		<input type="submit" class="w3-btn" value="SoX" name="install_sox"/> <br> <br>
 		
 		<hr>
+		<input type="submit" class="w3-btn" value="RTL_433" name="install_rtl_433"/> <br> <br>
 		<hr>
-		<input type="submit" class="w3-btn" value="Logger" name="install_rtl_433"/> <br> <br>
+		<input type="submit" class="w3-btn" value="Logger" name="install_rtl_433_mod"/> <br> <br>
 		
 		<hr>
 
@@ -221,7 +222,7 @@
 			ini_set('display_errors', 1);
 			if (isset($_POST["update_rep"])){
 				echo '<pre>';
-				$test = system('sudo docker run -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh 2>&1', $ret);
+				$test = system('sudo docker run --rm -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["reboot"])){
@@ -231,7 +232,7 @@
 			}
 			if (isset($_POST["update_docker_git"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t git /home/pi/gitrep/raspiv2/Docker/gitlab/. 2>&1', $ret);
+				$test = system('sudo docker build  -t git /home/pi/gitrep/raspiv2/Docker/gitlab/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["update_docker_umts"])){
@@ -261,8 +262,12 @@
 			}
 			if (isset($_POST["install_rtl_433"])){
 				echo '<pre>';
-				$test1 = system('sudo docker build --no-cache -t rtl_433 /home/pi/gitrep/raspiv2/Docker/rtl_433/. 2>&1', $ret);
-				$test2 = system('sudo docker build --no-cache -t rtl_433_mod /home/pi/gitrep/raspiv2/Docker/rtl_433_mod/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t rtl_433 /home/pi/gitrep/raspiv2/Docker/rtl_433/. 2>&1', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["install_rtl_433_mod"])){
+				echo '<pre>';
+				$test = system('sudo docker build --no-cache -t rtl_433_mod /home/pi/gitrep/raspiv2/Docker/rtl_433_mod/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_i2c"])){

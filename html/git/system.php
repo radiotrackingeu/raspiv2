@@ -122,6 +122,7 @@
 <div class="w3-bar w3-brown w3-mobile">
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('schedule')">Schedule</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('date')">Time/Date</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('date')">Hostname</button>
 </div>
 
 <div id="schedule" class="w3-container city" style="display:none">
@@ -144,8 +145,20 @@
 		<form method="POST">
 			<br>
 			You can leave out the weekday <br><br>
-			<input type="text" name="new_date" value="<?php echo shell_exec("date")?>"> <br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Update date and Time" name="update_date"><br>
+			<input type="text" name="new_date" value="<?php echo shell_exec("date"))?>"> <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Update date and time" name="update_date"><br>
+			<br>
+		</form>
+	</div>
+</div>	
+
+<div id="hostname" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<form method="POST">
+			<br>
+			Please choose a new hostname - it needs to start with characters. <br><br>
+			<input type="text" name="new_hostname" value="<?php echo  system("cat /etc/hostname")?>"> <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Update Hostname" name="change_hostname"><br>
 			<br>
 		</form>
 	</div>
@@ -159,6 +172,12 @@
 			if (isset($_POST["update_date"])){
 				echo '<pre>';
 				$test = system("sudo docker run -t --rm --privileged git date --set \"".$_POST["new_date"]."\" 2>&1", $ret);
+				echo '</pre>';
+			}
+			
+			if (isset($_POST["change_hostname"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/change_hostname.sh ".$_POST["new_hostname"], $ret);
 				echo '</pre>';
 			}
 			
