@@ -123,6 +123,7 @@
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('schedule')">Schedule</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('date')">Time/Date</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('hostname')">Hostname</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('expand_disc')">Expand Disc</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('infos')">System Information</button>
 </div>
 
@@ -165,6 +166,18 @@
 	</div>
 </div>	
 
+<div id="expand_disc" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<form method="POST">
+			<br>
+			Expands disc at reboot <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Expand Disc" name="exp_disc"><br>
+			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot"><br>
+			<br>
+		</form>
+	</div>
+</div>	
+
 <div id="infos" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br> The Temperature of the CPU is:  <?php echo shell_exec("cat /sys/class/thermal/thermal_zone0/temp") ?>
@@ -193,6 +206,12 @@
 				$cmd = $_POST["cron_lights"]."root       sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ i2c sh /tmp/start_all_lights.sh 2>&1";
 				$file = "/etc/crontab";
 				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/git/:/tmp/ git sh /tmp/add_cronjob.sh ".$cmd." ".$file , $ret);
+				echo '</pre>';
+			}
+			
+			if (isset($_POST["exp_disc"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/expand_disk.sh 2>&1", $ret);
 				echo '</pre>';
 			}
 			
