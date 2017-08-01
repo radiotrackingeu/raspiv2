@@ -143,7 +143,7 @@
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
 			<br><br>
 		</form>
-	</div>
+	</div>h
 </div>
 
 <div id="wifi_con" class="w3-container city" style="display:none">
@@ -155,12 +155,12 @@
 			<input type="submit" class="w3-btn w3-brown" value="Connect" name="change_hotspot" />
 			<br><br>
 			WiFi-Name: <br>
-			<input type="text" name="log_name" value="<?php $out=shell_exec("iwgetid -r"); echo $out; ?>">
+			<input type="text" name="ssid_wifi" value="<?php $out=shell_exec("iwgetid -r"); echo $out; ?>">
 			<br><br>
 			Password: <br>
-			<input type="text" name="log_name" value="<?php $out=shell_exec("/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"); echo $out; ?>">
+			<input type="text" name="pw_wifi" value="******">
 			<br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Change" name="change_wifi" />
+			<input type="submit" class="w3-btn w3-brown" value="Change" name="connect_wifi" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
 			<br><br>
 		</form>
@@ -215,6 +215,11 @@
 			if (isset($_POST["ifconfig_all"])){
 				echo '<pre>';
 				$test = system('ifconfig -a', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["connect_wifi"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp2/ wifi sh /tmp1/stop_hotspot_set_wifi_ssid.sh ".$_POST["ssid_wifi"]." ".$_POST["pw_wifi"], $ret);
 				echo '</pre>';
 			}
 	?>
