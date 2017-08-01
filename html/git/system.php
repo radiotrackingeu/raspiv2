@@ -122,7 +122,7 @@
 <div class="w3-bar w3-brown w3-mobile">
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('schedule')">Schedule</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('date')">Time/Date</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('date')">Hostname</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('hostname')">Hostname</button>
 </div>
 
 <div id="schedule" class="w3-container city" style="display:none">
