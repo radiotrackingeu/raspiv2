@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # first Argument is the new hostname
-OLDSTRING=$(</etc/hostname)
+OLDSTRING=$(</tmp/hostname)
 NEWSTRING="$1"
 FILE="/tmp/hosts"
 grep -q $OLDSTRING $FILE && 
