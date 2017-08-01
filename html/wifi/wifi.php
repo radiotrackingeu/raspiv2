@@ -137,7 +137,7 @@
 			Password: <br>
 			<input type="text" name="pw_hotspot" value="sdrtracking">
 			<br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Connect to WiFi" name="start_hotspot" />
+			<input type="submit" class="w3-btn w3-brown" value="Create Hotspot" name="start_hotspot" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
 			<br><br>
 		</form>
