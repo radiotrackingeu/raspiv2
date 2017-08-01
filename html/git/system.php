@@ -177,7 +177,7 @@
 			
 			if (isset($_POST["change_hostname"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/change_hostname.sh ".$_POST["new_hostname"], $ret);
+				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/change_hostname.sh ".$_POST["new_hostname"]." 2>&1", $ret);
 				echo '</pre>';
 			}
 			

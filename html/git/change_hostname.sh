@@ -2,7 +2,8 @@
 
 # first Argument is the new hostname
 OLDSTRING=$(</tmp/hostname)
-NEWSTRING=$1
+echo "old hostname is $OLDSTRING"
+NEWSTRING="$1"
 FILE="/tmp/hosts"
 grep -q $OLDSTRING $FILE && 
     sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE
