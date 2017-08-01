@@ -11,13 +11,13 @@ grep -q "$NEWSTRING" $FILE &&
 # change ssid and password
 
 OLDSTRING=$(grep ssid /tmp/wpa_supplicant/wpa_supplicant.conf)
-NEWSTRING="none"
+NEWSTRING="ssid=none"
 FILE="/tmp/wpa_supplicant/wpa_supplicant.conf"
 grep -q $OLDSTRING $FILE && 
     sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE
 	
 OLDSTRING=$(grep psk /tmp/wpa_supplicant/wpa_supplicant.conf)
-NEWSTRING="none"
+NEWSTRING="psk=none"
 FILE="/tmp/wpa_supplicant/wpa_supplicant.conf"
 grep -q $OLDSTRING $FILE && 
     sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE
