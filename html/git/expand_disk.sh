@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#/usr/bin/raspi-config --expand-rootfs
+#expand systems on reboot
 
 OLDSTRING='#@reboot root /usr/bin/raspi-config --expand-rootfs'
 NEWSTRING='@reboot root /usr/bin/raspi-config --expand-rootfs'
