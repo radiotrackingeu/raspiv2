@@ -131,19 +131,17 @@
 		After you have modified anything - please reboot.
 		<form method='POST' enctype="multipart/form-data">
 			<br>
-			<input type="submit" class="w3-btn w3-brown" value="Activate" name="change_hotspot" />
-			<br><br>
 			Hotspot-Name: <br>
-			<input type="text" name="log_name" value="<?php echo system("grep 'ssid=' /var/www/wifi/hostapd.conf", $cam);?>">
+			<input type="text" name="ssid_hotspot" value="rteuv2">
 			<br><br>
 			Password: <br>
-			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam);?>">
+			<input type="text" name="pw_hotspot" value="sdrtracking">
 			<br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Connect to WiFi" name="change_hotspot" />
+			<input type="submit" class="w3-btn w3-brown" value="Connect to WiFi" name="start_hotspot" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
 			<br><br>
 		</form>
-	</div>h
+	</div>
 </div>
 
 <div id="wifi_con" class="w3-container city" style="display:none">
@@ -218,6 +216,11 @@
 			if (isset($_POST["connect_wifi"])){
 				echo '<pre>';
 				$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi sh /tmp1/stop_hotspot_set_wifi_ssid.sh ".$_POST["ssid_wifi"]." ".$_POST["pw_wifi"], $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["start_hotspot"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi sh /tmp1/start_hotspot_stop_wifi.sh");
 				echo '</pre>';
 			}
 	?>
