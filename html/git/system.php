@@ -157,7 +157,7 @@
 		<form method="POST">
 			<br>
 			Please choose a new hostname - it needs to start with characters. <br><br>
-			<input type="text" name="new_hostname" value="<?php echo  system("cat /etc/hostname")?>"> <br><br>
+			<input type="text" name="new_hostname" value="<?php echo shell_exec("cat /etc/hostname")?>"> <br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Update Hostname" name="change_hostname"><br>
 			<br>
 		</form>
