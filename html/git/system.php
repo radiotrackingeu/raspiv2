@@ -123,6 +123,7 @@
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('schedule')">Schedule</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('date')">Time/Date</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('hostname')">Hostname</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('infos')">System Information</button>
 </div>
 
 <div id="schedule" class="w3-container city" style="display:none">
@@ -164,6 +165,13 @@
 	</div>
 </div>	
 
+<div id="infos" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<br> The Temperature of the CPU is:  <?php echo shell_exec(cat /sys/class/thermal/thermal_zone0/temp) ?>
+	</div>
+</div>	
+	
+
 <div id="output" class="w3-container city" style="display:block">
 	<br> Please choose one of the option shown above - the result will be displayed here:
 		<?php
@@ -180,7 +188,6 @@
 				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/change_hostname.sh ".$_POST["new_hostname"]." 2>&1", $ret);
 				echo '</pre>';
 			}
-			
 			if (isset($_POST["cron_light_on"])){
 				echo '<pre>';
 				$cmd = $_POST["cron_lights"]."root       sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ i2c sh /tmp/start_all_lights.sh 2>&1";
