@@ -167,7 +167,7 @@
 
 <div id="infos" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
-		<br> The Temperature of the CPU is:  <?php echo shell_exec(cat /sys/class/thermal/thermal_zone0/temp) ?>
+		<br> The Temperature of the CPU is:  <?php echo shell_exec("cat /sys/class/thermal/thermal_zone0/temp") ?>
 	</div>
 </div>	
 	
