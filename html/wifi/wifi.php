@@ -139,7 +139,7 @@
 			Password: <br>
 			<input type="text" name="log_name" value="<?php echo system("grep 'wpa_passphrase=' /var/www/wifi/hostapd.conf", $cam);?>">
 			<br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Change" name="change_hotspot" />
+			<input type="submit" class="w3-btn w3-brown" value="Connect to WiFi" name="change_hotspot" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
 			<br><br>
 		</form>
@@ -152,8 +152,6 @@
 		After you have modified anything - please reboot.
 		<form method='POST' enctype="multipart/form-data">
 			<br>
-			<input type="submit" class="w3-btn w3-brown" value="Connect" name="change_hotspot" />
-			<br><br>
 			WiFi-Name: <br>
 			<input type="text" name="ssid_wifi" value="<?php $out=shell_exec("iwgetid -r"); echo $out; ?>">
 			<br><br>
@@ -219,7 +217,7 @@
 			}
 			if (isset($_POST["connect_wifi"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp2/ wifi sh /tmp1/stop_hotspot_set_wifi_ssid.sh ".$_POST["ssid_wifi"]." ".$_POST["pw_wifi"], $ret);
+				$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi sh /tmp1/stop_hotspot_set_wifi_ssid.sh ".$_POST["ssid_wifi"]." ".$_POST["pw_wifi"], $ret);
 				echo '</pre>';
 			}
 	?>
