@@ -171,7 +171,10 @@
 		<form method="POST">
 			<br>
 			Expands disc at reboot <br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Expand Disc" name="exp_disc"><br>
+			<input type="submit" class="w3-btn w3-brown" value="Expand Disc on Reboot" name="exp_disc"><br>
+			<br>
+			<input type="submit" class="w3-btn w3-brown" value="Stop Expanding Disc on Start" name="stop_exp_disc"><br>
+			<br>
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot"><br>
 			<br>
 		</form>
@@ -212,6 +215,12 @@
 			if (isset($_POST["exp_disc"])){
 				echo '<pre>';
 				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/expand_disk.sh 2>&1", $ret);
+				echo '</pre>';
+			}
+			
+			if (isset($_POST["stop_exp_disc"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/stop_expand.sh 2>&1", $ret);
 				echo '</pre>';
 			}
 			
