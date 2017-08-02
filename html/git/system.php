@@ -170,7 +170,11 @@
 	<div class="w3-panel w3-green w3-round">
 		<form method="POST">
 			<br>
-			Expands disc at reboot <br><br>
+			Expands disc at reboot: If you want to use the whole free disc space on your mini sd memory card, you need to 
+			press the Expand Disc on Reboot button and reboot - after the reboot please press the Stop Expanding Disc on 
+			Start otherwise it will try to expand the disc on every reboot<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Show disc usage" name="disc_usage"><br>
+			<br>
 			<input type="submit" class="w3-btn w3-brown" value="Expand Disc on Reboot" name="exp_disc"><br>
 			<br>
 			<input type="submit" class="w3-btn w3-brown" value="Stop Expanding Disc on Start" name="stop_exp_disc"><br>
@@ -221,6 +225,11 @@
 			if (isset($_POST["stop_exp_disc"])){
 				echo '<pre>';
 				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/stop_expand.sh 2>&1", $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["disc_usage"])){
+				echo '<pre>';
+				$test = system('df -h', $ret);
 				echo '</pre>';
 			}
 			
