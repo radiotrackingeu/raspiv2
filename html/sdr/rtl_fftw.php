@@ -239,8 +239,6 @@ function w3_switch(name) {
         x.style.display = "none";
     }
 }
-
-
 </script>
 
 
