@@ -123,6 +123,7 @@ Start or stop the SDR# Server. Remember that only one service can run on each de
 <br><br>
 <form method='POST'> 
 <input type="submit" class="w3-btn" value="Start" name="rtl_tcp_start" />
+<input type="submit" class="w3-btn" value="Start with Port 81" name="rtl_tcp_start_81" />
 <input type="submit" class="w3-btn" value="Stop" name="rtl_tcp_stop" />
 </form> 
 <br>
@@ -138,6 +139,10 @@ Port:<?php echo ($_SERVER['SERVER_PORT']+1); ?>
 <?php
 	if (isset($_POST["rtl_tcp_start"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234' 2>&1";
+		$result = system($cmd);
+	}
+	if (isset($_POST["rtl_tcp_start_81"])){
+		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p 81:1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234' 2>&1";
 		$result = system($cmd);
 	}
 	if (isset($_POST["rtl_tcp_stop"])){
