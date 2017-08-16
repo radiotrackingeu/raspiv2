@@ -198,7 +198,7 @@ function unliveExecuteCommand($cmd)
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 	if (isset($_POST["fftw_start"])){
-		$cmd = "rtl_power_fftw -r 250000 -f " . $_POST["cfreq"]. " -b 300 -t 0.1 -g " . $_POST["gain"]. " -q -d 0 -e " . $_POST["rtime"]. " -m /home/" . $_POST["rname"];
+		$cmd = "rtl_power_fftw -r 250000 -f " . $_POST["cfreq"]. " -b 512 -n 1 -g " . $_POST["gain"]. " -q -d 0 -e " . $_POST["rtime"]. " -m /home/" . $_POST["rname"];
 		echo '<pre>';
 		$test = system("sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtlsdr ".$cmd." 2>&1", $ret);
 		echo '</pre>';
