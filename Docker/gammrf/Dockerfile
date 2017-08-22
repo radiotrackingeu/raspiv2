@@ -1,11 +1,11 @@
 # ΓRF client
-FROM resin/rpi-raspbian:jessie
+FROM rtlsdr
 
 MAINTAINER Ralf Zeidler <ralf.zeidler@radio-tracking.eu>
 
-RUN apt-get update
-RUN apt-get install -y wget git build-essential cmake gpsd gpsd-clients libusb-1.0-0-dev
-RUN apt-get install -y vim librtlsdr-dev python-pip python-dev pkg-config libfftw3-dev
+RUN apt-get update && \
+	apt-get install -y wget gpsd gpsd-clients \
+	vim python-pip python-dev pkg-config
 
 # hackrf
 RUN cd /tmp; wget https://github.com/mossmann/hackrf/releases/download/v2017.02.1/hackrf-2017.02.1.tar.xz
