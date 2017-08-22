@@ -1,0 +1,54 @@
+--- /home/jd/hackrf-2017.02.1/host/hackrf-tools/src/hackrf_sweep.c	2017-02-11 15:54:12.000000000 -0600
++++ /home/jd/hackrf_sweep.c	2017-04-13 12:31:41.951015969 -0500
+@@ -195,6 +195,12 @@
+ 	return log2f(magsq) * 10.0f / log2(10.0f);
+ }
+ 
++
++// gammarf
++#define SKIP_S  2
++time_t startskip = 0;
++//
++
+ int rx_callback(hackrf_transfer* transfer) {
+ 	int8_t* buf;
+ 	uint8_t* ubuf;
+@@ -207,6 +213,19 @@
+ 		return -1;
+ 	}
+ 
++        // gammarf
++        if(startskip == 0) {
++            startskip = time(NULL);
++        } else {
++            time_now = time(NULL);
++            if(difftime(time_now, startskip) >= SKIP_S) {
++                startskip = time(NULL);
++            } else {
++                return 0;
++            }
++        }
++        //
++
+ 	byte_count += transfer->valid_length;
+ 	buf = (int8_t*) transfer->buffer;
+ 	for(j=0; j<BLOCKS_PER_TRANSFER; j++) {
+@@ -633,11 +652,13 @@
+ 
+ 		time_start = time_now;
+ 
+-		if (byte_count_now == 0) {
+-			exit_code = EXIT_FAILURE;
+-			fprintf(stderr, "\nCouldn't transfer any bytes for one second.\n");
+-			break;
+-		}
++        // gammarf
++		//if (byte_count_now == 0) {
++	    //    exit_code = EXIT_FAILURE;
++	    //    fprintf(stderr, "\nCouldn't transfer any bytes for one second.\n");
++	    // 	  break;
++		//}
++        //
+ 	}
+ 
+ 	result = hackrf_is_streaming(device);	
