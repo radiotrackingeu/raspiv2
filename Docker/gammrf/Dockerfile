@@ -5,7 +5,7 @@ MAINTAINER Ralf Zeidler <ralf.zeidler@radio-tracking.eu>
 
 RUN apt-get update && \
 	apt-get install -y wget gpsd gpsd-clients \
-	vim python-pip python-dev pkg-config
+	vim python-pip python-dev pkg-config libfreetype6-dev libpng-devel
 
 # hackrf
 RUN cd /tmp; wget https://github.com/mossmann/hackrf/releases/download/v2017.02.1/hackrf-2017.02.1.tar.xz
