@@ -20,7 +20,7 @@ RUN cd /tmp/rtl-sdr; mkdir build; cd build; cmake ..; make; make install
 
 ADD ./requirements.txt /requirements.txt
 RUN pip install --upgrade pip
-RUN pip install -r /requirements.txt
+RUN pip install -r --no-cache-dir /requirements.txt
 
 ADD ./gammarf.conf /gammarf.conf
 ADD ./gammarf.py /gammarf.py
