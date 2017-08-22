@@ -1,5 +1,7 @@
 # ΓRF client
-FROM ubuntu:xenial
+FROM resin/rpi-raspbian:jessie
+
+MAINTAINER Ralf Zeidler <ralf.zeidler@radio-tracking.eu>
 
 RUN apt-get update
 RUN apt-get install -y wget git build-essential cmake gpsd gpsd-clients libusb-1.0-0-dev
