@@ -165,6 +165,9 @@
 		<hr>
 		<input type="submit" class="w3-btn" value="Logger" name="install_rtl_433_mod"/> <br> <br>
 		
+		<hr>	
+		<input type="submit" class="w3-btn" value="GammaRF" name="install_gammrf"/> <br> <br>
+		
 		<hr>
 
 		</form>
@@ -278,6 +281,11 @@
 			if (isset($_POST["install_sox"])){
 				echo '<pre>';
 				$test = system('sudo docker build -t mircophone /home/pi/gitrep/raspiv2/Docker/microphone/. 2>&1', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["install_gammrf"])){
+				echo '<pre>';
+				$test = system('sudo docker build -t gammrf /home/pi/gitrep/raspiv2/Docker/gammrf/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			error_reporting(E_ALL);
