@@ -5,7 +5,7 @@ MAINTAINER ralf.zeidler@fridata.de
 RUN apt-get update
 RUN apt-get install -y libusb-1.0-0-dev pkg-config ca-certificates\
 	libsox-fmt-mp3 git-core cmake build-essential sox socat --no-install-recommends\
-	nmap python2.7 libfftw3-dev vim
+	nmap python2.7 libfftw3-dev vim netcat
 
 WORKDIR /tmp
 
