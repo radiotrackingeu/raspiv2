@@ -47,5 +47,5 @@ RUN sed -i "s/rf_gain = 5/rf_gain = 20/g" /opt/openwebrx/config_webrx.py
 
 EXPOSE 8073 4951 
 
-CMD python2.7 openwebrx.py
+CMD python2.7 /opt/openwebrx/openwebrx.py
 
