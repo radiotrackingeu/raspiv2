@@ -170,8 +170,16 @@
 
 				Gain in DB:<br>
 				<input type="text" name="log_gain" value="20"><br>
-				Gain of the recording device. Higher gain results in more noise. max 42DB
+				Gain of the recording device. Higher gain results in more noise. max 49DB
 				<br><br>
+				Center Frequency in Hz:<br>
+				<input type="text" name="center_freq" value="150100000"><br>
+				Frequency Range to monitor: <br>
+				<select name="freq_range">
+					<option value="250000">250kHz</option>
+					<option value="1024000">1024kHz</option>
+				</select> 
+				<br>
 				Log Detection Level:<br>
 				<input type="text" name="log_level" value="0"><br>
 				0 means automatic - level up to 16384
@@ -209,7 +217,7 @@ function unliveExecuteCommand($cmd)
 		echo '</pre>';
 	}
 	if (isset($_POST["log_start"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f 150100000 -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
+		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
 		exec($cmd);
 	}
 	if (isset($_POST["log_stop"])){
