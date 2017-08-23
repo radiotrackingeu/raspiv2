@@ -31,7 +31,7 @@ RUN git clone https://github.com/simonyiszk/csdr.git && \
     rm -rf /tmp/csdr
 WORKDIR /opt
 ENV commit_id 6b06d13a934a093064f231f37bdafee6a3cc3b1c 
-ENV branch dev2 
+ENV branch master 
 
 RUN git clone https://github.com/simonyiszk/openwebrx.git && \
     cd openwebrx && \

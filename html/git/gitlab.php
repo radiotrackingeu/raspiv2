@@ -240,27 +240,27 @@
 			}
 			if (isset($_POST["update_docker_umts"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t umts /home/pi/gitrep/raspiv2/Docker/umts/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t umts /home/pi/gitrep/raspiv2/Docker/umts/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_wifi"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t wifi /home/pi/gitrep/raspiv2/Docker/wifi/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t wifi /home/pi/gitrep/raspiv2/Docker/wifi/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_rtlsdr"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t rtlsdr /home/pi/gitrep/raspiv2/Docker/rtlsdr/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t rtlsdr /home/pi/gitrep/raspiv2/Docker/rtlsdr/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_webrx"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t webrx /home/pi/gitrep/raspiv2/Docker/webrx/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t webrx /home/pi/gitrep/raspiv2/Docker/webrx/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_picam"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t picam /home/pi/gitrep/raspiv2/Docker/picam/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t picam /home/pi/gitrep/raspiv2/Docker/picam/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_rtl_433"])){

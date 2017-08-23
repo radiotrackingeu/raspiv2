@@ -119,6 +119,7 @@
 <!-- Enter text here-->
 <div class="w3-bar w3-brown w3-mobile">
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('logger')">Logger</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('logger_timer')">Logger Timer</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('spectrum')">Spectrum</button>
 </div>
 
@@ -191,6 +192,97 @@
 				
 			<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start" />
 			<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop" />
+		</form>
+		<br>
+	</div>
+</div>
+
+<div id="logger_timer" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<br>
+		<h3>Logger settings</h3><br>
+		<form method='POST' enctype="multipart/form-data">
+				
+			<input type="radio" name="start_timer" value="start_no" checked> No start<br>
+			<input type="radio" name="start_timer" value="reboot"> Start at Boot<br>
+			<input type="radio" name="start_timer" value="start_on_time"> Start at times stated below<br>
+				Minute
+				<select name="start_min">
+					<option value="0">0</option>
+					<option value="10">10</option>
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="40">40</option>
+					<option value="50">50</option>
+				</select> 
+				Hour
+				<select name="start_hour">
+					<option value="0">0</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+					<option value="21">21</option>
+					<option value="22">22</option>
+					<option value="23">23</option>
+				</select>
+			<br><br>
+			<input type="radio" name="stop_timer" value="stop_no" checked> No stop<br>
+			<input type="radio" name="stop_timer" value="stop_on_tim"> Stop at times stated below<br>
+				Minute
+				<select name="stop_min">
+					<option value="0">0</option>
+					<option value="10">10</option>
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="40">40</option>
+					<option value="50">50</option>
+				</select> 
+				Hour
+				<select name="stop_hour">
+					<option value="0">0</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+					<option value="21">21</option>
+					<option value="22">22</option>
+					<option value="23">23</option>
+				</select>
+				<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Change" name="change_timer" />
 		</form>
 		<br>
 	</div>
