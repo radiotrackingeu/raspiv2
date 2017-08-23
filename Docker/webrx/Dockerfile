@@ -45,7 +45,7 @@ RUN git clone https://github.com/simonyiszk/openwebrx.git && \
 
 
 
-EXPOSE 8073 8888 4951 
+#EXPOSE 8073 8888 4951 
 
 CMD python2.7 openwebrx.py
 
