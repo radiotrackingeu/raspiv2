@@ -255,7 +255,7 @@
 			}
 			if (isset($_POST["install_webrx"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t webrx /home/pi/gitrep/raspiv2/Docker/webrx/. 2>&1', $ret);
+				$test = system('sudo docker build -t webrx /home/pi/gitrep/raspiv2/Docker/webrx/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_picam"])){

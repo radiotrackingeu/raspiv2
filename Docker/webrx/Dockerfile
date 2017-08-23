@@ -39,8 +39,8 @@ RUN git clone https://github.com/simonyiszk/openwebrx.git && \
     #git reset --hard $commit_id
 #WORKDIR /opt/openwebrx
 
-RUN sed -i "s/center_freq = 145525000/center_freq = 150150000/g" /openwebrx/config_webrx.py
-RUN sed -i "s/rf_gain = 5/rf_gain = 20/g" /openwebrx/config_webrx.py
+#RUN sed -i "s/center_freq = 145525000/center_freq = 150150000/g" /openwebrx/config_webrx.py
+#RUN sed -i "s/rf_gain = 5/rf_gain = 20/g" /openwebrx/config_webrx.py
 
 
 
