@@ -24,7 +24,7 @@ ENV commit_id 0fd32aabbd56d3d5d11f828b933d85dab62d5680
 
 RUN git clone https://github.com/simonyiszk/csdr.git && \
     cd csdr && \
-    git reset --hard $commit_id && \
+    #git reset --hard $commit_id && \
     make && \
     make install && \
     cd / && \
@@ -45,7 +45,7 @@ RUN sed -i "s/rf_gain = 5/rf_gain = 20/g" /opt/openwebrx/config_webrx.py
 
 
 
-EXPOSE 8073 8888 4951 
+EXPOSE 8073 4951 
 
 CMD python2.7 openwebrx.py
 
