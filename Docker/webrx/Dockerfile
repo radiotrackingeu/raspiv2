@@ -24,18 +24,18 @@ ENV commit_id 0fd32aabbd56d3d5d11f828b933d85dab62d5680
 
 RUN git clone https://github.com/simonyiszk/csdr.git && \
     cd csdr && \
-    #git reset --hard $commit_id && \
+	git checkout dev && \
     make && \
     make install && \
     cd / && \
     rm -rf /tmp/csdr
 WORKDIR /opt
 ENV commit_id 6b06d13a934a093064f231f37bdafee6a3cc3b1c 
-ENV branch master 
+ENV branch dev 
 
 RUN git clone https://github.com/simonyiszk/openwebrx.git && \
-    cd openwebrx #&& \
-    #git checkout $branch && \
+    cd openwebrx && \
+    git checkout $branch #&& \
     #git reset --hard $commit_id
 WORKDIR /opt/openwebrx
 
