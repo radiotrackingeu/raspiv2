@@ -34,10 +34,9 @@ ENV commit_id 6b06d13a934a093064f231f37bdafee6a3cc3b1c
 ENV branch master 
 
 RUN git clone https://github.com/simonyiszk/openwebrx.git && \
-    cd openwebrx && \
+    cd openwebrx #&& \
     #git checkout $branch && \
     #git reset --hard $commit_id
-RUN ls
 WORKDIR /opt/openwebrx
 
 #RUN sed -i "s/center_freq = 145525000/center_freq = 150150000/g" /openwebrx/config_webrx.py
