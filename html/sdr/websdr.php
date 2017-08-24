@@ -126,7 +126,7 @@
 			<input type="number" name="fft_fps" value="27"><br> <br>
 			Number of bins in FFT: <br>
 			<select name="fft_size">
-				<option value="258">258</option>
+				<option value="256">256</option>
 				<option value="512">512</option>
 				<option value="1024">1024</option>
 				<option value="2048">2048</option>
