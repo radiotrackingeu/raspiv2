@@ -121,7 +121,7 @@
 <div id="UMTS" class="w3-container">
 	<div class="w3-panel w3-green w3-round">
 		<br><br>
-		<form method="POST">
+		<form method="POST" enctype="multipart/form-data">
 			FFTs per second: <br>
 			<input type="number" name="fft_fps" value="27"><br> <br>
 			Number of bins in FFT: <br>
