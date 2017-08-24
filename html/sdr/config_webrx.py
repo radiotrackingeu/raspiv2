@@ -36,7 +36,7 @@ config_webrx: configuration options for OpenWebRX
 
 # ==== Server settings ====
 web_port=8073
-server_hostname="pleci" # If this contains an incorrect value, the web UI may freeze on load (it can't open websocket)
+server_hostname="127.0.0.1" # If this contains an incorrect value, the web UI may freeze on load (it can't open websocket)
 max_clients=2
 
 # ==== Web GUI configuration ====
