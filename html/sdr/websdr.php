@@ -167,7 +167,7 @@
 	}
 	if (isset($_POST["change_config_websdr"])){
 		echo '<pre>';
-		$cmd = "sudo sh /var/www/html/sdr/change_config_webrx.sh ".$_POST["fft_fps"]." ".$_POST["fft_size"]." ".$_POST["samp_rate"]." ".$_POST["center_freq"]." ".$_POST["rf_gain"]." 2>&1";
+		$cmd = "sh /var/www/html/sdr/change_config_webrx.sh ".$_POST["fft_fps"]." ".$_POST["fft_size"]." ".$_POST["samp_rate"]." ".$_POST["center_freq"]." ".$_POST["rf_gain"]." 2>&1";
 		$result = liveExecuteCommand($cmd);
 		echo $result;
 		echo '</pre>';
