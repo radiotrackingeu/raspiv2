@@ -170,11 +170,11 @@
 		<form method='POST' enctype="multipart/form-data">
 
 				Gain in DB:<br>
-				<input type="text" name="log_gain" value="20"><br>
+				<input type="number" name="log_gain" value="20"><br>
 				Gain of the recording device. Higher gain results in more noise. max 49DB
 				<br><br>
 				Center Frequency in Hz:<br>
-				<input type="text" name="center_freq" value="150100000"><br>
+				<input type="number" name="center_freq" value="150100000"><br>
 				Frequency Range to monitor: <br>
 				<select name="freq_range">
 					<option value="250000">250kHz</option>

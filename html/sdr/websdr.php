@@ -119,11 +119,34 @@
 
 <!-- Enter text here-->
 <div id="UMTS" class="w3-container">
-<br><br>
-<form method="POST">
- <input type="submit" class="w3-btn" value="Start" name="rtl_websdr">
- <input type="submit" class="w3-btn" value="Stop" name="rtl_websdr_stop">
-</form>
+	<div class="w3-panel w3-green w3-round">
+		<br><br>
+		<form method="POST">
+			FFTs per second: <br>
+			<input type="number" name="fft_fps" value="27"><br> <br>
+			Number of bins in FFT: <br>
+			<select name="fft_size">
+				<option value="258">258</option>
+				<option value="512">512</option>
+				<option value="1024">1024</option>
+				<option value="2048">2048</option>
+				<option value="4096">4096</option>
+			</select> <br><br>
+			Sample rate / Frequency Range: <br>
+			<select name="samp_rate">
+				<option value="258">250</option>
+				<option value="1024">1024</option>
+			</select><br><br>
+			Center Frequency: <br>
+			<input type="number" name="center_freq" value="150100000"><br><br>
+			Gain: <br>
+			<input type="number" name="rf_gain" value="20"><br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Change settings befor start" name="change_config_websdr">
+			<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr">
+			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop">
+			<br><br>
+		</form>
+	</div>
 
 <br><br>
 <a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1)?>"> Link to Interface </a>
@@ -135,9 +158,16 @@
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($_SERVER['SERVER_PORT']+1).":8073 webrx sh /cfiles/start_openwebrx.sh";
 		$result = unliveExecuteCommand($cmd);
 	}
-		if (isset($_POST["rtl_websdr_stop"])){
+	if (isset($_POST["rtl_websdr_stop"])){
 		echo '<pre>';
 		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=webrx) 2>&1";
+		$result = liveExecuteCommand($cmd);
+		#echo $result;
+		echo '</pre>';
+	}
+	if (isset($_POST["change_config_websdr"])){
+		echo '<pre>';
+		$cmd = "sudo sh /var/www/html/sdr/change_config_webrx.sh ".$_POST["fft_fps"]." ".$_POST["fft_size"]." ".$_POST["samp_rate"]." ".$_POST["center_freq"]." ".$_POST["rf_gain"]." 2>&1";
 		$result = liveExecuteCommand($cmd);
 		echo $result;
 		echo '</pre>';
