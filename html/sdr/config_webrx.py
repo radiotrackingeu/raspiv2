@@ -176,7 +176,7 @@ iq_server_port = 4951 #TCP port for ncat to listen on. It will send I/Q data ove
 
 ### default theme by teejez:
 waterfall_colors = "[0x000000ff,0x0000ffff,0x00ffffff,0x00ff00ff,0xffff00ff,0xff0000ff,0xff00ffff,0xffffffff]"
-waterfall_min_level = -80 #in dB
+waterfall_min_level = -88 #in dB
 waterfall_max_level = -40
 waterfall_auto_level_margin = (5, 40)
 ### old theme by HA7ILM:
