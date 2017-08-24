@@ -132,8 +132,7 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 	if (isset($_POST["rtl_websdr"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($_SERVER['SERVER_PORT']+1).":8073 webrx python2.7 openwebrx.py /cfiles/config_webrx";
-		echo $cmd;
+		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($_SERVER['SERVER_PORT']+1).":8073 webrx sh /cfiles/start_openwebrx.sh";
 		$result = unliveExecuteCommand($cmd);
 	}
 		if (isset($_POST["rtl_websdr_stop"])){
