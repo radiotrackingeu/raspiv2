@@ -134,8 +134,8 @@
 			</select> <br><br>
 			Sample rate / Frequency Range: <br>
 			<select name="samp_rate">
-				<option value="250">250</option>
-				<option value="1024">1024</option>
+				<option value="250000">250k</option>
+				<option value="1024000">1024k</option>
 			</select><br><br>
 			Center Frequency: <br>
 			<input type="number" name="center_freq" value="150100000"><br><br>
