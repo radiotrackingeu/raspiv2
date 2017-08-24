@@ -36,17 +36,17 @@ config_webrx: configuration options for OpenWebRX
 
 # ==== Server settings ====
 web_port=8073
-server_hostname="localhost" # If this contains an incorrect value, the web UI may freeze on load (it can't open websocket)
+server_hostname="pleci" # If this contains an incorrect value, the web UI may freeze on load (it can't open websocket)
 max_clients=2
 
 # ==== Web GUI configuration ====
-receiver_name="radio-tracking.eu"
-receiver_location="raspberry pi in the forest"
-receiver_qra="FOREST"
+receiver_name="[Callsign]"
+receiver_location="Budapest, Hungary"
+receiver_qra="JN97ML"
 receiver_asl=200
-receiver_ant="Yagi"
+receiver_ant="Longwire"
 receiver_device="RTL-SDR"
-receiver_admin="info@radio-tracking.eu"
+receiver_admin="example@example.com"
 receiver_gps=(47.000000,19.000000)
 photo_height=350
 photo_title="Panorama of Budapest from Schönherz Zoltán Dormitory"
