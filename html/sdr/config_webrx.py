@@ -40,13 +40,13 @@ server_hostname="pleci" # If this contains an incorrect value, the web UI may fr
 max_clients=2
 
 # ==== Web GUI configuration ====
-receiver_name="[Callsign]"
-receiver_location="Budapest, Hungary"
-receiver_qra="JN97ML"
+receiver_name="radio-trackingeu"
+receiver_location="Close to bats"
+receiver_qra="FOREST"
 receiver_asl=200
-receiver_ant="Longwire"
+receiver_ant="Yagi probably"
 receiver_device="RTL-SDR"
-receiver_admin="example@example.com"
+receiver_admin="info@radio-tracking.eu"
 receiver_gps=(47.000000,19.000000)
 photo_height=350
 photo_title="Panorama of Budapest from Schönherz Zoltán Dormitory"
