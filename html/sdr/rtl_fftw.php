@@ -202,7 +202,27 @@
 		<br>
 		<h3>Logger settings</h3><br>
 		<form method='POST' enctype="multipart/form-data">
-				
+		
+			Gain in DB:<br>
+			<input type="number" name="log_gain" value="20"><br>
+			Gain of the recording device. Higher gain results in more noise. max 49DB
+			<br><br>
+			Center Frequency in Hz:<br>
+			<input type="number" name="center_freq" value="150100000"><br>
+			Frequency Range to monitor: <br>
+			<select name="freq_range">
+				<option value="250000">250kHz</option>
+				<option value="1024000">1024kHz</option>
+			</select> 
+			<br>
+			Log Detection Level:<br>
+			<input type="text" name="log_level" value="0"><br>
+			0 means automatic - level up to 16384
+			<br><br>
+			Record Name:<br>
+			<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
+			Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a><br><br>
+
 			<input type="radio" name="start_timer" value="start_no" checked> No start<br>
 			<input type="radio" name="start_timer" value="reboot"> Start at Boot<br>
 			<input type="radio" name="start_timer" value="start_on_time"> Start at times stated below<br>
@@ -318,11 +338,10 @@
 			$change= '@reboot root '.$cmd;
 			$search = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash";
 			echo '<pre>';
-			$result = system("sh /var/www/html/sdr/cronjob_logger.sh ".$search." ".$change, $ret);
+			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh ".$search." ".$change, $ret);
 			echo '</pre>';
 			echo "System will now start logger upon start with the following settings: Frequency: ".$_POST["center_freq"]." Frequency-Range: ".$_POST["freq_range"]." Log-Level: ".$_POST["log_level"]." Gain: " . $_POST["log_gain"]. " and File-Name: ". $_POST["log_name"];
 		}
-		echo $change;
 	}
 	function unliveExecuteCommand($cmd)
 	{
