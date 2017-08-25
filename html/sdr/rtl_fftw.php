@@ -334,7 +334,7 @@
 	}
 	if (isset($_POST["change_logger_cron"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
-		if($_POST["start_timer"]="reboot"){
+		if($_POST["start_timer"]=="reboot"){
 			$change= "@reboot root " .$cmd;
 			$search = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash";
 			echo '<pre>';
@@ -342,7 +342,7 @@
 			echo '</pre>';
 			echo "System will now start logger upon start with the following settings: Frequency: ".$_POST["center_freq"]." Frequency-Range: ".$_POST["freq_range"]." Log-Level: ".$_POST["log_level"]." Gain: " . $_POST["log_gain"]. " and File-Name: ". $_POST["log_name"];
 		}
-		if($_POST["start_timer"]="start_no"){
+		if($_POST["start_timer"]=="start_no"){
 			$change= "#@reboot root " .$cmd;
 			$search = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash";
 			echo '<pre>';
@@ -350,7 +350,7 @@
 			echo '</pre>';
 			echo "System will now start logger upon start with the following settings: Frequency: ".$_POST["center_freq"]." Frequency-Range: ".$_POST["freq_range"]." Log-Level: ".$_POST["log_level"]." Gain: " . $_POST["log_gain"]. " and File-Name: ". $_POST["log_name"];
 		}
-		if($_POST["start_timer"]="start_on_time"){
+		if($_POST["start_timer"]=="start_on_time"){
 			$change= $_POST["start_min"]. " ".$_POST["start_hour"]." root " .$cmd;
 			$search = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash";
 			echo '<pre>';
