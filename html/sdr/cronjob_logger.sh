@@ -2,8 +2,8 @@
 
 #
 
-OLDSTRING="'$1'"
-NEWSTRING="'$2'"
+OLDSTRING="$1"
+NEWSTRING="$2"
 
 echo $NEWSTRING;
 FILE="/tmp/crontab"
