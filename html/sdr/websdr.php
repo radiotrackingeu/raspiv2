@@ -127,7 +127,7 @@
 			Number of bins in FFT: <br>
 			<select name="fft_size">
 				<option value="256">256</option>
-				<option value="512">512</option>
+				<option value="512" selected="selected">512</option>
 				<option value="1024">1024</option>
 				<option value="2048">2048</option>
 				<option value="4096">4096</option>
@@ -137,7 +137,7 @@
 				<option value="250000">250k</option>
 				<option value="1024000">1024k</option>
 			</select><br><br>
-			Center Frequency: <br>
+			Center Frequency in Hz: <br>
 			<input type="number" name="center_freq" value="150100000"><br><br>
 			Gain: <br>
 			<input type="number" name="rf_gain" value="20"><br><br>
@@ -145,11 +145,13 @@
 			<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr">
 			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop">
 			<br><br>
+			<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1)?>"> Link to OpenWebRX </a>
+			<br><br>
 		</form>
 	</div>
 
 <br><br>
-<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1)?>"> Link to Interface </a>
+
 
 	<?php
 	error_reporting(E_ALL);

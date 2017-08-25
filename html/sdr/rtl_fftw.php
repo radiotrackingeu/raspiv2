@@ -282,7 +282,7 @@
 					<option value="23">23</option>
 				</select>
 				<br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Change" name="change_timer" />
+			<input type="submit" class="w3-btn w3-brown" value="Change Settings" name="change_logger_cron" />
 		</form>
 		<br>
 	</div>
@@ -310,13 +310,32 @@ function unliveExecuteCommand($cmd)
 	}
 	if (isset($_POST["log_start"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
-		exec($cmd);
+		unliveExecuteCommand(($cmd);
 	}
 	if (isset($_POST["log_stop"])){
 		echo '<pre>';
 		$result = system("sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtl_433_mod) 2>&1", $ret);
 		echo '</pre>';
 	}
+	if (isset($_POST["change_logger_cron"])){
+		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
+		if(start_timer="reboot"){
+			$change= '@reboot root '.$cmd;
+			$search = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash";
+			echo '<pre>';
+			$result = system("sh /var/www/html/sdr/cronjob_logger.sh ".$search." ".$change, $ret);
+			echo '</pre>';
+			echo "System will now start logger upon start with the following settings: Frequency: ".$_POST["center_freq"]." Frequency-Range: ".$_POST["freq_range"]." Log-Level: ".$_POST["log_level"]." Gain: " . $_POST["log_gain"]. " and File-Name: ". $_POST["log_name"];
+		}
+		echo $change;
+	}
+	function unliveExecuteCommand($cmd)
+	{
+		while (@ ob_end_flush()); // end all output buffers if any
+		$proc = popen("$cmd 2>&1", 'r');
+		pclose($proc);
+	}
+	
 ?>
 
 <!-- Enter text here-->
