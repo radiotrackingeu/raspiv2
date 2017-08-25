@@ -1,7 +1,7 @@
 #!/bin/bash
 
-OLDSTRING="$1"
-NEWSTRING="$2"
+OLDSTRING=$1
+NEWSTRING=$2
 
 FILE="/tmp/crontab"
 grep -q "$OLDSTRING" $FILE && 
