@@ -289,12 +289,7 @@
 </div>
 
 <?php
-function unliveExecuteCommand($cmd)
-{
-    while (@ ob_end_flush()); // end all output buffers if any
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-    pclose($proc);
-}
+
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 	if (isset($_POST["fftw_start"])){
