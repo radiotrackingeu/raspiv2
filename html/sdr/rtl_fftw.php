@@ -310,7 +310,7 @@ function unliveExecuteCommand($cmd)
 	}
 	if (isset($_POST["log_start"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
-		unliveExecuteCommand(($cmd);
+		unliveExecuteCommand($cmd);
 	}
 	if (isset($_POST["log_stop"])){
 		echo '<pre>';
