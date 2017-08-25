@@ -348,7 +348,7 @@
 			echo '<pre>';
 			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\"", $ret);
 			echo '</pre>';
-			echo "System will now start logger upon start with the following settings: Frequency: ".$_POST["center_freq"]." Frequency-Range: ".$_POST["freq_range"]." Log-Level: ".$_POST["log_level"]." Gain: " . $_POST["log_gain"]. " and File-Name: ". $_POST["log_name"];
+			echo "System will not start logger upon start";
 		}
 		if($_POST["start_timer"]=="start_on_time"){
 			$change= $_POST["start_min"]. " ".$_POST["start_hour"]." root " .$cmd;
@@ -356,7 +356,7 @@
 			echo '<pre>';
 			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\"", $ret);
 			echo '</pre>';
-			echo "System will now start logger upon start with the following settings: Frequency: ".$_POST["center_freq"]." Frequency-Range: ".$_POST["freq_range"]." Log-Level: ".$_POST["log_level"]." Gain: " . $_POST["log_gain"]. " and File-Name: ". $_POST["log_name"];
+			echo "System will now start logger upon start with the following settings: <br><br>Frequency: ".$_POST["center_freq"]." Frequency-Range: ".$_POST["freq_range"]." Log-Level: ".$_POST["log_level"]." Gain: " . $_POST["log_gain"]. " and File-Name: ". $_POST["log_name"];
 		}
 	}
 	function unliveExecuteCommand($cmd)
