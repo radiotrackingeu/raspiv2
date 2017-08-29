@@ -355,7 +355,7 @@
 			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"", $ret);
 			echo "System will now start logger upon start with the following settings: <br><br>Frequency: ".$_POST["center_freq"]." Frequency-Range: ".$_POST["freq_range"]." Log-Level: ".$_POST["log_level"]." Gain: " . $_POST["log_gain"]. " and File-Name: ". $_POST["log_name"];
 		}
-		$stop_cmd="sudo docker stop '\$(sudo docker ps -a -q --filter ancestor=rtl_433_mod)'";
+		$stop_cmd="sudo docker stop \\$(sudo docker ps -a -q --filter ancestor=rtl_433_mod)";
 		if($_POST["stop_timer"]=="stop_no"){
 			$change= "#".$stop_cmd;
 			$search = $stop_cmd;
