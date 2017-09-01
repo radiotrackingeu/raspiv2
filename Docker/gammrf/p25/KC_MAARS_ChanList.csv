@@ -1,0 +1,817 @@
+1,001,D,AMR,INDP AMR Medical - Emergency Management,Emergency Ops,Jackson County MO - Independence Emergency Management,1
+2,002,D,Ind ACO-1,Animal Control (DB: IPD),Public Works,Jackson County MO -- Independence City Services/Public Works,1
+3,003,E,IPD Center,IPD Center - In Progress Call (now fully encrypted),Law Dispatch,Jackson County MO - Independence Police,1
+4,004,D,Ind EM C/W 1,INDP City Wide 1 - Emergency Management,Emergency Ops,Jackson County MO - Independence Emergency Management,1
+5,005,D,Ind EM C/W 2,INDP City Wide 2 - Emergency Management,Emergency Ops,Jackson County MO - Independence Emergency Management,1
+6,006,D,Ind EM C/W 3,INDP City Wide 3 - Emergency Management,Emergency Ops,Jackson County MO - Independence Emergency Management,1
+7,007,D,Ind EM C/W 4,INDP City Wide 4 - Emergency Management,Emergency Ops,Jackson County MO - Independence Emergency Management,1
+8,008,D,I P & L 2,Operations,Utilities,Jackson County MO --- Independence Power and Light Talkgroups,1
+9,009,D,LCAP Fire,Lake City Ammo Fire: Operations,Fire-Tac,Jackson County MO --- Lake City Ammunition Plant,1
+11,00b,D,CJC Fire Sim,Central Jackson Co Fire: Simulcast of TG 118 & 119,Fire Dispatch,Central Jackson County Fire / EMS Talkgroups,1
+18,012,D,I P & L Disp,Dispatch - Simulcast of 451.050R,Utilities,Jackson County MO --- Independence Power and Light Talkgroups,1
+19,013,D,Ind FG A2,Independence Fire: Fireground Ops 1 [A2],Fire-Tac,Jackson County MO - Independence Fire,1
+20,014,D,Ind FG A3,Independence Fire: Fireground Ops 2 [A3[,Fire-Tac,Jackson County MO - Independence Fire,1
+21,015,D,Ind FireDisp,Independence Fire: Dispatch,Fire Dispatch,Jackson County MO - Independence Fire,1
+22,016,D,Ind Fire Evt,"Independence Fire: Special Events (IFD, IPD, AMR)",EMS Dispatch,Jackson County MO - Independence Fire,1
+23,017,D,Ind ACO-2,Animal Control - Unit-to-Unit (not monitored by IPD),Public Works,Jackson County MO -- Independence City Services/Public Works,1
+24,018,D,I P & L 3,Street Light Maintenance,Utilities,Jackson County MO --- Independence Power and Light Talkgroups,1
+35,023,D,I P & L 4,Traffic Signal Repair,Utilities,Jackson County MO --- Independence Power and Light Talkgroups,1
+36,024,E,IPD North,IPD North - Back In Use (now fully encrypted),Law Dispatch,Jackson County MO - Independence Police,1
+39,027,E,IPD Tac-1,IPD Dispatch - Tactical 1 [IPD TAC 1],Law Tac,Jackson County MO - Independence Police,1
+40,028,E,IPD Tac-2,IPD Dispatch - Tactical 2,Law Tac,Jackson County MO - Independence Police,1
+41,029,E,IPD Tac 3,IPD Tactical 3 (Encrypted),Law Tac,Jackson County MO - Independence Police,1
+49,031,D,Ind SnowPlow,Snow Plow Operations,Public Works,Jackson County MO -- Independence City Services/Public Works,1
+53,035,D,Ind Water,Water Department,Public Works,Jackson County MO -- Independence City Services/Public Works,1
+54,036,E,IPD South,IPD South Back In Use (now fully encrypted),Law Dispatch,Jackson County MO - Independence Police,1
+57,039,D,IPD Test 57,IPD Ops Testing,Law Tac,Jackson County MO - Independence Police,1
+64,040,D,IPD Test 64,IPD Ops Testing,Law Tac,Jackson County MO - Independence Police,1
+68,044,D,IPD test 68,IPD testing,Law Tac,Jackson County MO - Independence Police,1
+70,046,D,Ind WaterP/C,Water Pollution Control,Public Works,Jackson County MO -- Independence City Services/Public Works,1
+71,047,D,Ind Fire Adm,Independence Fire: Admin,Fire-Tac,Jackson County MO - Independence Fire,1
+88,058,D,Ind Fire ATG,Independence Fire: Wakeup Call (Heard waking a chief up from a nap),Fire Dispatch,Jackson County MO - Independence Fire,1
+100,064,D,Ind FD SizUp,Independence Fire: On Scene (Size Up),Fire-Tac,Jackson County MO - Independence Fire,1
+103,067,D,Ind FG A5,Independence Fire: Fireground Ops 3 [A5 ],Fire-Tac,Jackson County MO - Independence Fire,1
+113,071,E,LCAPSecurity,Lake City Ammo Security,Security,Jackson County MO --- Lake City Ammunition Plant,1
+114,072,D,LCAP FireEMS,Lake City Ammo Fire/EMS: Dispatch,Fire Dispatch,Jackson County MO --- Lake City Ammunition Plant,1
+116,074,D,Ind Code Enf,Code Enforcement,Public Works,Jackson County MO -- Independence City Services/Public Works,1
+118,076,D,CJC Fire 1,Central Jackson Co Fire: Dispatch,Fire Dispatch,Central Jackson County Fire / EMS Talkgroups,1
+119,077,D,CJC Fire 2,Central Jackson Co Fire: Tac,Fire-Tac,Central Jackson County Fire / EMS Talkgroups,1
+120,078,D,CJC FG 1,Central Jackson Co Fire: Fireground 1,Fire-Tac,Central Jackson County Fire / EMS Talkgroups,1
+121,079,D,CJC FG 2,Central Jackson Co Fire: Fireground 2,Fire-Tac,Central Jackson County Fire / EMS Talkgroups,1
+122,07a,D,Spec Ops 3*P,Simulcast Patch of Spc Ops 3 - KCPD,Law Tac,Jackson County MO - Independence Police,1
+124,07c,E,IPD Inv/SpOp,IPD Investigations/Special Ops,Law Tac,Jackson County MO - Independence Police,1
+129,081,D,MCCP Disp,Metropolitan Community College Police Dispatch,Security,Metropolitan Community College Talkgroups,1
+130,082,D,MCCP CH 2,Metropolitan Community College Police CH 2,Law Talk,Metropolitan Community College Talkgroups,1
+135,087,D,FTOsgeFDDIsp,Fort Osage Fire Dispatch ( Dispatched By Lee's Summit Fire),Fire Dispatch,Central Jackson County Fire / EMS Talkgroups,1
+136,088,D,FTOsageFDFG2,Fort Osage Fire F2 (Fireground),Fire-Tac,Central Jackson County Fire / EMS Talkgroups,1
+137,089,D,FTOsageFDFG3,Fort Osage Fire F3 (talk-around),Fire-Tac,Central Jackson County Fire / EMS Talkgroups,1
+315,13b,E,SCPD/FD Disp,Police/Fire Dispatch,Multi-Dispatch,Jackson County - Sugar Creek,1
+400,190,E,IPD TAC 2 *E,IPD Tactical 2 [IPD TAC 2],Law Tac,Jackson County MO - Independence Police,1
+3800,ed8,D,BlueSpr PD1,Blue Springs Police: Dispatch,Law Dispatch,Jackson County MO,1
+3801,ed9,D,BlueSpr PD2,Blue Springs Police: North Zone,Law Dispatch,Jackson County MO,1
+3802,eda,D,BlueSpr PD3,Blue Springs Police: South Zone,Law Dispatch,Jackson County MO,1
+3821,eed,D,BlueSpsPark1,Blue Springs Parks 1,Public Works,Jackson County MO,1
+3822,eee,D,BlueSpr PW1,Blue Springs Public Works 1,Public Works,Jackson County MO,1
+3823,eef,D,BlueSpr PW2,Blue Springs Public Works 2,Public Works,Jackson County MO,1
+3901,f3d,D,EJCFire Tac2,East Jackson County Fire: Tac 2,Fire-Tac,Jackson County MO,1
+30000,7530,D,JoCoSO- ATG,Johnson County Sheriff -- Announce (All Call),Law Dispatch,Johnson County Ks Sheriff,1
+30001,7531,D,JoCoSONorth1,Johnson County Sheriff -- North Zone Primary,Law Dispatch,Johnson County Ks Sheriff,1
+30002,7532,E,JoCoSONorth2,Johnson County Sheriff -- North Zone Secondary (encrypted),Law Tac,Johnson County Ks Sheriff,1
+30003,7533,D,JoCoSOSouth1,Johnson County Sheriff -- South Zone Primary,Law Dispatch,Johnson County Ks Sheriff,1
+30004,7534,E,JoCoSOSouth2,Johnson County Sheriff -- South Zone Secondary (encrypted),Law Tac,Johnson County Ks Sheriff,1
+30005,7535,E,JoCoSO Zn3-1,Johnson County Sheriff -- Zone 3 Primary,Law Dispatch,Johnson County Ks Sheriff,1
+30006,7536,D,JoCoSO Zn3-2,Johnson County Sheriff -- Zone 3 Secondary,Law Dispatch,Johnson County Ks Sheriff,1
+30007,7537,D,JoCoSO Cmnty,Johnson County Sheriff -- Community Patrols,Law Tac,Johnson County Ks Sheriff,1
+30015,753f,D,JoCoSO Tac 1,Johnson County Sheriff -- Tac 1,Law Tac,Johnson County Ks Sheriff,1
+30016,7540,D,JoCoSO Tac 2,Johnson County Sheriff -- Tac 2,Law Tac,Johnson County Ks Sheriff,1
+30017,7541,D,JoCoSO Tac 3,Johnson County Sheriff -- Tac 3,Law Tac,Johnson County Ks Sheriff,1
+30020,7544,D,JoCoSO Civil,Johnson County Sheriff -- Civil Paper Servers,Law Talk,Johnson County Ks Sheriff,1
+30021,7545,D,JoCoSOWarnts,Johnson County Sheriff -- Warrants,Law Talk,Johnson County Ks Sheriff,1
+30022,7546,E,JoCoSO Invst,Johnson County Sheriff -- Investigations,Law Tac,Johnson County Ks Sheriff,1
+30030,754e,D,JoCoSO Covrt,Johnson County Sheriff -- Covert Operations,Law Tac,Johnson County Ks Sheriff,1
+30031,754f,E,JoCoSO Narcs,Johnson County Sheriff -- Narcotics,Law Tac,Johnson County Ks Sheriff,1
+30032,7550,D,JoCoSO Admin,Johnson County Sheriff -- Administration,Law Talk,Johnson County Ks Sheriff,1
+30033,7551,D,JoCoSO ADC-1,Johnson County Sheriff -- ADC-1,Law Talk,Johnson County Ks Sheriff,1
+30034,7552,D,JoCoSO ADC-2,Johnson County Sheriff -- ADC-2,Law Talk,Johnson County Ks Sheriff,1
+30035,7553,D,JoCoSO Cort1,Johnson County Sheriff -- Courthouse Security 1,Law Dispatch,Johnson County Ks Sheriff,1
+30036,7554,D,JoCoSO Cort2,Johnson County Sheriff -- Courthouse Security 2,Law Tac,Johnson County Ks Sheriff,1
+30037,7555,D,TheJO Xpress,The JO (Johnson County Transit) Express,Transportation,Johnson County Ks Transit -- The JO,1
+30100,7594,D,JoCoECC All,Johnson County Emergency Communications Center -- Announce (All Call),Emergency Ops,Johnson County Ks Emergency Communications Center (ECC),1
+30101,7595,D,JoCoECC Main,Johnson County Fire and EMS Dispatch,Fire Dispatch,Johnson County Ks Emergency Communications Center (ECC),1
+30102,7596,D,JoCo ECC Ops,Johnson County Fire and EMS Operations,Fire Dispatch,Johnson County Ks Emergency Communications Center (ECC),1
+30103,7597,D,JoCoECC Tac3,Johnson County Fire and EMS Tac 3 / Admin,Fire-Tac,Johnson County Ks Emergency Communications Center (ECC),1
+30104,7598,E,JoCoECC Tac4,Johnson County Fire and EMS Tac 4 (now fully encrypted),Fire-Tac,Johnson County Ks Emergency Communications Center (ECC),1
+30105,7599,E,JoCoECC Tac5,Johnson County Fire and EMS Tac 5 (now fully encrypted),Fire-Tac,Johnson County Ks Emergency Communications Center (ECC),1
+30106,759a,E,JoCoECC Tac6,Johnson County Fire and EMS Tac 6 (now fully encrypted),Fire-Tac,Johnson County Ks Emergency Communications Center (ECC),1
+30107,759b,E,JoCoECC Tac7,Johnson County Fire and EMS Tac 7 (now fully encrypted),Fire-Tac,Johnson County Ks Emergency Communications Center (ECC),1
+30108,759c,E,JoCoECC Tac8,Johnson County Fire and EMS Tac 8 (now fully encrypted),Fire-Tac,Johnson County Ks Emergency Communications Center (ECC),1
+30109,759d,E,JoCoECC Tac9,Johnson County Fire and EMS Tac 9 (now fully encrypted),Fire-Tac,Johnson County Ks Emergency Communications Center (ECC),1
+30110,759e,D,JoCoECC Emrg,Johnson County Emergency Communications Center -- Emergency,Emergency Ops,Johnson County Ks Emergency Communications Center (ECC),1
+30140,75bc,D,JoCoInterop1,Johnson County Interop Announce (All Call),Interop,Johnson County Ks: Interoperations,1
+30142,75be,D,JoCoInterop2,Johnson County Interop-2,Interop,Johnson County Ks: Interoperations,1
+30143,75bf,D,JoCoInterop3,Johnson County Interop-3,Interop,Johnson County Ks: Interoperations,1
+30144,75c0,D,JoCoInterop4,Johnson County Interop-4,Interop,Johnson County Ks: Interoperations,1
+30145,75c1,D,JoCoInterop5,Johnson County Interop-5,Interop,Johnson County Ks: Interoperations,1
+30146,75c2,D,JoCoInterop6,Johnson County Interop-6,Interop,Johnson County Ks: Interoperations,1
+30147,75c3,D,JoCoInterop7,Johnson County Interop-7,Interop,Johnson County Ks: Interoperations,1
+30148,75c4,D,JoCoInterop8,Johnson County Interop-8,Interop,Johnson County Ks: Interoperations,1
+30149,75c5,D,JoCoInterop9,Johnson County Interop-9,Interop,Johnson County Ks: Interoperations,1
+30150,75c6,D,JoCoIOpEmerg,Johnson County Interop Emergency,Interop,Johnson County Ks: Interoperations,1
+30180,75e4,D,JoCoECC Admn,Johnson County Emergency Mangement -- Administration,Emergency Ops,Johnson County Ks Emergency Communications Center (ECC),1
+30251,762b,D,Jo Co EOC,Johnson County Emergency Operations Center -- Storms,Emergency Ops,Johnson County Ks Emergency Communications Center (ECC),1
+30280,7648,D,JoCo PS All,Johnson County Public Safety -- Announce (All Call),Interop,Johnson County Ks Public Safety Common,1
+30281,7649,D,PS Disp,PS Dispatch - MARRS Wide Information,Interop,Regional Interop,1
+30282,764a,D,JoCo PS Com1,Johnson County Public Safety -- Com 1,Interop,Johnson County Ks Public Safety Common,1
+30283,764b,D,JoCo PS Com2,Johnson County Public Safety -- Com 2,Interop,Johnson County Ks Public Safety Common,1
+30285,764d,E,JoCo PS Tac1,Johnson County Public Safety -- Tac 1 (now fully encrypted),Interop,Johnson County Ks Public Safety Common,1
+30286,764e,E,JoCo PS Tac2,Johnson County Public Safety -- Tac 2 (now fully encrypted),Interop,Johnson County Ks Public Safety Common,1
+30287,764f,E,JoCo PS Tac3,Johnson County Public Safety -- Tac 3 (now fully encrypted),Interop,Johnson County Ks Public Safety Common,1
+30400,76c0,D,JoCoCommnAll,Johnson County Common -- Announce (All Call),Interop,Johnson County Ks Common,1
+30401,76c1,D,JoCo 911,Johnson County Common -- 911,Interop,Johnson County Ks Common,1
+30402,76c2,D,JoCo Common1,Johnson County Common -- 1,Interop,Johnson County Ks Common,1
+30403,76c3,D,JoCo Common2,Johnson County Common -- 2,Interop,Johnson County Ks Common,1
+30404,76c4,D,JoCo Common3,Johnson County Common -- 3,Interop,Johnson County Ks Common,1
+30405,76c5,D,JoCo Common4,Johnson County Common -- 4,Interop,Johnson County Ks Common,1
+30406,76c6,D,JoCo Common5,Johnson County Common -- 5,Interop,Johnson County Ks Common,1
+30800,7850,D,JoCoAirports,Johnson County Airports Announce (All Call),Public Works,Johnson County Ks : Airports,1
+30801,7851,D,NewCntrAirpt,"New Century Air Center, FAA code is IXD",Public Works,Johnson County Ks : Airports,1
+30802,7852,D,NewCntrTower,"New Century Air Center, Control Tower , FAA code is IXD",Public Works,Johnson County Ks : Airports,1
+30803,7853,D,ExectvAirprt,Executive Airport,Public Works,Johnson County Ks : Airports,1
+30804,7854,D,ExecutvTower,Executive Airport Control Tower,Public Works,Johnson County Ks : Airports,1
+30805,7855,D,JoCoAirport1,Johnson County Airports -1,Public Works,Johnson County Ks : Airports,1
+30806,7856,D,JoCoAirport2,Johnson County Airports -2,Public Works,Johnson County Ks : Airports,1
+30807,7857,D,JoCoAirport3,Johnson County Airports -3,Public Works,Johnson County Ks : Airports,1
+30820,7864,D,JoCoWstWrAll,Johnson County Wastewater -- Announce (All Call),Public Works,Johnson County Ks Wastewater,1
+30821,7865,D,JoCoWWSuprvs,Johnson County Wastewater -- Supervisors,Public Works,Johnson County Ks Wastewater,1
+30822,7866,D,JoCoWWPermts,Johnson County Wastewater -- Permits,Public Works,Johnson County Ks Wastewater,1
+30823,7867,D,JoCoWWColect,Johnson County Wastewater -- Collections,Public Works,Johnson County Ks Wastewater,1
+30824,7868,D,JoCoWWLowell,Johnson County Wastewater -- Lowell Office,Public Works,Johnson County Ks Wastewater,1
+30825,7869,D,JoCoWWPlants,Johnson County Wastewater -- Treatment Plants,Public Works,Johnson County Ks Wastewater,1
+30826,786a,D,JoCoWW Comm1,Johnson County Wastewater -- Comm 1,Public Works,Johnson County Ks Wastewater,1
+30827,786b,D,JoCoWW Comm2,Johnson County Wastewater -- Comm 2,Public Works,Johnson County Ks Wastewater,1
+30828,786c,D,JoCoWW Comm3,Johnson County Wastewater -- Comm 3,Public Works,Johnson County Ks Wastewater,1
+30829,786d,D,JoCoWW Comm4,Johnson County Wastewater -- Comm 4,Public Works,Johnson County Ks Wastewater,1
+30830,786e,D,JoCoWW Comm5,Johnson County Wastewater -- Comm 5,Public Works,Johnson County Ks Wastewater,1
+30831,786f,D,JoCoWW Comm6,Johnson County Wastewater -- Comm 6,Public Works,Johnson County Ks Wastewater,1
+30832,7870,D,JoCoWW Comm7,Johnson County Wastewater -- Comm 7,Public Works,Johnson County Ks Wastewater,1
+30833,7871,D,JoCoWW Comm8,Johnson County Wastewater -- Comm 8,Public Works,Johnson County Ks Wastewater,1
+30834,7872,D,JoCoWW Call,Johnson County Wastewater -- Calling,Public Works,Johnson County Ks Wastewater,1
+30835,7873,D,JoCoWWFaclty,Johnson County Wastewater -- Facility,Public Works,Johnson County Ks Wastewater,1
+30850,7882,D,JoCo Bus All,The JO (Johnson County Transit) -- Announce (All Call),Transportation,Johnson County Ks Transit -- The JO,1
+30851,7883,D,The JO SpcSv,The JO (Johnson County Transit) A -- Special Serives,Transportation,Johnson County Ks Transit -- The JO,1
+30852,7884,D,The JO Trans,The JO (Johnson County Transit) B -- Transit,Transportation,Johnson County Ks Transit -- The JO,1
+30853,7885,D,The JO Privt,The JO (Johnson County Transit) C -- Private,Transportation,Johnson County Ks Transit -- The JO,1
+30860,788c,D,JoCoHelthAll,Johnson County Health Department -- Announce (All Call),Public Works,Johnson County Ks Health Department,1
+30861,788d,D,JoCoHealth 1,Johnson County Health Department,Public Works,Johnson County Ks Health Department,1
+31000,7918,D,JoCoSO N All,Johnson County Sheriff North Zone -- Announce (All Call),Emergency Ops,Johnson County Ks Sheriff North Zone,1
+31001,7919,D,Fairway PD,Fairway Police,Law Dispatch,Johnson County Ks Sheriff North Zone,1
+31002,791a,D,LkQuivira PD,Lake Quivira Police,Law Dispatch,Johnson County Ks Sheriff North Zone,1
+31003,791b,D,Merriam PD,Merriam Police,Law Dispatch,Johnson County Ks Sheriff North Zone,1
+31004,791c,D,Mission PD,Mission Police,Law Dispatch,Johnson County Ks Sheriff North Zone,1
+31005,791d,D,RoelandPk PD,Roeland Park Police,Law Dispatch,Johnson County Ks Sheriff North Zone,1
+31006,791e,D,Westwod PD,Westwood Police,Law Dispatch,Johnson County Ks Sheriff North Zone,1
+31010,7922,D,LkQuivira FD,Lake Quivira Fire,Fire Dispatch,Johnson County Ks Sheriff North Zone,1
+31011,7923,D,Merriam Fire,Merriam Fire,Fire Dispatch,Johnson County Ks Sheriff North Zone,1
+31020,792c,D,FariwayPubWk,Fairway Public Works,Public Works,Johnson County Ks Sheriff North Zone,1
+31021,792d,D,Misson PubWk,Mission Public Works,Public Works,Johnson County Ks Sheriff North Zone,1
+31031,7937,D,Merriam City,Merriam Citywide,Public Works,Johnson County Ks Sheriff North Zone,1
+31033,7939,D,Merriam PW,Merriam Public Works,Public Works,Johnson County Ks Sheriff North Zone,1
+31050,794a,D,North Common,Johnson County Sheriff North Zone -- Common,Law Dispatch,Johnson County Ks Sheriff North Zone,1
+31100,797c,D,JoCoSO S All,Johnson County Sheriff South Zone -- Announce (All Call),Emergency Ops,Johnson County Ks Sheriff South Zone,1
+31101,797d,D,Gardner PD 1,Gardner Police 1,Law Dispatch,Johnson County Ks Sheriff South Zone,1
+31102,797e,D,Gardner PD 2,Gardner Police 2,Law Tac,Johnson County Ks Sheriff South Zone,1
+31103,797f,D,Sprg Hill PD,Spring Hill Police,Law Dispatch,Johnson County Ks Sheriff South Zone,1
+31104,7980,D,De Soto PD,De Soto Police,Law Dispatch,Johnson County Ks Sheriff South Zone,1
+31105,7981,D,Edgerton PD,Edgerton Police,Law Dispatch,Johnson County Ks Sheriff South Zone,1
+31120,7990,D,JoCo Park 1,Johnson County Park Police 1,Security,Johnson County Ks Sheriff,1
+31121,7991,D,JoCo Park 2,Johnson County Park Police 2,Security,Johnson County Ks Sheriff,1
+31150,79ae,D,South Common,Johnson County Sheriff South Zone Common,Law Talk,Johnson County Ks Sheriff South Zone,1
+31160,79b8,D,JoCoFDAdmin1,Johnson County Fire District #1 -- Administration,Fire-Talk,Johnson County Ks Fire,1
+31170,79c2,D,JoCoFDAdmin2,Johnson County Fire District #2 -- Administration,Fire-Talk,Johnson County Ks Fire,1
+31190,79d6,D,Miami Co FD,Miami Co Fire/EMS Dispatch,Fire Dispatch,Miami County Ks,1
+31200,79e0,D,LeawodPD All,Leawood Police -- Announce (All call),Law Dispatch,Johnson County Ks: Leawood,1
+31201,79e1,D,Leawood PD 1,Leawood Police 1,Law Dispatch,Johnson County Ks: Leawood,1
+31202,79e2,E,Leawood PD 2,Leawood Police 2,Law Tac,Johnson County Ks: Leawood,1
+31203,79e3,E,Leawood PD 3,"Leawood Police 3 ""Secure channel"" (Encrypted)",Law Tac,Johnson County Ks: Leawood,1
+31204,79e4,D,LwoodPDEvent,Leawood Police -- Special Events,Law Tac,Johnson County Ks: Leawood,1
+31205,79e5,D,LwoodPD Tac2,Leawood Police -- Tac 2,Law Tac,Johnson County Ks: Leawood,1
+31206,79e6,D,LwoodPD Comn,Leawood Police -- Common,Law Talk,Johnson County Ks: Leawood,1
+31210,79ea,D,Leawood FD1,Leawood Fire 1,Fire Dispatch,Johnson County Ks: Leawood,1
+31211,79eb,D,Leawood FD 2,Leawood Fire 2,Fire-Tac,Johnson County Ks: Leawood,1
+31212,79ec,D,LwoodFD Admn,Leawood Fire Administration (Chief's Channel),Fire-Talk,Johnson County Ks: Leawood,1
+31230,79fe,D,Lwood PW All,Leawood Public Works Announce (All Call),Public Works,Johnson County Ks: Leawood,1
+31231,79ff,D,Leawood PW 1,Leawood Public Works,Public Works,Johnson County Ks: Leawood,1
+31232,7a00,D,LeawoodParks,Leawood Public Works -- Parks,Public Works,Johnson County Ks: Leawood,1
+31233,7a01,D,Leawood PW 3,Leawood Public Works 3,Public Works,Johnson County Ks: Leawood,1
+31234,7a02,D,Leawood Code,Leawood Public Works -- Code Enforcement,Public Works,Johnson County Ks: Leawood,1
+31235,7a03,D,LeawoodEvent,Leawood Public Works -- Special Events,Public Works,Johnson County Ks: Leawood,1
+31236,7a04,D,LwoodPubSfty,Leawood Public Safety,Multi-Tac,Johnson County Ks: Leawood,1
+31250,7a12,D,LenexaPD All,Lenexa Police -- Announce (All Call),Law Dispatch,Johnson County Ks: Lenexa,1
+31251,7a13,D,Lenexa PD 1,Lenexa Police 1,Law Dispatch,Johnson County Ks: Lenexa,1
+31252,7a14,E,Lenexa PD 2,Lenexa Police 2,Law Dispatch,Johnson County Ks: Lenexa,1
+31253,7a15,E,LenexaPDTac1,Lenexa Police -- Tac 1,Law Tac,Johnson County Ks: Lenexa,1
+31254,7a16,E,LenexaPDTac2,Lenexa Police -- Tac 2,Law Tac,Johnson County Ks: Lenexa,1
+31255,7a17,E,LenexaPDSecr,Lenexa Police -- Secure,Law Tac,Johnson County Ks: Lenexa,1
+31256,7a18,D,Lenexa PD PS,Lenexa Police -- Public Safety,Law Talk,Johnson County Ks: Lenexa,1
+31257,7a19,D,Lenexa Emerg,Lenexa Emergency Management,Emergency Ops,Johnson County Ks: Lenexa,1
+31280,7a30,D,LenexaFD All,Lenexa Fire -- Announce (All Call),Fire Dispatch,Johnson County Ks: Lenexa,1
+31281,7a31,D,LenexaFD Adm,Lenexa Fire -- Administration,Fire-Talk,Johnson County Ks: Lenexa,1
+31282,7a32,D,LenexaFD Trn,Lenexa Fire -- Training,Fire-Talk,Johnson County Ks: Lenexa,1
+31283,7a33,D,Lenexa FD PS,Lenexa Fire -- Public Safety,Fire-Talk,Johnson County Ks: Lenexa,1
+31284,7a34,D,Lenexa Commn,Lenexa Common,Multi-Tac,Johnson County Ks: Lenexa,1
+31285,7a35,D,LenexaStreet,Lenexa Public Works -- Street Department,Public Works,Johnson County Ks: Lenexa,1
+31286,7a36,D,Lenexa PW,Public Works,Public Works,Johnson County Ks: Lenexa,1
+31287,7a37,D,Lenexa SrCtr,Senior Community Center Bus,Public Works,Johnson County Ks: Lenexa,1
+31300,7a44,D,OlathePD All,Olathe Police -- Announce (All Call),Law Dispatch,Johnson County Ks: Olathe,1
+31301,7a45,D,OlathePD SRO,Olathe Police -- SRO,Law Talk,Johnson County Ks: Olathe,1
+31302,7a46,D,OlathePD Nar,Olathe Police -- Narcotics,Law Tac,Johnson County Ks: Olathe,1
+31303,7a47,D,OlathePD Dis,Olathe Police -- Dispatch,Law Dispatch,Johnson County Ks: Olathe,1
+31304,7a48,E,Olathe PD 2,Olathe Police 2 -- Encrypted,Law Tac,Johnson County Ks: Olathe,1
+31305,7a49,E,Olathe PD 3,Olathe Police 3 -- Encrypted,Law Tac,Johnson County Ks: Olathe,1
+31306,7a4a,E,OlathePDTac1,Olathe Police Tac 1,Law Tac,Johnson County Ks: Olathe,1
+31307,7a4b,E,OlathePDTac2,Olathe Police Tac 2,Law Tac,Johnson County Ks: Olathe,1
+31310,7a4e,D,OlathFD All,Olathe Fire -- Announce (All Call),Fire Dispatch,Johnson County Ks: Olathe,1
+31311,7a4f,D,OlatheFD Dis,Olathe Fire Dispatch,Fire Dispatch,Johnson County Ks: Olathe,1
+31312,7a50,D,Olathe FD,Olathe Fire,Fire-Tac,Johnson County Ks: Olathe,1
+31313,7a51,D,Olathe FDTR1,OLATHE FIRE TRAINING 1,Fire-Tac,Johnson County Ks: Olathe,1
+31314,7a52,D,Olathe FDTR2,OLATHE FIRE TRAINING 2,Fire-Tac,Johnson County Ks: Olathe,1
+31316,7a54,D,Olathe Waste,Public Works - Solid Waste,Public Works,Johnson County Ks: Olathe,1
+31317,7a55,D,Olathe Field,Public Works - Field Operations,Public Works,Johnson County Ks: Olathe,1
+31318,7a56,D,Olathe Envir,Public Works - Environmental Service,Public Works,Johnson County Ks: Olathe,1
+31319,7a57,D,Olathe Strat,Public Works - Strategic Services,Public Works,Johnson County Ks: Olathe,1
+31326,7a5e,D,Olathe Trash,Residential Solid Waste,Public Works,Johnson County Ks: Olathe,1
+31328,7a60,D,OL CMTY CNTR,COMMUNITY CENTER FRONT DESK,Public Works,Johnson County Ks: Olathe,1
+31330,7a62,D,OlathSchlAll,Olathe Public Schools -- Announce (All Call),Schools,Johnson County Ks: Olathe Public Schools,1
+31331,7a63,D,OlathSchl D2,Olathe Public Schools -- D 2,Schools,Johnson County Ks: Olathe Public Schools,1
+31332,7a64,D,OlathSchl D1,Olathe Public Schools -- D 1,Schools,Johnson County Ks: Olathe Public Schools,1
+31333,7a65,D,OlathSclSEC1,Olathe Public Schools -- SEC 1,Schools,Johnson County Ks: Olathe Public Schools,1
+31334,7a66,D,OlathSclSEC2,Olathe Public Schools -- SEC 2,Schools,Johnson County Ks: Olathe Public Schools,1
+31335,7a67,D,OlathSclSEC3,Olathe Public Schools -- SEC 3,Schools,Johnson County Ks: Olathe Public Schools,1
+31336,7a68,D,OlathSclSEC4,Olathe Public Schools -- SEC 4,Schools,Johnson County Ks: Olathe Public Schools,1
+31337,7a69,D,OlathSclActv,Olathe Public Schools -- Activities,Schools,Johnson County Ks: Olathe Public Schools,1
+31338,7a6a,D,OlathSclSvc1,Olathe Public Schools -- Service Center 1,Schools,Johnson County Ks: Olathe Public Schools,1
+31339,7a6b,D,OlathSclSvc2,Olathe Public Schools -- Service Center 2,Schools,Johnson County Ks: Olathe Public Schools,1
+31340,7a6c,D,OlathSclSvc3,Olathe Public Schools -- Service Center 3,Schools,Johnson County Ks: Olathe Public Schools,1
+31341,7a6d,D,OlathSclSvc4,Olathe Public Schools -- Service Center 4,Schools,Johnson County Ks: Olathe Public Schools,1
+31342,7a6e,D,OlathSclCom1,Olathe Public Schools -- Common 1,Schools,Johnson County Ks: Olathe Public Schools,1
+31343,7a6f,D,OlathSclCom2,Olathe Public Schools -- Common 2,Schools,Johnson County Ks: Olathe Public Schools,1
+31344,7a70,D,OlathSclCom3,Olathe Public Schools -- Common 3,Schools,Johnson County Ks: Olathe Public Schools,1
+31350,7a76,D,OvldPkPD All,Overland Park Police -- Announce (All Call),Law Dispatch,Johnson County Ks: Overland Park,1
+31351,7a77,D,OvPkPDPRIMRY,Overland Park Police -- Primary Dispatch,Law Dispatch,Johnson County Ks: Overland Park,1
+31352,7a78,E,OvldPkPDInfo,Overland Park Police -- Information,Law Talk,Johnson County Ks: Overland Park,1
+31353,7a79,D,OvldPkPDScaf,Overland Park Police -- Myron E. Scafe Building,Law Dispatch,Johnson County Ks: Overland Park,1
+31354,7a7a,E,OvldPkPD T/A,Overland Park Police -- Talk Around,Law Talk,Johnson County Ks: Overland Park,1
+31355,7a7b,E,OvldPkPDTac1,Overland Park Police -- Tac 1,Law Talk,Johnson County Ks: Overland Park,1
+31356,7a7c,E,OvldPkPDTac4,Overland Park Police -- Tac 4,Law Tac,Johnson County Ks: Overland Park,1
+31357,7a7d,E,OvldPkPDTac3,Overland Park Police -- Tac 3,Law Tac,Johnson County Ks: Overland Park,1
+31358,7a7e,E,OvldPkPDTac2,Overland Park Police -- Tac 2,Law Tac,Johnson County Ks: Overland Park,1
+31359,7a7f,D,JCCC Police,Johnson County Community College Campus Police,Law Dispatch,Johnson County Ks Community College,1
+31360,7a80,D,OvPkPDCityWd,Overland Park Police -- City Wide,Law Talk,Johnson County Ks: Overland Park,1
+31361,7a81,D,OvldPkEmrgMn,Overland Park Emergency Preparedness,Emergency Ops,Johnson County Ks: Overland Park,1
+31362,7a82,D,OvldPkPD M/A,Overland Park Police -- Mutual Aid,Law Talk,Johnson County Ks: Overland Park,1
+31363,7a83,D,OvldPkPDSis2,Overland Park Police -- Sis 2,Law Tac,Johnson County Ks: Overland Park,1
+31364,7a84,E,OvldPkPDAdmn,Overland Park Police -- Administration,Law Talk,Johnson County Ks: Overland Park,1
+31365,7a85,D,OvldPkPDRadM,Overland Park Police Radio Maintenance,Public Works,Johnson County Ks: Overland Park,1
+31366,7a86,E,OvldPkPDTac6,Overland Park Police --Tac 6,Law Tac,Johnson County Ks: Overland Park,1
+31367,7a87,E,OvldPkPDTac7,Overland Park Police --Tac 7,Law Tac,Johnson County Ks: Overland Park,1
+31368,7a88,E,OvldPkPDTac8,Overland Park Police --Tac 8,Law Tac,Johnson County Ks: Overland Park,1
+31370,7a8a,D,OvldPkFD All,Overland Park Fire -- Announce (All Call),Fire Dispatch,Johnson County Ks: Overland Park,1
+31371,7a8b,D,OvrlandPkFD1,Overland Park Fire 1,Fire Dispatch,Johnson County Ks: Overland Park,1
+31372,7a8c,D,OvrlandPkFD2,Overland Park Fire 2,Fire-Tac,Johnson County Ks: Overland Park,1
+31373,7a8d,D,OvrlandPkFD3,Overland Park Fire 3,Fire-Tac,Johnson County Ks: Overland Park,1
+31380,7a94,D,OvPkPubWkAll,Overland Park City Public Works -- Announce (All Call),Public Works,Johnson County Ks: Overland Park,1
+31381,7a95,D,OvPkPW SMSt1,Overland Park City Public Works -- Street Maintenance -- Shawnee Mission District 1,Public Works,Johnson County Ks: Overland Park,1
+31382,7a96,D,OvPkPW BVSt2,Overland Park City Public Works -- Street Maintenance -- Blue Valley District 1,Public Works,Johnson County Ks: Overland Park,1
+31383,7a97,D,OvPkPW SMSt2,Overland Park City Public Works -- Street Maintenance -- Shawnee Mission District 2,Public Works,Johnson County Ks: Overland Park,1
+31384,7a98,D,OvPkPW BVSt2,Overland Park City Public Works -- Street Maintenance -- Blue Valley District 2,Public Works,Johnson County Ks: Overland Park,1
+31385,7a99,D,OvPkPW Specl,Overland Park City Public Works -- Special Events,Public Works,Johnson County Ks: Overland Park,1
+31386,7a9a,D,OvPkPW Maint,Overland Park City Public Works -- Maintenance Dispatch,Public Works,Johnson County Ks: Overland Park,1
+31387,7a9b,D,OvPkPW Engnr,Overland Park City Public Works -- Engineering Dispatch,Public Works,Johnson County Ks: Overland Park,1
+31388,7a9c,D,OvPkPW Traff,Overland Park City Public Works -- Traffic Services,Public Works,Johnson County Ks: Overland Park,1
+31389,7a9d,D,OvPkPW Parks,Overland Park City Public Works -- Parks and Recreation,Public Works,Johnson County Ks: Overland Park,1
+31390,7a9e,D,OvPkPW DevSv,Overland Park City Public Works -- Planning and Development Services,Public Works,Johnson County Ks: Overland Park,1
+31391,7a9f,D,OvPkPW Manag,Overland Park City Public Works -- Management Sevices,Public Works,Johnson County Ks: Overland Park,1
+31392,7aa0,D,OvPkPWTestEm,Overland Park City Public Works -- Test/Emergency,Public Works,Johnson County Ks: Overland Park,1
+31394,7aa2,D,OvrlandPkEOC,Overland Park Emergency Operations Center,Emergency Ops,Johnson County Ks: Overland Park,1
+31395,7aa3,D,OvPkPW 1,OVERLAND PARK PUBLIC WORKS 1,Public Works,Johnson County Ks: Overland Park,1
+31396,7aa4,D,OvPkPW 2,OVERLAND PARK PUBLIC WORKS 2,Public Works,Johnson County Ks: Overland Park,1
+31400,7aa8,D,PrVilPD All,Prairie Village Police -- Announce (All Call),Law Dispatch,Johnson County Ks: Prairie Village,1
+31401,7aa9,D,PrairieVlPD1,Prairie Village Police -- Dispatch,Law Dispatch,Johnson County Ks: Prairie Village,1
+31402,7aaa,D,PrairieVlPD2,Prairie Village Police 2,Law Tac,Johnson County Ks: Prairie Village,1
+31403,7aab,D,PrariVlPDTac,Prairie Village Police -- Tactical,Law Tac,Johnson County Ks: Prairie Village,1
+31404,7aac,D,PrariVlPDCty,Prairie Village Police -- Citywide,Law Talk,Johnson County Ks: Prairie Village,1
+31405,7aad,E,PrariVlPDAdm,Prairie Village Police -- Administration,Law Talk,Johnson County Ks: Prairie Village,1
+31406,7aae,D,PrariVlPDSRO,Prairie Village Police -- SRO,Law Talk,Johnson County Ks: Prairie Village,1
+31407,7aaf,D,PrVilPubWks1,Prairie Village Public Works 1,Public Works,Johnson County Ks: Prairie Village,1
+31408,7ab0,D,PrVilPubWks2,Prairie Village Public Works 2,Public Works,Johnson County Ks: Prairie Village,1
+31409,7ab1,D,PrairieVilag,Prairie Village,Public Works,Johnson County Ks: Prairie Village,1
+31450,7ada,D,ShawnePD All,Shawnee Police -- Announce (All Call),Law Dispatch,Johnson County Ks: Shawnee,1
+31451,7adb,D,ShawnePDDisp,Shawnee Police -- Dispatch,Law Dispatch,Johnson County Ks: Shawnee,1
+31452,7adc,E,ShawnePDTac1,Shawnee Police -- Tac 1 (full encryption),Law Tac,Johnson County Ks: Shawnee,1
+31453,7add,E,ShanwePDTac2,Shawnee Police -- Tac 2 (full encryption),Law Tac,Johnson County Ks: Shawnee,1
+31454,7ade,E,ShawnePD Inv,Shawnee Police -- Investigations (full encryption),Law Tac,Johnson County Ks: Shawnee,1
+31455,7adf,E,Shawnee PD 2,Shawnee Police 2 -- Information (fully encrypted),Law Tac,Johnson County Ks: Shawnee,1
+31456,7ae0,D,Shawnee PD 3,Shawnee Police 3 -- Car-to-Car (dispatch clear - officers encrypted),Law Tac,Johnson County Ks: Shawnee,1
+31457,7ae1,E,ShawneePDTac,Shawnee Police -- Encrypted Tactical,Law Tac,Johnson County Ks: Shawnee,1
+31470,7aee,D,ShawneFDAll,Shawnee Fire -- Announce (All Call),Fire Dispatch,Johnson County Ks: Shawnee,1
+31471,7aef,D,ShawneFDDisp,Shawnee Fire -- DIspatch,Fire Dispatch,Johnson County Ks: Shawnee,1
+31472,7af0,D,ShawneFDTac1,Shawnee Fire -- Tac 1,Fire-Tac,Johnson County Ks: Shawnee,1
+31473,7af1,D,ShawneFDTac2,Shawnee Fire -- Tac 2,Fire-Tac,Johnson County Ks: Shawnee,1
+31482,7afa,D,Sh City Wide,Shawnee Citywide,Public Works,Johnson County Ks: Shawnee,1
+31490,7b02,D,ShawneePubWk,Shawnee Public Works,Public Works,Johnson County Ks: Shawnee,1
+31500,7b0c,D,StateAnounce,State Announce (All Call),Interop,State of Kansas,1
+31501,7b0d,D,KHP Dispatch,Kansas Highway Patrol -- Dispatch,Law Dispatch,State of Kansas,1
+31502,7b0e,D,KHP Common,Kansas HIghway Patrol -- Common,Law Tac,State of Kansas,1
+31503,7b0f,D,K B I,Kansas Bureau of Investigation,Law Dispatch,State of Kansas,1
+31504,7b10,D,KS Soc Rehab,Kansas Department of Social and Rehabilitation Services,Public Works,State of Kansas,1
+31505,7b11,D,KS Correctns,Kansas State Corrections,Corrections,State of Kansas,1
+31506,7b12,D,KS Bev Cntrl,Kansas Alcoholic Beverage Control,Law Dispatch,State of Kansas,1
+31507,7b13,D,US Marshal,US Marshals,Law Dispatch,State of Kansas,1
+31508,7b14,D,KU MedPolice,University of Kansas Medical Center Police,Law Dispatch,State of Kansas,1
+31509,7b15,D,KDOT,Kansas Department of Transportation,Public Works,State of Kansas,1
+31510,7b16,E,KHP A Ops-2,Kansas Highway Patrol Troop A Ops-2,Law Tac,State of Kansas,1
+31800,7c38,D,MARCER All,MARCER Announce (All Call),Emergency Ops,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31801,7c39,D,MARCER Disp,MARCER Ambulance Dispatch,EMS Dispatch,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31802,7c3a,D,Centerpnt ER,Centerpoint Medical Center ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31803,7c3b,D,Childrens ER,Childrens Mercy Hospital ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31804,7c3c,D,ChildrenSoER,Childrens Mercy South Hospital ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31805,7c3d,D,CushngHospER,Cushing Memorial Hospital ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31806,7c3e,D,KU Med ER,KU Medical Center ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31807,7c3f,D,LMH ER,Lawrence Medical Hospital ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31808,7c40,D,LSMC ER,Lee's Summit Medical Center ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31809,7c41,D,Liberty ER,Liberty Hospital ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31811,7c43,D,Menorah ER,Menorah Hospital ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31812,7c44,D,MCMC ER,Miami County Medical Center ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31813,7c45,D,North KC ER,North Kansas City Hospital (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31814,7c46,D,OvPkMedCtrER,Overland Park Medical Center ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31815,7c47,D,OlatheMed ER,Olathe Medical Center ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31816,7c48,D,ProvidenceER,Providence Medical Center ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31817,7c49,D,RsrchBltn ER,Research Belton ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31818,7c4a,D,RsrchBrks ER,Research Brookside Campus Therapy,Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31819,7c4b,D,Research ER,Research Medical Center ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31820,7c4c,D,ShawneeMsnER,Shawnee Mission Medical Center ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31821,7c4d,D,JOCO PW,JOCO Public Works,Public Works,Johnson County Ks: Public Works,1
+31822,7c4e,D,SMPrairie ER,Star Outpatient Pavilion at Prairie Star ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31823,7c4f,D,StJohns H ER,St. Johns Hospital ER (Patient Reports) [Leavenworth],Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31824,7c50,D,StJo Hosp ER,St. Joseph ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31825,7c51,D,StLukeEastER,St. Luke's Hospital East ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31826,7c52,D,StLukeSmith,St. Luke's Hospital Smithville ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31827,7c53,D,StLukes N ER,St. Lukes North ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31828,7c54,D,StLukePlz ER,St. Lukes Plaza ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31829,7c55,D,StLuke S ER,St. Lukes South ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31830,7c56,D,StMaryBSprER,St. Mary's Blue Springs ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31831,7c57,D,TrumanMed ER,Truman Medical Center ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31832,7c58,D,TrumanLkwdER,Truman Lakewood East ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31833,7c59,D,KCMO VA ER,KCMO Veteran Hospital ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31836,7c5c,D,LMH ER,Lawrence Memorial Hospital (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31838,7c5e,D,CASSCO REG,CASS REGIONAL ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31839,7c5f,D,OPR ShawneER,OPR Shawnee ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31840,7c60,D,OPR OlatheER,OPR Olathe ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31841,7c61,D,AMRDisp PLCo,AMR Dispatch Platte County Mo,EMS Dispatch,EMS Agencies,1
+31842,7c62,D,LifeFlight,LifeFlight Eagle Medical Helicopters,EMS Dispatch,Medical Helicopters,1
+31843,7c63,D,AMR,AMR - Moved to TG 690 on KSICS 8/10/16,EMS-Tac,EMS Agencies,1
+31844,7c64,D,AMRMetroTac,AMR Metro Tac,EMS-Tac,EMS Agencies,1
+31845,7c65,D,AMRDisp Indp,AMR Dispatch Independence MO,EMS Dispatch,EMS Agencies,1
+31847,7c67,D,JOCO PW,JOCO Public Works,Public Works,Johnson County Ks: Public Works,1
+31849,7c69,D,JOCO PW,JOCO Public Works,Public Works,Johnson County Ks: Public Works,1
+31861,7c75,D,RAINBOW RSI,RAINBOW RSI NON-ER (Patient Reports),Hospital,MARCER Hospitals - Ambulance to Emergency Room Communications,1
+31901,7c9d,D,WaterOneDisp,Water One Dispach,Public Works,Water One of Johnson County Ks,1
+31903,7c9f,D,Water1 Maint,Water One Construction / Maintenance,Public Works,Water One of Johnson County Ks,1
+31905,7ca1,D,Water1Servce,Water One Service / Conncetions,Public Works,Water One of Johnson County Ks,1
+32005,7d05,D,SMUSD512 SRO,SHAWNEE MISSION USD 512 SRO,Schools,Johnson County Ks: Shawnee Mission USD-512 Public Schools Talkgr,1
+33000,80e8,D,KCFD EMS A1,KCMO Fire/EMS: Dispatch [A1],Fire Dispatch,Kansas City Mo - Fire,1
+33001,80e9,D,KCFD Marshal,KCMO FD Marshal 1,Fire-Tac,Kansas City Mo - Fire,1
+33003,80eb,D,KCFD Trng 1,KCMO FD Training 1,Fire-Tac,Kansas City Mo - Fire,1
+33004,80ec,D,KCFD Trmg 2,KCMO FD Training 2,Fire-Tac,Kansas City Mo - Fire,1
+33006,80ee,D,KCFD EMS A2,KCMO Fire/EMS: Operations [A2],Fire-Tac,Kansas City Mo - Fire,1
+33007,80ef,D,KCFD EMS A3,KCMO Fire/EMS: Operations [A3],Fire-Tac,Kansas City Mo - Fire,1
+33008,80f0,D,KCFD EMS A4,KCMO Fire/EMS: Operations [A4],Fire-Tac,Kansas City Mo - Fire,1
+33010,80f2,D,KCFD EMS A5,KCMO Fire/EMS: Operations [A5],Fire-Tac,Kansas City Mo - Fire,1
+33011,80f3,D,KCFD EMS A6,KCMO Fire/EMS: Operations [A6],Fire-Tac,Kansas City Mo - Fire,1
+33012,80f4,D,KCFD EMS A7,KCMO Fire/EMS: Operations [A7],Fire-Tac,Kansas City Mo - Fire,1
+33013,80f5,D,KCFD EMS A8,KCMO Fire/EMS: Operations [A8],Fire-Tac,Kansas City Mo - Fire,1
+33014,80f6,D,KCFD EMS A9,KCMO Fire/EMS: Operations [A9],Fire-Tac,Kansas City Mo - Fire,1
+33015,80f7,D,KCFD EMS A10,KCMO Fire/EMS: Operations [A10],Fire-Tac,Kansas City Mo - Fire,1
+33016,80f8,D,KCFD Hazmat,KCMO FD Hazmat,Emergency Ops,Kansas City Mo - Fire,1
+33017,80f9,D,MERS Patch,MERS - Metropolitan Emergency Radio System - 154.1300 Link to National WX Service at Pleasant Hill MO,Emergency Ops,Metropolitan Emergency Radio System - M.E.R.S.,1
+33050,811a,D,PD All Call,KCMO Police:: All Call/Citywide (Attempt to Locate info),Law Dispatch,Kansas City Mo - Police Patrol,1
+33051,811b,D,PD Center,KCMO Police: Center Patrol Zone,Law Dispatch,Kansas City Mo - Police Patrol,1
+33052,811c,D,PD Metro,KCMO Police: Metro Patrol Zone,Law Dispatch,Kansas City Mo - Police Patrol,1
+33053,811d,D,PD East,KCMO Police: East Patrol Zone,Law Dispatch,Kansas City Mo - Police Patrol,1
+33054,811e,D,PD North,KCMO Police: North Patrol Zone,Law Dispatch,Kansas City Mo - Police Patrol,1
+33055,811f,D,PD South,KCMO Police: South Patrol Zone,Law Dispatch,Kansas City Mo - Police Patrol,1
+33057,8121,D,SD Service,KCMO Police: Service - License Plate 10-28/29s,Law Tac,Kansas City Mo - Police Patrol,1
+33058,8122,D,PD Shl Creek,KCMO Police: Shoal Creek Patrol Zone,Law Dispatch,Kansas City Mo - Police Patrol,1
+33059,8123,D,PD Traffic 1,KCMO Police: Traffic 1 Patrol Tac,Law Dispatch,Kansas City Mo - Police Patrol,1
+33060,8124,D,PD Traffic 2,KCMO Police: Traffic 2 Patrol,Law Tac,Kansas City Mo - Police Patrol,1
+33061,8125,D,PT OPS 1,KC Police: PT OPS 1,Law Tac,Kansas City Mo - Police Special Operations,1
+33062,8126,D,PT OPS 2,KC Police: PT OPS 2,Law Tac,Kansas City Mo - Police Special Operations,1
+33063,8127,D,PT OPS 3,KC Police: PT OPS 3,Law Tac,Kansas City Mo - Police Special Operations,1
+33065,8129,D,Police M/A N,Police Mutual Aid - North [NO PDMU AID],Law Talk,Regional Interop,1
+33066,812a,D,Police M/A S,Police Mutual Aid - South [SO PDMU AID],Law Talk,Regional Interop,1
+33067,812b,D,SPOPS1,KC Police: Special Ops-1,Law Tac,Kansas City Mo - Police Special Operations,1
+33068,812c,D,SPOPS2,KC Police: Special Ops-2,Law Tac,Kansas City Mo - Police Special Operations,1
+33069,812d,D,SPOPS3,KC Police: Special Ops-3,Law Tac,Kansas City Mo - Police Special Operations,1
+33070,812e,D,SPOPS4,KC Police: Special Ops-4,Law Tac,Kansas City Mo - Police Special Operations,1
+33071,812f,D,SPOPS5,KC Police: Special Ops-5,Law Tac,Kansas City Mo - Police Special Operations,1
+33072,8130,D,SPOPS6,KC Police: Special Ops-6,Law Tac,Kansas City Mo - Police Special Operations,1
+33073,8131,D,SPOPS7,KC Police: Special Ops-7,Law Tac,Kansas City Mo - Police Special Operations,1
+33074,8132,D,SPOPS8,KC Police: Special Ops-8,Law Tac,Kansas City Mo - Police Special Operations,1
+33075,8133,D,SPOPS9,KC Police: Special Ops-9,Law Tac,Kansas City Mo - Police Special Operations,1
+33076,8134,D,SPOPS10,KC Police: Special Ops-10,Law Tac,Kansas City Mo - Police Special Operations,1
+33077,8135,D,TAC 1,KC Police: Tac-1 [TAC-1],Law Tac,Kansas City Mo - Police Special Operations,1
+33078,8136,D,TAC 2,KC Police: Tac-2 [TAC-2],Law Tac,Kansas City Mo - Police Special Operations,1
+33079,8137,D,TAC 3,KC Police: Tac-3 [TAC-3],Law Tac,Kansas City Mo - Police Special Operations,1
+33080,8138,D,TAC 4,KC Police: Tac-4 [TAC-4],Law Tac,Kansas City Mo - Police Special Operations,1
+33094,8146,D,KCPA 1 33094,Kansas City Police Academy 1,Law Tac,Kansas City Mo - Police Special Operations,1
+33095,8147,D,KCPA 2 33095,Kansas City Police Academy 2,Law Tac,Kansas City Mo - Police Special Operations,1
+33096,8148,D,KCPA 3 33096,Kansas City Police Academy 3,Law Tac,Kansas City Mo - Police Special Operations,1
+33097,8149,D,KCPA 4 DTC,Kansas City Police Academy: Driver Training Course 4,Law Tac,Kansas City Mo - Police Special Operations,1
+33098,814a,D,KCPA 5,Kansas City Police Academy 5,Law Tac,Kansas City Mo - Police Special Operations,1
+33100,814c,D,KCPD Vice,KC Police - Vice,Law Tac,Kansas City Mo - Police Special Operations,1
+33102,814e,D,KCMO 33102,KC MO Police 33102,Law Tac,Kansas City Mo - Police Special Operations,1
+33115,815b,D,KCPD Narc 1,KC Police - Narcotics 1,Law Tac,Kansas City Mo - Police Special Operations,1
+33116,815c,D,KCMO MDTF,KC MO Metro Drug Task Force,Law Tac,Kansas City Mo - Police Special Operations,1
+33120,8160,D,Radio 1,Radio Techs - KCMO,Business,Radio Technicians / Testing,1
+33121,8161,D,Radio 2,Radio Techs - KCMO,Business,Radio Technicians / Testing,1
+33122,8162,D,KCPD Inv 1,KCPD Investigations 1,Law Talk,Kansas City Mo - Police Special Operations,1
+33123,8163,D,KCPD Inv 2,KCPD Investigations 2,Law Talk,Kansas City Mo - Police Special Operations,1
+33124,8164,D,KCFCD BldgOp,Facility Service Division Building Operations,Public Works,Kansas City Mo - Facility Service Division,1
+33125,8165,D,KCFCD Ground,Facility Service Division Grounds,Public Works,Kansas City Mo - Facility Service Division,1
+33151,817f,D,KCI TermSVCS,Terminal Services - Valet and Shuttles,Transportation,Kansas City International Airport - MCI,1
+33155,8183,D,KCI Crash Ph,KCI Crash Phone,Emergency Ops,Kansas City International Airport - MCI,1
+33156,8184,D,KCI AP 1,Airport Police [KCI AP 1],Law Dispatch,Kansas City International Airport - MCI,1
+33158,8186,D,KCFD IC,Fire Incident Command,Fire-Tac,Kansas City International Airport - MCI,1
+33159,8187,D,KCI ARFF,Aircraft Rescue & Fire Fighting Dispatch [ARFF],Fire Dispatch,Kansas City International Airport - MCI,1
+33160,8188,D,KCI PD Ops 1,Airport Police Tac 1/Parking Enforcement,Law Tac,Kansas City International Airport - MCI,1
+33161,8189,D,KCI F Maint1,Field Maintenance Division [FM1],Public Works,Kansas City International Airport - MCI,1
+33162,818a,D,KCI F Maint2,Field Maintenance Division [FM2],Public Works,Kansas City International Airport - MCI,1
+33163,818b,D,KCI F Maint3,Field Maintenance Division [FM3],Public Works,Kansas City International Airport - MCI,1
+33164,818c,D,KCI FACCD,Facilities Maintenance Custodial Division [FACCD],Public Works,Kansas City International Airport - MCI,1
+33166,818e,D,KCI FACSD,Facilities Maintenance Structural Division [FACSD],Public Works,Kansas City International Airport - MCI,1
+33167,818f,D,KCI Ops Div,Operations Division,Public Works,Kansas City International Airport - MCI,1
+33168,8190,D,City Garage,City Garage,Public Works,Kansas City Mo - City Services,1
+33169,8191,D,KCI GT Bus,KCI Ground Transportation Bus Dispatch,Transportation,Kansas City International Airport - MCI,1
+33170,8192,D,MKC DT1,Airport Police [MKC DT1) Downtown Airport,Law Tac,Kansas City International Airport - MCI,1
+33171,8193,D,MKC Security,Airport Ch12 - Security,Security,Kansas City International Airport - MCI,1
+33200,81b0,D,KCMO ACO 1,Animal Control Officers [ACO 1],Public Works,Kansas City Mo - City Services,1
+33201,81b1,D,KCMO ACO T1,Animal Control Officers [ACO Tac 1],Public Works,Kansas City Mo - City Services,1
+33215,81bf,D,MC NurseStn,Municipal Corrections Nurse Station,Corrections,Kansas City Mo - City Services,1
+33217,81c1,D,SE COMTY CNT,SE COMMUNITY CENTER (SWOPE PARK),Public Works,Kansas City Mo - City Services,1
+33220,81c4,D,KCCC 1,Kansas City Convention Center Channel 1,Public Works,Kansas City Mo - City Services,1
+33221,81c5,D,KCCC 2,Kansas City Convention Center Channel 2,Public Works,Kansas City Mo - City Services,1
+33224,81c8,D,FSD,Facility Services Division Engineering,Public Works,Kansas City Mo - City Services,1
+33225,81c9,D,KCCCSecurity,KC Convention Center Security,Security,Kansas City Mo - City Services,1
+33235,81d3,D,FSDCH,Facility Services Division City Hall,Public Works,Kansas City Mo - City Services,1
+33236,81d4,D,C/W Security,City Wide Security Division: Control Dispatch,Security,Kansas City Mo - City Services,1
+33237,81d5,D,Parking Enf,Parking Enforcement,Public Works,Kansas City Mo - City Services,1
+33238,81d6,D,Corrections,Municipal Corrections Escort,Corrections,Kansas City Mo - City Services,1
+33252,81e4,D,KC CodeInsp1,Codes Inspections Division of Development Services Channel 1,Public Works,Kansas City Mo - City Services,1
+33253,81e5,D,KC CodeInsp2,Codes Inspections Division of Development Services Channel 2,Public Works,Kansas City Mo - City Services,1
+33254,81e6,D,KC CodeInsp3,Codes Inspections Division of Development Services Channel 3,Public Works,Kansas City Mo - City Services,1
+33255,81e7,D,KC CodeInsp4,Codes Inspections Division of Development Services Channel 4,Public Works,Kansas City Mo - City Services,1
+33256,81e8,D,KC CodeInsp5,Codes Inspections Division of Development Services Channel 5,Public Works,Kansas City Mo - City Services,1
+33257,81e9,D,KC CodeInsp6,Codes Inspections Division of Development Services Channel 6,Public Works,Kansas City Mo - City Services,1
+33260,81ec,D,KC CodeInsp7,Code Inspections,Public Works,Kansas City Mo - City Services,1
+33261,81ed,D,KC CodeInsp8,Code Inspections,Public Works,Kansas City Mo - City Services,1
+33270,81f6,D,KCWaterDisp,Water Department Dispatch,Public Works,Kansas City Mo - City Services,1
+33271,81f7,D,KCWaterFacil,Water Department Facilities,Public Works,Kansas City Mo - City Services,1
+33272,81f8,D,KCWaterEng,Water Department Engineering,Public Works,Kansas City Mo - City Services,1
+33300,8214,D,KCPW Disp,Public Works Dispatch,Public Works,Kansas City Mo - Public Works,1
+33302,8216,D,KCPW Ops,Public Works Operations,Public Works,Kansas City Mo - Public Works,1
+33303,8217,D,KCPW Plow,Public Works Snow Plows,Public Works,Kansas City Mo - Public Works,1
+33304,8218,D,KCPW Signals,Public Works: Signals [PWSGN],Public Works,Kansas City Mo - Public Works,1
+33305,8219,D,KCPW Dist 1,Public Works: District 1 [PWD1],Public Works,Kansas City Mo - Public Works,1
+33306,821a,D,KCPW Dist 2,Public Works: District 2 [PWD2],Public Works,Kansas City Mo - Public Works,1
+33307,821b,D,KCPW Dist 3,Public Works: District 3 [PWD3],Public Works,Kansas City Mo - Public Works,1
+33308,821c,D,KCPW Dist 4,Public Works: District 4 [PWD4],Public Works,Kansas City Mo - Public Works,1
+33309,821d,D,KCPW 1,Public Works 1,Public Works,Kansas City Mo - Public Works,1
+33317,8225,D,KCPW SldWast,Public Works: Solid Waste [PWSW],Public Works,Kansas City Mo - Public Works,1
+33318,8226,D,KCPW SldWstS,Public Works: Solid Waste Supervisor [PWSWS],Public Works,Kansas City Mo - Public Works,1
+33350,8246,D,KCPR AllCall,KC Parks & Recreation: All Call,Public Works,Kansas City Mo - Parks and Recreation,1
+33351,8247,D,KCPR Dist 1,KC Parks & Recreation: District 1,Public Works,Kansas City Mo - Parks and Recreation,1
+33352,8248,D,KCPR Dist 2,KC Parks & Recreation: District 2,Public Works,Kansas City Mo - Parks and Recreation,1
+33353,8249,D,KCPR Dist 3,KC Parks & Recreation: District 3,Public Works,Kansas City Mo - Parks and Recreation,1
+33354,824a,D,KCPR Dist 4,KC Parks & Recreation: District 4,Public Works,Kansas City Mo - Parks and Recreation,1
+33356,824c,D,KCPR ParkOps,KC Parks & Recreation: Park Operations,Public Works,Kansas City Mo - Parks and Recreation,1
+33500,82dc,D,KCM CALL,KC MO Police: Calling [KCM CALL],Law Talk,Kansas City Mo - Police Special Operations,1
+33501,82dd,D,KCMOCMN3,KC MO Police: Common 3 [KCMOCMN3],Law Talk,Kansas City Mo - Police Special Operations,1
+33502,82de,D,KCMOCMN4,KC MO Police: Common 4 [KCMOCMN4],Law Talk,Kansas City Mo - Police Special Operations,1
+33503,82df,D,KCMOCMN5,KC MO Police: Common 5 [KCMOCMN5],Law Talk,Kansas City Mo - Police Special Operations,1
+33504,82e0,D,KCMOCMN6,KC MO Police: Common 6 [KCMOCMN6],Law Talk,Kansas City Mo - Police Special Operations,1
+33505,82e1,D,KCMOCMN7,KC MO Police: Common 7 [KCMOCMN7],Law Talk,Kansas City Mo - Police Special Operations,1
+33506,82e2,D,KCMOCMN8,KC MO Police: Common 8 [KCMOCMN8],Law Talk,Kansas City Mo - Police Special Operations,1
+33510,82e6,D,P/S Common 9,Public Safety Common 9 [PS CMN9],Interop,Regional Interop,1
+33511,82e7,D,P/S Common10,Public Safety Common 10 [PS CMN10],Interop,Regional Interop,1
+33512,82e8,D,P/S Common11,Public Safety Common 11 [PS CMN11],Interop,Regional Interop,1
+33513,82e9,D,P/S Common12,Public Safety Common 11 [PS CMN11],Interop,Regional Interop,1
+33514,82ea,D,P/S Common13,Public Safety Common 13 [PS CMN13],Interop,Regional Interop,1
+33515,82eb,D,P/S Common14,Public Safety Common 14 [PS CMN14],Interop,Regional Interop,1
+34005,84d5,D,Reg Calling,Regional Calling [REG CALL],Interop,Regional Interop,1
+34006,84d6,D,Reg Common3,Regional Common 3 [REG CMN3],Interop,Regional Interop,1
+34007,84d7,D,Reg Common4,Regional Common 4 [REG CMN4],Interop,Regional Interop,1
+34008,84d8,D,Reg Common5,Regional Common 5 [REG CMN5],Interop,Regional Interop,1
+34009,84d9,D,Reg Common6,Regional Common 6 [REG CMN6],Interop,Regional Interop,1
+34010,84da,D,E Common 7,East Common 7 [EASTCM7],Interop,Regional Interop,1
+34011,84db,D,E Common 8,East Common 8 [EASTCM8],Interop,Regional Interop,1
+34012,84dc,D,E Common 9,East Common 9 [EASTCM9],Interop,Regional Interop,1
+34013,84dd,D,E Common 10,East Common 10 [EASTCM10],Interop,Regional Interop,1
+34014,84de,D,W Common 11,West Common 11 [WESTCM11],Interop,Regional Interop,1
+34015,84df,D,W Common 12,West Common 12 [WESTCM12],Interop,Regional Interop,1
+34016,84e0,D,W Common 13,West Common 13 [WESTCM13],Interop,Regional Interop,1
+34017,84e1,D,W Common 14,West Common 14 [WESTCM14],Interop,Regional Interop,1
+34018,84e2,D,Reg Pursuit,Regional Pursuit [REG PRST],Law Talk,Regional Interop,1
+34045,84fd,D,MHP-A DISP 1,MHP Troop A (KC) Dispatch,Law Dispatch,State of Missouri,1
+34046,84fe,D,MHP-A DISP-2,MHP Troop A (KC) Dispatch 2,Law Dispatch,State of Missouri,1
+34060,850c,D,UMKC PD Disp,UMKC PD Dispatch,Security,University of Missouri Kansas City,1
+34061,850d,D,UMKC Parking,Parking Enforcement,Schools,University of Missouri Kansas City,1
+34100,8534,D,Platte Law 1,Platte County Sheriff: Law 1,Law Dispatch,Platte County Mo,1
+34101,8535,D,Platte Law 2,Platte County Sheriff: Law 2 (records checks etc),Law Talk,Platte County Mo,1
+34104,8538,D,PlatteLawTc1,Platte County Sheriff: Tac 1,Law Tac,Platte County Mo,1
+34105,8539,D,PlatteLawTc2,Platte County Sheriff: Tac 2,Law Tac,Platte County Mo,1
+34106,853a,D,PlatteLawTc3,Platte County Sheriff: Tac 3,Law Tac,Platte County Mo,1
+34107,853b,D,PlatteLawTc4,Platte County Sheriff: Tac 4,Law Tac,Platte County Mo,1
+34108,853c,D,PlatteLawTc5,Platte County Sheriff: Tac 5,Law Tac,Platte County Mo,1
+34109,853d,D,PlatteLawTc6,Platte County Sheriff: Tac 6,Law Tac,Platte County Mo,1
+34110,853e,E,PlatteLawTc7,Platte County Sheriff: Tac 7 (Encrypted),Law Tac,Platte County Mo,1
+34117,8545,D,PatteCoSSU,Platte County Courthouse Security [SSU],Security,Platte County Mo,1
+34118,8546,D,PlatteLawCm1,Platte County Sheriff: Car-to-Car 1 [COM 1],Law Talk,Platte County Mo,1
+34119,8547,D,PlatteLawCm2,Platte County Sheriff: Car-to-Car 2 [COM 2],Law Talk,Platte County Mo,1
+34129,8551,D,PlatteCo EM1,Platte County Emergency Management,Emergency Ops,Platte County Mo,1
+34131,8553,D,PlatteCo PW1,Platte County Public Works 1 [PW 1],Public Works,Platte County Mo,1
+34132,8554,D,PlatteCo PW2,Platte County Public Works 2 [PW 2],Public Works,Platte County Mo,1
+34133,8555,D,PlatteCo PW3,Platte County Public Works 3 [PW 3],Public Works,Platte County Mo,1
+34136,8558,D,PlatteCo FM1,Platte County Facilities Management 1 [FM 1],Public Works,Platte County Mo,1
+34137,8559,D,PlatteCo FM2,Platte County Facilities Management 2 [FM 2],Public Works,Platte County Mo,1
+34138,855a,D,PlatteCo FM3,Platte County Facilities Management 3 [FM 3],Public Works,Platte County Mo,1
+34141,855d,D,Platte Fire1,Platte County Fire: Dispatch [FIRE 1],Fire Dispatch,Platte County Mo,1
+34145,8561,D,PlatteFireT1,Platte County Fire: Tactical 1,Fire-Tac,Platte County Mo,1
+34146,8562,D,PlatteFireT2,Platte County Fire: Tactical 2,Fire-Tac,Platte County Mo,1
+34200,8598,D,Raytown PD A,Raytown Police Ch. A Dispatch,Law Dispatch,Jackson County - Raytown,1
+34201,8599,D,Raytown PD B,Raytown Police Ch. B,Law Talk,Jackson County - Raytown,1
+34202,859a,D,Raytown PD C,Raytown Police Ch. C,Law Talk,Jackson County - Raytown,1
+34203,859b,D,Raytown PD D,Raytown Police Ch. D,Law Talk,Jackson County - Raytown,1
+34204,859c,D,Raytown PD E,Raytown Police Ch. E,Law Talk,Jackson County - Raytown,1
+34212,85a4,D,Raytown PWKS,Raytown Public Works,Public Works,Jackson County - Raytown,1
+34219,85ab,D,Raytown EMS,Raytown EMS Dispatch,EMS Dispatch,Jackson County - Raytown,1
+34250,85ca,D,Grandview PD,Grandview Police Dispatch,Law Dispatch,Jackson County - Grandview,1
+34258,85d2,D,Grandview CW,Grandview Citywide,Public Works,Jackson County - Grandview,1
+34270,85de,D,Grandview FD,Grandview Fire/EMS,Fire Dispatch,Jackson County - Grandview,1
+34300,85fc,D,ClayCoSO CH1,Clay County Sheriff Dispatch CH 1,Law Dispatch,Clay County MO,1
+34301,85fd,D,ClayCoSO CH2,Clay County Sheriff CH 2,Law Tac,Clay County MO,1
+34302,85fe,D,ClayCoSO CH3,Clay County Sheriff CH 3,Law Talk,Clay County MO,1
+34303,85ff,D,ClayCoSO CH4,Clay County Sheriff CH 4,Law Talk,Clay County MO,1
+34304,8600,D,ClayCoSO CH5,Clay County Sheriff CH 5,Law Talk,Clay County MO,1
+34305,8601,D,ClayCoSO CH6,Clay County Sheriff CH 6,Law Talk,Clay County MO,1
+34306,8602,D,ClayCoSO CH7,Clay County Sheriff CH 7 Court Security,Security,Clay County MO,1
+34307,8603,E,ClayCoSo CH8,Clay County Sheriff's Office Drug Squad,Law Talk,Clay County MO,1
+34312,8608,D,Clay Co FD,Clay County Fire/EMS Dispatch,Fire Dispatch,Clay County MO,1
+34320,8610,D,Randolph PD,Randolph Police,Law Dispatch,Clay County MO,1
+34321,8611,D,ClayCoParks,Clay County Parks,Public Works,Clay County MO,1
+34322,8612,D,PlsValleyPD1,Pleasant Valley - Police Dispatch,Law Dispatch,Clay County MO,1
+34323,8613,D,PlsValleyPD2,Pleasant Valley - Police Tactical,Law Tac,Clay County MO,1
+34324,8614,D,PlsValleyFD1,Pleasant Valley - Fire Dispatch,Fire Dispatch,Clay County MO,1
+34325,8615,D,PlsValleyFD2,Pleasant Valley - Fire Tactical,Fire-Tac,Clay County MO,1
+34326,8616,D,PlsValley PW,Pleasant Valley - Public Works,Public Works,Clay County MO,1
+34351,862f,E,JCSO Disp,Jackson County Sheriff: Dispatch,Law Dispatch,Jackson County MO,1
+34352,8630,E,JCSO Sec,Jackson County Sheriff: Secondary,Law Tac,Jackson County MO,1
+34353,8631,E,JCSO Ops 1,Jackson County Sheriff': Ops-1,Law Tac,Jackson County MO,1
+34354,8632,D,JCSO Ops 2,Jackson County Sheriff: Ops-2,Law Tac,Jackson County MO,1
+34355,8633,D,JCSO Ops 3,Jackson County Sheriff: Ops-3,Law Tac,Jackson County MO,1
+34356,8634,E,JCSO Ops 4,Jackson County Sheriff: Ops-4,Law Tac,Jackson County MO,1
+34357,8635,E,JCSO ERT,Jackson County Sheriff Emergency Response Team,Law Tac,Jackson County MO,1
+34358,8636,D,JCSO Traffic,Jackson County Sheriff Traffic Unit,Law Tac,Jackson County MO,1
+34359,8637,D,JCSO Ct KC,KC (Downtown) Courthouse,Law Tac,Jackson County MO,1
+34360,8638,D,JCSO Ct Ind,Independence Courthouse,Law Tac,Jackson County MO,1
+34361,8639,D,JaCo Muni PD,Jackson County Sheriff: Municipal Police - Dispatch*,Law Dispatch,Jackson County MO,1
+34362,863a,D,JC ParksRngr,Jackson County Park Rangers,Public Works,Jackson County MO,1
+34365,863d,D,JACO PW,Jackson County Public Works,Public Works,Jackson County MO,1
+34370,8642,D,JACO PW TAC,Jackson County Public Works TAC,Public Works,Jackson County MO,1
+34379,864b,D,OAK GROVE 1,OAK GROVE POLICE,Law Dispatch,Jackson County MO,1
+34381,864d,D,GrVALLEY COD,GRAIN VALLEY CODES,Public Works,Jackson County MO,1
+34382,864e,D,Lake Lota PD,Lake Lotawana Police,Law Dispatch,Jackson County MO,1
+34383,864f,D,LakeLota PD1,Lake Lotawana Police 1,Law Tac,Jackson County MO,1
+34384,8650,D,Lone Jack PD,Lone Jack Police,Law Dispatch,Jackson County MO,1
+34385,8651,D,LoneJack PD1,Lone Jack Police 1,Law Tac,Jackson County MO,1
+34386,8652,D,Greenwood PD,Greenwood Police,Law Dispatch,Jackson County MO,1
+34387,8653,D,GreenwoodPD1,Greenwood Police 1,Law Tac,Jackson County MO,1
+34389,8655,D,IFPD BlueSum,Intercity Fire Protection District (Blue Summit),Fire-Tac,Jackson County MO,1
+34500,86c4,D,Liberty PD,Liberty Police Dispatch,Law Dispatch,Clay County MO - Liberty,1
+34501,86c5,D,Liberty PD 2,Liberty Police Channel 2,Law Tac,Clay County MO - Liberty,1
+34504,86c8,D,Liberty FD,Liberty Fire Dispatch,Fire Dispatch,Clay County MO - Liberty,1
+34505,86c9,D,Lib FD Tac 1,Liberty Fire Tactical 1,Fire-Tac,Clay County MO - Liberty,1
+34514,86d2,D,Liberty PW,Liberty Public Works,Public Works,Clay County MO - Liberty,1
+34519,86d7,D,LIBERTY EMS,LIBERTY EMS DISPATCH,EMS Dispatch,Clay County MO - Liberty,1
+34550,86f6,E,CassCo SO F1,Cass Co Sheriff F-1 (Dispatch),Law Dispatch,Cass County MO,1
+34551,86f7,E,CassCo SO F2,Cass Co Sheriff F-2 (Overflow),Law Tac,Cass County MO,1
+34552,86f8,E,CASSOPS1,Cass Co Sheriff Operations 1,Law Talk,Cass County MO,1
+34553,86f9,E,CASSOPS2,Cass Co Sheriff Operations 2,Law Talk,Cass County MO,1
+34554,86fa,E,CassCo Jail,CassCoJail,Corrections,Cass County MO,1
+34555,86fb,E,CASSTAC1,Cass Co Sheriff TAC 1,Law Tac,Cass County MO,1
+34556,86fc,E,CASSTAC2,Cass Co Sheriff TAC 2,Law Tac,Cass County MO,1
+34557,86fd,E,CASS DET,Cass Co Sheriff Detectives,Law Talk,Cass County MO,1
+34558,86fe,E,CASSADMN,Cass Co Sheriff Admin,Law Talk,Cass County MO,1
+34559,86ff,E,Belton PD F1,Belton PD Dispatch,Law Dispatch,Cass County MO,1
+34560,8700,E,BeltonPDTAC1,BPDTAC1,Law Tac,Cass County MO,1
+34561,8701,E,BeltonPDTAC2,BPDTAC2,Law Tac,Cass County MO,1
+34562,8702,E,BeltonPDTAC3,BPDTAC3,Law Tac,Cass County MO,1
+34563,8703,E,BeltonPDCIRT,BPDCIRT,Law Tac,Cass County MO,1
+34564,8704,D,Belton Fire,Belton Fire Dispatch,Fire Dispatch,Cass County MO,1
+34565,8705,D,BeltonFDTAC1,BFDTAC1,Fire-Tac,Cass County MO,1
+34566,8706,D,BeltonFDTAC2,BFDTAC2,Fire-Tac,Cass County MO,1
+34567,8707,D,Belton LG,Belton Local Government,Public Works,Cass County MO,1
+34568,8708,D,Belton CH,Belton City Hall,Public Works,Cass County MO,1
+34569,8709,D,Belton PW,Belton Public Works,Public Works,Cass County MO,1
+34570,870a,D,BeltonPWALT1,Belton Public Works Alt 1,Public Works,Cass County MO,1
+34571,870b,D,BeltonPWALT2,Belton Public Works Alt 2,Public Works,Cass County MO,1
+34572,870c,D,Belton TRAN,Belton Transportation,Transportation,Cass County MO,1
+34573,870d,D,BeltonEMA OC,Belton Emergency Management,Emergency Ops,Cass County MO,1
+34574,870e,D,BeltonEMACOM,Belton Emergency Management Common,Emergency Ops,Cass County MO,1
+34575,870f,D,Belton CMN1,Belton Common 1,Interop,Cass County MO,1
+34576,8710,D,Belton CMN2,Belton Common 2,Interop,Cass County MO,1
+34577,8711,D,Belton WAT,Belton WAT,Other,Cass County MO,1
+34578,8712,D,Belton VM,Belton VM,Other,Cass County MO,1
+34579,8713,D,Belton CDD,Belton CDD,Other,Cass County MO,1
+34580,8714,E,HV PD DISP,Harrisonville Police Dispatch,Law Dispatch,Cass County MO,1
+34581,8715,E,HV PD TAC1,Harrisonville Police TAC 1,Law Tac,Cass County MO,1
+34582,8716,E,HV PD TAC2,Harrisonville Police TAC 2,Law Tac,Cass County MO,1
+34583,8717,E,HV PD ACO,Harrisonville Police Animal Control,Law Talk,Cass County MO,1
+34584,8718,E,HV PD INV1,Harrisonville Police Investigations 1,Law Talk,Cass County MO,1
+34585,8719,E,HV PD INV2,Harrisonville Police Investigations 2,Law Talk,Cass County MO,1
+34586,871a,D,HV FD/EMS,Harrisonville Fire/EMS Dispatch,Fire Dispatch,Cass County MO,1
+34587,871b,D,HV ES TAC1,Harrisonville Fire/EMS TAC 1,Fire-Tac,Cass County MO,1
+34588,871c,D,HV ES TAC2,Harrisonville Fire/EMS TAC 2,Fire-Tac,Cass County MO,1
+34589,871d,D,HV ES TAC3,Harrisonville Fire/EMS TAC 3,Fire-Tac,Cass County MO,1
+34590,871e,D,HAR PARKS,Harrisonville Parks,Public Works,Cass County MO,1
+34591,871f,D,HAR STRTS,Harrisonville Street,Public Works,Cass County MO,1
+34592,8720,D,HAR ELEC,Harrisonville Electric,Utilities,Cass County MO,1
+34593,8721,D,HAR TREE,Harrisonville Tree,Public Works,Cass County MO,1
+34594,8722,D,HAR WATER,Harrisonville Water,Utilities,Cass County MO,1
+34595,8723,D,HAR CODES,Harrisonville Codes,Public Works,Cass County MO,1
+34596,8724,D,HARCTYHL,Harrisonville City Hall,Public Works,Cass County MO,1
+34597,8725,D,HAR CMN1,Harrisonville Common 1,Interop,Cass County MO,1
+34598,8726,D,HAR CMN2,Harrisonville Common 2,Interop,Cass County MO,1
+34599,8727,D,HAR CMN3,Harrisonville Common3,Interop,Cass County MO,1
+34600,8728,D,HAR EMGT,Harrisonville Emergency Managment,Emergency Ops,Cass County MO,1
+34601,8729,D,HARPWSUP,Harrisonville Public Works Supervisors,Public Works,Cass County MO,1
+34602,872a,E,PH PD DISP1,Pleasant Hill PD Dispatch 1,Law Dispatch,Cass County MO,1
+34603,872b,E,PH PD DISP2,Pleasant Hill PD Dispatch 2,Law Dispatch,Cass County MO,1
+34604,872c,E,PH PD TAC1,Pleasant Hill PDTAC1,Law Tac,Cass County MO,1
+34605,872d,E,PH PD TAC2,Pleasant Hill PDTAC2,Law Tac,Cass County MO,1
+34606,872e,E,PH PD ACO,Pleasant Hill PD ACO,Law Talk,Cass County MO,1
+34607,872f,D,PH EM,Pleasant Hill Emergency Managment,Emergency Ops,Cass County MO,1
+34608,8730,D,PH PW1,Pleasant Hill Public Works 1,Public Works,Cass County MO,1
+34609,8731,D,PH PW2,Pleasant Hill Public Works 2,Public Works,Cass County MO,1
+34610,8732,D,PH CMN1,Pleasant Hill Common 1,Interop,Cass County MO,1
+34611,8733,D,PH CMN2,Pleasant Hill Common 2,Interop,Cass County MO,1
+34612,8734,D,PH FD DISP,Pleasant Hill Fire/EMS Dispatch,Fire Dispatch,Cass County MO,1
+34613,8735,D,PH FD TAC1,Pleasant Hill FDTAC1,EMS-Tac,Cass County MO,1
+34614,8736,D,PH FD TAC2,Pleasant Hill FDTAC2,EMS-Tac,Cass County MO,1
+34615,8737,D,CntCass Fire,Central Cass Fire Dispatch,Fire Dispatch,Cass County MO,1
+34618,873a,D,CRTN FD,Creighton Fire Dispatch,Fire Dispatch,Cass County MO,1
+34619,873b,D,DRXL FD,Drexel Fire Dispatch,Fire Dispatch,Cass County MO,1
+34620,873c,D,DWD FD,Dolan West Dolan Fire Dispatch,Fire Dispatch,Cass County MO,1
+34621,873d,D,ELYNNFD,East Lynn Fire Dispatch,Fire Dispatch,Cass County MO,1
+34622,873e,D,GDCTY FD,Garden City Fire Dispatch,Fire Dispatch,Cass County MO,1
+34623,873f,D,SoMtroFDDisp,South Metro Fire Dispatch,Fire Dispatch,Cass County MO,1
+34624,8740,D,SoMtroFDTAC1,South Metro Fire TAC 1,Fire-Tac,Cass County MO,1
+34625,8741,D,SoMtroFDTAC2,South Metro Fire TAC 2,Fire-Tac,Cass County MO,1
+34633,8749,D,WPecFD DISP,West Peculiar Fire Dispatch,Fire Dispatch,Cass County MO,1
+34634,874a,E,RaymorePD F1,Raymore PD Dispatch,Law Dispatch,Cass County MO,1
+34635,874b,E,RMPD TC1,Raymore PD TAC 1,Law Tac,Cass County MO,1
+34636,874c,E,RMPD TC2,Raymore PD TAC 2,Law Tac,Cass County MO,1
+34637,874d,E,PECPD TC1,Peculiar Police TAC1,Law Tac,Cass County MO,1
+34638,874e,D,RM EMGT,Raymore Emergency Managment,Emergency Ops,Cass County MO,1
+34639,874f,D,RM PW,Raymore Public Works,Public Works,Cass County MO,1
+34640,8750,D,RM PARKS,Raymore Parks,Public Works,Cass County MO,1
+34641,8751,D,RM CMN1,Raymore Common 1,Interop,Cass County MO,1
+34642,8752,D,RM CMN2,Raymore Common 2,Interop,Cass County MO,1
+34643,8753,D,CASSCMN1,Cass County Common 1,Interop,Cass County MO,1
+34644,8754,D,CASSCMN2,Cass County Common 2,Interop,Cass County MO,1
+34645,8755,D,CASSCMN3,Cass County Common 3,Interop,Cass County MO,1
+34646,8756,D,CASSCMN4,Cass County Common 4,Interop,Cass County MO,1
+34647,8757,E,CC LAW,Cass County LAW,Interop,Cass County MO,1
+34648,8758,D,CC FIRE,Cass County FIRE,Interop,Cass County MO,1
+34649,8759,D,CC EMGT,Cass County Emergency Managment,Interop,Cass County MO,1
+34650,875a,E,CCLAWTAC,Cass County LAW TAC,Interop,Cass County MO,1
+34651,875b,D,FMA NE 1,Fire Mutual Aid North East 1,Interop,Cass County MO,1
+34652,875c,D,FMA NE 2,Fire Mutual Aid North East 2,Interop,Cass County MO,1
+34653,875d,D,FMA NE 3,Fire Mutual Aid North East 3,Interop,Cass County MO,1
+34654,875e,D,FMA NW 1,Fire Mutual Aid North West 1,Interop,Cass County MO,1
+34655,875f,D,FMA NW 2,Fire Mutual Aid North West 2,Interop,Cass County MO,1
+34656,8760,D,FMA NW 3,Fire Mutual Aid North West 3,Interop,Cass County MO,1
+34657,8761,D,FMA SE 1,Fire Mutual Aid South East 1,Interop,Cass County MO,1
+34658,8762,D,FMA SE 2,Fire Mutual Aid South East 2,Interop,Cass County MO,1
+34659,8763,D,FMA SE 3,Fire Mutual Aid South East 3,Interop,Cass County MO,1
+34660,8764,D,FMA SW 1,Fire Mutual Aid South West 1,Interop,Cass County MO,1
+34661,8765,D,FMA SW 2,Fire Mutual Aid South West 2,Interop,Cass County MO,1
+34662,8766,D,FMA SW 3,Fire Mutual Aid South West 3,Interop,Cass County MO,1
+34663,8767,D,ARCH LG,Archie Local Government,Public Works,Cass County MO,1
+34664,8768,D,CLVLD LG,Cleveland Local Government,Public Works,Cass County MO,1
+34665,8769,D,CRTN LG,Creighton Local Government,Public Works,Cass County MO,1
+34666,876a,D,DREX LG,Drexel Local Government,Public Works,Cass County MO,1
+34667,876b,D,ELYNN LG,East Lynn Local Government,Public Works,Cass County MO,1
+34668,876c,D,FRMN LG,Freeman Local Government,Public Works,Cass County MO,1
+34669,876d,D,GDCTY LG,Garden City Local Government,Public Works,Cass County MO,1
+34670,876e,D,LKWIN LG,Lake Winnebago Local Government,Public Works,Cass County MO,1
+34671,876f,D,LOCLD LG,Loch Lloyd Local Government,Public Works,Cass County MO,1
+34672,8770,D,PECLR LG,Peculiar Local Government,Public Works,Cass County MO,1
+34673,8771,D,STRAS LG,Strausburg Local Government,Public Works,Cass County MO,1
+34674,8772,D,RD BRDG1,Road & Bridge 1,Public Works,Cass County MO,1
+34675,8773,D,RD BRDG2,Road & Bridge 2,Public Works,Cass County MO,1
+34676,8774,D,RD BRDG3,Road & Bridge 3,Public Works,Cass County MO,1
+34677,8775,D,ARCH PD,Archie Police,Law Talk,Cass County MO,1
+34678,8776,D,CLVLD PD,Cleveland Police,Law Talk,Cass County MO,1
+34679,8777,D,CRTN PD,Creighton Police,Law Talk,Cass County MO,1
+34680,8778,D,DREX PD,Drexel Police,Law Talk,Cass County MO,1
+34681,8779,D,ELYNN PD,East Lynn Police,Law Talk,Cass County MO,1
+34682,877a,D,FRMN PD,Freeman Police,Law Talk,Cass County MO,1
+34683,877b,D,GDCTY PD,Garden City Police,Law Talk,Cass County MO,1
+34684,877c,D,LKWIN PD,Lake Winnebago Police,Law Talk,Cass County MO,1
+34685,877d,D,PECLR PD,Peculiar Police,Law Talk,Cass County MO,1
+34686,877e,D,STRAS PD,Strausburg Police,Law Talk,Cass County MO,1
+34687,877f,E,CCFD INV,Cass County Fire Investigations,Other,Cass County MO,1
+34688,8780,D,PSDSP**,Public Safety Dispatch Common,Interop,Cass County MO,1
+34689,8781,D,MAPD VHF,MA PD VHF 155.4750 MotoBridge Tie,Interop,Cass County MO,1
+34690,8782,D,MAFD VHF,MA FD VHF 154.2800 MotoBridge Tie,Interop,Cass County MO,1
+34691,8783,D,MO SOVHF,MO SO VHF 155.7300 MotoBridge Tie,Interop,Cass County MO,1
+34692,8784,D,CASS VHF,CASS SO VHF 155.6850 MotoBridge Tie,Interop,Cass County MO,1
+34693,8785,D,RAYPEC 1,Raymore Peculiar Schools 1,Schools,Cass County MO,1
+34694,8786,D,RAYPEC 2,Raymore Peculiar Schools 2,Schools,Cass County MO,1
+34695,8787,D,FOXWOOD,Foxwood Springs Security,Security,Cass County MO,1
+35731,8b93,D,USProbParole,US Probation & Parole Agents [USPP],Law Talk,Kansas City Mo - Police Special Operations,1
+35732,8b94,D,VAPD1,VA Police Dispatch,Law Dispatch,Kansas City MO - VA Medical Center,1
+35733,8b95,D,VAPD2,VA Police Ch. 2,Law Tac,Kansas City MO - VA Medical Center,1
+35734,8b96,D,VAPD3,VA Police Ch.3,Law Tac,Kansas City MO - VA Medical Center,1
+35735,8b97,D,VAEMS,VA Emergency Medical Services,EMS Dispatch,Kansas City MO - VA Medical Center,1
+35736,8b98,D,VAMNT,VA Facilities Maintenance,Public Works,Kansas City MO - VA Medical Center,1
+35750,8ba6,D,GladFireOps,Gladstone Fire: Response/On Scene Ops,Fire Dispatch,Clay County MO - Gladstone,1
+35751,8ba7,D,GladFireTac1,Gladstone Fire Tactical,Fire-Tac,Clay County MO - Gladstone,1
+35753,8ba9,D,Glad FireEMS,Gladstone Fire/EMS Dispatch,Fire Dispatch,Clay County MO - Gladstone,1
+35755,8bab,D,Glad Police,Gladstone Police Dispatch,Law Dispatch,Clay County MO - Gladstone,1
+35756,8bac,D,Glad PD Tac1,Gladstone PD Tac 1,Law Tac,Clay County MO - Gladstone,1
+35763,8bb3,D,GladFireInsp,Gladstone Fire Inspections,Fire-Talk,Clay County MO - Gladstone,1
+35765,8bb5,D,Glad PubWrks,Gladstone Public Works,Public Works,Clay County MO - Gladstone,1
+35766,8bb6,D,Glad ComCntr,Gladstone Community Center,Public Works,Clay County MO - Gladstone,1
+35799,8bd7,D,NKC Fire,NKC Fire: Tone Out - Station Alert,Fire Dispatch,Clay County MO - North Kansas City,1
+35800,8bd8,D,NKC FD Disp,NKC Fire: Dispatch,Fire Dispatch,Clay County MO - North Kansas City,1
+35801,8bd9,D,NKC FD 2,NKC Fire 2,Fire-Tac,Clay County MO - North Kansas City,1
+35802,8bda,D,NKC FD 3,NKC Fire 3,Fire-Tac,Clay County MO - North Kansas City,1
+35805,8bdd,D,NKC Police,NKC Police: Dispatch,Law Dispatch,Clay County MO - North Kansas City,1
+35807,8bdf,D,NKC Police 2,NKC Police,Law Tac,Clay County MO - North Kansas City,1
+35808,8be0,E,NKC PD Tac,NKC Police Tactical,Law Tac,Clay County MO - North Kansas City,1
+35850,8c0a,D,Rvrsd Fire,Riverside Fire: Dispatch,Fire Dispatch,Platte County MO - Riverside,1
+35851,8c0b,D,Rvrsd FDTac1,Riverside Fire: Tac [TAC1],Fire-Tac,Platte County MO - Riverside,1
+35855,8c0f,D,Rvrsd Police,Riverside Police: Dispatch [RIVRSD PD DSP],Law Dispatch,Platte County MO - Riverside,1
+35856,8c10,D,Rvrsd PDTac1,Riverside Police: Tac 1,Law Tac,Platte County MO - Riverside,1
+35857,8c11,D,Rvrsd PDTac2,Riverside Police: Tac 2,Law Tac,Platte County MO - Riverside,1
+35865,8c19,D,Rvrsd PubWrk,Riverside Public Works,Public Works,Platte County MO - Riverside,1
+35900,8c3c,D,MO DOT 1,MO DOT 1 - Motorist Assist Dispatch,Public Works,State of Missouri,1
+35901,8c3d,D,MO DOT 2,MO DOT 2 - Motorist Assist Talkaround,Public Works,State of Missouri,1
+35928,8c58,D,PVal/OVw PD,Pleasant Valley/Oak View Police - Simulcast,Law Dispatch,Clay County MO,1
+35932,8c5c,D,Claycomo PD,Claycomo PD,Law Dispatch,Clay County MO,1
+36998,9086,D,Motorola 998,Motorola Radio Techs,Business,Radio Technicians / Testing,1
+36999,9087,D,Motorola 999,Motorola Radio Techs,Business,Radio Technicians / Testing,1
+37000,9088,E,KC PD East,Kansas City Police -- East,Law Dispatch,Wyandotte County Kansas,1
+37001,9089,E,KC PD Midtwn,Kansas City Police -- Midtown,Law Dispatch,Wyandotte County Kansas,1
+37002,908a,E,KC PD West,Kansas City Police -- West,Law Dispatch,Wyandotte County Kansas,1
+37003,908b,E,KC PD South,Kansas City Police -- South,Law Dispatch,Wyandotte County Kansas,1
+37004,908c,E,KC PD Score,Kansas City PD SCORE,Law Tac,Wyandotte County Kansas,1
+37005,908d,D,KC PD ACO,Kansas City PD -- Animal Control,Law Tac,Wyandotte County Kansas,1
+37006,908e,E,KC PD Detect,Kansas City PD -- Detective,Law Tac,Wyandotte County Kansas,1
+37007,908f,E,KC PD Vice,Kansas City PD -- Narcotics/Vice,Law Tac,Wyandotte County Kansas,1
+37008,9090,D,KC CtznPatrl,Kansas City PD -- Neighborhood Crime Patrol (Civilian),Law Tac,Wyandotte County Kansas,1
+37010,9092,D,KC PD TAC 1,Kansas City PD -- Tac 1,Law Tac,Wyandotte County Kansas,1
+37011,9093,E,KC PD TAC 2,Kansas City PD -- Tac 2,Law Tac,Wyandotte County Kansas,1
+37012,9094,E,KC PDDirect1,Kansas City PD -- Direct 1,Law Tac,Wyandotte County Kansas,1
+37013,9095,E,KC PDDirect2,Kansas City PD -- Direct 2,Law Tac,Wyandotte County Kansas,1
+37014,9096,D,USD500 PD,USD 500 PD -- School Police,Law Dispatch,Wyandotte County Kansas,1
+37015,9097,D,KC Fire Disp,Kansas City Fire -- Dispatch,Fire Dispatch,Wyandotte County Kansas,1
+37016,9098,D,KC Fire Tac1,Kansas City Fire -- Tac 1,Fire-Tac,Wyandotte County Kansas,1
+37017,9099,D,KC Fire Tac2,Kansas City Fire -- Tac 2,Fire-Tac,Wyandotte County Kansas,1
+37018,909a,D,KC Fire Tac3,Kansas City Fire -- Tac 3,Fire-Tac,Wyandotte County Kansas,1
+37019,909b,D,KC Fire Tac4,Kansas City Fire -- Tac 4,Fire-Tac,Wyandotte County Kansas,1
+37020,909c,D,KC Fire Tac5,Kansas City Fire -- Tac 5,Fire-Tac,Wyandotte County Kansas,1
+37021,909d,D,KC Fire Tac6,Kansas City Fire -- TAC 6,Fire-Tac,Wyandotte County Kansas,1
+37022,909e,D,KC Fire Tac7,Kansas City Fire -- TAC 7,Fire-Tac,Wyandotte County Kansas,1
+37023,909f,D,KC Fire Tac8,Kansas City Fire -- TAC 8,Fire-Tac,Wyandotte County Kansas,1
+37024,90a0,D,KC Fire Tac9,Kansas City Fire -- TAC 9,Fire-Tac,Wyandotte County Kansas,1
+37025,90a1,D,KC FireTac10,Kansas City Fire -- TAC 10,Fire-Tac,Wyandotte County Kansas,1
+37026,90a2,D,KCFireEMS,Kansas City Fire -- EMS,EMS Dispatch,Wyandotte County Kansas,1
+37033,90a9,D,KCFDStation7,Fire Station 7 -- 27th and Strong Ave (South),Fire Dispatch,Wyandotte County Kansas,1
+37036,90ac,D,KCFDStatin10,Fire Station 10 -- 36th and Rainbow Blvd (South),Fire Dispatch,Wyandotte County Kansas,1
+37040,90b0,D,KCFDStatin14,Fire Station 14 -- 27th and Rowland Ave (East),Fire Dispatch,Wyandotte County Kansas,1
+37042,90b2,D,KCFDStatin16,Fire Station 16 -- 55th and Metropolitan Ave (South),Fire Dispatch,Wyandotte County Kansas,1
+37043,90b3,D,KCFDStatin17,Fire Station 17 -- 51st and Gibbs Rd (South),Fire Dispatch,Wyandotte County Kansas,1
+37045,90b5,D,KCFDStatin19,Fire Station 19 -- 80th and Minnesota (West),Fire Dispatch,Wyandotte County Kansas,1
+37046,90b6,D,KCFDStatin20,Fire Station 20 -- 78th and Kansas Ave (West),Fire Dispatch,Wyandotte County Kansas,1
+37049,90b9,D,Wy Co PubWks,WYCO Public Works/Street Dept,Public Works,Wyandotte County Kansas,1
+37052,90bc,D,KCKStrtsDis5,KC KS Street Department District 5,Public Works,Wyandotte County Kansas,1
+37053,90bd,D,KCKStrtsDis4,KC KS Street Department District 4,Public Works,Wyandotte County Kansas,1
+37058,90c2,D,Wy Co Codes,WYCO Code Enforcement,Public Works,Wyandotte County Kansas,1
+37061,90c5,E,WyandotCoTAC,Wyandotte Sheriff Tac,Law Tac,Wyandotte County Kansas,1
+37063,90c7,D,WyandotCo SO,Wyandotte Sheriff,Law Dispatch,Wyandotte County Kansas,1
+37064,90c8,D,WYCO JailOps,Wyandotte County Jail operations (non encrypted),Corrections,Wyandotte County Kansas,1
+37068,90cc,D,Wy Co EM Mgn,WYCO Emergency Management,Emergency Ops,Wyandotte County Kansas,1
+37069,90cd,D,Wy Co EM WX,WYCO Emergency Management WX,Emergency Ops,Wyandotte County Kansas,1
+37070,90ce,D,Wy Co EM EOC,WYCO Emergency Management EOC,Emergency Ops,Wyandotte County Kansas,1
+37071,90cf,D,Wy Co COM 1,Wyandotte Common 1,Interop,Wyandotte County Kansas,1
+37072,90d0,D,Wy Co COM 2,Wyandotte Common 2,Interop,Wyandotte County Kansas,1
+37073,90d1,D,Wy Co COM 3,Wyandotte Common 3,Interop,Wyandotte County Kansas,1
+37074,90d2,D,Wy Co COM 4,Wyandotte Common 4,Interop,Wyandotte County Kansas,1
+37075,90d3,D,Wy Co COM 5,Wyandotte Common 5,Interop,Wyandotte County Kansas,1
+37076,90d4,D,Wy Co COM 6,Wyandotte Common 6,Interop,Wyandotte County Kansas,1
+37077,90d5,D,Wy Co COM 7,Wyandotte Common 7,Interop,Wyandotte County Kansas,1
+37078,90d6,D,Wy Co COM 8,Wyandotte Common 8,Interop,Wyandotte County Kansas,1
+37081,90d9,D,KCKCC PD,KCKCC PD (Community College),Law Dispatch,Wyandotte County Kansas,1
+37082,90da,E,BnrSprgsPD 1,Bonner Springs / Edwardsville Police -- Channel 1,Law Dispatch,Wyandotte County Kansas,1
+37083,90db,D,BnrSprgsTAC1,Bonner Springs PD Tac 1,Law Tac,Wyandotte County Kansas,1
+37085,90dd,D,BonnerSpgsFD,Bonner Springs Fire and EMS Dispatch,Fire Dispatch,Wyandotte County Kansas,1
+37086,90de,D,BnrSpgFDTac1,Bonner Springs Fire and EMS -- TAC 1,Fire-Tac,Wyandotte County Kansas,1
+37087,90df,D,BnrSpgFDTac2,Bonner Springs Fire and EMS -- TAC 2,Fire-Tac,Wyandotte County Kansas,1
+37093,90e5,D,EdwvlPD TAC1,Edwardsville PD Tac 1,Law Tac,Wyandotte County Kansas,1
+37095,90e7,D,ED Fire Disp,Edwardsville Fire Dispatch,Fire Dispatch,Wyandotte County Kansas,1
+37097,90e9,D,ED Fire Tac1,Edwardsville Fire Tac-1,Fire-Tac,Wyandotte County Kansas,1
+37098,90ea,D,ED Fire Tac2,Edwardsville Fire Tac-2,Fire-Tac,Wyandotte County Kansas,1
+37100,90ec,D,BPU MainDisp,Kansas City BPU Utilities -- Main Dispatch,Utilities,Wyandotte County Kansas,1
+37116,90fc,D,BPU Water,BPU Water,Utilities,Wyandotte County Kansas,1

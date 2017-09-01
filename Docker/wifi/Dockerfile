@@ -5,7 +5,7 @@ MAINTAINER Ralf Zeidler
 RUN apt-get update -y && \
     apt-get install -y hostapd dnsmasq net-tools \
     rfkill iptables iw bridge-utils ifupdown udev wpasupplicant wireless-tools \
-    isc-dhcp-server wget
+    isc-dhcp-server wget isc-dhcp-client
 
 #RUN wget -q https://git.io/voEUQ -O /tmp/raspap && bash /tmp/raspap
 
