@@ -13,6 +13,9 @@
 cd /home/pi/gitrep/raspiv2/
 echo 'Download new repositry:'
 git pull
+git checkout $1
+git reset --hard origin/$1
+echo Switched to $1 branch.
 echo '<br> Copy new repositry.'
 cp -R /home/pi/gitrep/raspiv2/html/ /var/www/
 echo 'Refresh porperty rights. <br>'

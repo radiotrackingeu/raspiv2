@@ -129,9 +129,13 @@
 	
 	<div id="GIT" class="w3-container city" style="display:none">
 		<br>First download then install the feature - installing requires also an internet connection and requires some time. <br><br>
-		<form method="POST" onsubmit="return openCity('GIT');">
-		<input class="w3-btn" type="submit" value="Download Recipes and HTML Files" name="update_rep" onclick="openCity('GIT')"/>
-		<input class="w3-btn" type="submit" value="Reboot" name="reboot" "/>
+		<form method="POST" enctype="multipart/form-data" onsubmit="return openCity('GIT');">
+				<select name="git_checkout">
+					<option value="master">Stable Version</option>
+					<option value="live">Development Version</option>
+				</select> 
+			<input class="w3-btn" type="submit" value="Download Recipes and HTML Files" name="update_rep" onclick="openCity('GIT')"/>
+			<input class="w3-btn" type="submit" value="Reboot" name="reboot" "/>
 		</form>
 	</div>
 	<div id="install" class="w3-container city" style="display:none">
@@ -171,7 +175,7 @@
 		<hr>
 
 		</form>
-		</div>
+	</div>
 		<div id="git_setup" class="w3-container city" style="display:none">
 		    <form method="post" enctype="multipart/form-data">
 			<br>
@@ -225,7 +229,7 @@
 			ini_set('display_errors', 1);
 			if (isset($_POST["update_rep"])){
 				echo '<pre>';
-				$test = system('sudo docker run --rm -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh 2>&1', $ret);
+				$test = system('sudo docker run --rm -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh ' .$_POST["git_checkout"]. ' 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["reboot"])){
