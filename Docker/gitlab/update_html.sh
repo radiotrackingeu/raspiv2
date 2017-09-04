@@ -12,7 +12,7 @@
 # Running on live branch with githab repository
 cd /home/pi/gitrep/raspiv2/
 echo 'Download new repositry:'
-#git pull
+git pull
 git checkout $1
 git reset --hard origin/$1
 echo Switched to $1 branch.
