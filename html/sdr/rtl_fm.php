@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="/weblib/css/font-awesome.min.css">
 
 <body>
+<!-- <?php require_once("../header.php"); ?> -->
 
 <div class="w3-container w3-green">
 <h1>radio-tracking.eu</h1>
@@ -116,26 +117,59 @@
 	<a class="w3-bar-item w3-button w3-mobile" href="/license.html"><i class="fa fa-registered"></i> License</a>
 </div>
 
+<?php
+	//for debugging purposes
+	function console_log( $data ){
+	  echo '<script>';
+	  echo 'console.log('. json_encode( $data ) .')';
+	  echo '</script>';
+	}
+	
+	// $settings = parse_ini_file('../globalconfig', false, INI_SCANNER_RAW);
+	require_once '../Config/Lite.php';
+	define ('confSection', 'SDR_Radio');
+	define ('confKeys', array('Freq1','Freq2','Freq3','Freq4','Freq5','Freq6', 'Radio_Gain'));
+	$config = new Config_Lite('../globalconfig');
+	console_log('Reading Config File. Freq3= '.$config['SDR_Radio']['Freq3']);
+	
+
+	//Assign currently entered values to config and write config to file.
+	function update_Config(&$config) {
+		// $config->read();
+		// var_dump($config);
+		foreach (confKeys as $value)
+		{
+			if ($config->has(confSection,$value) && isset($_POST[$value])) {
+				// console_log('is set: '.$value);
+				$config->set(confSection,$value,$_POST[$value]);
+			}
+		}
+		$config->save();		
+	}
+?>
+
+
+
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown">
   <button class="w3-bar-item w3-button" onclick="openCity('Radio')">Single Frequency</button>
 </div>
 <div id="UMTS" class="w3-container">
-<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 
 <h3>Receiver Settings</h3><br>
 <table style="width:90%">
 
 	<tr>
 		<td>Frequencies:</td>
-		<td><input type="text" name="freq" value="<?php echo isset($_POST['freq']) ? $_POST['freq'] : '150.1M' ?>" /></td>
+		<td><input type="text" name="Freq3" value="<?php echo isset($config['SDR_Radio']['Freq3']) ? $config['SDR_Radio']['Freq3'] : 42 ?>" /></td>
 		<td>Set the frequency you want to listen to. You can use multipliers like M and k. Turn slightly below the frequency for better results. Together with a treshold bigger then 0 you can scan multiple frequencies if you add a -f (i.e. 150.1M -f 150.120M) </td>
 	</tr>
 	<tr>
 		<td>Gain in DB:</td>
-		<td><input type="text" name="gain" value="<?php echo isset($_POST['gain']) ? $_POST['gain'] : '20' ?>" /></td>
-		<td>Set a gain value. Remeber higher gains results in higher noise levels. </td>
+		<td><input type="text" name="Radio_Gain" value="<?php echo isset($config['SDR_Radio']['Radio_Gain']) ? $config['SDR_Radio']['Radio_Gain'] : 42 ?>" /></td>
+		<td>Set a gain value. Remember higher gains result in higher noise levels. </td>
 	</tr>
 </table>
 
@@ -152,11 +186,12 @@ Start and Stop receiver - to set a new frequency/gain, first stop and restart:
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 	if (isset($_POST["rtl_fm_start_s"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["freq"]. " -g " . $_POST["gain"]. " -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
+		// update_Config($config);
+		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Freq3"]. " -g " . $_POST["Radio_Gain"]. " -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
 		$result = unliveExecuteCommand($cmd);
 	}
 	if (isset($_POST["rtl_fm_start_l"])){
-		$cmd = "sudo docker run --rm -t --privileged rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["freq"]. " -g " . $_POST["gain"]. " -d 0 | play -r 32k -t raw -v 5 -e s -b 16 -c 1 -V1 -'";
+		$cmd = "sudo docker run --rm -t --privileged rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Freq3"]. " -g " . $_POST["Radio_Gain"]. " -d 0 | play -r 32k -t raw -v 5 -e s -b 16 -c 1 -V1 -'";
 		$result = unliveExecuteCommand($cmd);
 	} 
 	if (isset($_POST["rtl_stop"])){

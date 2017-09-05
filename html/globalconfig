@@ -1,39 +1,19 @@
-***Global-Config-File***
-Created by: Dipl.-Phys. Ralf Zeidler
-EMail: info@radio-tracking.eu
-Version: 0.1
+Hostname = "plecotus"
+HOTSPOT = 1
+SSID = ""
+WIFI-PW = ""
+HOTSPOT-SSID = "rteuv2"
+HOTSPOT-PW = "sdrtracking"
+FIX-IP = ""
+LAN-IP = "192.168.1.1"
+Center_Freq = "150.100MHz"
+Logger_Gain = 20
 
-***General***
-Hostname=plecotus
-
-***Wifi-Setup***
-HOTSPOT=yes
-SSID=none
-WIFI-PW=none
-HOTSPOT-SSID=rteuv2
-HOTSPOT-PW=sdrtracking
-
-***Lan-Setup***
-FIX-IP=no
-LAN-IP=192.168.1.1
-
-***SDR-Logger***
-Center_Freq=150.100MHz
-Logger_Gain=20
-
-***SDR-Radio***
-Radio_Gain=20
-Freq1=150.010MHz
-Freq2=150.020MHz
-Freq3=150.030MHz
-Freq4=150.040MHz
-Freq5=150.050MHz
-Freq6=150.060MHz
-
-***SDR#-Settings***
-
-***SDR-WebRx***
-
-***DB-Settings***
-
-***Up-On-Start*** 
+[SDR_Radio]
+Radio_Gain = 4242
+Freq1 = ""
+Freq2 = ""
+Freq3 = 4242
+Freq4 = ""
+Freq5 = ""
+Freq6 = ""
