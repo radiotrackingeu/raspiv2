@@ -28,7 +28,7 @@
 
 		<h3>Zip Camera's record folder</h3><br>
 		<form method='POST' enctype="multipart/form-data">
-			<input type="text" name="zip_name" value="<?php echo "Camera_".date('Y_m_d_H_i')?>">
+			<input type="text" name="zip__camera_name" value="<?php echo "Camera_".date('Y_m_d_H_i')?>">
 			<input type="submit" class="w3-btn w3-brown" value="Zip All Camera Recordings" name="zip_camera" /> <br><br>
 			You can find the zipped files here: <a href="/picam/zipped/">Record Folder</a> <br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Delete all recordings" name="rm_cam_record_folder" />
@@ -44,7 +44,7 @@
 
 		<h3>Zip Logger's record folder</h3><br>
 		<form method='POST' enctype="multipart/form-data">
-			<input type="text" name="zip_name" value="<?php echo "Logger_".date('Y_m_d_H_i')?>">
+			<input type="text" name="zip_logger_name" value="<?php echo "Logger_".date('Y_m_d_H_i')?>">
 			<input type="submit" class="w3-btn w3-brown" value="Zip All Logger Recordings" name="zip_logger" /> <br><br>
 			You can find the zipped files here: <a href="/sdr/zipped/">Record Folder</a> <br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Delete all recordings" name="rm_logger_record_folder" />
@@ -65,7 +65,7 @@
 			
 			if (isset($_POST["zip_camera"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip_name"]." /tmp/record/ 2>&1", $ret);
+				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip__camera_name"]." /tmp/record/ 2>&1", $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["rm_cam_zip_folder"])){
@@ -80,7 +80,7 @@
 			}
 			if (isset($_POST["zip_logger"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/sdr/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip_name"]." /tmp/record/ 2>&1", $ret);
+				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/sdr/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip_logger_name"]." /tmp/record/ 2>&1", $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["rm_logger_zip_folder"])){
