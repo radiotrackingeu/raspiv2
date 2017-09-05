@@ -14,10 +14,10 @@
  * @link      https://github.com/pce/config_lite
  */
 
-require_once '../Config/Lite/Exception.php';
-require_once '../Config/Lite/Exception/InvalidArgument.php';
-require_once '../Config/Lite/Exception/Runtime.php';
-require_once '../Config/Lite/Exception/UnexpectedValue.php';
+require_once RESOURCES_PATH.'/Config/Lite/Exception.php';
+require_once RESOURCES_PATH.'/Config/Lite/Exception/InvalidArgument.php';
+require_once RESOURCES_PATH.'/Config/Lite/Exception/Runtime.php';
+require_once RESOURCES_PATH.'/Config/Lite/Exception/UnexpectedValue.php';
 
 /**
  * Config_Lite Class

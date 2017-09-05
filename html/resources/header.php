@@ -1,23 +1,13 @@
-<!DOCTYPE html>
-<html>
-
-<title>radio-tracking.eu</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/weblib/w3.css">
-<link rel="stylesheet" href="/weblib/css/font-awesome.min.css">
-
-<body>
-
 <div class="w3-container w3-green">
 <h1>radio-tracking.eu</h1>
-  <img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:20%"><br>
+  <img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:25%"><br>
  <button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
 </div>
  
 
 <div class="w3-bar w3-light-grey" style="display:none" id="sidebar">
 	<!-- Home -->
-	<a class="w3-bar-item w3-button w3-mobile" href="/index.html"><i class="fa fa-home"></i> Home</a>
+	<a class="w3-bar-item w3-button w3-mobile" href="/index.php"><i class="fa fa-home"></i> Home</a>
 	
 	<!-- Radio -->
 	<div class="w3-dropdown-hover w3-mobile">
@@ -113,85 +103,5 @@
 	</div>
 	
 	<!-- License -->
-	<a class="w3-bar-item w3-button w3-mobile" href="/license.html"><i class="fa fa-registered"></i> License</a>
+	<a class="w3-bar-item w3-button w3-mobile" href="/license.php"><i class="fa fa-registered"></i> License</a>
 </div>
-
-<!-- Enter text here-->
-
-<div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('license')">License</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('further_notes')">Further Notes</button>
-</div>
-
-<div id="license" class="w3-container city" style="display:block">
-
-<!-- Enter text here-->
-<div class="w3-panel w3-green w3-round">
-<h4>MIT License</h4>
-
-<p>
-
-
-<h5>Copyright (c) 2017 Dipl.-Phys. Ralf Zeidler</h5>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-<br><br>
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-<br><br>
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-</p>
-
-</div>
-<div class="w3-panel w3-green w3-round">
-<p>
-If you got Questions, please don't hesitate to contact us: <a href= "mailto:info@radio-tracking.eu">info@radio-tracking.eu</a>
-</p>
-</div>
-</div>
-<div id="further_notes" class="w3-container" style="display:none">
-<p>
-I'll work on that :)
-</p>
-
-<!-- Enter text here-->
-
-</div>
-</div>
-
-<script>
-function openCity(cityName) {
-    var i;
-    var x = document.getElementsByClassName("city");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(cityName).style.display = "block";  
-}
-function w3_switch(name) {
-	var x = document.getElementById(name);
-    if (x.style.display == "none") {
-        x.style.display = "block";
-    } else { 
-        x.style.display = "none";
-    }
-}
-</script>
-
-
-</body>
-
-</html>
