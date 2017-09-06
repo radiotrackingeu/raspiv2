@@ -113,25 +113,26 @@
 		<h3>Logger settings</h3><br>
 		<form method='POST' enctype="multipart/form-data">
 		
-			Gain in DB:<br>
-			<input type="number" name="log_gain" value="<?php echo isset($config['logger_433']['log_gain']) ? $config['logger_433']['log_gain'] : 20 ?>"><br>
-			Gain of the recording device. Higher gain results in more noise. max 49DB
-			<br><br>
-			Center Frequency in Hz:<br>
-			<input type="number" name="center_freq" value="<?php echo isset($config['logger_433']['center_freq']) ? $config['logger_433']['center_freq'] : 150100000 ?>"><br>
-			Frequency Range to monitor: <br>
-			<select name="freq_range">
-				<option value="250000">250kHz</option>
-				<option value="1024000">1024kHz</option>
-			</select> 
-			<br>
-			Log Detection Level:<br>
-			<input type="text" name="log_level" value="0"><br>
-			0 means automatic - level up to 16384
-			<br><br>
-			Record Name:<br>
-			<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
-			Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a><br><br>
+				Gain in DB:<br>
+				<input type="number" name="log_gain" value="<?php echo isset($config['logger_433']['log_gain']) ? $config['logger_433']['log_gain'] : 20 ?>"><br>
+				Gain of the recording device. Higher gain results in more noise. max 49DB
+				<br><br>
+				Center Frequency in Hz:<br>
+				<input type="number" name="center_freq" value="<?php echo isset($config['logger_433']['center_freq']) ? $config['logger_433']['center_freq'] : 150100000 ?>"><br>
+				Frequency Range to monitor: <br>
+				<select name="freq_range">
+					<option value="250000" <?php echo isset($config['logger_433']['freq_range']) && $config['logger_433']['freq_range'] == "250000" ? "selected" : "" ?>>250kHz</option>
+					<option value="1024000" <?php echo isset($config['logger_433']['freq_range']) && $config['logger_433']['freq_range'] == "1024000" ? "selected" : "" ?>>1024kHz</option>
+				</select> 
+				<br>
+				Log Detection Level:<br>
+				<input type="text" name="log_level" value="<?php echo isset($config['logger_433']['log_level']) ? $config['logger_433']['log_level'] : 1 ?>"><br>
+				0 means automatic - level up to 16384 - the tricky part is setting a good log level compared to the gain: try and error
+				<br><br>
+				Prefix and Record Name:<br>
+				<input type="text" name="pre_log_name" value="<?php echo isset($config['logger_433']['pre_log_name']) ? $config['logger_433']['pre_log_name'] : "rteu" ?>">
+				<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
+				Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a><br><br>
 
 			<input type="radio" name="start_timer" value="start_no" checked> No start<br>
 			<input type="radio" name="start_timer" value="reboot"> Start at Boot<br>
