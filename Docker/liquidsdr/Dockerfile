@@ -52,7 +52,7 @@ RUN mkdir CubicSDR && \
 	cd build && \
 	cmake ../ -DCMAKE_BUILD_TYPE=Release -DwxWidgets_CONFIG_EXECUTABLE=~/Develop/wxWidgets-staticlib/bin/wx-config && \
 	make && \
-	cd x64/ && \
+	cd x86/ && \
 	./CubicSDR && \
 	make install && \
 	cd ..
