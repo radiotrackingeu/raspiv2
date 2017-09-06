@@ -13,10 +13,10 @@ RUN mkdir liquidsdr && \
 	git clone https://github.com/jgaeddert/liquid-dsp.git && \
 	cd liquid-dsp && \
 	./bootstrap.sh && \
-	CFLAGS="-march=native -O3" && \
-	./configure --enable-fftoverride && \
-	make  -j4 && \
+	./configure	&& \
+	make && \
 	make install && \
 	ldconfig
 	
 #	gcc -g -O2  -ffast-math -mcpu=cortex-a7 -mfloat-abi=hard -mfpu=neon-vfpv4 -Wall -fPIC  examples/rtlsdr_signal_detect.c libliquid.a -o examples/rtlsdr_signal_detect -lfftw3f -lm -lc
+#  gcc -g -O2  -ffast-math -mcpu=cortex-a7 -mfloat-abi=hard -mfpu=neon-vfpv4 -Wall -fPIC  rtlsdr_signal_detect.c /liquidsdr/liquid-dsp/libliquid.a -o rtlsdr_signal_detect -lfftw3f -lm -lc
