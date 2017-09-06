@@ -38,7 +38,7 @@ RUN mkdir wxWidgest && \
 	tar -xvjf wxWidgets-3.1.0.tar.bz2  && \
 	cd wxWidgets-3.1.0/ && \
 	mkdir -p ~/Develop/wxWidgets-staticlib && \
-	/autogen.sh && \
+	./autogen.sh && \
 	./configure --with-opengl --disable-shared --enable-monolithic --with-libjpeg --with-libtiff --with-libpng --with-zlib --disable-sdltest --enable-unicode --enable-display --enable-propgrid --disable-webkit --disable-webview --disable-webviewwebkit --prefix=`echo ~/Develop/wxWidgets-staticlib` CXXFLAGS="-std=c++0x" && \
 	wxWidgets-3.1.0$ make -j4 && \
 	make install && \
