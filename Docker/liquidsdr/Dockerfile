@@ -1,9 +1,16 @@
-FROM resin/rpi-raspbian:jessie
+FROM rtlsdr
 
 MAINTAINER ralf.zeidler@radio-tracking.eu
 
-RUN apt-get update && \
-    apt-get install mysql-server mysql-client sqlite3
+#RUN apt-get update && \
+#    apt-get install 
 	
-#Also install PhpMyAdmin
+RUN mkdir liquidsdr && \
+	cd liquidsdr && \
+	git clone https://github.com/jgaeddert/liquid-dsp.git && \
+	cd liquid-dsp && \
+	./bootstrap.sh && \
+	./configure && \
+	make && \
+	make install 
 
