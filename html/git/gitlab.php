@@ -13,6 +13,17 @@
 	require_once '../cfg/baseConfig.php';
 	//load top menu
 	require_once RESOURCES_PATH.'/header.php';
+	//load functions
+	require_once RESOURCES_PATH.'/helpers.php';
+	//load ConfigLite
+	require_once CONFIGLITE_PATH.'/Lite.php';
+	
+	//define config section and items.
+	define ('confSection', 'gitlab_updates');
+	define ('confKeys', array('online_repository','lokal_branch'));
+	
+	//load values from config
+	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');	
  ?>
 <!-- Enter text here-->
 
@@ -27,10 +38,11 @@
 	
 	<div id="GIT" class="w3-container city" style="display:none">
 		<br>First download then install the feature - installing requires also an internet connection and requires some time. <br><br>
-		<form method="POST" enctype="multipart/form-data" onsubmit="return openCity('GIT');">
+		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>" >
 				<select name="git_checkout">
-					<option value="master">Stable Version</option>
-					<option value="live">Development Version</option>
+					<?php echo $config['gitlab_updates']['lokal_branch']; ?>
+					<option value="master" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "master" ?  "selected" : ""; ?>>Stable Version</option>
+					<option value="live" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "live" ? "selected" : ""; ?>>Development Version</option>
 				</select> 
 			<input class="w3-btn" type="submit" value="Download Recipes and HTML Files" name="update_rep" onclick="openCity('GIT')"/>
 			<input class="w3-btn" type="submit" value="Reboot" name="reboot" "/>

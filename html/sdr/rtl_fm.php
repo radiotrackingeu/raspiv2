@@ -38,12 +38,12 @@
 
 	<tr>
 		<td>Frequencies:</td>
-		<td><input type="text" name="Freq3" value="<?php echo isset($config['SDR_Radio']['Freq3']) ? $config['SDR_Radio']['Freq3'] : 42 ?>" /></td>
+		<td><input type="text" name="Freq3" value="<?php echo isset($config['SDR_Radio']['Freq3']) ? $config['SDR_Radio']['Freq3'] : ."150.1M" ?>" /></td>
 		<td>Set the frequency you want to listen to. You can use multipliers like M and k. Turn slightly below the frequency for better results. Together with a treshold bigger then 0 you can scan multiple frequencies if you add a -f (i.e. 150.1M -f 150.120M) </td>
 	</tr>
 	<tr>
 		<td>Gain in DB:</td>
-		<td><input type="text" name="Radio_Gain" value="<?php echo isset($config['SDR_Radio']['Radio_Gain']) ? $config['SDR_Radio']['Radio_Gain'] : 42 ?>" /></td>
+		<td><input type="text" name="Radio_Gain" value="<?php echo isset($config['SDR_Radio']['Radio_Gain']) ? $config['SDR_Radio']['Radio_Gain'] : 20 ?>" /></td>
 		<td>Set a gain value. Remember higher gains result in higher noise levels. </td>
 	</tr>
 </table>

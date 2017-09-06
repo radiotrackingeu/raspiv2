@@ -17,3 +17,7 @@ Freq3 = "150.1M"
 Freq4 = ""
 Freq5 = ""
 Freq6 = ""
+
+[gitlab_updates]
+online_repository = "github"
+lokal_branch = "live"
