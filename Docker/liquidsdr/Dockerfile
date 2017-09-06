@@ -2,8 +2,8 @@ FROM rtlsdr
 
 MAINTAINER ralf.zeidler@radio-tracking.eu
 
-#RUN apt-get update && \
-#    apt-get install 
+RUN apt-get update && \
+    apt-get install autotools-dev autoconf
 	
 RUN mkdir liquidsdr && \
 	cd liquidsdr && \
