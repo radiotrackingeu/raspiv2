@@ -55,5 +55,6 @@ RUN mkdir CubicSDR && \
 	cd x64/ && \
 	./CubicSDR && \
 	make install && \
+	cd ..
 	
 	
