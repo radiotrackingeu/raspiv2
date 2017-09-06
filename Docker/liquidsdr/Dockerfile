@@ -4,7 +4,7 @@ MAINTAINER ralf.zeidler@radio-tracking.eu
 
 RUN apt-get update && \
     apt-get install autotools-dev autoconf automake libpulse-dev libgtk-3-dev && \
-					freeglut3 freeglut3-dev 
+					freeglut3-dev 
 
 RUN mkdir SoapySDR && \
 	cd SoapySDR && \
