@@ -25,7 +25,8 @@ RUN mkdir liquidsdr && \
 	git clone https://github.com/jgaeddert/liquid-dsp.git && \
 	cd liquid-dsp && \
 	./bootstrap.sh && \
-	CFLAGS="-march=native -O3" ./configure --enable-fftoverride && \
+	CFLAGS="-march=native -O3" && \
+	./configure --enable-fftoverride && \
 	make  -j4 && \
 	make install && \
 	ldconfig && \
