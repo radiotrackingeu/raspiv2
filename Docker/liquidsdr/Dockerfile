@@ -3,21 +3,9 @@ FROM rtlsdr
 MAINTAINER ralf.zeidler@radio-tracking.eu
 
 RUN apt-get update && \
-    apt-get install -y autotools-dev autoconf automake libpulse-dev libgtk-3-dev \
-					freeglut3 freeglut3-dev wget
+    apt-get install -y autotools-dev autoconf automake 
 
-RUN mkdir SoapySDR && \
-	cd SoapySDR && \
-	git clone https://github.com/pothosware/SoapySDR.git && \
-	cd SoapySDR && \
-	mkdir build && \
-	cd build && \
-	cmake ../ -DCMAKE_BUILD_TYPE=Release && \
-	make -j4 && \
-	make install && \
-	ldconfig && \
-	SoapySDRUtil --info && \
-	cd ..
+
 	
 
 RUN mkdir liquidsdr && \
@@ -29,30 +17,6 @@ RUN mkdir liquidsdr && \
 	./configure --enable-fftoverride && \
 	make  -j4 && \
 	make install && \
-	ldconfig && \
-	cd ..
-
-RUN mkdir wxWidgest && \
-	cd wxWidgest && \
-	wget https://github.com/wxWidgets/wxWidgets/releases/download/v3.1.0/wxWidgets-3.1.0.tar.bz2 && \
-	tar -xvjf wxWidgets-3.1.0.tar.bz2  && \
-	cd wxWidgets-3.1.0/ && \
-	mkdir -p ~/Develop/wxWidgets-staticlib && \
-	./autogen.sh && \
-	./configure --with-opengl --disable-shared --enable-monolithic --with-libjpeg --with-libtiff --with-libpng --with-zlib --disable-sdltest --enable-unicode --enable-display --enable-propgrid --disable-webkit --disable-webview --disable-webviewwebkit --prefix=`echo ~/Develop/wxWidgets-staticlib` CXXFLAGS="-std=c++0x" && \
-	make -j4 && \
-	make install && \
-	cd ..
+	ldconfig
 	
-RUN mkdir CubicSDR && \
-	cd CubicSDR && \
-	git clone https://github.com/cjcliffe/CubicSDR.git && \
-	cd CubicSDR && \
-	mkdir build && \
-	cd build && \
-	cmake ../ -DCMAKE_BUILD_TYPE=Release -DwxWidgets_CONFIG_EXECUTABLE=~/Develop/wxWidgets-staticlib/bin/wx-config && \
-	make && \
-	make install && \
-	cd ..
-	
-	
+#	gcc -g -O2  -ffast-math -mcpu=cortex-a7 -mfloat-abi=hard -mfpu=neon-vfpv4 -Wall -fPIC  examples/rtlsdr_signal_detect.c libliquid.a -o examples/rtlsdr_signal_detect -lfftw3f -lm -lc
