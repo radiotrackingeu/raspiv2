@@ -117,12 +117,10 @@ Use it to connect the system to a mobile network, so you can access it via the w
 </div>
 <!-- Enter text here-->
 
-<div id="container"></div>
-
-<div class="w3-container w3-center w3-brown">
-  Online-Website: <a href="https://radio-tracking.eu/">radio-tracking.eu</a>
-  Email: <a href= "mailto:info@radio-tracking.eu">info@radio-tracking.eu</a>
-</div>
+<?php
+	//load footer
+	require_once RESOURCES_PATH.'/footer.php';
+ ?>
 
 
 <script>

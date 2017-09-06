@@ -221,8 +221,6 @@
 
 <?php
 
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
 	if (isset($_POST["fftw_start"])){
 		$cmd = "rtl_power_fftw -r 250000 -f " . $_POST["cfreq"]. " -b 128 -t 0.1 -g " . $_POST["gain"]. " -q -d 0 -e " . $_POST["rtime"]. " -m /home/" . $_POST["rname"];
 		echo '<pre>';
@@ -293,6 +291,10 @@
 
 <!-- Enter text here-->
 
+<?php
+	//load footer
+	require_once RESOURCES_PATH.'/footer.php';
+ ?>
 
 <script>
 function openCity(cityName) {

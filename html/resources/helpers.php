@@ -6,7 +6,7 @@
 	  echo '</script>';
 	}
 	
-		//Assign currently entered values to config and write config to file.
+	//Assign currently entered values to config and write config to file.
 	function update_Config(&$config) {
 		// $config->read();
 		// var_dump($config);

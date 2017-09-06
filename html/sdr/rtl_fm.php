@@ -106,6 +106,11 @@ function w3_switch(name) {
 
 <!-- Enter text here-->
 
+<?php
+	//load footer
+	require_once RESOURCES_PATH.'/footer.php';
+ ?>
+
 </body>
 
 </html>
