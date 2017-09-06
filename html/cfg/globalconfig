@@ -21,3 +21,10 @@ Freq6 = ""
 [gitlab_updates]
 online_repository = "github"
 lokal_branch = "live"
+
+[logger_433]
+log_gain = 20
+center_freq = 150100000
+freq_range = 250000
+log_level = 1
+pre_log_name = "rteu"

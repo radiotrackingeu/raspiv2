@@ -12,6 +12,17 @@
 	require_once '../cfg/baseConfig.php';
 	//load top menu
 	require_once RESOURCES_PATH.'/header.php';
+	//load functions
+	require_once RESOURCES_PATH.'/helpers.php';
+	//load ConfigLite
+	require_once CONFIGLITE_PATH.'/Lite.php';
+	
+	//define config section and items.
+	define ('confSection', 'logger_433');
+	define ('confKeys', array('log_gain','center_freq','freq_range','log_level','pre_log_name'));
+	
+	//load values from config
+	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
  ?>
 
 <!-- Enter text here-->
@@ -65,25 +76,26 @@
 	<div class="w3-panel w3-green w3-round">
 		<br>
 		<h3>Logger settings</h3><br>
-		<form method='POST' enctype="multipart/form-data">
+		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
 
 				Gain in DB:<br>
-				<input type="number" name="log_gain" value="20"><br>
+				<input type="number" name="log_gain" value="<?php echo isset($config['logger_433']['log_gain']) ? $config['logger_433']['log_gain'] : 20 ?>"><br>
 				Gain of the recording device. Higher gain results in more noise. max 49DB
 				<br><br>
 				Center Frequency in Hz:<br>
-				<input type="number" name="center_freq" value="150100000"><br>
+				<input type="number" name="center_freq" value="<?php echo isset($config['logger_433']['center_freq']) ? $config['logger_433']['center_freq'] : 150100000 ?>"><br>
 				Frequency Range to monitor: <br>
 				<select name="freq_range">
-					<option value="250000">250kHz</option>
-					<option value="1024000">1024kHz</option>
+					<option value="250000" <?php echo isset($config['logger_433']['freq_range']) && $config['logger_433']['freq_range'] == "250000" ? "selected" : "" ?>>250kHz</option>
+					<option value="1024000" <?php echo isset($config['logger_433']['freq_range']) && $config['logger_433']['freq_range'] == "1024000" ? "selected" : "" ?>>1024kHz</option>
 				</select> 
 				<br>
 				Log Detection Level:<br>
-				<input type="text" name="log_level" value="0"><br>
-				0 means automatic - level up to 16384
+				<input type="text" name="log_level" value="<?php echo isset($config['logger_433']['log_level']) ? $config['logger_433']['log_level'] : 1 ?>"><br>
+				0 means automatic - level up to 16384 - the tricky part is setting a good log level compared to the gain: try and error
 				<br><br>
-				Record Name:<br>
+				Prefix and Record Name:<br>
+				<input type="text" name="pre_log_name" value="<?php echo isset($config['logger_433']['pre_log_name']) ? $config['logger_433']['pre_log_name'] : "rteu" ?>">
 				<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
 				Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a><br><br>
 				
@@ -102,11 +114,11 @@
 		<form method='POST' enctype="multipart/form-data">
 		
 			Gain in DB:<br>
-			<input type="number" name="log_gain" value="20"><br>
+			<input type="number" name="log_gain" value="<?php echo isset($config['logger_433']['log_gain']) ? $config['logger_433']['log_gain'] : 20 ?>"><br>
 			Gain of the recording device. Higher gain results in more noise. max 49DB
 			<br><br>
 			Center Frequency in Hz:<br>
-			<input type="number" name="center_freq" value="150100000"><br>
+			<input type="number" name="center_freq" value="<?php echo isset($config['logger_433']['center_freq']) ? $config['logger_433']['center_freq'] : 150100000 ?>"><br>
 			Frequency Range to monitor: <br>
 			<select name="freq_range">
 				<option value="250000">250kHz</option>

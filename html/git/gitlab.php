@@ -38,9 +38,8 @@
 	
 	<div id="GIT" class="w3-container city" style="display:none">
 		<br>First download then install the feature - installing requires also an internet connection and requires some time. <br><br>
-		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>" >
+		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
 				<select name="git_checkout">
-					<?php echo $config['gitlab_updates']['lokal_branch']; ?>
 					<option value="master" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "master" ?  "selected" : ""; ?>>Stable Version</option>
 					<option value="live" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "live" ? "selected" : ""; ?>>Development Version</option>
 				</select> 

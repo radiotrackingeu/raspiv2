@@ -38,7 +38,7 @@
 
 	<tr>
 		<td>Frequencies:</td>
-		<td><input type="text" name="Freq3" value="<?php echo isset($config['SDR_Radio']['Freq3']) ? $config['SDR_Radio']['Freq3'] : ."150.1M" ?>" /></td>
+		<td><input type="text" name="Freq3" value="<?php echo isset($config['SDR_Radio']['Freq3']) ? $config['SDR_Radio']['Freq3'] : "150.1M" ?>" /></td>
 		<td>Set the frequency you want to listen to. You can use multipliers like M and k. Turn slightly below the frequency for better results. Together with a treshold bigger then 0 you can scan multiple frequencies if you add a -f (i.e. 150.1M -f 150.120M) </td>
 	</tr>
 	<tr>
