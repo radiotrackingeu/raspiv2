@@ -20,6 +20,7 @@
 <div class="w3-bar w3-brown w3-mobile">
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('camera_data')">Camera</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('radio_data')">Radio</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('mysql')">Database</button>
 </div>
 
 <div id="camera_data" class="w3-container city" style="display:none">
@@ -39,6 +40,22 @@
 	</div>
 </div>
 <div id="radio_data" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<br>
+
+		<h3>Zip Logger's record folder</h3><br>
+		<form method='POST' enctype="multipart/form-data">
+			<input type="text" name="zip_logger_name" value="<?php echo "Logger_".date('Y_m_d_H_i')?>">
+			<input type="submit" class="w3-btn w3-brown" value="Zip All Logger Recordings" name="zip_logger" /> <br><br>
+			You can find the zipped files here: <a href="/sdr/zipped/">Record Folder</a> <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Delete all recordings" name="rm_logger_record_folder" />
+			<input type="submit" class="w3-btn w3-brown" value="Delete all zipped files" name="rm_logger_zip_folder" /><br><br>
+
+		</form>
+		<br>
+	</div>
+</div>
+<div id="mysql" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
 
