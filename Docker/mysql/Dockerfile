@@ -2,8 +2,12 @@ FROM resin/rpi-raspbian:jessie
 
 MAINTAINER ralf.zeidler@radio-tracking.eu
 
-RUN debconf-set-selections <<< 'mysql-server mysql-server/root_password password rteuv2!' && \
-    debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password rteuv2!'
+RUN { \
+		echo mysql-server mysql-server/data-dir select ''; \
+		echo mysql-server mysql-server/root-pass password ''; \
+		echo mysql-server mysql-server/re-root-pass password ''; \
+		echo mysql-server mysql-server/remove-test-db select false; \
+	} | debconf-set-selections 
 
 RUN apt-get update && \
     apt-get install -y apache2 apache2-doc apache2-utils mysql-server mysql-client sqlite3 \
