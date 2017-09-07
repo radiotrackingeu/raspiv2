@@ -22,7 +22,8 @@
 		echo '<pre>';
 		$test = system($docker_cmd, $ret);
 		echo '</pre>';
-		echo "<script type='text/javascript'>document.getElementById(".$block_to_jump.").style.display = 'block';</script>";		
+		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";
+		echo "document.getElementById(\'".$block_to_jump."\').style.display = 'block'";		
 	}
 ?>
 
