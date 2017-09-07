@@ -141,15 +141,7 @@
 
 			?>
 		</div>
-	<div id="output" class="w3-container city" style="display:block">
-		<br> Please choose one of the option shown above - the result will be displayed here:<br> 
 		<?php
-			/*
-			if (isset($_POST["update_rep"])){
-				echo '<pre>';
-				$test = system('sudo docker run --rm -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh ' .$_POST["git_checkout"]. ' 2>&1', $ret);
-				echo '</pre>';
-			}*/
 			if (isset($_POST["reboot"])){
 				echo '<pre>';
 				$test = system('sudo reboot', $ret);
@@ -274,7 +266,6 @@
 				echo '</pre>';
 			}
 		?>
-	</div>
 
 <!-- Enter text here-->
 
