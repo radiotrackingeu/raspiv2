@@ -17,7 +17,8 @@
 	function start_docker($docker_cmd,$block_to_jump){
 		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
 		echo '<pre>';
-		$test = system($docker_cmd, $ret);
+		//$test = system($docker_cmd, $ret);
+		system($docker_cmd);
 		echo '</pre>';
 		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";	
 	}
