@@ -18,6 +18,10 @@
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
 		start_docker_quite($cmd,'logger');
 	}
+	if (isset($_POST["log_stop"])){
+		$cmd="sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtl_433_mod) 2>&1";
+		start_docker($cmd, 'logger');
+	}
 	function start_docker($docker_cmd,$block_to_jump){
 		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
 		echo '<pre>';
@@ -27,15 +31,9 @@
 	}
 	function start_docker_quite($docker_cmd,$block_to_jump){
 		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
-		$test = exec($docker_cmd." >/dev/null 2>/dev/null &");
-		echo $test;
-		echo $test ? "Started" : "Start failed";
+		system($docker_cmd." >/dev/null 2>/dev/null &");
+		echo "<p>Process started</p>";
 		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";	
-	}
-	function unliveExecuteCommand($cmd){
-		//while (@ ob_end_flush()); // end all output buffers if any
-		//$proc = popen("$cmd ; echo Exit status : $?", 'r');
-		system($cmd." >/dev/null 2>/dev/null &");
 	}
 ?>
 

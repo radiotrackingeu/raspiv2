@@ -231,15 +231,6 @@
 		echo '<pre>';
 		$result = system("sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtlsdr) 2>&1", $ret);
 		echo '</pre>';
-	}/*
-	if (isset($_POST["log_start"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
-		unliveExecuteCommand($cmd);
-	}*/
-	if (isset($_POST["log_stop"])){
-		echo '<pre>';
-		$result = system("sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtl_433_mod) 2>&1", $ret);
-		echo '</pre>';
 	}
 	if (isset($_POST["change_logger_cron"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
@@ -279,14 +270,7 @@
 			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"", $ret);
 			echo "System will now stop logger at specific time";
 		}
-	}
-	/*function unliveExecuteCommand($cmd)
-	{
-		while (@ ob_end_flush()); // end all output buffers if any
-		$proc = popen("$cmd 2>&1", 'r');
-		pclose($proc);
-	}*/
-	
+	}	
 ?>
 
 <!-- Enter text here-->

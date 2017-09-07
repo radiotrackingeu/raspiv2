@@ -1,7 +1,16 @@
 <div class="w3-container w3-green">
-<h1>radio-tracking.eu</h1>
-  <img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:25%"><br>
- <button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
+	
+	<div class="w3-display-container w3-green">
+		<div class="w3-display-middle w3-large">
+			<img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:35%">
+		</div>
+		<br><br>
+		<div class="w3-display-left w3-large">
+			<h1>radio-tracking.eu</h1>
+			<button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true">  Menu</i></button>
+		</div>		
+		<br><br><br><br>
+	</div>
 </div>
  
 
