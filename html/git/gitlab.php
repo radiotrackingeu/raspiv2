@@ -28,23 +28,22 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('GIT')">Update</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('install')">Install</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('running_docker')">Status</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('GIT')">User Interface</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('install')">Applications</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('running_docker')">Applications Status</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('git_setup')">Setup Update</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('create_id')">Create Key</button>
 </div>
 	
 <div id="GIT" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
-		<br>First download then install the feature - installing requires also an internet connection and requires some time. <br><br>
+		<br>First update the User Interface - if a single Application has been updated - please go afterwards to Applications<br><br>
 		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
 				<select name="git_checkout">
 					<option value="master" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "master" ?  "selected" : ""; ?>>Stable Version</option>
 					<option value="live" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "live" ? "selected" : ""; ?>>Development Version</option>
 				</select> 
-			<input class="w3-btn" type="submit" value="Download Recipes and HTML Files" name="update_rep" onclick="openCity('GIT')"/>
-			<input class="w3-btn" type="submit" value="Reboot" name="reboot" "/>
+			<input class="w3-btn w3-brown" type="submit" value="Update User Interface" name="update_rep" onclick="openCity('GIT')"/>
 		</form>
 		<br>
 	</div>
@@ -135,7 +134,7 @@
 			?>
 		</div>
 	<div id="output" class="w3-container city" style="display:block">
-		<br> Please choose one of the option shown above - the result will be displayed here:
+		<br> Please choose one of the option shown above - the result will be displayed here:<br> 
 		<?php
 			if (isset($_POST["update_rep"])){
 				echo '<pre>';
