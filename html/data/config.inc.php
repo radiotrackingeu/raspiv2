@@ -24,6 +24,8 @@ $cfg['Servers'][$i]['host'] = 'extern1';
 $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = false;
 
+$cfg['PmaNoRelation_DisableWarning'] = ! FALSE;
+
 
 /**
  * phpMyAdmin configuration storage settings.
