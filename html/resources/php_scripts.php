@@ -28,6 +28,7 @@
 	function start_docker_quite($docker_cmd,$block_to_jump){
 		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
 		$test = system($docker_cmd." >/dev/null 2>/dev/null &");
+		echo $test;
 		echo $test ? "Started" : "Start failed";
 		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";	
 	}
