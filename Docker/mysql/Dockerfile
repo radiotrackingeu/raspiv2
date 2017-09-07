@@ -2,6 +2,10 @@ FROM resin/rpi-raspbian:jessie
 
 MAINTAINER ralf.zeidler@radio-tracking.eu
 
+RUN groupadd -r mysql && useradd -r -g mysql mysql
+
+RUN apt-get update && apt-get install -y perl --no-install-recommends && rm -rf /var/lib/apt/lists/*
+
 RUN { \
 		echo mysql-server mysql-server/data-dir select ''; \
 		echo mysql-server mysql-server/root-pass password ''; \
@@ -12,5 +16,8 @@ RUN { \
 RUN apt-get update && \
     apt-get install -y apache2 apache2-doc apache2-utils mysql-server mysql-client sqlite3 \
 					php5 php5-mysql  libapache2-mod-php5 php5 php-pear php5-xcache phpmyadmin 
-	
 
+RUN rm -rf /var/lib/apt/lists/* \
+	&& rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql && chown -R mysql:mysql /var/lib/mysql
+	
+RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf

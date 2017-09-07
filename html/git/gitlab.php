@@ -134,7 +134,7 @@
 
 			?>
 		</div>
-		<div id="output" class="w3-container city" style="display:block">
+	<div id="output" class="w3-container city" style="display:block">
 		<br> Please choose one of the option shown above - the result will be displayed here:
 		<?php
 			if (isset($_POST["update_rep"])){
