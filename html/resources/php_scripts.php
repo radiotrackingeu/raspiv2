@@ -10,20 +10,16 @@
 		$cmd="sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip__camera_name"]." /tmp/record/ 2>&1";
 		start_docker($cmd,'camera_data');
 		}
-		/*
-	if (isset($_POST["zip_camera"])){
-		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
-		echo '<pre>';
-		$test = system("sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip__camera_name"]." /tmp/record/ 2>&1", $ret);
-		echo '</pre>';
-	}*/
+	if (isset($_POST["update_rep"])){
+		$cmd='sudo docker run --rm -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh ' .$_POST["git_checkout"]. ' 2>&1';
+		start_docker($cmd,'GIT');
+	}
 	function start_docker($docker_cmd,$block_to_jump){
 		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
 		echo '<pre>';
 		$test = system($docker_cmd, $ret);
 		echo '</pre>';
-		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";
-		echo "document.getElementById(\'".$block_to_jump."\').style.display = 'block'";		
+		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";	
 	}
 ?>
 
