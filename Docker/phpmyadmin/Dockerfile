@@ -9,4 +9,6 @@ RUN echo "Include /etc/phpmyadmin/apache.conf" >> /etc/apache2/apache2.conf
 #Change port to 8080
 #Listen 80
 
-CMD sh start_phpmyadmin.sh
+RUN sed -i "s|.*Listen 80.*|Listen 8080|" /etc/apache2/apache.conf
+
+CMD sh /cfiles/start_phpmyadmin.sh
