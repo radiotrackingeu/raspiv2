@@ -231,11 +231,11 @@
 		echo '<pre>';
 		$result = system("sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtlsdr) 2>&1", $ret);
 		echo '</pre>';
-	}
+	}/*
 	if (isset($_POST["log_start"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
 		unliveExecuteCommand($cmd);
-	}
+	}*/
 	if (isset($_POST["log_stop"])){
 		echo '<pre>';
 		$result = system("sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtl_433_mod) 2>&1", $ret);
@@ -280,12 +280,12 @@
 			echo "System will now stop logger at specific time";
 		}
 	}
-	function unliveExecuteCommand($cmd)
+	/*function unliveExecuteCommand($cmd)
 	{
 		while (@ ob_end_flush()); // end all output buffers if any
 		$proc = popen("$cmd 2>&1", 'r');
 		pclose($proc);
-	}
+	}*/
 	
 ?>
 
@@ -294,29 +294,11 @@
 <?php
 	//load footer
 	require_once RESOURCES_PATH.'/footer.php';
+	//load javascripts
+	require_once RESOURCES_PATH.'/javascript.php';
+	//load php_scripts
+	require_once RESOURCES_PATH.'/php_scripts.php';
  ?>
 
-<script>
-function openCity(cityName) {
-    var i;
-    var x = document.getElementsByClassName("city");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(cityName).style.display = "block";  
-}
-function w3_switch(name) {
-	var x = document.getElementById(name);
-    if (x.style.display == "none") {
-        x.style.display = "block";
-    } else { 
-        x.style.display = "none";
-    }
-}
-
-</script>
-
-
 </body>
-
 </html>
