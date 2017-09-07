@@ -49,8 +49,8 @@
 	</div>
 </div>
 	
-	<div id="install" class="w3-container city" style="display:none">
-		<form method="POST" onsubmit="document.getElementById('install').style.display = 'block');">
+<div id="install" class="w3-container city" style="display:none">
+	<form method="POST" onsubmit="document.getElementById('install').style.display = 'block');">
 		<br>
 		<input type="submit" class="w3-btn" value="Downloader" name="update_docker_git"/> <br> <br>
 		
@@ -85,38 +85,46 @@
 		
 		<hr>
 
-		</form>
-	</div>
-		<div id="git_setup" class="w3-container city" style="display:none">
-		    <form method="post" enctype="multipart/form-data">
-			<br>
-				Select private key to upload (the one without an ending): 
-				<br><br>
-				<input type="file" name="fileToUpload_id" id="fileToUpload_id">
-				<br><br><br>
-				Select public key to upload (the one with a .pub ending):
-				<br><br>
-				<input type="file" name="fileToUpload_pub" id="fileToUpload_pub">
-				<br><br><br><br>
-				<input type="submit" class="w3-btn" value="Upload keys" name="upload_files">
-				<input type="submit" class="w3-btn" value="Remove Files" name="rm_files">
-			</form>
+	</form>
+</div>
 
-		</div>
-		<div id="running_docker" class="w3-container city" style="display:none">
+<div id="git_setup" class="w3-container city" style="display:none">
+	<form method="post" enctype="multipart/form-data">
+		<br>
+		Select private key to upload (the one without an ending): 
+		<br><br>
+		<input type="file" name="fileToUpload_id" id="fileToUpload_id">
+		<br><br><br>
+		Select public key to upload (the one with a .pub ending):
+		<br><br>
+		<input type="file" name="fileToUpload_pub" id="fileToUpload_pub">
+		<br><br><br><br>
+		<input type="submit" class="w3-btn" value="Upload keys" name="upload_files">
+		<input type="submit" class="w3-btn" value="Remove Files" name="rm_files">
+	</form>
+</div>
+
+<div id="running_docker" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
 		<form method="POST">
 			<br>
-			<input type="submit" class="w3-btn" value="Runnning" name="running_containers">
-			<input type="submit" class="w3-btn" value="Installed" name="installed_images">
-			<input type="submit" class="w3-btn" value="Stop all" name="stop_all">
-			<input type="submit" class="w3-btn" value="Remove all stopped containers" name="rm_all">
-			<input type="submit" class="w3-btn" value="Remove all unsed Images" name="rmi_unused">
-			<input type="submit" class="w3-btn" value="Remove all Images" name="rmi_all">
-			<br>
 			
-
+			<input type="submit" class="w3-btn w3-brown" value="List running Applications" name="running_containers">
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="List installed Applications" name="installed_images">
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="Stop all running Applications" name="stop_all">
+			This means, that also the Hotspot won't work any more.
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="Delete all stopped containers" name="rm_all">
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="Delte all unsed Images" name="rmi_unused">
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="Delte all Images" name="rmi_all">
+			<br><br>
 		</form>
-		</div>
+	</div>
+</div>
 		
 		<div id="create_id" class="w3-container city" style="display:none">
 		<br>
