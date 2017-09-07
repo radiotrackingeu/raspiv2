@@ -58,32 +58,15 @@
 <div id="mysql" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
-		
-		
-		
-		
-		
-		Start Database now
-		<input type="submit" class="w3-btn w3-brown" value="Zip All Logger Recordings" name="start_mysql" /> <br><br>
-		
-		
-		Start ManagementTool
-		<input type="submit" class="w3-btn w3-brown" value="Zip All Logger Recordings" name="start_phpmyadmin" /> <br><br>
-		
-		
-		Start Database upon start
-		Stop starting DB upon start
-		
 
 		<h3>Zip Logger's record folder</h3><br>
 		<form method='POST' enctype="multipart/form-data">
-			<input type="text" name="zip_logger_name" value="<?php echo "Logger_".date('Y_m_d_H_i')?>">
-			<input type="submit" class="w3-btn w3-brown" value="Zip All Logger Recordings" name="zip_logger" /> <br><br>
-			You can find the zipped files here: <a href="/sdr/zipped/">Record Folder</a> <br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Delete all recordings" name="rm_logger_record_folder" />
-			<input type="submit" class="w3-btn w3-brown" value="Delete all zipped files" name="rm_logger_zip_folder" /><br><br>
-
+			<input type="submit" class="w3-btn w3-brown" value="Start Database" name="start_mysql" /> <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Start ManagementTool" name="start_phpmyadmin" /> <br><br>
 		</form>
+		Start Database upon start
+		Stop starting DB upon start
+		
 		<br>
 	</div>
 </div>
