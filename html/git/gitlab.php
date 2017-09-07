@@ -312,11 +312,11 @@ function liveExecuteCommand($cmd)
                     'exit_status'  => intval($matches[0]),
                     'output'       => str_replace("Exit status : " . $matches[0], '', $complete_output)
                  );
-}
+}/*
 function unliveExecuteCommand($cmd)
 {
     while (@ ob_end_flush()); // end all output buffers if any
     $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
     pclose($proc);
-}
+}*/
 ?>
