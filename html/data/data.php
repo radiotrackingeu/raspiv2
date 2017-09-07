@@ -58,7 +58,19 @@
 <div id="mysql" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
+		
+		
+		
+		
+		
 		Start Database now
+		<input type="submit" class="w3-btn w3-brown" value="Zip All Logger Recordings" name="start_mysql" /> <br><br>
+		
+		
+		Start ManagementTool
+		<input type="submit" class="w3-btn w3-brown" value="Zip All Logger Recordings" name="start_phpmyadmin" /> <br><br>
+		
+		
 		Start Database upon start
 		Stop starting DB upon start
 		
@@ -112,6 +124,16 @@
 			if (isset($_POST["rm_logger_record_folder"])){
 				echo '<pre>';
 				$test = system("rm -rf /var/www/html/sdr/record/* 2>&1", $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["start_mysql"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql mysql 2>&1", $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["start_phpmyadmin"])){
+				echo '<pre>';
+				$test = system("sudo docker run -t --rm --net=host -v /var/www/html/data/:/cfiles/ phpmyadmin 2>&1", $ret);
 				echo '</pre>';
 			}
 
