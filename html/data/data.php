@@ -58,6 +58,10 @@
 <div id="mysql" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
+		Start Database now
+		Start Database upon start
+		Stop starting DB upon start
+		
 
 		<h3>Zip Logger's record folder</h3><br>
 		<form method='POST' enctype="multipart/form-data">
