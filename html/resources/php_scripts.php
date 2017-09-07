@@ -16,13 +16,19 @@
 	}
 	if (isset($_POST["log_start"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
-		unliveExecuteCommand($cmd);
+		start_docker_quite($cmd,'logger');
 	}
 	function start_docker($docker_cmd,$block_to_jump){
 		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
 		echo '<pre>';
 		$test = system($docker_cmd, $ret);
 		echo '</pre>';
+		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";	
+	}
+	function start_docker_quite($docker_cmd,$block_to_jump){
+		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
+		$test = system($cmd." >/dev/null 2>/dev/null &");
+		echo $test ? "Started" : "Start failed";
 		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";	
 	}
 	function unliveExecuteCommand($cmd){
