@@ -33,12 +33,12 @@
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('running_docker')">Status</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('git_setup')">Setup Update</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('create_id')">Create Key</button>
-  
 </div>
 	
-	<div id="GIT" class="w3-container city" style="display:none">
+<div id="GIT" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
 		<br>First download then install the feature - installing requires also an internet connection and requires some time. <br><br>
-		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
+		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
 				<select name="git_checkout">
 					<option value="master" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "master" ?  "selected" : ""; ?>>Stable Version</option>
 					<option value="live" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "live" ? "selected" : ""; ?>>Development Version</option>
@@ -46,7 +46,10 @@
 			<input class="w3-btn" type="submit" value="Download Recipes and HTML Files" name="update_rep" onclick="openCity('GIT')"/>
 			<input class="w3-btn" type="submit" value="Reboot" name="reboot" "/>
 		</form>
+		<br>
 	</div>
+</div>
+	
 	<div id="install" class="w3-container city" style="display:none">
 		<form method="POST" onsubmit="document.getElementById('install').style.display = 'block');">
 		<br>
@@ -134,8 +137,6 @@
 		<div id="output" class="w3-container city" style="display:block">
 		<br> Please choose one of the option shown above - the result will be displayed here:
 		<?php
-			error_reporting(E_ALL);
-			ini_set('display_errors', 1);
 			if (isset($_POST["update_rep"])){
 				echo '<pre>';
 				$test = system('sudo docker run --rm -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh ' .$_POST["git_checkout"]. ' 2>&1', $ret);
