@@ -28,7 +28,7 @@
 	function unliveExecuteCommand($cmd){
 		//while (@ ob_end_flush()); // end all output buffers if any
 		//$proc = popen("$cmd ; echo Exit status : $?", 'r');
-		exec($cmd);
+		exec($cmd >/dev/null 2>/dev/null &);
 	}
 ?>
 
