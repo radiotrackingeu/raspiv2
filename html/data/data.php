@@ -26,7 +26,6 @@
 <div id="camera_data" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
-
 		<h3>Zip Camera's record folder</h3><br>
 		<form method='POST' enctype="multipart/form-data">
 			<input type="text" name="zip__camera_name" value="<?php echo "Camera_".date('Y_m_d_H_i')?>">
@@ -34,11 +33,11 @@
 			You can find the zipped files here: <a href="/picam/zipped/">Record Folder</a> <br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Delete all recordings" name="rm_cam_record_folder" />
 			<input type="submit" class="w3-btn w3-brown" value="Delete all zipped files" name="rm_cam_zip_folder" /><br><br>
-
 		</form>
 		<br>
 	</div>
 </div>
+
 <div id="radio_data" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
@@ -55,11 +54,12 @@
 		<br>
 	</div>
 </div>
+
 <div id="mysql" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
 
-		<h3>Zip Logger's record folder</h3><br>
+		<h3>Manage Data in Databases</h3><br>
 		<form method='POST' enctype="multipart/form-data">
 			<input type="submit" class="w3-btn w3-brown" value="Start Database" name="start_mysql" /> <br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Start ManagementTool" name="start_phpmyadmin" /> <br><br>
@@ -74,75 +74,64 @@
 
 <!-- Enter text here-->
 
-	<?php
-			error_reporting(E_ALL);
-			ini_set('display_errors', 1);
-			
-			
-			if (isset($_POST["zip_camera"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip__camera_name"]." /tmp/record/ 2>&1", $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["rm_cam_zip_folder"])){
-				echo '<pre>';
-				$test = system("rm -rf /var/www/html/picam/zipped/* 2>&1", $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["rm_cam_record_folder"])){
-				echo '<pre>';
-				$test = system("rm -rf /var/www/html/picam/record/* 2>&1", $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["zip_logger"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/sdr/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip_logger_name"]." /tmp/record/ 2>&1", $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["rm_logger_zip_folder"])){
-				echo '<pre>';
-				$test = system("rm -rf /var/www/html/sdr/zipped/* 2>&1", $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["rm_logger_record_folder"])){
-				echo '<pre>';
-				$test = system("rm -rf /var/www/html/sdr/record/* 2>&1", $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["start_mysql"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql mysql 2>&1", $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["start_phpmyadmin"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm --net=host -v /var/www/html/data/:/cfiles/ phpmyadmin 2>&1", $ret);
-				echo '</pre>';
-			}
 
-	?>
+<?php
+	if (isset($_POST["zip_camera"])){
+		echo "<script type='text/javascript'>document.getElementById('id01').style.display='block';</script>";
+		echo '<pre>';
+		$test = system("sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip__camera_name"]." /tmp/record/ 2>&1", $ret);
+		echo '</pre>';
+		echo "<script type='text/javascript'>document.getElementById('camera_data').style.display = 'block';</script>";
+	}
+	if (isset($_POST["rm_cam_zip_folder"])){
+		echo '<pre>';
+		$test = system("rm -rf /var/www/html/picam/zipped/* 2>&1", $ret);
+		echo '</pre>';
+	}
+	if (isset($_POST["rm_cam_record_folder"])){
+		echo '<pre>';
+		$test = system("rm -rf /var/www/html/picam/record/* 2>&1", $ret);
+		echo '</pre>';
+	}
+	if (isset($_POST["zip_logger"])){
+		echo '<pre>';
+		$test = system("sudo docker run -t --rm --privileged -v /var/www/html/sdr/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip_logger_name"]." /tmp/record/ 2>&1", $ret);
+		echo '</pre>';
+	}
+	if (isset($_POST["rm_logger_zip_folder"])){
+		echo '<pre>';
+		$test = system("rm -rf /var/www/html/sdr/zipped/* 2>&1", $ret);
+		echo '</pre>';
+	}
+	if (isset($_POST["rm_logger_record_folder"])){
+		echo '<pre>';
+		$test = system("rm -rf /var/www/html/sdr/record/* 2>&1", $ret);
+		echo '</pre>';
+	}
+	if (isset($_POST["start_mysql"])){
+		echo '<pre>';
+		$test = system("sudo docker run -t --rm -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql mysql 2>&1", $ret);
+		echo '</pre>';
+	}
+	if (isset($_POST["start_phpmyadmin"])){
+		echo '<pre>';
+		$test = system("sudo docker run -t --rm --net=host -v /var/www/html/data/:/cfiles/ phpmyadmin 2>&1", $ret);
+		echo '</pre>';
+	}
+?>
 
 
-<script>
-function openCity(cityName) {
-    var i;
-    var x = document.getElementsByClassName("city");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(cityName).style.display = "block";  
-}
-function w3_switch(name) {
-	var x = document.getElementById(name);
-    if (x.style.display == "none") {
-        x.style.display = "block";
-    } else { 
-        x.style.display = "none";
-    }
-}
-</script>
 
+<?php
+	//load footer
+	require_once RESOURCES_PATH.'/footer.php';
+	//load javascripts
+	require_once RESOURCES_PATH.'/javascript.php';
+	//load php_scripts
+	require_once RESOURCES_PATH.'/php_scripts.php';
+ ?>
 
+ 
+ 
 </body>
-
 </html>
