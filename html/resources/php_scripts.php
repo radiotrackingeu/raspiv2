@@ -11,7 +11,7 @@
 		start_docker($cmd,'camera_data');
 		}
 	if (isset($_POST["update_rep"])){
-		$cmd='sudo docker run --rm -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh ' .$_POST["git_checkout"]. ' 2>&1';
+		$cmd='sudo docker run --rm -td -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh ' .$_POST["git_checkout"]. ' 2>&1';
 		start_docker($cmd,'GIT');
 	}
 	if (isset($_POST["log_start"])){
