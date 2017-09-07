@@ -76,13 +76,6 @@
 
 
 <?php
-	if (isset($_POST["zip_camera"])){
-		echo "<script type='text/javascript'>document.getElementById('id01').style.display='block';</script>";
-		echo '<pre>';
-		$test = system("sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip__camera_name"]." /tmp/record/ 2>&1", $ret);
-		echo '</pre>';
-		echo "<script type='text/javascript'>document.getElementById('camera_data').style.display = 'block';</script>";
-	}
 	if (isset($_POST["rm_cam_zip_folder"])){
 		echo '<pre>';
 		$test = system("rm -rf /var/www/html/picam/zipped/* 2>&1", $ret);
