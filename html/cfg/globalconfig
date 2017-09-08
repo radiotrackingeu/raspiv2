@@ -11,12 +11,13 @@ Logger_Gain = 20
 
 [SDR_Radio]
 Radio_Gain = 20
-Freq1 = ""
-Freq2 = ""
-Freq3 = "150.1M"
-Freq4 = ""
-Freq5 = ""
-Freq6 = ""
+Signle_Freq = "150.1M"
+Freq1 = "150.04M"
+Freq2 = "150.06M"
+Freq3 = "150.08M"
+Freq4 = "150.10M"
+Freq5 = "150.12M"
+Freq6 = "150.14M"
 
 [gitlab_updates]
 online_repository = "github"

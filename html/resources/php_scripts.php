@@ -20,6 +20,19 @@
 		$cmd='sudo docker ps';
 		start_docker($cmd,'running_docker');
 	}
+	//WebRadio Functions
+	if (isset($_POST["rtl_fm_start_s"])){
+		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Signle_Freq"]. " -g " . $_POST["Radio_Gain"]. " -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
+		start_docker_quite($cmd,'single_freq');
+	}
+	if (isset($_POST["rtl_fm_start_l"])){
+		$cmd = "sudo docker run --rm -t --privileged rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Signle_Freq"]. " -g " . $_POST["Radio_Gain"]. " -d 0 | play -r 32k -t raw -v 5 -e s -b 16 -c 1 -V1 -'";
+		start_docker_quite($cmd,'single_freq');
+	} 
+	if (isset($_POST["rtl_stop"])){
+		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtlsdr) 2>&1";
+		start_docker($cmd,'single_freq');
+	}
 	//Logger Functions
 	if (isset($_POST["log_start"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
