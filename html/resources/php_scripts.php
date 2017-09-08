@@ -1,5 +1,6 @@
+
 <div id="output_php" class="w3-modal">
-	<div class="w3-modal-content">
+	<div class="w3-modal-content" style="width: 90%">
 		<div class="w3-container w3-blue">
 			<span onclick="document.getElementById('output_php').style.display='none'" class="w3-button w3-display-topright">&times;</span>
 					
