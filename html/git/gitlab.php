@@ -34,8 +34,8 @@
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('git_setup')">Setup Update</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('create_id')">Create Key</button>
 </div>
-	
-<div id="GIT" class="w3-container city" style="display:inital">
+
+<div id="GIT" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>First update the User Interface - if a single Application has been updated - please go afterwards to Applications<br><br>
 		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
@@ -221,14 +221,9 @@
 			if (isset($_POST["rm_files"])){
 				$cmd1 = "rm /var/www/html/git/id_rsa";
 				$cmd2 = "rm /var/www/html/git/id_rsa.pub";
-				$result = liveExecuteCommand($cmd1);
-				$result = liveExecuteCommand($cmd2);
+				$result = system($cmd1);
+				$result = system($cmd2);
 				echo "Config has been removed";
-			}
-			if (isset($_POST["running_containers"])){
-				echo '<pre>';
-				$content = system('sudo docker ps', $ret);
-				echo '</pre>';
 			}
 			if (isset($_POST["installed_images"])){
 				echo '<pre>';
@@ -278,45 +273,5 @@
 	require_once RESOURCES_PATH.'/php_scripts.php';
  ?>
 
-
 </body>
-
 </html>
-
-<?php 
-function liveExecuteCommand($cmd)
-{
-
-    while (@ ob_end_flush()); // end all output buffers if any
-
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-
-    $live_output     = "";
-    $complete_output = "";
-
-    while (!feof($proc))
-    {
-        $live_output     = fread($proc, 4096);
-        $complete_output = $complete_output . $live_output;
-        echo "$live_output";
-        @ flush();
-    }
-
-    pclose($proc);
-
-    // get exit status
-    preg_match('/[0-9]+$/', $complete_output, $matches);
-
-    // return exit status and intended output
-    return array (
-                    'exit_status'  => intval($matches[0]),
-                    'output'       => str_replace("Exit status : " . $matches[0], '', $complete_output)
-                 );
-}/*
-function unliveExecuteCommand($cmd)
-{
-    while (@ ob_end_flush()); // end all output buffers if any
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-    pclose($proc);
-}*/
-?>

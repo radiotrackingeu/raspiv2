@@ -5,15 +5,21 @@
 					
 
 <?php
-	
+	//Data Management Functions
 	if (isset($_POST["zip_camera"])){
 		$cmd="sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip__camera_name"]." /tmp/record/ 2>&1";
 		start_docker($cmd,'camera_data');
-		}
+	}
+	//System - Software Functions
 	if (isset($_POST["update_rep"])){
 		$cmd='sudo docker run --rm -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh ' .$_POST["git_checkout"]. ' 2>&1';
 		start_docker($cmd,'GIT');
 	}
+	if (isset($_POST["running_containers"])){
+		$cmd='sudo docker ps';
+		start_docker($cmd,'running_docker');
+	}
+	//Logger Functions
 	if (isset($_POST["log_start"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
 		start_docker_quite($cmd,'logger');
@@ -22,6 +28,7 @@
 		$cmd="sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtl_433_mod) 2>&1";
 		start_docker($cmd, 'logger');
 	}
+	//General Functions
 	function start_docker($docker_cmd,$block_to_jump){
 		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
 		echo '<pre>';
