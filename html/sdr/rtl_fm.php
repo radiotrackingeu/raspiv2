@@ -31,6 +31,7 @@
 	<button class="w3-bar-item w3-button" onclick="openCity('single_freq')">Single Frequency</button>
 	<button class="w3-bar-item w3-button" onclick="openCity('multiple_freq')">Multiple Frequencies</button>
 	<button class="w3-bar-item w3-button" onclick="openCity('freq_settings')">Frequencies Settings</button>
+	<button class="w3-bar-item w3-button" onclick="openCity('single_freq_rec')">Single Frequency Recorder</button>
 </div>
 <div id="single_freq" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
@@ -66,13 +67,18 @@
 	<div class="w3-panel w3-green w3-round">
 		<form method="post" enctype="multipart/form-data">
 			<br>
-			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq1'] ?>" name="rtl_fm_start_f1"/><br><br>
+			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq1'] ?>" name="rtl_fm_start_f1"/>
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq2'] ?>" name="rtl_fm_start_f2"/><br><br>
-			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq3'] ?>" name="rtl_fm_start_f3"/><br><br>
+			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq3'] ?>" name="rtl_fm_start_f3"/>
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq4'] ?>" name="rtl_fm_start_f4"/><br><br>
-			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq5'] ?>" name="rtl_fm_start_f5"/><br><br>
+			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq5'] ?>" name="rtl_fm_start_f5"/>
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq6'] ?>" name="rtl_fm_start_f6"/><br><br>
 		</form>
+		<audio controls>
+			<source src="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1); ?>" type="audio/mpeg" controls preload="none">
+			Your browser does not support the audio element.
+		</audio>
+		<br><br>
 	</div>
 </div>
 
@@ -96,6 +102,36 @@
 			<input type="text" name="Radio_Gain" value="<?php echo isset($config['SDR_Radio']['Radio_Gain']) ? $config['SDR_Radio']['Radio_Gain'] : 20 ?>" /><br>
 			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Save Settings" name="save_settings"/>
+		</form>
+	</div>
+</div>
+
+<div id="single_freq_rec" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
+			<br>
+			<strong>Frequencies:</strong><br>
+			<input type="text" name="Signle_Freq" value="<?php echo isset($config['SDR_Radio']['Signle_Freq']) ? $config['SDR_Radio']['Signle_Freq'] : "150.1M" ?>" /><br>
+			Set the frequency you want to listen to. You can use multipliers like M and k. Turn slightly below the frequency for better results.<br>
+			Together with a treshold bigger then 0 you can scan multiple frequencies if you add a -f (i.e. 150.1M -f 150.120M)
+			<br><br>
+			<strong>Gain in DB:</strong><br>
+			<input type="text" name="Radio_Gain" value="<?php echo isset($config['SDR_Radio']['Radio_Gain']) ? $config['SDR_Radio']['Radio_Gain'] : 20 ?>" /><br>
+			Set a gain value. Remember higher gains result in higher noise levels.
+			<br>
+			<br>
+			Start and Stop receiver - to set a new frequency/gain, first stop and restart: 
+			<br>
+			<br>
+			<input type="submit" class="w3-btn w3-brown" value="Start Browser playback" name="rtl_fm_start_s"/>
+			<input type="submit" class="w3-btn w3-brown" value="Start Local playback" name="rtl_fm_start_l"/>
+			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_stop"/>
+			<br>
+			<br>
+			<audio controls>
+				<source src="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1); ?>" type="audio/mpeg" controls preload="none">
+				Your browser does not support the audio element.
+			</audio>
 		</form>
 	</div>
 </div>
