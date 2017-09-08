@@ -74,10 +74,6 @@
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq5'] ?>" name="rtl_fm_start_f5"/>
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq6'] ?>" name="rtl_fm_start_f6"/><br><br>
 		</form>
-		<audio controls>
-			<source src="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1); ?>" type="audio/mpeg" controls preload="none">
-			Your browser does not support the audio element.
-		</audio>
 		<br><br>
 	</div>
 </div>
