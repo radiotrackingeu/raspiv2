@@ -28,4 +28,23 @@ log_gain = 20
 center_freq = 150100000
 freq_range = 250000
 log_level = 1
-pre_log_name = "rteu"
+pre_log_name = "rteu_"
+
+[recorder_sdr]
+log_gain = 20
+center_freq = 150100000
+freq_range = 250000
+pre_log_name = "sdr_"
+
+[timer_logger_433]
+log_gain = 20
+center_freq = 150100000
+freq_range = 250000
+log_level = 1
+start_timer = "reboot"
+start_min = 0
+start_hour = 0
+stop_timer = "stop_no"
+stop_min = 0
+stop_hour = 0
+pre_log_name = "rteu_"

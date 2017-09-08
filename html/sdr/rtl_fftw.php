@@ -18,8 +18,8 @@
 	require_once CONFIGLITE_PATH.'/Lite.php';
 	
 	//define config section and items.
-	define ('confSection', 'logger_433');
-	define ('confKeys', array('log_gain','center_freq','freq_range','log_level','pre_log_name'));
+	define ('confSection', array('logger_433','recorder_sdr','timer_logger_433'));
+	define ('confKeys', array('log_gain','center_freq','freq_range','log_level','pre_log_name','start_timer','start_min','start_hout','stop_timer','stop_min','stop_hour'));
 	
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
@@ -30,6 +30,7 @@
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('logger')">Logger</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('logger_timer')">Logger Timer</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('spectrum')">Spectrum</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('raw_data')">Raw Data Recorder</button>
 </div>
 
 <div id="spectrum" class="w3-container city" style="display:none">
@@ -72,7 +73,7 @@
 	</div>
 </div>
 
-<div id="logger" class="w3-container city" style="display:inital">
+<div id="logger" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
 		<h3>Logger settings</h3><br>
@@ -111,116 +112,77 @@
 	<div class="w3-panel w3-green w3-round">
 		<br>
 		<h3>Logger settings</h3><br>
-		<form method='POST' enctype="multipart/form-data">
+		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 		
 				Gain in DB:<br>
-				<input type="number" name="log_gain" value="<?php echo isset($config['logger_433']['log_gain']) ? $config['logger_433']['log_gain'] : 20 ?>"><br>
+				<input type="number" name="log_gain" value="<?php echo isset($config['timer_logger_433']['log_gain']) ? $config['timer_logger_433']['log_gain'] : 20 ?>"><br>
 				Gain of the recording device. Higher gain results in more noise. max 49DB
 				<br><br>
 				Center Frequency in Hz:<br>
-				<input type="number" name="center_freq" value="<?php echo isset($config['logger_433']['center_freq']) ? $config['logger_433']['center_freq'] : 150100000 ?>"><br>
+				<input type="number" name="center_freq" value="<?php echo isset($config['timer_logger_433']['center_freq']) ? $config['timer_logger_433']['center_freq'] : 150100000 ?>"><br>
 				Frequency Range to monitor: <br>
 				<select name="freq_range">
-					<option value="250000" <?php echo isset($config['logger_433']['freq_range']) && $config['logger_433']['freq_range'] == "250000" ? "selected" : "" ?>>250kHz</option>
-					<option value="1024000" <?php echo isset($config['logger_433']['freq_range']) && $config['logger_433']['freq_range'] == "1024000" ? "selected" : "" ?>>1024kHz</option>
+					<option value="250000" <?php echo isset($config['timer_logger_433']['freq_range']) && $config['timer_logger_433']['freq_range'] == "250000" ? "selected" : "" ?>>250kHz</option>
+					<option value="1024000" <?php echo isset($config['timer_logger_433']['freq_range']) && $config['timer_logger_433']['freq_range'] == "1024000" ? "selected" : "" ?>>1024kHz</option>
 				</select> 
 				<br>
 				Log Detection Level:<br>
-				<input type="text" name="log_level" value="<?php echo isset($config['logger_433']['log_level']) ? $config['logger_433']['log_level'] : 1 ?>"><br>
+				<input type="text" name="log_level" value="<?php echo isset($config['timer_logger_433']['log_level']) ? $config['timer_logger_433']['log_level'] : 1 ?>"><br>
 				0 means automatic - level up to 16384 - the tricky part is setting a good log level compared to the gain: try and error
 				<br><br>
 				Prefix and Record Name:<br>
-				<input type="text" name="pre_log_name" value="<?php echo isset($config['logger_433']['pre_log_name']) ? $config['logger_433']['pre_log_name'] : "rteu" ?>">
+				<input type="text" name="pre_log_name" value="<?php echo isset($config['timer_logger_433']['pre_log_name']) ? $config['timer_logger_433']['pre_log_name'] : "rteu" ?>">
 				<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
 				Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a><br><br>
 
-			<input type="radio" name="start_timer" value="start_no" checked> No start<br>
-			<input type="radio" name="start_timer" value="reboot"> Start at Boot<br>
-			<input type="radio" name="start_timer" value="start_on_time"> Start at times stated below<br>
-				Minute
-				<select name="start_min">
-					<option value="0">0</option>
-					<option value="10">10</option>
-					<option value="20">20</option>
-					<option value="30">30</option>
-					<option value="40">40</option>
-					<option value="50">50</option>
-				</select> 
-				Hour
-				<select name="start_hour">
-					<option value="0">0</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-					<option value="11">11</option>
-					<option value="12">12</option>
-					<option value="13">13</option>
-					<option value="14">14</option>
-					<option value="15">15</option>
-					<option value="16">16</option>
-					<option value="17">17</option>
-					<option value="18">18</option>
-					<option value="19">19</option>
-					<option value="20">20</option>
-					<option value="21">21</option>
-					<option value="22">22</option>
-					<option value="23">23</option>
-				</select>
+			<input type="radio" name="start_timer" value="start_no" <?php echo isset($config['timer_logger_433']['start_timer']) && $config['timer_logger_433']['start_timer'] == "start_no" ? "checked" : "" ?>> No start<br>
+			<input type="radio" name="start_timer" value="reboot" <?php echo isset($config['timer_logger_433']['start_timer']) && $config['timer_logger_433']['start_timer'] == "reboot" ? "checked" : "" ?>> Start at Boot<br>
+			<input type="radio" name="start_timer" value="start_on_time" <?php echo isset($config['timer_logger_433']['start_timer']) && $config['timer_logger_433']['start_timer'] == "start_on_time" ? "checked" : "" ?>> Start at times stated below<br>
+			Minute (0 - 59)
+			<input type="number" name="start_min" value="<?php echo isset($config['timer_logger_433']['start_min']) ? $config['timer_logger_433']['start_min'] : 0 ?>"><br>
+			Hour (0-23)
+			<input type="number" name="start_hour" value="<?php echo isset($config['timer_logger_433']['start_hour']) ? $config['timer_logger_433']['start_hour'] : 0 ?>"><br>
 			<br><br>
-			<input type="radio" name="stop_timer" value="stop_no" checked> No stop<br>
-			<input type="radio" name="stop_timer" value="stop_on_time"> Stop at times stated below<br>
-				Minute
-				<select name="stop_min">
-					<option value="0">0</option>
-					<option value="10">10</option>
-					<option value="20">20</option>
-					<option value="30">30</option>
-					<option value="40">40</option>
-					<option value="50">50</option>
-				</select> 
-				Hour
-				<select name="stop_hour">
-					<option value="0">0</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-					<option value="11">11</option>
-					<option value="12">12</option>
-					<option value="13">13</option>
-					<option value="14">14</option>
-					<option value="15">15</option>
-					<option value="16">16</option>
-					<option value="17">17</option>
-					<option value="18">18</option>
-					<option value="19">19</option>
-					<option value="20">20</option>
-					<option value="21">21</option>
-					<option value="22">22</option>
-					<option value="23">23</option>
-				</select>
-				<br><br>
+			<input type="radio" name="stop_timer" value="stop_no" <?php echo isset($config['timer_logger_433']['stop_timer']) && $config['timer_logger_433']['stop_timer'] == "stop_no" ? "checked" : "" ?>> No stop<br>
+			<input type="radio" name="stop_timer" value="stop_on_time" <?php echo isset($config['timer_logger_433']['stop_timer']) && $config['timer_logger_433']['stop_timer'] == "stop_on_time" ? "checked" : "" ?>> Stop at times stated below<br>
+			Minute (0 - 59)
+			<input type="number" name="stop_min" value="<?php echo isset($config['timer_logger_433']['stop_min']) ? $config['timer_logger_433']['stop_min'] : 0 ?>"><br>
+			Hour (0-23)
+			<input type="number" name="stop_hour" value="<?php echo isset($config['timer_logger_433']['stop_hour']) ? $config['timer_logger_433']['stop_hour'] : 0 ?>"><br>
+			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Change Settings" name="change_logger_cron" />
 		</form>
 		<br>
 	</div>
 </div>
 
-<?php
+<div id="raw_data" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
+			Gain in DB:<br>
+			<input type="number" name="log_gain" value="<?php echo isset($config['recorder_sdr']['log_gain']) ? $config['recorder_sdr']['log_gain'] : 20 ?>"><br>
+			Gain of the recording device. Higher gain results in more noise. max 49DB
+			<br><br>
+			Center Frequency in Hz:<br>
+			<input type="number" name="center_freq" value="<?php echo isset($config['recorder_sdr']['center_freq']) ? $config['recorder_sdr']['center_freq'] : 150100000 ?>"><br>
+			Frequency Range to monitor: <br>
+			<select name="freq_range">
+				<option value="250000" <?php echo isset($config['recorder_sdr']['freq_range']) && $config['recorder_sdr']['freq_range'] == "250000" ? "selected" : "" ?>>250kHz</option>
+				<option value="1024000" <?php echo isset($config['recorder_sdr']['freq_range']) && $config['recorder_sdr']['freq_range'] == "1024000" ? "selected" : "" ?>>1024kHz</option>
+			</select> 
+			<br>
+			Prefix and Record Name:<br>
+			<input type="text" name="pre_log_name" value="<?php echo isset($config['recorder_sdr']['pre_log_name']) ? $config['recorder_sdr']['pre_log_name'] : "SDR_" ?>">
+			<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
+			Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a><br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Start" name="sdr_start" />
+			<input type="submit" class="w3-btn w3-brown" value="Stop" name="sdr_stop" />
+		</form>
+		<br>
+	</div>
+</div>
 
+<?php
 	if (isset($_POST["fftw_start"])){
 		$cmd = "rtl_power_fftw -r 250000 -f " . $_POST["cfreq"]. " -b 128 -t 0.1 -g " . $_POST["gain"]. " -q -d 0 -e " . $_POST["rtime"]. " -m /home/" . $_POST["rname"];
 		echo '<pre>';

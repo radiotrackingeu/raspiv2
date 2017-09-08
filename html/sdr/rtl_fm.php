@@ -37,7 +37,7 @@
 	<div class="w3-panel w3-green w3-round">
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<br>
-			<strong>Frequencies:</strong><br>
+			<strong>Frequency:</strong><br>
 			<input type="text" name="Signle_Freq" value="<?php echo isset($config['SDR_Radio']['Signle_Freq']) ? $config['SDR_Radio']['Signle_Freq'] : "150.1M" ?>" /><br>
 			Set the frequency you want to listen to. You can use multipliers like M and k. Turn slightly below the frequency for better results.<br>
 			Together with a treshold bigger then 0 you can scan multiple frequencies if you add a -f (i.e. 150.1M -f 150.120M)
@@ -67,6 +67,7 @@
 	<div class="w3-panel w3-green w3-round">
 		<form method="post" enctype="multipart/form-data">
 			<br>
+			<strong>Frequencies:</strong><br>
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq1'] ?>" name="rtl_fm_start_f1"/>
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq2'] ?>" name="rtl_fm_start_f2"/><br><br>
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq3'] ?>" name="rtl_fm_start_f3"/>
@@ -75,6 +76,7 @@
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq6'] ?>" name="rtl_fm_start_f6"/><br><br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_stop"/>
 		</form>
+		Press button to start playback at the specified frequency.
 		<br><br>
 		<audio controls>
 			<source src="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1); ?>" type="audio/mpeg" controls preload="none">
