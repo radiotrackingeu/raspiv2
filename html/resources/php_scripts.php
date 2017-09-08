@@ -30,6 +30,7 @@
 		start_docker_quite($cmd,'single_freq');
 	}
 	if (isset($_POST["rtl_fm_start_f1"])){
+		echo $config['SDR_Radio']['Freq1'];
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " .$config['SDR_Radio']['Freq1']. " -g " . $_POST["Radio_Gain"]. " -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
 		start_docker_quite($cmd,'multiple_freq');
 	}
