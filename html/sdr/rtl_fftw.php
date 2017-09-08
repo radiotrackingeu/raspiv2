@@ -32,7 +32,7 @@
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('spectrum')">Spectrum</button>
 </div>
 
-<div id="spectrum" class="w3-container city" style="display:none">
+<div id="spectrum" class="w3-container city" style="display">
 	<div class="w3-panel w3-green w3-round">
 		<br>
 		To record a Frequency Spektrum for a given time, just modify the entries below and press Start.
@@ -72,7 +72,7 @@
 	</div>
 </div>
 
-<div id="logger" class="w3-container city" style="display:none">
+<div id="logger" class="w3-container city" style="display:inital">
 	<div class="w3-panel w3-green w3-round">
 		<br>
 		<h3>Logger settings</h3><br>

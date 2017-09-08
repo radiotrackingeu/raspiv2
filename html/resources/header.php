@@ -1,18 +1,19 @@
-<div class="w3-container w3-green">
-	
-	<div class="w3-display-container w3-green">
-		<div class="w3-display-middle w3-large">
-			<img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:35%">
-		</div>
-		<br><br>
-		<div class="w3-display-left w3-large">
-			<h1>radio-tracking.eu</h1>
-			<button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true">  Menu</i></button>
-		</div>		
-		<br><br><br><br>
+<div class="w3-cell-row">
+	<div class="w3-container w3-cell w3-cell-right w3-large w3-green w3-mobile" style="width:20%">
+		<br>
+		<img src="/images/logo_rteu.png" align="left" alt="radio-tracking.eu" style="width:70%">
 	</div>
+	<div class="w3-container w3-cell w3-cell-middle w3-large w3-green w3-mobile" style="width:80%">
+		<br>
+		<h1>radio-tracking.eu</h1>
+	</div>	
+
 </div>
- 
+<div class="w3-cell-row">
+	<div class="w3-container w3-cell w3-large  w3-green w3-mobile">
+		<button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true">  Menu</i></button>
+	</div>
+ </div>
 
 <div class="w3-bar w3-light-grey" style="display:none" id="sidebar">
 	<!-- Home -->

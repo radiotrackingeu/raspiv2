@@ -35,7 +35,7 @@
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('create_id')">Create Key</button>
 </div>
 	
-<div id="GIT" class="w3-container city" style="display:none">
+<div id="GIT" class="w3-container city" style="display:inital">
 	<div class="w3-panel w3-green w3-round">
 		<br>First update the User Interface - if a single Application has been updated - please go afterwards to Applications<br><br>
 		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
