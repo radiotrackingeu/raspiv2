@@ -87,8 +87,8 @@
 		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";	
 	}
 	function check_docker($docker_name){
-		if(system("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=".$docker_name.")")){
-			echo "<span class='w3-tag wr-red w3-xlarge'>Device is in use</span>";
+		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=".$docker_name.")")){
+			echo "<span class='w3-tag w3-red w3-xlarge'>Device is in use</span> \n";
 		}
 		else{
 			echo "Device is not in use";
