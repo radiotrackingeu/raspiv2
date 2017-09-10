@@ -59,11 +59,11 @@
 	}
 	//Logger Functions
 	if (isset($_POST["log_start"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
+		$cmd = "sudo docker run --rm --name logger-sdr-d1 -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
 		start_docker_quite($cmd,'logger');
 	}
 	if (isset($_POST["log_stop"])){
-		$cmd="sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtl_433_mod) 2>&1";
+		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d1) 2>&1";
 		start_docker($cmd, 'logger');
 	}
 	//Raw Data Recorder Functions
@@ -75,9 +75,9 @@
 	//General Functions
 	function start_docker($docker_cmd,$block_to_jump){
 		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
-		echo '<pre>';
+		echo '<p>';
 		$test = system($docker_cmd, $ret);
-		echo '</pre>';
+		echo '</p>';
 		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";	
 	}
 	function start_docker_quite($docker_cmd,$block_to_jump){
