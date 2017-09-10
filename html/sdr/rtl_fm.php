@@ -15,10 +15,7 @@
 	//load functions
 	require_once RESOURCES_PATH.'/helpers.php';
 	//load ConfigLite
-	require_once CONFIGLITE_PATH.'/Lite.php';
-	//load php_scripts
-	require_once RESOURCES_PATH.'/php_scripts.php';
-	
+	require_once CONFIGLITE_PATH.'/Lite.php';	
 	//define config section and items.
 	define ('confSection', 'SDR_Radio');
 	define ('confKeys', array('Signle_Freq','Freq1','Freq2','Freq3','Freq4','Freq5','Freq6', 'Radio_Gain'));
@@ -147,6 +144,8 @@
 	require_once RESOURCES_PATH.'/footer.php';
 	//load javascripts
 	require_once RESOURCES_PATH.'/javascript.php';
+	//load php_scripts
+	require_once RESOURCES_PATH.'/php_scripts.php';
  ?>
 
 </body>

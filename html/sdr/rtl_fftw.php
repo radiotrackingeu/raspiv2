@@ -23,9 +23,6 @@
 	
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
-	
-	//load php_scripts
-	require_once RESOURCES_PATH.'/php_scripts.php';
  ?>
 
 <!-- Enter text here-->
@@ -205,6 +202,8 @@
 	require_once RESOURCES_PATH.'/footer.php';
 	//load javascripts
 	require_once RESOURCES_PATH.'/javascript.php';
+	//load php_scripts
+	require_once RESOURCES_PATH.'/php_scripts.php';
  ?>
 
 </body>
