@@ -181,6 +181,15 @@
 	</div>
 </div>
 
+<div id="tab_raw_data" class="w3-container city" style="display:block">
+	<div class="w3-panel w3-green w3-round">
+		<br>
+		<?php check_docker("logger-sdr-d1");?>
+		<br>
+	</div>
+</div>
+
+
 <?php
 	if (isset($_POST["fftw_start"])){
 		$cmd = "rtl_power_fftw -r 250000 -f " . $_POST["cfreq"]. " -b 128 -t 0.1 -g " . $_POST["gain"]. " -q -d 0 -e " . $_POST["rtime"]. " -m /home/" . $_POST["rname"];
