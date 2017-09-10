@@ -79,7 +79,6 @@
 		$test = system($docker_cmd, $ret);
 		echo '</pre>';
 		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";
-		check_docker($docker_name);
 	}
 	function start_docker_quite($docker_cmd,$block_to_jump){
 		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
@@ -89,7 +88,7 @@
 	}
 	function check_docker($docker_name){
 		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=".$docker_name.")")){
-			echo "<span class='w3-tag w3-red w3-xlarge'>Device is in use</span> \n";
+			echo "<span class='w3-tag w3-red w3-xlarge'>Device is in use</span> \n \n";
 		}
 		else{
 			echo "Device is not in use";
