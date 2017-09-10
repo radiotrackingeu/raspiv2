@@ -16,6 +16,8 @@
 	require_once RESOURCES_PATH.'/helpers.php';
 	//load ConfigLite
 	require_once CONFIGLITE_PATH.'/Lite.php';
+	//load php_scripts
+	require_once RESOURCES_PATH.'/php_scripts.php';
 	
 	//define config section and items.
 	define ('confSection', 'SDR_Radio');
@@ -145,8 +147,6 @@
 	require_once RESOURCES_PATH.'/footer.php';
 	//load javascripts
 	require_once RESOURCES_PATH.'/javascript.php';
-	//load php_scripts
-	require_once RESOURCES_PATH.'/php_scripts.php';
  ?>
 
 </body>
