@@ -181,10 +181,17 @@
 	</div>
 </div>
 
-<div id="tab_raw_data" class="w3-container city" style="display:block">
+<div id="device_info" class="w3-container city" style="display:block">
 	<div class="w3-panel w3-green w3-round">
 		<br>
-		<?php echo check_docker("logger-sdr-d1");?>
+		<?php 
+		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=".$docker_name.")")){
+			echo "<span class='w3-tag w3-red w3-xlarge'>Radio unavaible</span> \n \n";
+		}
+		else{
+			echo "<span class='w3-tag w3-green w3-xlarge'>Radio avaible</span> \n \n";
+		}
+		?>
 		<br>
 	</div>
 </div>
