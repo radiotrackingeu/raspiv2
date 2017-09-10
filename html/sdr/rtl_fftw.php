@@ -30,13 +30,13 @@
 
 <!-- Enter text here-->
 <div class="w3-bar w3-brown w3-mobile">
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('logger')">Logger</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('logger_timer')">Logger Timer</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('spectrum')">Spectrum</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('raw_data')">Raw Data Recorder</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger')">Logger</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_timer')">Logger Timer</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_spectrum')">Spectrum</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data')">Raw Data Recorder</button>
 </div>
 
-<div id="spectrum" class="w3-container city" style="display:none">
+<div id="tab_spectrum" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
 		To record a Frequency Spektrum for a given time, just modify the entries below and press Start.
@@ -76,7 +76,7 @@
 	</div>
 </div>
 
-<div id="logger" class="w3-container city" style="display:none">
+<div id="tab_logger" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
 		<h3>Logger settings</h3><br>
@@ -110,32 +110,31 @@
 	</div>
 </div>
 
-<div id="logger_timer" class="w3-container city" style="display:none">
+<div id="tab_logger_timer" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
 		<h3>Logger settings</h3><br>
 		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
-		
-				Gain in DB:<br>
-				<input type="number" name="time_log_gain" value="<?php echo isset($config['logger']['time_log_gain']) ? $config['logger']['time_log_gain'] : 20 ?>"><br>
-				Gain of the recording device. Higher gain results in more noise. max 49DB
-				<br><br>
-				Center Frequency in Hz:<br>
-				<input type="number" name="time_center_freq" value="<?php echo isset($config['logger']['time_center_freq']) ? $config['logger']['time_center_freq'] : 150100000 ?>"><br>
-				Frequency Range to monitor: <br>
-				<select name="time_freq_range">
-					<option value="250000" <?php echo isset($config['logger']['time_freq_range']) && $config['logger']['time_freq_range'] == "250000" ? "selected" : "" ?>>250kHz</option>
-					<option value="1024000" <?php echo isset($config['logger']['time_freq_range']) && $config['logger']['time_freq_range'] == "1024000" ? "selected" : "" ?>>1024kHz</option>
-				</select> 
-				<br>
-				Log Detection Level:<br>
-				<input type="text" name="time_log_level" value="<?php echo isset($config['logger']['time_log_level']) ? $config['logger']['time_log_level'] : 1 ?>"><br>
-				0 means automatic - level up to 16384 - the tricky part is setting a good log level compared to the gain: try and error
-				<br><br>
-				Prefix and Record Name:<br>
-				<input type="text" name="time_pre_log_name" value="<?php echo isset($config['logger']['time_pre_log_name']) ? $config['logger']['time_pre_log_name'] : "rteu" ?>">
-				<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
-				Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a><br><br>
+			Gain in DB:<br>
+			<input type="number" name="time_log_gain" value="<?php echo isset($config['logger']['time_log_gain']) ? $config['logger']['time_log_gain'] : 20 ?>"><br>
+			Gain of the recording device. Higher gain results in more noise. max 49DB
+			<br><br>
+			Center Frequency in Hz:<br>
+			<input type="number" name="time_center_freq" value="<?php echo isset($config['logger']['time_center_freq']) ? $config['logger']['time_center_freq'] : 150100000 ?>"><br>
+			Frequency Range to monitor: <br>
+			<select name="time_freq_range">
+				<option value="250000" <?php echo isset($config['logger']['time_freq_range']) && $config['logger']['time_freq_range'] == "250000" ? "selected" : "" ?>>250kHz</option>
+				<option value="1024000" <?php echo isset($config['logger']['time_freq_range']) && $config['logger']['time_freq_range'] == "1024000" ? "selected" : "" ?>>1024kHz</option>
+			</select> 
+			<br>
+			Log Detection Level:<br>
+			<input type="text" name="time_log_level" value="<?php echo isset($config['logger']['time_log_level']) ? $config['logger']['time_log_level'] : 1 ?>"><br>
+			0 means automatic - level up to 16384 - the tricky part is setting a good log level compared to the gain: try and error
+			<br><br>
+			Prefix and Record Name:<br>
+			<input type="text" name="time_pre_log_name" value="<?php echo isset($config['logger']['time_pre_log_name']) ? $config['logger']['time_pre_log_name'] : "rteu" ?>">
+			<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
+			Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a><br><br>
 
 			<input type="radio" name="time_start_timer" value="start_no" <?php echo isset($config['logger']['time_start_timer']) && $config['logger']['time_start_timer'] == "start_no" ? "checked" : "" ?>> No start<br>
 			<input type="radio" name="time_start_timer" value="reboot" <?php echo isset($config['logger']['time_start_timer']) && $config['logger']['time_start_timer'] == "reboot" ? "checked" : "" ?>> Start at Boot<br>
@@ -158,7 +157,7 @@
 	</div>
 </div>
 
-<div id="raw_data" class="w3-container city" style="display:none">
+<div id="tab_raw_data" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
 			<br>
