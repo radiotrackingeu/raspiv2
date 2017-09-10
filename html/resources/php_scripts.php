@@ -68,7 +68,7 @@
 	}
 	//Raw Data Recorder Functions
 	if (isset($_POST["sdr_start"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/tmp/ rtlsdr bash -c 'rtl_sdr -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -g ".$_POST["log_gain"]." /tmp/".$_POST["log_name"]."'";
+		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/tmp/ rtlsdr bash -c 'rtl_sdr -f ".$_POST["raw_center_freq"]." -s ".$_POST["raw_freq_range"]." -g ".$_POST["raw_log_log_gain"]." /tmp/".$_POST["raw_pre_log_name"].$_POST["log_name"]."'";
 		echo $cmd;
 		start_docker_quite($cmd,'raw_data');
 	}

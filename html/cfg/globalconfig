@@ -23,28 +23,24 @@ Freq6 = "150.14M"
 online_repository = "github"
 lokal_branch = "live"
 
-[logger_433]
+[logger]
 log_gain = 20
 center_freq = 150100000
 freq_range = 250000
 log_level = 1
 pre_log_name = "rteu_"
-
-[recorder_sdr]
-log_gain = 20
-center_freq = 150100000
-freq_range = 250000
-pre_log_name = "sdr_"
-
-[timer_logger_433]
-log_gain = 20
-center_freq = 150100000
-freq_range = 250000
-log_level = 1
-start_timer = "reboot"
-start_min = 0
-start_hour = 0
-stop_timer = "stop_no"
-stop_min = 0
-stop_hour = 0
-pre_log_name = "rteu_"
+raw_log_log_gain = 20
+raw_center_freq = 150100000
+raw_freq_range = 250000
+raw_pre_log_name = "sdr_"
+time_log_gain = 20
+time_center_freq = 150100000
+time_freq_range = 250000
+time_log_level = 1
+time_start_timer = "reboot"
+time_start_min = 0
+time_start_hour = 0
+time_stop_timer = "stop_no"
+time_stop_min = 0
+time_stop_hour = 0
+time_pre_log_name = "rteu_"
