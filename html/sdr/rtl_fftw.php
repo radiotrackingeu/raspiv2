@@ -184,7 +184,7 @@
 <div id="tab_raw_data" class="w3-container city" style="display:block">
 	<div class="w3-panel w3-green w3-round">
 		<br>
-		<?php check_docker("logger-sdr-d1");?>
+		<?php echo check_docker("logger-sdr-d1");?>
 		<br>
 	</div>
 </div>
