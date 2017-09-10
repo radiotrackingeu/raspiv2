@@ -9,7 +9,7 @@
 #git config --global user.name "Radio Tracking Eu"
 #eval $(ssh-agent -s) && ssh-add /root/.ssh/id_rsa
 
-# Running on live branch with githab repository
+# Running on live branch with github repository
 cd /home/pi/gitrep/raspiv2/
 echo 'Download new repositry:'
 git pull
