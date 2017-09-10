@@ -216,7 +216,7 @@
 			echo "System will not start logger upon start";
 		}
 		if($_POST["time_start_timer"]=="start_on_time"){
-			$change= $_POST["start_min"]. " ".$_POST["start_hour"]." * * * root " .$cmd;
+			$change= $_POST["time_start_min"]. " ".$_POST["time_start_hour"]." * * * root " .$cmd;
 			$search = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash";
 			$file_to_replace="/tmp/crontab";
 			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"", $ret);
@@ -231,7 +231,7 @@
 			echo "System will not stop logger";
 		}
 		if($_POST["time_stop_timer"]=="stop_on_time"){
-			$change= $_POST["stop_min"]. " ".$_POST["stop_hour"]." * * * root " .$stop_cmd;
+			$change= $_POST["time_stop_min"]. " ".$_POST["time_stop_hour"]." * * * root " .$stop_cmd;
 			$search = $stop_cmd;
 			$file_to_replace="/tmp/crontab";
 			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"", $ret);
