@@ -78,6 +78,7 @@
 		echo '<p>'.'<br/>'."\n";
 		$test = system($docker_cmd, $ret);
 		echo '</p>';
+		header("Refresh:0");
 		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";	
 	}
 	function start_docker_quite($docker_cmd,$block_to_jump){
