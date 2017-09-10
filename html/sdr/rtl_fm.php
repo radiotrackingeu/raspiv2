@@ -74,6 +74,7 @@
 		</form>
 		Press button to start playback at the specified frequency.
 		<br><br>
+		<?php echo start_playback(); ?>
 		<br><br>
 	</div>
 </div>
