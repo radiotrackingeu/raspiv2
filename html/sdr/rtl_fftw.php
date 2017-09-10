@@ -201,21 +201,21 @@
 	if (isset($_POST["change_logger_cron"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["time_center_freq"]." -s ".$_POST["time_freq_range"]." -t -q -A -l ".$_POST["time_log_level"]." -g " . $_POST["time_log_gain"]. " 2> /home/".$_POST["time_pre_log_name"]."\\$(date +%Y_%M_%k_%m_%S)'";
 		echo $cmd;
-		if($_POST["start_timer"]=="reboot"){
+		if($_POST["time_start_timer"]=="reboot"){
 			$change= "@reboot root " .$cmd;
 			$search = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash";
 			$file_to_replace="/tmp/crontab";
 			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"", $ret);
 			echo "System will now start logger upon start with the following settings: Frequency: ".$_POST["time_center_freq"]." Frequency-Range: ".$_POST["time_freq_range"]." Log-Level: ".$_POST["time_log_level"]." Gain: " . $_POST["time_log_gain"]. " and File-Name: ". $_POST["time_pre_log_name"];
 		}
-		if($_POST["start_timer"]=="start_no"){
+		if($_POST["time_start_timer"]=="start_no"){
 			$change= "#@reboot root " .$cmd;
 			$search = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash";
 			$file_to_replace="/tmp/crontab";
 			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"", $ret);
 			echo "System will not start logger upon start";
 		}
-		if($_POST["start_timer"]=="start_on_time"){
+		if($_POST["time_start_timer"]=="start_on_time"){
 			$change= $_POST["start_min"]. " ".$_POST["start_hour"]." * * * root " .$cmd;
 			$search = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash";
 			$file_to_replace="/tmp/crontab";
@@ -223,14 +223,14 @@
 			echo "System will now start logger upon start with the following settings: <br><br>Frequency: ".$_POST["time_center_freq"]." Frequency-Range: ".$_POST["time_freq_range"]." Log-Level: ".$_POST["time_log_level"]." Gain: " . $_POST["time_log_gain"]. " and File-Name: ". $_POST["time_pre_log_name"];
 		}
 		$stop_cmd="sudo docker stop \\$(sudo docker ps -a -q --filter ancestor=rtl_433_mod)";
-		if($_POST["stop_timer"]=="stop_no"){
+		if($_POST["time_stop_timer"]=="stop_no"){
 			$change= "#".$stop_cmd;
 			$search = $stop_cmd;
 			$file_to_replace="/tmp/crontab";
 			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"", $ret);
 			echo "System will not stop logger";
 		}
-		if($_POST["stop_timer"]=="stop_on_time"){
+		if($_POST["time_stop_timer"]=="stop_on_time"){
 			$change= $_POST["stop_min"]. " ".$_POST["stop_hour"]." * * * root " .$stop_cmd;
 			$search = $stop_cmd;
 			$file_to_replace="/tmp/crontab";
