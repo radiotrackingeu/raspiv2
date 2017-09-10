@@ -185,14 +185,23 @@
 	<div class="w3-panel w3-green w3-round">
 		<br>
 		<?php 
-		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=".$docker_name.")")){
-			echo "<span class='w3-tag w3-red w3-xlarge'>Radio unavaible</span> \n \n";
+		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
+			echo "<span class='w3-tag w3-red w3-xlarge'>Radio 1 unavaible</span> \n \n";
 		}
 		else{
-			echo "<span class='w3-tag w3-green w3-xlarge'>Radio avaible</span> \n \n";
+			echo "<span class='w3-tag w3-green w3-xlarge'>Radio 1 avaible</span> \n \n";
 		}
 		?>
-		<br>
+		<br><br>
+		<?php 
+		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
+			echo "<span class='w3-tag w3-red w3-xlarge'>Radio 1 unavaible</span> \n \n";
+		}
+		else{
+			echo "<span class='w3-tag w3-green w3-xlarge'>Radio 1 avaible</span> \n \n";
+		}
+		?>
+		<br><br>
 	</div>
 </div>
 
