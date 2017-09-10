@@ -60,7 +60,6 @@
 	//Logger Functions
 	if (isset($_POST["log_start"])){
 		$cmd = "sudo docker run --rm --name logger-sdr-d1 -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
-		check_docker("logger-sdr-d1");
 		start_docker_quite($cmd,'logger');
 	}
 	if (isset($_POST["log_stop"])){
@@ -89,7 +88,7 @@
 	}
 	function check_docker($docker_name){
 		if(system("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=".$docker_name.")")){
-			echo "Device is in use";
+			echo "<span class='w3-tag wr-red w3-xlarge'>Device is in use</span>";
 		}
 		else{
 			echo "Device is not in use";
