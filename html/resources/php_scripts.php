@@ -142,7 +142,7 @@
 		}
 	}
 	function start_audio_html(){
-		echo "<audio controls><source src='http://".$_SERVER['SERVER_NAME'].':'.($_SERVER['SERVER_PORT']+1)."'type='audio/mpeg' controls preload='none'>Your browser does not support the audio element.</audio>";
+		echo "<audio controls autoplay preload=none><source src='http://".$_SERVER['SERVER_NAME'].':'.($_SERVER['SERVER_PORT']+1)."'type='audio/mpeg' controls preload='none'>Your browser does not support the audio element.</audio>";
 	}
 ?>
 
