@@ -53,6 +53,7 @@
 			<input type="submit" class="w3-btn w3-brown" value="Start Local playback" name="rtl_fm_start_l"/>
 			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_stop"/>
 			<br><br>
+			<audio controls autoplay preload=none><source src='http://".$_SERVER['SERVER_NAME'].':'.($_SERVER['SERVER_PORT']+1)."'type='audio/mpeg' controls preload='none'>Your browser does not support the audio element.</audio>
 			<br>
 		</form>
 	</div>
@@ -60,7 +61,7 @@
 
 <div id="multiple_freq" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
-		<form method="post" enctype="multipart/form-data" action="<?php start_audio_html();?>">
+		<form method="post" enctype="multipart/form-data">
 			<br>
 			<strong>Frequencies:</strong><br>
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq1'] ?>" name="rtl_fm_start_f1"/>
