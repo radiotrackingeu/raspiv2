@@ -24,6 +24,7 @@
 	if (isset($_POST["rtl_fm_start_s"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Signle_Freq"]. " -g " . $_POST["Radio_Gain"]. " -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
 		start_docker_quite($cmd,'single_freq');
+		start_audio_html();
 	}
 	if (isset($_POST["rtl_fm_start_l"])){
 		$cmd = "sudo docker run --rm -t --privileged rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Signle_Freq"]. " -g " . $_POST["Radio_Gain"]. " -d 0 | play -r 32k -t raw -v 5 -e s -b 16 -c 1 -V1 -'";
@@ -139,6 +140,9 @@
 		else{
 			echo "Device is not in use";
 		}
+	}
+	function start_audio_html(){
+		echo "<audio controls><source src='http://".$_SERVER['SERVER_NAME'].':'.($_SERVER['SERVER_PORT']+1)."'type='audio/mpeg' controls preload='none'>Your browser does not support the audio element.</audio>";
 	}
 ?>
 

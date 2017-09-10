@@ -53,10 +53,6 @@
 			<input type="submit" class="w3-btn w3-brown" value="Start Local playback" name="rtl_fm_start_l"/>
 			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_stop"/>
 			<br><br>
-			<audio controls>
-				<source src="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1); ?>" type="audio/mpeg" controls preload="none">
-				Your browser does not support the audio element.
-			</audio>
 			<br>
 		</form>
 	</div>

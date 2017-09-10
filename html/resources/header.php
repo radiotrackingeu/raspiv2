@@ -84,7 +84,6 @@
 		</button>
 		<div id="wifi" class="w3-dropdown-content w3-card-4">
 			<a href="/wifi/wifi.php">Start</a>
-			<a href="/wifi/wifi_setup.php">Setup</a>
 		</div>
 	</div>
 		
@@ -95,8 +94,6 @@
 		</button>
 		<div id="remote" class="w3-dropdown-content w3-card-4">
 			<a href="/connect/connect.php">Start</a>
-			<a href="/connect/umts_setup.php">UMTS Setup</a>
-			<a href="/connect/vpn_setup.php">VPN Setup</a>
 		</div>
 	</div>
 	
