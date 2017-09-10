@@ -53,7 +53,7 @@
 			<input type="submit" class="w3-btn w3-brown" value="Start Local playback" name="rtl_fm_start_l"/>
 			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_stop"/>
 			<br><br>
-			<audio controls autoplay preload=none><source src='http://".$_SERVER['SERVER_NAME'].':'.($_SERVER['SERVER_PORT']+1)."'type='audio/mpeg'>Your browser does not support the audio element.</audio>
+			<?php echo start_playback(); ?>
 			<br>
 		</form>
 	</div>
@@ -139,6 +139,10 @@
 	require_once RESOURCES_PATH.'/javascript.php';
 	//load php_scripts
 	require_once RESOURCES_PATH.'/php_scripts.php';
+	
+	function start_playback(){
+		echo "<audio controls autoplay preload=none><source src='http://".$_SERVER['SERVER_NAME'].':'.($_SERVER['SERVER_PORT']+1)."'type='audio/mpeg'>Your browser does not support the audio element.</audio>";
+	}
  ?>
 
 </body>
