@@ -30,7 +30,8 @@
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger')">Logger</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_timer')">Logger Timer</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_spectrum')">Spectrum</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data')">Raw Data Recorder</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data')">Raw Data Recorder</button>device_info
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('device_info')">Device Information</button>
 </div>
 
 <div id="tab_spectrum" class="w3-container city" style="display:none">
@@ -181,24 +182,24 @@
 	</div>
 </div>
 
-<div id="device_info" class="w3-container city" style="display:block">
+<div id="device_info" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
 		<?php 
 		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
-			echo "<span class='w3-tag w3-red w3-xlarge'>Radio 1 unavaible</span> \n \n";
+			echo "<span class='w3-tag w3-red w3-xlarge'>Radio 1 running</span> \n \n";
 		}
 		else{
-			echo "<span class='w3-tag w3-green w3-xlarge'>Radio 1 avaible</span> \n \n";
+			echo "<span class='w3-tag w3-green w3-xlarge'>Radio 1 not running</span> \n \n";
 		}
 		?>
 		<br><br>
 		<?php 
-		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
-			echo "<span class='w3-tag w3-red w3-xlarge'>Radio 1 unavaible</span> \n \n";
+		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d2)")){
+			echo "<span class='w3-tag w3-red w3-xlarge'>Radio 2 running</span> \n \n";
 		}
 		else{
-			echo "<span class='w3-tag w3-green w3-xlarge'>Radio 1 avaible</span> \n \n";
+			echo "<span class='w3-tag w3-green w3-xlarge'>Radio 2 not running</span> \n \n";
 		}
 		?>
 		<br><br>
