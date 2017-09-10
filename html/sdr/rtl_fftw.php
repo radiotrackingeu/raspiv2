@@ -18,7 +18,7 @@
 	require_once CONFIGLITE_PATH.'/Lite.php';
 	
 	//define config section and items.
-	define ('confSection', array('logger'));
+	define ('confSection', 'logger');
 	define ('confKeys', array('log_gain','center_freq','freq_range','log_level','pre_log_name','raw_log_log_gain','raw_center_freq','raw_freq_range','raw_pre_log_name','time_center_freq','time_freq_range','time_log_level','time_start_timer','time_start_min','time_start_hour','time_stop_timer','time_stop_min','time_stop_hour','time_pre_log_name'));
 	
 	//load values from config
