@@ -30,7 +30,7 @@
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger')">Logger</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_timer')">Logger Timer</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_spectrum')">Spectrum</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data')">Raw Data Recorder</button>device_info
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data')">Raw Data Recorder</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('device_info')">Device Information</button>
 </div>
 

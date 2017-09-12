@@ -18,7 +18,7 @@
 	require_once CONFIGLITE_PATH.'/Lite.php';	
 	//define config section and items.
 	define ('confSection', 'SDR_Radio');
-	define ('confKeys', array('Signle_Freq','Freq1','Freq2','Freq3','Freq4','Freq5','Freq6', 'Radio_Gain'));
+	define ('confKeys', array('device_sing_freq','Signle_Freq','Freq1','Freq2','Freq3','Freq4','Freq5','Freq6', 'Radio_Gain'));
 	
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');	
@@ -36,6 +36,12 @@
 	<div class="w3-panel w3-green w3-round">
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<br>
+			Seletc device: <br>
+			<select name="device_sing_freq">
+				<option value="1" <?php echo isset($config['SDR_Radio']['device_sing_freq']) && $config['SDR_Radio']['device_sing_freq'] == "1" ? "selected" : "" ?>>Receiver 1</option>
+				<option value="2" <?php echo isset($config['SDR_Radio']['device_sing_freq']) && $config['SDR_Radio']['device_sing_freq'] == "2" ? "selected" : "" ?>>Receiver 2</option>
+			</select> <br><br>
+			
 			<strong>Frequency:</strong><br>
 			<input type="text" name="Signle_Freq" value="<?php echo isset($config['SDR_Radio']['Signle_Freq']) ? $config['SDR_Radio']['Signle_Freq'] : "150.1M" ?>" /><br>
 			Set the frequency you want to listen to. You can use multipliers like M and k. Turn slightly below the frequency for better results.<br>
@@ -62,6 +68,12 @@
 <div id="multiple_freq" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<form method="post" enctype="multipart/form-data">
+			<br>
+			Seletc device: <br>
+			<select name="device_sing_freq">
+				<option value="1" <?php echo isset($config['SDR_Radio']['device_sing_freq']) && $config['SDR_Radio']['device_sing_freq'] == "1" ? "selected" : "" ?>>Receiver 1</option>
+				<option value="2" <?php echo isset($config['SDR_Radio']['device_sing_freq']) && $config['SDR_Radio']['device_sing_freq'] == "2" ? "selected" : "" ?>>Receiver 2</option>
+			</select> <br><br>
 			<br>
 			<strong>Frequencies:</strong><br>
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq1'] ?>" name="rtl_fm_start_f1"/>
@@ -104,6 +116,32 @@
 </div>
 
 <div id="single_freq_rec" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
+			<br>
+			<strong>Frequencies:</strong><br>
+			<input type="text" name="Signle_Freq" value="<?php echo isset($config['SDR_Radio']['Signle_Freq']) ? $config['SDR_Radio']['Signle_Freq'] : "150.1M" ?>" /><br>
+			Set the frequency you want to listen to. You can use multipliers like M and k. Turn slightly below the frequency for better results.<br>
+			Together with a treshold bigger then 0 you can scan multiple frequencies if you add a -f (i.e. 150.1M -f 150.120M)
+			<br><br>
+			<strong>Gain in DB:</strong><br>
+			<input type="text" name="Radio_Gain" value="<?php echo isset($config['SDR_Radio']['Radio_Gain']) ? $config['SDR_Radio']['Radio_Gain'] : 20 ?>" /><br>
+			Set a gain value. Remember higher gains result in higher noise levels.
+			<br>
+			<br>
+			Start and Stop receiver - to set a new frequency/gain, first stop and restart: 
+			<br>
+			<br>
+			<input type="submit" class="w3-btn w3-brown" value="Start Browser playback" name="rtl_fm_start_s"/>
+			<input type="submit" class="w3-btn w3-brown" value="Start Local playback" name="rtl_fm_start_l"/>
+			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_stop"/>
+			<br>
+			<br>
+		</form>
+	</div>
+</div>
+
+<div id="multiple_freq_rec" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<br>

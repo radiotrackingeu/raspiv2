@@ -10,8 +10,10 @@ Center_Freq = "150.100MHz"
 Logger_Gain = 20
 
 [SDR_Radio]
-Radio_Gain = 20
-Signle_Freq = "150.1M"
+device_sing_freq = 1
+Radio_Gain = 10
+Signle_Freq = "150.052M"
+device_multiple_freq = 1
 Freq1 = "150.04M"
 Freq2 = "150.06M"
 Freq3 = "150.08M"
