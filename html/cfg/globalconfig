@@ -46,3 +46,6 @@ time_stop_timer = "stop_no"
 time_stop_min = 0
 time_stop_hour = 0
 time_pre_log_name = "rteu_"
+
+[remote]
+time_start_vpn = "reboot"

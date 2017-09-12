@@ -172,7 +172,7 @@
 	}
 	
 	//Connect Cornjob Functions
-	if (isset($_POST["change_vpn_cron"])){
+	if (isset($_POST["change_VPN_cron"])){
 		$cmd = "sudo docker run --rm --name vpn_tunnel -v /var/www/html/connect/:/config/ --privileged --net=host -t umts openvpn /config/client.conf";
 		$search = "sudo docker run --rm --name vpn_tunnel";
 		if($_POST["time_start_vpn"]=="reboot"){
