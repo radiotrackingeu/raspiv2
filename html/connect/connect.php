@@ -58,6 +58,7 @@
 			<br>
 			<input type="radio" name="time_start_vpn" value="start_no" <?php echo isset($config['remote']['time_start_vpn']) && $config['remote']['time_start_vpn'] == "start_no" ? "checked" : "" ?>> No start<br>
 			<input type="radio" name="time_start_vpn" value="reboot" <?php echo isset($config['remote']['time_start_vpn']) && $config['remote']['time_start_vpn'] == "reboot" ? "checked" : "" ?>> Start at Boot<br>			
+			<input type="submit" class="w3-btn w3-brown" value="Change Settings" name="change_VPN_cron"/>
 			<br><br>
 		</form>
 	</div>
@@ -101,6 +102,7 @@
 			<input type="submit" value="Upload Certificate" name="upload_cfg">
 			<br><br><br>
 			<input type="submit" class="w3-btn" value="Remove Certificate" name="rm_config">
+			<br><br>
 		</form>
 	</div>
 </div>
