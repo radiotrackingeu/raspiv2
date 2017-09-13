@@ -191,13 +191,13 @@
 			<select name="s1">
 				<option value="" selected="selected">-----</option>
 				<?php 
-					foreach(glob(dirname(__FILE__) . '/sdr/record/sdr_*') as $filename){
+					foreach(glob('/sdr/record/sdr_*') as $filename){
 					$filename = basename($filename);
 					echo "<option value='" . $filename . "'>".$filename."</option>";
 				}
 				?>
-
-</select> 
+			</select> 
+			<br>
 			
 			Gain in DB:<br>
 			<input type="number" name="raw_log_log_gain" value="<?php echo isset($config['logger']['raw_log_log_gain']) ? $config['logger']['raw_log_log_gain'] : 20 ?>"><br>
