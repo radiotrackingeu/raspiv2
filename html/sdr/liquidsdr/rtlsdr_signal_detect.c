@@ -20,7 +20,7 @@ float psd         [nfft];
 int   detect      [nfft];
 int   count       [nfft];
 int   groups      [nfft];
-int   timestep    =nfft/4; // time between transforms [samples]
+int   timestep    =nfft/400; // time between transforms [samples]
 unsigned long int num_transforms = 0;
 
 // print usage/help message
@@ -80,7 +80,7 @@ int main(int argc, char*argv[])
     float complex buf[buf_len];
 
     // DC-blocking filter 1e-3f
-    iirfilt_crcf dcblock = iirfilt_crcf_create_dc_blocker(1.5f); 
+    iirfilt_crcf dcblock = iirfilt_crcf_create_dc_blocker(1e-3f); 
     
     // open input file
     FILE * fid = fopen(filename_input,"r");
