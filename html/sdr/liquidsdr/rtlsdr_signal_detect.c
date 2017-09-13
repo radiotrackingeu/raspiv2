@@ -13,14 +13,14 @@
 #include <liquid/liquid.h>
 #include <getopt.h>
 
-#define nfft (4000)
+#define nfft (400)
 
 float psd_template[nfft];
 float psd         [nfft];
 int   detect      [nfft];
 int   count       [nfft];
 int   groups      [nfft];
-int   timestep    =nfft/16; // time between transforms [samples]
+int   timestep    =nfft/40; // time between transforms [samples]
 unsigned long int num_transforms = 0;
 
 // print usage/help message
@@ -51,7 +51,7 @@ int   step(float _threshold);
 // main program
 int main(int argc, char*argv[])
 {
-    char       filename_input[256] = "data/zeidler-2017-08-06/g10_1e_120kHz.dat";
+    //char       filename_input[256] = "data/zeidler-2017-08-06/g10_1e_120kHz.dat";
     float      threshold           = 10.0f; //-60.0f;
     
     // read command-line options
@@ -234,6 +234,34 @@ int signal_complete(int _group_id)
 
 // get group center frequency
 float get_group_freq(int _group_id)
+{
+    int i, n=0;
+    float fc = 0.0f;
+    for (i=0; i<nfft; i++) {
+        if (groups[i] == _group_id) {
+            fc += ((float)i/(float)nfft - 0.5f) * count[i];
+            n  += count[i];
+        }
+    }
+    return fc / (float)n;
+}
+
+// get group maximal signal strength
+float get_group_max(int _group_id)
+{
+    int i, n=0;
+    float fc = 0.0f;
+    for (i=0; i<nfft; i++) {
+        if (groups[i] == _group_id) {
+            fc += ((float)i/(float)nfft - 0.5f) * count[i];
+            n  += count[i];
+        }
+    }
+    return fc / (float)n;
+}
+
+// get group mean signal strength
+float get_group_mean(int _group_id)
 {
     int i, n=0;
     float fc = 0.0f;
