@@ -13,7 +13,7 @@
 #include <liquid/liquid.h>
 #include <getopt.h>
 
-#define nfft (400)
+#define nfft (800)
 
 float psd_template[nfft];
 float psd         [nfft];
