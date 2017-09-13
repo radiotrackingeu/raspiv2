@@ -84,6 +84,9 @@
 		<input type="submit" class="w3-btn" value="GammaRF" name="install_gammrf"/> <br> <br>
 		
 		<hr>
+		<input type="submit" class="w3-btn" value="LiquidSDR" name="install_liquidsdr"/> <br> <br>
+		
+		<hr>
 
 	</form>
 </div>
@@ -200,6 +203,11 @@
 			if (isset($_POST["install_gammrf"])){
 				echo '<pre>';
 				$test = system('sudo docker build -t gammrf /home/pi/gitrep/raspiv2/Docker/gammrf/. 2>&1', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["install_liquidsdr"])){
+				echo '<pre>';
+				$test = system('sudo docker build -t liquidsdr /home/pi/gitrep/raspiv2/Docker/liquidsdr/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			error_reporting(E_ALL);
