@@ -20,7 +20,7 @@ float psd         [nfft];
 int   detect      [nfft];
 int   count       [nfft];
 int   groups      [nfft];
-int   timestep    =nfft/16; // time between transforms [samples]
+int   timestep    =nfft/32; // time between transforms [samples]
 unsigned long int num_transforms = 0;
 
 // print usage/help message
