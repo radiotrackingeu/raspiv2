@@ -325,11 +325,11 @@ int step(float _threshold)
     for (i=1; i<=num_groups; i++) {
         if (signal_complete(i)) {
             // signal started & stopped
-            float duration    = get_group_time(i)*timestep; // duration [samples]
-            float signal_freq = get_group_freq(i);          // center frequency estimate (normalized)
-            float signal_bw   = get_group_bw(i);            // bandwidth estimate (normalized)
+            float duration    = get_group_time(i)*timestep/250000; // duration [samples]
+            float signal_freq = get_group_freq(i)*250000;          // center frequency estimate (normalized)
+            float signal_bw   = get_group_bw(i)*250000;            // bandwidth estimate (normalized)
             float start_time  = num_transforms*timestep - duration; // approximate starting time
-            printf("signal detected! time=%10.0f, duration=%10.0f, freq=%9.6f, bw=%9.6f\n",
+            printf("signal detected! time=%10.0f, duration=%10.6f, freq=%9.6f, bw=%9.6f\n",
                     start_time, duration, signal_freq, signal_bw);
 
             // reset counters for group
