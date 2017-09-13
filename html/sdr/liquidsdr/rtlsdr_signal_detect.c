@@ -51,7 +51,7 @@ int   step(float _threshold);
 // main program
 int main(int argc, char*argv[])
 {
-    //char       filename_input[256] = "data/zeidler-2017-08-06/g10_1e_120kHz.dat";
+    char       filename_input[256] = "data/zeidler-2017-08-06/g10_1e_120kHz.dat";
     float      threshold           = 10.0f; //-60.0f;
     
     // read command-line options
