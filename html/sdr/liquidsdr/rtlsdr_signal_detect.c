@@ -79,8 +79,8 @@ int main(int argc, char*argv[])
     unsigned int  buf_len = 64;
     float complex buf[buf_len];
 
-    // DC-blocking filter
-    iirfilt_crcf dcblock = iirfilt_crcf_create_dc_blocker(1e-3f);
+    // DC-blocking filter 1e-3f
+    iirfilt_crcf dcblock = iirfilt_crcf_create_dc_blocker(1e-4f); 
     
     // open input file
     FILE * fid = fopen(filename_input,"r");
