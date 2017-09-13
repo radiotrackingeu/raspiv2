@@ -100,7 +100,7 @@ int main(int argc, char*argv[])
             break;
 
         // apply DC blocking filter
-        //iirfilt_crcf_execute_block(dcblock, buf, buf_len, buf);
+        iirfilt_crcf_execute_block(dcblock, buf, buf_len, buf);
 
         // accumulate spectrum
         spgramcf_write(periodogram, buf, buf_len);
@@ -171,9 +171,9 @@ int update_detect(float _threshold)
     int total=0;
     for (i=0; i<nfft; i++) {
         // relative
-        detect[i] = ((psd[i] - psd_template[i]) > _threshold) ? 1 : 0;
+        //detect[i] = ((psd[i] - psd_template[i]) > _threshold) ? 1 : 0;
         // absolute
-        //detect[i] = (psd[i] > _threshold) ? 1 : 0;
+        detect[i] = (psd[i] > _threshold) ? 1 : 0;
         total += detect[i];
     }
     return total;
