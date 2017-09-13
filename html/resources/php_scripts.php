@@ -191,9 +191,29 @@
 	
 	//Raw Data Recorder Functions
 	if (isset($_POST["sdr_start"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/tmp/ rtlsdr bash -c 'rtl_sdr -f ".$_POST["raw_center_freq"]." -s ".$_POST["raw_freq_range"]." -g ".$_POST["raw_log_log_gain"]." /tmp/".$_POST["raw_pre_log_name"].$_POST["log_name"]."'";
-		echo $cmd;
-		start_docker_quite($cmd,'raw_data');
+		$cmd = "sudo docker run --rm --name=raw-sdr-d1 -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/tmp/ rtlsdr bash -c 'rtl_sdr -f ".$_POST["raw_center_freq"]." -s ".$_POST["raw_freq_range"]." -g ".$_POST["raw_log_log_gain"]." /tmp/".$_POST["raw_pre_log_name"].$_POST["log_name"]."'";
+		start_docker_quite($cmd,'tab_raw_data');
+	}
+	if (isset($_POST["sdr_stop"])){
+		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=raw-sdr-d1) 2>&1";
+		start_docker($cmd, 'tab_logger');
+	}
+	
+	//Raw Data Analzer sudo docker run -it --rm -v /var/www/html/sdr/liquidsdr/:/tmp/ liquidsdr
+	if (isset($_POST["start_analyze"])){
+		$cmd = "sudo docker run -it --rm --name liquidsdr -v /var/www/html/sdr/:/tmp/ liquidsdr /tmp/liquidsdr/rtlsdr_signal_detect -i /tmp/record/".$_POST["analyzer_file"]) ;
+		start_docker($cmd,'tab_raw_data_ana');
+	}
+	
+	if (isset($_POST["compile"])){
+		$gcc="gcc -g -O2  -ffast-math -mcpu=cortex-a7 -mfloat-abi=hard -mfpu=neon-vfpv4 -Wall -fPIC  rtlsdr_signal_detect.c /liquidsdr/liquid-dsp/libliquid.a -o rtlsdr_signal_detect -lfftw3f -lm -lc"
+		$cmd = "sudo docker run -it --rm -v /var/www/html/sdr/liquidsdr/:/tmp/ liquidsdr ".$gcc;
+		start_docker_quite($cmd,'tab_raw_data_ana');
+	}
+	
+	if (isset($_POST["stop_analyze"])){
+		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=liquidsdr) 2>&1";
+		start_docker($cmd, 'tab_logger');
 	}
 	
 	

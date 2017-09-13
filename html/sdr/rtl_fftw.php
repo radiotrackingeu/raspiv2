@@ -187,8 +187,8 @@
 	<div class="w3-panel w3-green w3-round">
 		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
 			<br>
-			Select one file:
-			<select name="s1">
+			Select one file:<br>
+			<select name="analyzer_file">
 				<option value="" selected="selected">-----</option>
 				<?php 
 					foreach(glob(dirname(__FILE__) . '/record/*') as $filename){
@@ -197,26 +197,10 @@
 				}
 				?>
 			</select> 
-			<br>
-			
-			Gain in DB:<br>
-			<input type="number" name="raw_log_log_gain" value="<?php echo isset($config['logger']['raw_log_log_gain']) ? $config['logger']['raw_log_log_gain'] : 20 ?>"><br>
-			Gain of the recording device. Higher gain results in more noise. max 49DB
 			<br><br>
-			Center Frequency in Hz:<br>
-			<input type="number" name="raw_center_freq" value="<?php echo isset($config['logger']['raw_center_freq']) ? $config['logger']['raw_center_freq'] : 150100000 ?>"><br>
-			Frequency Range to monitor: <br>
-			<select name="raw_freq_range">
-				<option value="250000" <?php echo isset($config['logger']['raw_freq_range']) && $config['logger']['raw_freq_range'] == "250000" ? "selected" : "" ?>>250kHz</option>
-				<option value="1024000" <?php echo isset($config['logger']['raw_freq_range']) && $config['logger']['raw_freq_range'] == "1024000" ? "selected" : "" ?>>1024kHz</option>
-			</select> 
-			<br>
-			Prefix and Record Name:<br>
-			<input type="text" name="raw_pre_log_name" value="<?php echo isset($config['logger']['raw_pre_log_name']) ? $config['logger']['raw_pre_log_name'] : "SDR_" ?>">
-			<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
-			Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a><br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Start" name="sdr_start" />
-			<input type="submit" class="w3-btn w3-brown" value="Stop" name="sdr_stop" />
+			<input type="submit" class="w3-btn w3-brown" value="Compile" name="compile"/>
+			<input type="submit" class="w3-btn w3-brown" value="Start" name="start_analyze"/>
+			<input type="submit" class="w3-btn w3-brown" value="Stop" name="stop_analyze"/>
 		</form>
 		<br>
 	</div>
