@@ -201,7 +201,7 @@
 	
 	//Raw Data Analzer sudo docker run -it --rm -v /var/www/html/sdr/liquidsdr/:/tmp/ liquidsdr
 	if (isset($_POST["start_analyze"])){
-		$cmd = "sudo docker run -it --rm --name liquidsdr -v /var/www/html/sdr/:/tmp/ liquidsdr /tmp/liquidsdr/rtlsdr_signal_detect -i /tmp/record/".$_POST["analyzer_file"];
+		$cmd = "sudo docker run -t --rm --name liquidsdr -v /var/www/html/sdr/:/tmp/ liquidsdr /tmp/liquidsdr/rtlsdr_signal_detect -i /tmp/record/".$_POST["analyzer_file"];
 		echo $cmd;
 		start_docker($cmd,'tab_raw_data_ana');
 	}
