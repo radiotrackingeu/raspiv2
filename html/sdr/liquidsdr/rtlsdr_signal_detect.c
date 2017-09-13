@@ -13,14 +13,14 @@
 #include <liquid/liquid.h>
 #include <getopt.h>
 
-#define nfft (250)
+#define nfft (400)
 
 float psd_template[nfft];
 float psd         [nfft];
 int   detect      [nfft];
 int   count       [nfft];
 int   groups      [nfft];
-int   timestep    =nfft/25; // time between transforms [samples]
+int   timestep    =nfft/8; // time between transforms [samples]
 unsigned long int num_transforms = 0;
 
 // print usage/help message
