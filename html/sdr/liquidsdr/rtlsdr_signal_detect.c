@@ -100,7 +100,7 @@ int main(int argc, char*argv[])
             break;
 
         // apply DC blocking filter
-        iirfilt_crcf_execute_block(dcblock, buf, buf_len, buf);
+        //iirfilt_crcf_execute_block(dcblock, buf, buf_len, buf);
 
         // accumulate spectrum
         spgramcf_write(periodogram, buf, buf_len);
