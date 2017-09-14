@@ -171,9 +171,9 @@ int update_detect(float _threshold)
     int total=0;
     for (i=0; i<nfft; i++) {
         // relative
-        //detect[i] = ((psd[i] - psd_template[i]) > _threshold) ? 1 : 0;
+        detect[i] = ((psd[i] - psd_template[i]) > _threshold) ? 1 : 0;
         // absolute
-        detect[i] = (psd[i] > _threshold) ? 1 : 0;
+        //detect[i] = (psd[i] > _threshold) ? 1 : 0;
         total += detect[i];
     }
     return total;
@@ -197,7 +197,7 @@ int update_groups()
     // replace all non-zero entries with a 1
     int i;
     for (i=0; i<nfft; i++)
-        groups[i] = count[i] > 0;
+        groups[i] = count[i] > 0; //Was macht dieser Operator? 
 
     // look for adjacent groups and refactor...
     int group_id = 0;
@@ -232,7 +232,7 @@ int signal_complete(int _group_id)
     return 1;
 }
 
-// get group center frequency
+// get group center frequency 
 float get_group_freq(int _group_id)
 {
     int i, n=0;
@@ -246,7 +246,7 @@ float get_group_freq(int _group_id)
     return fc / (float)n;
 }
 
-// get group maximal signal strength
+// get group maximal signal strength - to be done
 float get_group_max(int _group_id)
 {
     int i, n=0;
@@ -260,7 +260,7 @@ float get_group_max(int _group_id)
     return fc / (float)n;
 }
 
-// get group mean signal strength
+// get group mean signal strength - to be done
 float get_group_mean(int _group_id)
 {
     int i, n=0;
