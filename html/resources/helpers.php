@@ -10,13 +10,21 @@
 	function update_Config(&$config) {
 		// $config->read();
 		// var_dump($config);
-		foreach (confKeys as $value)
+		foreach (confKeys as $key)
 		{
-			if ($config->has(confSection,$value) && isset($_POST[$value])) {
-				// console_log('is set: '.$value);
-				$config->set(confSection,$value,$_POST[$value]);
+			if ($config->has(confSection,$key) && isset($_POST[$key])) {
+				// console_log('is set: '.$key);
+				if (is_array($config[confSection][$key])){
+					$value = $config[confSection][$key];
+					$value[$config[confSection]['device']] = $_POST[$key];
+				}
+				else 
+					$value = $_POST[$key];
+				
+				$config->set(confSection,$key,$value);
 			}
 		}
 		$config->save();		
+		// console_log('saved log for '.__FILE__);
 	}
 ?>

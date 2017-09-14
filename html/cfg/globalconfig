@@ -10,16 +10,23 @@ Center_Freq = "150.100MHz"
 Logger_Gain = 20
 
 [SDR_Radio]
-device_sing_freq = 1
-Radio_Gain = 10
-Signle_Freq = "150.052M"
-device_multiple_freq = 1
-Freq1 = "150.04M"
-Freq2 = "150.06M"
-Freq3 = "150.08M"
-Freq4 = "150.10M"
-Freq5 = "150.12M"
-Freq6 = "150.14M"
+device = 2
+Radio_Gain[1] = 20
+Radio_Gain[2] = 21
+Single_Freq[1] = "150.052M"
+Single_Freq[2] = "151.052M"
+Freq1[1] = "150.04M"
+Freq1[2] = "151.04M"
+Freq2[1] = "150.06M"
+Freq2[2] = "151.06M"
+Freq3[1] = "150.08M"
+Freq3[2] = "151.08M"
+Freq4[1] = "150.10M"
+Freq4[2] = "151.10M"
+Freq5[1] = "150.12M"
+Freq5[2] = "151.12M"
+Freq6[1] = "150.14M"
+Freq6[2] = "151.14M"
 
 [gitlab_updates]
 online_repository = "github"
@@ -49,3 +56,7 @@ time_pre_log_name = "rteu_"
 
 [remote]
 time_start_vpn = "reboot"
+
+[testsection]
+testkey[0] = "testvalue1"
+testkey[1] = "testvalue2"
