@@ -58,6 +58,10 @@
 		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtlsdr) 2>&1";
 		start_docker($cmd,'single_freq');
 	}
+	if (isset($_POST["change_device"])){
+		echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";	
+	}
+	
 	
 	//Logger Functions
 	if (isset($_POST["log_start"])){
