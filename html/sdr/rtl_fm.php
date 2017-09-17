@@ -18,7 +18,7 @@
 	require_once CONFIGLITE_PATH.'/Lite.php';	
 	//define config section and items.
 	define ('confSection', 'SDR_Radio');
-	define ('confKeys', array('device','Single_Freq','Freq1','Freq2','Freq3','Freq4','Freq5','Freq6', 'Radio_Gain'));
+	define ('confKeys', array('device','Single_Freq','Freq1','Freq2','Freq3','Freq4','Freq5','Freq6','Radio_Gain'));
 	
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
@@ -43,7 +43,6 @@
 				}
 				if (isset($_POST["change_device_to_2"])){
 					$config['SDR_Radio']['device']=2;
-					update_Config($config);
 					echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
 				}
 				if($config['SDR_Radio']['device']==2){
@@ -52,19 +51,18 @@
 				}
 				if (isset($_POST["change_device_to_1"])){
 					$config['SDR_Radio']['device']=1;
-					update_Config($config);
 					echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
 				}
 			?>
 			<br><br>
 			
 			<strong>Frequency:</strong><br>
-			<input type="text" name="Single_Freq" value="<?php echo isset($config['SDR_Radio']['Single_Freq'][$config['device']]) ? $config['SDR_Radio']['Single_Freq'][$config['device']] : "150.1M" ?>" /><br>
+			<input type="text" name="Single_Freq" value="<?php echo isset($config['SDR_Radio']['Single_Freq'][$config['SDR_Radio']['device']]) ? $config['SDR_Radio']['Single_Freq'][$config['SDR_Radio']['device']] : "150.1M" ?>" /><br>
 			Set the frequency you want to listen to. You can use multipliers like M and k. Turn slightly below the frequency for better results.<br>
 			Together with a treshold bigger then 0 you can scan multiple frequencies if you add a -f (i.e. 150.1M -f 150.120M)
 			<br><br>
 			<strong>Gain in DB:</strong><br>
-			<input type="text" name="Radio_Gain" value="<?php echo isset($config['SDR_Radio']['Radio_Gain'][$config['device']]) ? $config['SDR_Radio']['Radio_Gain'][$config['device']] : 20 ?>" /><br>
+			<input type="text" name="Radio_Gain" value="<?php echo isset($config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]) ? $config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']] : 20 ?>" /><br>
 			Set a gain value. Remember higher gains result in higher noise levels.
 			<br>
 			<br>
