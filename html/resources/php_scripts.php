@@ -58,6 +58,7 @@
 		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtlsdr) 2>&1";
 		start_docker($cmd,'single_freq');
 	}
+	
 	//Logger Functions
 	if (isset($_POST["log_start"])){
 		check_docker("logger-sdr-d1");
