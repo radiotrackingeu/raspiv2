@@ -83,27 +83,8 @@
 <div id="multiple_freq" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<form method="post" enctype="multipart/form-data">
+
 			<br>
-			<?php
-				if($config['SDR_Radio']['device']==1){
-					echo "<strong>Receiver 1 selected</strong><br><br>";
-					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 2' name='change_device_to_2'/>";
-					if (isset($_POST["change_device_to_2"])){
-						$config['SDR_Radio']['device']==2;
-						echo "<script type='text/javascript'>document.getElementById('multiple_freq').style.display = 'block';</script>";
-					}
-				}
-				if($config['SDR_Radio']['device']==2){
-					echo "<strong>Receiver 2 selected</strong><br><br>";
-					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 1' name='change_device_to_1'/>";
-					if (isset($_POST["change_device_to_1"])){
-						echo $config['SDR_Radio']['device'];
-						$config['SDR_Radio']['device']==1;
-						echo "<script type='text/javascript'>document.getElementById('multiple_freq').style.display = 'block';</script>";
-					}
-				}
-			?>
-			<br><br>
 			<strong>Frequencies:</strong><br>
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq1'][$config['SDR_Radio']['device']] ?>" name="rtl_fm_start_f1"/>
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq2'][$config['SDR_Radio']['device']] ?>" name="rtl_fm_start_f2"/><br><br>
@@ -126,26 +107,6 @@
 	<div class="w3-panel w3-green w3-round">
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<br>
-			<?php
-				if($config['SDR_Radio']['device']==1){
-					echo "<strong>Receiver 1 selected</strong><br><br>";
-					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 2' name='change_device_to_2'/>";
-					if (isset($_POST["change_device_to_2"])){
-						$config['SDR_Radio']['device']==2;
-						echo "<script type='text/javascript'>document.getElementById('freq_settings').style.display = 'block';</script>";
-					}
-				}
-				if($config['SDR_Radio']['device']==2){
-					echo "<strong>Receiver 2 selected</strong><br><br>";
-					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 1' name='change_device_to_1'/>";
-					if (isset($_POST["change_device_to_1"])){
-						echo $config['SDR_Radio']['device'];
-						$config['SDR_Radio']['device']==1;
-						echo "<script type='text/javascript'>document.getElementById('freq_settings').style.display = 'block';</script>";
-					}
-				}
-			?>
-			<br><br>
 			<strong>Frequency 1:</strong><br>
 			<input type="text" name="Freq1" value="<?php echo isset($config['SDR_Radio']['Freq1'][$config['SDR_Radio']['device']]) ? $config['SDR_Radio']['Freq1'][$config['SDR_Radio']['device']] : "150.1M" ?>" /><br>
 			<strong>Frequency 2:</strong><br>
@@ -172,26 +133,6 @@
 	<div class="w3-panel w3-green w3-round">
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<br>
-			<?php
-				if($config['SDR_Radio']['device']==1){
-					echo "<strong>Receiver 1 selected</strong><br><br>";
-					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 2' name='change_device_to_2'/>";
-					if (isset($_POST["change_device_to_2"])){
-						$config['SDR_Radio']['device']==2;
-						echo "<script type='text/javascript'>document.getElementById('single_freq_rec').style.display = 'block';</script>";
-					}
-				}
-				if($config['SDR_Radio']['device']==2){
-					echo "<strong>Receiver 2 selected</strong><br><br>";
-					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 1' name='change_device_to_1'/>";
-					if (isset($_POST["change_device_to_1"])){
-						echo $config['SDR_Radio']['device'];
-						$config['SDR_Radio']['device']==1;
-						echo "<script type='text/javascript'>document.getElementById('single_freq_rec').style.display = 'block';</script>";
-					}
-				}
-			?>
-			<br><br>
 			<strong>Frequencies:</strong><br>
 			<input type="text" name="Single_Freq" value="<?php echo isset($config['SDR_Radio']['Single_Freq'][$config['device']]) ? $config['SDR_Radio']['Single_Freq'][$config['device']] : "150.1M" ?>" /><br>
 			Set the frequency you want to listen to. You can use multipliers like M and k. Turn slightly below the frequency for better results.<br>
