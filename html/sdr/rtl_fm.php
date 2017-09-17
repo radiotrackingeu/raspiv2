@@ -35,27 +35,22 @@
 	<div class="w3-panel w3-green w3-round">
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<br>
+			
 			<?php
 				if($config['SDR_Radio']['device']==1){
 					echo "<strong>Receiver 1 selected</strong><br><br>";
 					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 2' name='change_device_to_2'/>";
-
-				}
-				if (isset($_POST["change_device_to_2"])){
-					$config['SDR_Radio']['device']=2;
-					update_Config($config);
-					echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
 				}
 				if($config['SDR_Radio']['device']==2){
 					echo "<strong>Receiver 2 selected</strong><br><br>";
 					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 1' name='change_device_to_1'/>";
 				}
-				if (isset($_POST["change_device_to_1"])){
-					$config['SDR_Radio']['device']=1;
-					update_Config($config);
-					echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
-				}
 			?>
+			
+			<select name="git_checkout">
+				<option value="master" <?php echo isset($config['SDR_Radio']['device']) && $config['SDR_Radio']['device'] == 1 ?  "selected" : ""; ?>>Receiver 1</option>
+				<option value="live" <?php echo isset($config['SDR_Radio']['device']) && $config['SDR_Radio']['device'] == 2 ? "selected" : ""; ?>>Receiver 2</option>
+			</select> 
 			<br><br>
 			
 			<strong>Frequency:</strong><br>
