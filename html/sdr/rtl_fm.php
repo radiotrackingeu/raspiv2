@@ -35,22 +35,11 @@
 	<div class="w3-panel w3-green w3-round">
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<br>
-			
-			<?php
-				if($config['SDR_Radio']['device']==1){
-					echo "<strong>Receiver 1 selected</strong><br><br>";
-					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 2' name='change_device_to_2'/>";
-				}
-				if($config['SDR_Radio']['device']==2){
-					echo "<strong>Receiver 2 selected</strong><br><br>";
-					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 1' name='change_device_to_1'/>";
-				}
-			?>
-			
 			<select name="device">
 				<option value=1 <?php echo isset($config['SDR_Radio']['device']) && $config['SDR_Radio']['device'] == 1 ?  "selected" : ""; ?>>Receiver 1</option>
 				<option value=2 <?php echo isset($config['SDR_Radio']['device']) && $config['SDR_Radio']['device'] == 2 ? "selected" : ""; ?>>Receiver 2</option>
 			</select> 
+			<input type='submit' class='w3-btn w3-brown' value='Switch to receiver' name='change_device'/>
 			<br><br>
 			
 			<strong>Frequency:</strong><br>
