@@ -48,7 +48,6 @@
 					echo "<strong>Receiver 2 selected</strong><br><br>";
 					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 1' name='change_device_to_1'/>";
 					if (isset($_POST["change_device_to_1"])){
-						echo $config['SDR_Radio']['device'];
 						$config['SDR_Radio']['device']==1;
 						echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
 					}
@@ -91,7 +90,7 @@
 					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 2' name='change_device_to_2'/>";
 					if (isset($_POST["change_device_to_2"])){
 						$config['SDR_Radio']['device']==2;
-						echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
+						echo "<script type='text/javascript'>document.getElementById('multiple_freq').style.display = 'block';</script>";
 					}
 				}
 				if($config['SDR_Radio']['device']==2){
@@ -100,7 +99,7 @@
 					if (isset($_POST["change_device_to_1"])){
 						echo $config['SDR_Radio']['device'];
 						$config['SDR_Radio']['device']==1;
-						echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
+						echo "<script type='text/javascript'>document.getElementById('multiple_freq').style.display = 'block';</script>";
 					}
 				}
 			?>
@@ -133,7 +132,7 @@
 					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 2' name='change_device_to_2'/>";
 					if (isset($_POST["change_device_to_2"])){
 						$config['SDR_Radio']['device']==2;
-						echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
+						echo "<script type='text/javascript'>document.getElementById('freq_settings').style.display = 'block';</script>";
 					}
 				}
 				if($config['SDR_Radio']['device']==2){
@@ -142,7 +141,7 @@
 					if (isset($_POST["change_device_to_1"])){
 						echo $config['SDR_Radio']['device'];
 						$config['SDR_Radio']['device']==1;
-						echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
+						echo "<script type='text/javascript'>document.getElementById('freq_settings').style.display = 'block';</script>";
 					}
 				}
 			?>
@@ -179,7 +178,7 @@
 					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 2' name='change_device_to_2'/>";
 					if (isset($_POST["change_device_to_2"])){
 						$config['SDR_Radio']['device']==2;
-						echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
+						echo "<script type='text/javascript'>document.getElementById('single_freq_rec').style.display = 'block';</script>";
 					}
 				}
 				if($config['SDR_Radio']['device']==2){
@@ -188,7 +187,7 @@
 					if (isset($_POST["change_device_to_1"])){
 						echo $config['SDR_Radio']['device'];
 						$config['SDR_Radio']['device']==1;
-						echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
+						echo "<script type='text/javascript'>document.getElementById('single_freq_rec').style.display = 'block';</script>";
 					}
 				}
 			?>
