@@ -35,12 +35,15 @@
 	<div class="w3-panel w3-green w3-round">
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<br>
+			
 			<select name="device">
 				<option value=1 <?php echo isset($config['SDR_Radio']['device']) && $config['SDR_Radio']['device'] == 1 ?  "selected" : ""; ?>>Receiver 1</option>
 				<option value=2 <?php echo isset($config['SDR_Radio']['device']) && $config['SDR_Radio']['device'] == 2 ? "selected" : ""; ?>>Receiver 2</option>
 			</select> 
 			<input type='submit' class='w3-btn w3-brown' value='Switch to receiver' name='change_device'/>
 			<br><br>
+			
+			<strong>Receiver <?php echo $config['SDR_Radio']['device']; ?> </strong>
 			
 			<strong>Frequency:</strong><br>
 			<input type="text" name="Single_Freq" value="<?php echo isset($config['SDR_Radio']['Single_Freq'][$config['SDR_Radio']['device']]) ? $config['SDR_Radio']['Single_Freq'][$config['SDR_Radio']['device']] : "150.1M" ?>" /><br>
