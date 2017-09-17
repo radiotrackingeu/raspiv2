@@ -48,8 +48,8 @@
 			?>
 			
 			<select name="git_checkout">
-				<option value="master" <?php echo isset($config['SDR_Radio']['device']) && $config['SDR_Radio']['device'] == 1 ?  "selected" : ""; ?>>Receiver 1</option>
-				<option value="live" <?php echo isset($config['SDR_Radio']['device']) && $config['SDR_Radio']['device'] == 2 ? "selected" : ""; ?>>Receiver 2</option>
+				<option value=1 <?php echo isset($config['SDR_Radio']['device']) && $config['SDR_Radio']['device'] == 1 ?  "selected" : ""; ?>>Receiver 1</option>
+				<option value=2 <?php echo isset($config['SDR_Radio']['device']) && $config['SDR_Radio']['device'] == 2 ? "selected" : ""; ?>>Receiver 2</option>
 			</select> 
 			<br><br>
 			
