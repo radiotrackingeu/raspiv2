@@ -42,7 +42,7 @@
 
 				}
 				if (isset($_POST["change_device_to_2"])){
-					$config['SDR_Radio']['device']==2;
+					$config['SDR_Radio']['device']=2;
 					update_Config($config);
 					echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
 				}
@@ -51,7 +51,7 @@
 					echo "<input type='submit' class='w3-btn w3-brown' value='Switch to receiver 1' name='change_device_to_1'/>";
 				}
 				if (isset($_POST["change_device_to_1"])){
-					$config['SDR_Radio']['device']==1;
+					$config['SDR_Radio']['device']=1;
 					update_Config($config);
 					echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
 				}
