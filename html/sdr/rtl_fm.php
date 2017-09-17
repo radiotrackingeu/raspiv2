@@ -43,6 +43,7 @@
 				}
 				if (isset($_POST["change_device_to_2"])){
 					$config['SDR_Radio']['device']=2;
+					update_Config($config);
 					echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
 				}
 				if($config['SDR_Radio']['device']==2){
@@ -51,6 +52,7 @@
 				}
 				if (isset($_POST["change_device_to_1"])){
 					$config['SDR_Radio']['device']=1;
+					update_Config($config);
 					echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";
 				}
 			?>
