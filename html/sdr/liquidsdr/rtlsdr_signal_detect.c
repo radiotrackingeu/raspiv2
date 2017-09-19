@@ -30,6 +30,7 @@ void usage()
     printf("  -h        : print help\n");
     printf("  -i <file> : input data filename\n");
     printf("  -t <thsh> : detection threshold above psd, default: 10 dB\n");
+    printf("  -s        : use STDIN as input\n")
 }
 
 // read samples from file and store into buffer
@@ -52,8 +53,9 @@ int   step(float _threshold);
 int main(int argc, char*argv[])
 {
     char       filename_input[256] = "data/zeidler-2017-08-06/g10_1e_120kHz.dat";
+    filename_input =NULL;
     float      threshold           = 10.0f; //-60.0f;
-    
+
     // read command-line options
     int dopt;
     while ((dopt = getopt(argc,argv,"hi:t:")) != EOF) {
@@ -61,6 +63,7 @@ int main(int argc, char*argv[])
         case 'h': usage();                            return 0;
         case 'i': strncpy(filename_input,optarg,256); break;
         case 't': threshold = atof(optarg);           break;
+        case 's': filename_input = NULL;
         default:  exit(1);
         }
     }
@@ -80,14 +83,18 @@ int main(int argc, char*argv[])
     float complex buf[buf_len];
 
     // DC-blocking filter 1e-3f
-    iirfilt_crcf dcblock = iirfilt_crcf_create_dc_blocker(1e-3f); 
-    
+    iirfilt_crcf dcblock = iirfilt_crcf_create_dc_blocker(1e-3f);
+
     // open input file
-    FILE * fid = fopen(filename_input,"r");
-    if (fid == NULL) {
-        fprintf(stderr,"error: could not open %s for reading\n", filename_input);
-        exit(-1);
-    }
+    FILE * fid;
+    if (filename_input!=NULL){
+        fid = fopen(filename_input,"r");
+        if (fid == NULL) {
+            fprintf(stderr,"error: could not open %s for reading\n", filename_input);
+            exit(-1);
+        }
+    } else
+        fid = stdin;
 
     // continue processing as long as there are samples in the file
     unsigned long int total_samples  = 0;
@@ -118,7 +125,7 @@ int main(int argc, char*argv[])
                 // detect differences between current PSD estimate and template
                 step(threshold);
             }
-            
+
             // update counters and reset spectrogram object
             num_transforms += spgramcf_get_num_transforms(periodogram);
             spgramcf_reset(periodogram);
@@ -197,7 +204,7 @@ int update_groups()
     // replace all non-zero entries with a 1
     int i;
     for (i=0; i<nfft; i++)
-        groups[i] = count[i] > 0; //Was macht dieser Operator? 
+        groups[i] = count[i] > 0; //Was macht dieser Operator?
 
     // look for adjacent groups and refactor...
     int group_id = 0;
@@ -232,7 +239,7 @@ int signal_complete(int _group_id)
     return 1;
 }
 
-// get group center frequency 
+// get group center frequency
 float get_group_freq(int _group_id)
 {
     int i, n=0;
