@@ -33,14 +33,13 @@
 </div>
 <div id="single_freq" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
-	
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
 			<br>
 			<select name="device">
 				<option value=1 >Receiver 1</option>
 				<option value=2 >Receiver 2</option>
 			</select> 
-			<input type='submit' class='w3-btn w3-brown' value='Switch receiver' name='change_device'/>
+			<input type='submit' class='w3-btn w3-brown' value='Switch receiver' name='change_device_single_freq'/>
 			<br><br>
 		</form>
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config);?>">
@@ -74,8 +73,16 @@
 
 <div id="multiple_freq" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
+		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
+			<br>
+			<select name="device">
+				<option value=1 >Receiver 1</option>
+				<option value=2 >Receiver 2</option>
+			</select> 
+			<input type='submit' class='w3-btn w3-brown' value='Switch receiver' name='change_device_multiple_freq'/>
+			<br><br>
+		</form>
 		<form method="post" enctype="multipart/form-data">
-
 			<br>
 			<strong>Frequencies:</strong><br>
 			<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq1'][$config['SDR_Radio']['device']] ?>" name="rtl_fm_start_f1"/>
@@ -97,6 +104,15 @@
 <!--- TODO Do we want to set these individually for both devices? ---->
 <div id="freq_settings" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
+		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
+			<br>
+			<select name="device">
+				<option value=1 >Receiver 1</option>
+				<option value=2 >Receiver 2</option>
+			</select> 
+			<input type='submit' class='w3-btn w3-brown' value='Switch receiver' name='change_device_freq_settings'/>
+			<br><br>
+		</form>
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<br>
 			<strong>Frequency 1:</strong><br>
@@ -123,6 +139,15 @@
 
 <div id="single_freq_rec" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
+		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
+			<br>
+			<select name="device">
+				<option value=1 >Receiver 1</option>
+				<option value=2 >Receiver 2</option>
+			</select> 
+			<input type='submit' class='w3-btn w3-brown' value='Switch receiver' name='change_device_single_freq_rec'/>
+			<br><br>
+		</form>
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<br>
 			<strong>Frequencies:</strong><br>
@@ -151,6 +176,15 @@
 
 <div id="multiple_freq_rec" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
+		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
+			<br>
+			<select name="device">
+				<option value=1 >Receiver 1</option>
+				<option value=2 >Receiver 2</option>
+			</select> 
+			<input type='submit' class='w3-btn w3-brown' value='Switch receiver' name='change_device_multiple_freq_rec'/>
+			<br><br>
+		</form>
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<br>
 			<strong>Frequencies:</strong><br>

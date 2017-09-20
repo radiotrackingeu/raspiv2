@@ -20,48 +20,64 @@
 		$cmd='sudo docker ps';
 		start_docker($cmd,'running_docker');
 	}
-	//*** TODO Which device is being set? ***//
 	//WebRadio Functions
 	if (isset($_POST["rtl_fm_start_s"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Single_Freq"]. " -g " . $_POST["Radio_Gain"]. " -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
+		$cmd = "sudo docker run --rm -t --name webradio --device=/dev/bus/usb -d ".$config['SDR_Radio']['device']." -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Single_Freq"]. " -g " . $_POST["Radio_Gain"]. " -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
 		start_docker_quite($cmd,'single_freq');
 	}
 	if (isset($_POST["rtl_fm_start_l"])){
-		$cmd = "sudo docker run --rm -t --privileged rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Single_Freq"]. " -g " . $_POST["Radio_Gain"]. " -d 0 | play -r 32k -t raw -v 5 -e s -b 16 -c 1 -V1 -'";
+		$cmd = "sudo docker run --rm -t --name webradio -d ".$config['SDR_Radio']['device']." --privileged rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Single_Freq"]. " -g " . $_POST["Radio_Gain"]. " -d 0 | play -r 32k -t raw -v 5 -e s -b 16 -c 1 -V1 -'";
 		start_docker_quite($cmd,'single_freq');
 	}
 	if (isset($_POST["rtl_fm_start_f1"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " .$config['SDR_Radio']['Freq1'][$config['SDR_Radio']['device']]. " -g ".$config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]." -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
+		$cmd = "sudo docker run --rm -t --name webradio --device=/dev/bus/usb -d ".$config['SDR_Radio']['device']." -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " .$config['SDR_Radio']['Freq1'][$config['SDR_Radio']['device']]. " -g ".$config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]." -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
 		start_docker_quite($cmd,'multiple_freq');
 	}
 	if (isset($_POST["rtl_fm_start_f2"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " .$config['SDR_Radio']['Freq2'][$config['SDR_Radio']['device']]. " -g ".$config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]." -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
+		$cmd = "sudo docker run --rm -t --name webradio --device=/dev/bus/usb -d ".$config['SDR_Radio']['device']." -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " .$config['SDR_Radio']['Freq2'][$config['SDR_Radio']['device']]. " -g ".$config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]." -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
 		start_docker_quite($cmd,'multiple_freq');
 	}
 	if (isset($_POST["rtl_fm_start_f3"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " .$config['SDR_Radio']['Freq3'][$config['SDR_Radio']['device']]. " -g ".$config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]." -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
+		$cmd = "sudo docker run --rm -t --name webradio --device=/dev/bus/usb -d ".$config['SDR_Radio']['device']." -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " .$config['SDR_Radio']['Freq3'][$config['SDR_Radio']['device']]. " -g ".$config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]." -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
 		start_docker_quite($cmd,'multiple_freq');
 	}
 	if (isset($_POST["rtl_fm_start_f4"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " .$config['SDR_Radio']['Freq4'][$config['SDR_Radio']['device']]. " -g ".$config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]." -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
+		$cmd = "sudo docker run --rm -t --name webradio --device=/dev/bus/usb -d ".$config['SDR_Radio']['device']." -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " .$config['SDR_Radio']['Freq4'][$config['SDR_Radio']['device']]. " -g ".$config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]." -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
 		start_docker_quite($cmd,'multiple_freq');
 	}
 	if (isset($_POST["rtl_fm_start_f5"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " .$config['SDR_Radio']['Freq5'][$config['SDR_Radio']['device']]. " -g ".$config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]." -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
+		$cmd = "sudo docker run --rm -t --name webradio --device=/dev/bus/usb -d ".$config['SDR_Radio']['device']." -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " .$config['SDR_Radio']['Freq5'][$config['SDR_Radio']['device']]. " -g ".$config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]." -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
 		start_docker_quite($cmd,'multiple_freq');
 	}
 	if (isset($_POST["rtl_fm_start_f6"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " .$config['SDR_Radio']['Freq6'][$config['SDR_Radio']['device']]. " -g ".$config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]." -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
+		$cmd = "sudo docker run --rm -t --name webradio --device=/dev/bus/usb -d ".$config['SDR_Radio']['device']." -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " .$config['SDR_Radio']['Freq6'][$config['SDR_Radio']['device']]. " -g ".$config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]." -d 0 | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
 		start_docker_quite($cmd,'multiple_freq');
 	}
 	if (isset($_POST["rtl_stop"])){
-		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtlsdr) 2>&1";
+		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter name=webradio) 2>&1";
 		start_docker($cmd,'single_freq');
 	}
-	if (isset($_POST["change_device"])){
+	if (isset($_POST["change_device_single_freq"])){
 		echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";	
 	}
-	
+	if (isset($_POST["change_device_multiple_freq"])){
+		echo "<script type='text/javascript'>document.getElementById('multiple_freq').style.display = 'block';</script>";	
+	}
+	if (isset($_POST["change_device_freq_settings"])){
+		echo "<script type='text/javascript'>document.getElementById('freq_settings').style.display = 'block';</script>";	
+	}
+	if (isset($_POST["change_device_single_freq_recs"])){
+		echo "<script type='text/javascript'>document.getElementById('single_freq_recs').style.display = 'block';</script>";	
+	}	
+	if (isset($_POST["change_device_multiple_freq_rec"])){
+		echo "<script type='text/javascript'>document.getElementById('multiple_freq_rec').style.display = 'block';</script>";	
+	}
+	if (isset($_POST["change_device_tab_logger"])){
+		echo "<script type='text/javascript'>document.getElementById('tab_logger').style.display = 'block';</script>";	
+	}
+	if (isset($_POST["change_device_tab_logger_timer"])){
+		echo "<script type='text/javascript'>document.getElementById('tab_logger_timer').style.display = 'block';</script>";	
+	}
 	
 	//Logger Functions
 	if (isset($_POST["log_start"])){
