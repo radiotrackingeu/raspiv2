@@ -22,6 +22,7 @@ int   count       [nfft];
 int   groups      [nfft];
 int   timestep    =nfft/8; // time between transforms [samples]
 unsigned long int num_transforms = 0;
+unsigned short read_from_stdin = 0;
 
 // print usage/help message
 void usage()
@@ -53,17 +54,16 @@ int   step(float _threshold);
 int main(int argc, char*argv[])
 {
     char       filename_input[256] = "data/zeidler-2017-08-06/g10_1e_120kHz.dat";
-    filename_input =NULL;
     float      threshold           = 10.0f; //-60.0f;
 
     // read command-line options
     int dopt;
-    while ((dopt = getopt(argc,argv,"hi:t:")) != EOF) {
+    while ((dopt = getopt(argc,argv,"hi:t:s")) != EOF) {
         switch (dopt) {
         case 'h': usage();                            return 0;
         case 'i': strncpy(filename_input,optarg,256); break;
         case 't': threshold = atof(optarg);           break;
-        case 's': filename_input = NULL;
+        case 's': read_from_stdin = 1;
         default:  exit(1);
         }
     }
@@ -87,20 +87,23 @@ int main(int argc, char*argv[])
 
     // open input file
     FILE * fid;
-    if (filename_input!=NULL){
+    if (read_from_stdin){
+        fprintf(stderr,"Reading from stdin.\n");
+        fid = stdin;
+        }
+    } else {
         fid = fopen(filename_input,"r");
         if (fid == NULL) {
-            fprintf(stderr,"error: could not open %s for reading\n", filename_input);
-            exit(-1);
-        }
-    } else
-        fid = stdin;
+        fprintf(stderr,"error: could not open %s for reading\n", filename_input);
+        exit(-1);
+    }
 
     // continue processing as long as there are samples in the file
     unsigned long int total_samples  = 0;
     num_transforms = 0;
     do
     {
+        fprintf(stderr, "Reading. %d samples read so far.", total_samples);
         // read samples into buffer
         unsigned int r = buf_read(fid, buf, buf_len);
         if (r != buf_len)
