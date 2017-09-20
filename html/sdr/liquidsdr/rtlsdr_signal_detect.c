@@ -361,6 +361,6 @@ void get_timestamp(char * _buf, unsigned int _buf_len)
     clock_gettime(CLOCK_REALTIME, &time);
     const time_t tm = (time_t) time.tv_sec;
     strftime(_buf, _buf_len, "%F %T",gmtime(&tm));
-    sprintf(buffer, ".%9ld ", time.tv_nsec);
+    sprintf(buffer, ".%-9ld ", time.tv_nsec);
     strncat(_buf, buffer, 11);
 }
