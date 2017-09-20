@@ -22,7 +22,6 @@ int   count       [nfft];
 int   groups      [nfft];
 int   timestep    =nfft/8; // time between transforms [samples]
 unsigned long int num_transforms = 0;
-char read_from_stdin = 0;
 
 // print usage/help message
 void usage()
@@ -32,6 +31,7 @@ void usage()
     printf("  -i <file> : input data filename\n");
     printf("  -t <thsh> : detection threshold above psd, default: 10 dB\n");
     printf("  -s        : use STDIN as input\n");
+    printf("  -s        : sampling rate in kHz, default 250kHz\n");
 }
 
 // read samples from file and store into buffer
@@ -48,13 +48,15 @@ float get_group_freq   (int _group_id);
 float get_group_bw     (int _group_id);
 float get_group_time   (int _group_id);
 int   clear_group_count(int _group_id);
-int   step(float _threshold);
+int   step(float _threshold, unsigned int _sampling_rate);
 
 // main program
 int main(int argc, char*argv[])
 {
-    char       filename_input[256] = "data/zeidler-2017-08-06/g10_1e_120kHz.dat";
-    float      threshold           = 10.0f; //-60.0f;
+    char            filename_input[256] = "data/zeidler-2017-08-06/g10_1e_120kHz.dat";
+    float           threshold           = 10.0f; //-60.0f;
+    char            read_from_stdin     = 0;
+    unsigned int   sampling_rate       = 250;
 
     // read command-line options
     int dopt;
@@ -64,6 +66,7 @@ int main(int argc, char*argv[])
         case 'i': strncpy(filename_input,optarg,256);   break;
         case 't': threshold = atof(optarg);             break;
         case 's': read_from_stdin = 1;                  break;
+        case 'r': sampling_rate = atoi(optarg);         break;
         default:  exit(1);
         }
     }
@@ -323,7 +326,7 @@ int clear_group_count(int _group_id)
 }
 
 // look for signal
-int step(float _threshold)
+int step(float _threshold, unsigned int _sampling_rate)
 {
     update_detect(_threshold);
     update_count ();
@@ -334,9 +337,9 @@ int step(float _threshold)
     for (i=1; i<=num_groups; i++) {
         if (signal_complete(i)) {
             // signal started & stopped
-            float duration    = get_group_time(i)*timestep/250000; // duration [samples]
-            float signal_freq = get_group_freq(i)*250000;          // center frequency estimate (normalized)
-            float signal_bw   = get_group_bw(i)*250000;            // bandwidth estimate (normalized)
+            float duration    = get_group_time(i)*timestep/_sampling_rate*1e-3; // duration [samples]
+            float signal_freq = get_group_freq(i)*_sampling_rate*1e-3;          // center frequency estimate (normalized)
+            float signal_bw   = get_group_bw(i)*_sampling_rate*1e-3;            // bandwidth estimate (normalized)
             float start_time  = num_transforms*timestep - duration; // approximate starting time
             printf("signal detected! time=%10.0f, duration=%10.6f, freq=%9.6f, bw=%9.6f\n",
                     start_time, duration, signal_freq, signal_bw);
