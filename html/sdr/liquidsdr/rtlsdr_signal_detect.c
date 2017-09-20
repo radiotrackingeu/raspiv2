@@ -22,7 +22,7 @@ int   count       [nfft];
 int   groups      [nfft];
 int   timestep    =nfft/8; // time between transforms [samples]
 unsigned long int num_transforms = 0;
-unsigned short read_from_stdin = 0;
+char read_from_stdin = 0;
 
 // print usage/help message
 void usage()
@@ -60,10 +60,10 @@ int main(int argc, char*argv[])
     int dopt;
     while ((dopt = getopt(argc,argv,"hi:t:s")) != EOF) {
         switch (dopt) {
-        case 'h': usage();                            return 0;
-        case 'i': strncpy(filename_input,optarg,256); break;
-        case 't': threshold = atof(optarg);           break;
-        case 's': read_from_stdin = 1;
+        case 'h': usage();                              return 0;
+        case 'i': strncpy(filename_input,optarg,256);   break;
+        case 't': threshold = atof(optarg);             break;
+        case 's': read_from_stdin = 1;                  break;
         default:  exit(1);
         }
     }
@@ -88,23 +88,21 @@ int main(int argc, char*argv[])
     // open input file
     FILE * fid;
     if (read_from_stdin){
-        fprintf(stderr,"Reading from stdin.\n");
+        fprintf(stderr,"reading from stdin.\n");
         fid = stdin;
     } else {
         fid = fopen(filename_input,"r");
         if (fid == NULL) {
-			fprintf(stderr,"error: could not open %s for reading\n", filename_input);
-			exit(-1);
-		}
+	        fprintf(stderr,"error: could not open %s for reading\n", filename_input);
+        	exit(-1);
+	}
     }
-
 
     // continue processing as long as there are samples in the file
     unsigned long int total_samples  = 0;
     num_transforms = 0;
     do
     {
-        fprintf(stderr, "Reading. %ld samples read so far.", total_samples);
         // read samples into buffer
         unsigned int r = buf_read(fid, buf, buf_len);
         if (r != buf_len)
