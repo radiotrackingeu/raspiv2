@@ -128,7 +128,7 @@ int main(int argc, char*argv[])
                 memmove(psd_template, psd, nfft*sizeof(float));
             } else {
                 // detect differences between current PSD estimate and template
-                step(threshold);
+                step(threshold, sampling_rate);
             }
 
             // update counters and reset spectrogram object
