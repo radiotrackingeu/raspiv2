@@ -12,6 +12,7 @@
 #include <math.h>
 #include <liquid/liquid.h>
 #include <getopt.h>
+#include <time.h>
 
 #define nfft (400)
 
@@ -49,6 +50,7 @@ float get_group_bw     (int _group_id);
 float get_group_time   (int _group_id);
 int   clear_group_count(int _group_id);
 int   step(float _threshold, unsigned int _sampling_rate);
+void  get_timestamp(char * _buf, unsigned int _buf_len);
 
 // main program
 int main(int argc, char*argv[])
@@ -331,18 +333,19 @@ int step(float _threshold, unsigned int _sampling_rate)
     update_detect(_threshold);
     update_count ();
     int num_groups = update_groups();
-
+    char timestamp char[26];
     // determine if signal has stopped based on group and detection
     int i;
     for (i=1; i<=num_groups; i++) {
         if (signal_complete(i)) {
             // signal started & stopped
+            get_timestamp(timestamp, 26);
             float duration    = get_group_time(i)*timestep/_sampling_rate*1e-3; // duration [samples]
             float signal_freq = get_group_freq(i)*_sampling_rate*1e-3;          // center frequency estimate (normalized)
             float signal_bw   = get_group_bw(i)*_sampling_rate*1e-3;            // bandwidth estimate (normalized)
-            float start_time  = num_transforms*timestep - duration; // approximate starting time
-            printf("signal detected! time=%10.0f, duration=%10.6f, freq=%9.6f, bw=%9.6f\n",
-                    start_time, duration, signal_freq, signal_bw);
+//            float start_time  = num_transforms*timestep - duration; // approximate starting time
+            printf("signal detected! time=%s, duration=%10.6f, freq=%9.6f, bw=%9.6f\n",
+                    timestamp, duration, signal_freq, signal_bw);
 
             // reset counters for group
             clear_group_count(i);
@@ -351,3 +354,13 @@ int step(float _threshold, unsigned int _sampling_rate)
     return 0;
 }
 
+void get_timestamp(char * _buf, unsigned int _buf_len)
+{
+    timespec time;
+    char buffer[12];
+    clock_gettime(CLOCK_REALTIME, &time);
+    time_t tm = (time_t) time.tv_sec;
+    strftime(_buf, _buf_len, "%F %T",gmtime(tm))
+    sprintf(buffer, ".%9ld ", time.tv_nsec);
+    strncat(_buf, buffer, 11);
+}
