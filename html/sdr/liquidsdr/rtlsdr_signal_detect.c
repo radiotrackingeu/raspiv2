@@ -60,7 +60,7 @@ int main(int argc, char*argv[])
 
     // read command-line options
     int dopt;
-    while ((dopt = getopt(argc,argv,"hi:t:s")) != EOF) {
+    while ((dopt = getopt(argc,argv,"hi:t:sr:")) != EOF) {
         switch (dopt) {
         case 'h': usage();                              return 0;
         case 'i': strncpy(filename_input,optarg,256);   break;
