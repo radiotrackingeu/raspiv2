@@ -88,7 +88,7 @@ int main(int argc, char*argv[])
     // open input file
     FILE * fid;
     if (read_from_stdin){
-        fprintf(stderr,"Reading from stdin.\n");
+        fprintf(stderr,"reading from stdin.\n");
         fid = stdin;
         }
     } else {
