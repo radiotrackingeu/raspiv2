@@ -328,7 +328,7 @@ int clear_group_count(int _group_id)
 }
 
 // look for signal
-int step(float _threshold, unsigned long _sampling_rate)
+int step(float _threshold, unsigned int _sampling_rate)
 {
     update_detect(_threshold);
     update_count ();
@@ -344,7 +344,7 @@ int step(float _threshold, unsigned long _sampling_rate)
             float signal_freq = get_group_freq(i)*_sampling_rate;          // center frequency estimate (normalized)
             float signal_bw   = get_group_bw(i)*_sampling_rate;            // bandwidth estimate (normalized)
 //            float start_time  = num_transforms*timestep - duration; // approximate starting time
-            printf("signal detected! time=%s, duration=%-10.-6f, freq=%9.6f, bw=%9.6f\n",
+            printf("signal detected! time=%s, duration=%-10.6f, freq=%9.6f, bw=%9.6f\n",
                     timestamp, duration, signal_freq, signal_bw);
 
             // reset counters for group
@@ -354,7 +354,7 @@ int step(float _threshold, unsigned long _sampling_rate)
     return 0;
 }
 
-void get_timestamp(char * _buf, unsigned int _buf_len)
+void get_timestamp(char * _buf, unsigned long _buf_len)
 {
     struct timespec time;
     char buffer[11];
