@@ -31,7 +31,7 @@ void usage()
     printf("  -h        : print help\n");
     printf("  -i <file> : input data filename\n");
     printf("  -t <thsh> : detection threshold above psd, default: 10 dB\n");
-    printf("  -s        : use STDIN as input\n")
+    printf("  -s        : use STDIN as input\n");
 }
 
 // read samples from file and store into buffer
