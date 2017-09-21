@@ -203,7 +203,6 @@ int update_detect(float _threshold)
 		}
 		else{
 			detect[i]=0;
-			psd_max[i]=0;
 		}
         // absolute
         //detect[i] = (psd[i] > _threshold) ? 1 : 0;
