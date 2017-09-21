@@ -19,7 +19,7 @@
 	
 	//define config section and items.
 	define ('confSection', 'logger');
-	define ('confKeys', array('log_gain','center_freq','freq_range','log_level','pre_log_name','raw_log_log_gain','raw_center_freq','raw_freq_range','raw_pre_log_name','time_center_freq','time_freq_range','time_log_level','time_start_timer','time_start_min','time_start_hour','time_stop_timer','time_stop_min','time_stop_hour','time_pre_log_name'));
+	define ('confKeys', array('device','log_gain','center_freq','freq_range','log_level','pre_log_name','raw_log_log_gain','raw_center_freq','raw_freq_range','raw_pre_log_name','time_center_freq','time_freq_range','time_log_level','time_start_timer','time_start_min','time_start_hour','time_stop_timer','time_stop_min','time_stop_hour','time_pre_log_name', 'threshold', 'sampling_rate','nfft','timestep_factor'));
 	
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
@@ -80,13 +80,13 @@
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
 			<br>
 			<select name="device">
-				<option value=1 >Receiver 1</option>
-				<option value=2 >Receiver 2</option>
+				<option value=1 <?php echo isset($config['logger']['device']) && $config['logger']['device'] == "1" ? "selected" : "" ?>>Receiver 1</option>
+				<option value=2 <?php echo isset($config['logger']['device']) && $config['logger']['device'] == "2" ? "selected" : "" ?>>Receiver 2</option>
 			</select> 
 			<input type='submit' class='w3-btn w3-brown' value='Switch receiver' name='change_device_tab_logger'/>
 			<br><br>
 		</form>
-		<h3>Logger settings - Receiver <?php echo $config['logger']['device'];?></h3><br>
+		<h3>Logger Analyzer settings - Receiver <?php echo $config['logger']['device'];?></h3><br>
 		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
 
 				Gain in DB:<br>
@@ -105,6 +105,19 @@
 				<input type="text" name="log_level" value="<?php echo isset($config['logger']['log_level'][$config['logger']['device']]) ? $config['logger']['log_level'][$config['logger']['device']] : 1 ?>"><br>
 				0 means automatic - level up to 16384 - the tricky part is setting a good log level compared to the gain: try and error
 				<br><br>
+				Detection - Threshold (default 10):<br>
+				<input type="text" name="threshold" value="<?php echo isset($config['logger']['threshold'][$config['logger']['device']]) ? $config['logger']['threshold'][$config['logger']['device']] : 10 ?>"><br>
+				<br>
+				Detection - Sampling_Rate in Hz (default: 250000):<br>
+				<input type="text" name="sampling_rate" value="<?php echo isset($config['logger']['sampling_rate'][$config['logger']['device']]) ? $config['logger']['sampling_rate'][$config['logger']['device']] : 250000 ?>"><br>
+				<br>
+				Detection - Number of bins in FFT (default: 400):<br>
+				<input type="text" name="nfft" value="<?php echo isset($config['logger']['nfft'][$config['logger']['device']]) ? $config['logger']['nfft'][$config['logger']['device']] : 400 ?>"><br>
+				<br>
+				Detection - Timestep as Fraction of Number of bins (default: 8):<br>
+				<input type="text" name="timestep_factor" value="<?php echo isset($config['logger']['timestep_factor'][$config['logger']['device']]) ? $config['logger']['timestep_factor'][$config['logger']['device']] : 8 ?>"><br>
+				<br> i.e. Timestep is No of bins divided by this.
+				<br>
 				Prefix and Record Name:<br>
 				<input type="text" name="pre_log_name" value="<?php echo isset($config['logger']['pre_log_name'][$config['logger']['device']]) ? $config['logger']['pre_log_name'][$config['logger']['device']] : "rteu" ?>">
 				<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
@@ -119,7 +132,7 @@
 
 <div id="tab_logger_timer" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
-		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
+<!--		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
 			<br>
 			<select name="device">
 				<option value=1 >Receiver 1</option>
@@ -128,6 +141,7 @@
 			<input type='submit' class='w3-btn w3-brown' value='Switch receiver' name='change_device_tab_logger_timer'/>
 			<br><br>
 		</form>
+-->
 		<h3>Logger settings - Receiver <?php echo $config['logger']['device'];?></h3><br>
 
 		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">

@@ -74,6 +74,14 @@ time_stop_hour[1] = 0
 time_stop_hour[2] = 0
 time_pre_log_name[1] = "rteu_d1_"
 time_pre_log_name[2] = "rteu_d2_"
+threshold[1] = 10
+threshold[2] = 10
+sampling_rate[1] = 250000
+sampling_rate[2] = 250000
+nfft[1] = 400
+nfft[2] = 400
+timestep_factor[1] = 8
+timestep_factor[2] = 8
 
 [remote]
 time_start_vpn = "reboot"

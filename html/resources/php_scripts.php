@@ -80,11 +80,16 @@
 	}
 	
 	//Logger Functions
-	if (isset($_POST["log_start"])){
-		check_docker("logger-sdr-d1");
-		$cmd = "sudo docker run --rm --name logger-sdr-d1 -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
+	 if (isset($_POST["log_start"])){
+	 $cmd = "sudo docker run --rm --name=raw-sdr-d1 -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ rtlsdr bash -c 'rtl_sdr -d ".$_POST["device"]."-f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -g ".$_POST["log_gain"]." - | liquidsdr/rtlsdr_signal_detect -p -t ".$_POST["threshold"]." -s ".$_POST["sampling_rate"]." -n ".$_POST["nfft"]." -f ".$_POST["timestep_factor"]." > /tmp/".$_POST["pre_log_name"].$_POST["log_name"]."'";
+		console_log($cmd);
 		start_docker_quite($cmd,'tab_logger');
-	}
+		 
+		 
+		// check_docker("logger-sdr-d1");
+		// $cmd = "sudo docker run --rm --name logger-sdr-d1 -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
+		// start_docker_quite($cmd,'tab_logger');
+	 }
 	if (isset($_POST["log_stop"])){
 		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d1) 2>&1";
 		start_docker($cmd, 'tab_logger');
