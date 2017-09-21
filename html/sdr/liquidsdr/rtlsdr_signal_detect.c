@@ -14,16 +14,6 @@
 #include <getopt.h>
 #include <time.h>
 
-//#define nfft (400)
-
-//int nfft = 400;
-//float psd_template[nfft];
-//float psd         [nfft];
-//float psd_max     [nfft];
-//int   detect      [nfft];
-//int   count       [nfft];
-//int   groups      [nfft];
-//int   timestep    =nfft/8; // time between transforms [samples]
 int nfft;
 float *psd_template;
 float *psd;
@@ -66,7 +56,6 @@ float get_group_max_sig (int _group_id);
 int   clear_group_count	(int _group_id);
 int   step(float _threshold, unsigned int _sampling_rate);
 void  get_timestamp(char * _buf, unsigned long _buf_len);
-void  set_timestep(float _mult);
 void  free_memory();
 
 // main program
@@ -77,7 +66,7 @@ int main(int argc, char*argv[])
     char            read_from_stdin     = 0;
     unsigned long   sampling_rate       = 250000;
                     nfft                = 400;
-                    timestep            = nfft/8;
+    int             timestep_factor     = 8;
 
 
     // read command-line options
@@ -90,18 +79,13 @@ int main(int argc, char*argv[])
         case 's': sampling_rate = atoi(optarg);         break;
         case 'p': read_from_stdin = 1;                  break;
 		case 'n': nfft = atoi(optarg);         			break;
-        case 'f': timestep = nfft/atoi(optarg);         break;
+        case 'f': timestep_factor = atoi(optarg);       break;
         default:  exit(1);
         }
     }
-    fprintf(stderr,"nfft: %d\timestep: %d\n",nfft,timestep);
-    // reset counters, etc.
-//    memset(psd_template, 0x0, nfft*sizeof(float));
-//    memset(psd,          0x0, nfft*sizeof(float));
-//	  memset(psd_max,      0x0, nfft*sizeof(float));
-//    memset(detect,       0x0, nfft*sizeof(int  ));
-//    memset(count,        0x0, nfft*sizeof(int  ));
-//    memset(groups,       0x0, nfft*sizeof(int  ));
+    timestep = nfft/timestep_factor;
+    fprintf(stderr,"Setting nfft=%d and timestep=%d\n",nfft,timestep);
+
     psd_template = (float*) calloc(nfft, sizeof(float));
     psd          = (float*) calloc(nfft, sizeof(float));
 	psd_max      = (float*) calloc(nfft, sizeof(float));
@@ -122,7 +106,7 @@ int main(int argc, char*argv[])
     // open input file
     FILE * fid;
     if (read_from_stdin){
-        fprintf(stderr,"reading from stdin.\n");
+        fprintf(stderr,"Reading from stdin.\n");
         fid = stdin;
     } else {
         fid = fopen(filename_input,"r");
@@ -189,13 +173,6 @@ int main(int argc, char*argv[])
     free_memory();
     return 0;
 }
-
-// allocate memory according to given number of fft bins
-//void allocate_memory()
-//{
-//
-//
-//}
 
 // read samples from file and store into buffer
 unsigned int buf_read(FILE *          _fid,
@@ -399,19 +376,13 @@ void get_timestamp(char * _buf, unsigned long _buf_len)
     strncat(_buf, buffer, 10);
 }
 
-void set_timestep(float _mult)
-{
-    if (_mult == 0)
-        fprintf(stderr,"Error: invalid timestep multiplier 0. Using default timestep.\n");
-    else
-        timestep = (int) (timestep*_mult);
-}
+//release allocate memory space
 void free_memory()
 {
-free(psd_template);
-free(psd);
-free(psd_max);
-free(detect);
-free(count);
-free(groups);
+    free(psd_template);
+    free(psd);
+    free(psd_max);
+    free(detect);
+    free(count);
+    free(groups);
 }
