@@ -69,7 +69,7 @@ int main(int argc, char*argv[])
     int             timestep_factor     = 8;
 
 	//no output buffering
-	setbuf(stdout, NULL);
+	//setbuf(stdout, NULL);
 
     // read command-line options
     int dopt;
@@ -359,6 +359,7 @@ int step(float _threshold, unsigned int _sampling_rate)
 //            float start_time  = num_transforms*timestep - duration; // approximate starting time
             printf("signal detected! time=%s, duration=%-10.6f, freq=%9.6f, bw=%9.6f, strength=%f\n",
                     timestamp, duration, signal_freq, signal_bw,max_signal);
+			fflush(stdout);
 
             // reset counters for group
             clear_group_count(i);
