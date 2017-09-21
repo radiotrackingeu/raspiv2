@@ -81,7 +81,7 @@
 	
 	//Logger Functions
 	 if (isset($_POST["log_start"])){
-		$cmd = "sudo docker run --rm --name=logger-sdr-d".$config['logger']['device']." -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ liquidsdr bash -c 'rtl_sdr -d ".$config['logger']['device']." -f ".$_POST['center_freq']." -s ".$_POST['freq_range']." -g ".$_POST['log_gain']." - | /tmp/liquidsdr/rtlsdr_signal_detect -p -t ".$_POST['threshold']." -s ".$_POST['sampling_rate']." -n ".$_POST['nfft']." -f ".$_POST['timestep_factor']." > /tmp/record/" . $_POST['pre_log_name'] . $_POST['log_name']."'";
+		$cmd = "sudo docker run --rm --name=logger-sdr-d".$config['logger']['device']." -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ liquidsdr bash -c 'rtl_sdr -d ".$config['logger']['device']." -f ".$_POST['center_freq']." -s ".$_POST['freq_range']." -g ".$_POST['log_gain']." - | /tmp/liquidsdr/rtlsdr_signal_detect -p -t ".$_POST['threshold']." -s ".$_POST['sampling_rate']." -n ".$_POST['nfft']." -f ".$_POST['timestep_factor']." > /tmp/record/" . $_POST['pre_log_name'] . $_POST['log_name']." 2>&1'";
 		start_docker_quite($cmd,'tab_logger');
 		 
 		 
