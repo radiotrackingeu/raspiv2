@@ -196,14 +196,14 @@ int update_detect(float _threshold)
     int total=0;
     for (i=0; i<nfft; i++) {
         // relative
-        //detect[i] = ((psd[i] - psd_template[i]) > _threshold) ? 1 : 0;
+        // detect[i] = ((psd[i] - psd_template[i]) > _threshold) ? 1 : 0;
 		if((psd[i] - psd_template[i]) > _threshold){
 			detect[i]=1; //write matrix for detection
-			psd_max[i] = (psd_max[i]<psd[i]) ? psd[i] : psd_max[i]; //save highes values
+			psd_max[i] = (psd_max[i]>psd[i]) ? psd_max[i] : psd[i]; //save highes values
 		}
 		else{
 			detect[i]=0;
-			psd_max[i]=0;
+			//psd_max[i]=0;
 		}
         // absolute
         //detect[i] = (psd[i] > _threshold) ? 1 : 0;
