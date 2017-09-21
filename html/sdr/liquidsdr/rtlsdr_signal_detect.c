@@ -32,11 +32,12 @@ int tmp_transforms = 0;
 void usage()
 {
     printf("%s [options]\n", __FILE__);
-    printf("  -h        : print help\n");
-    printf("  -i <file> : input data filename\n");
-    printf("  -t <thsh> : detection threshold above psd, default: 10 dB\n");
-    printf("  -s        : use STDIN as input\n");
-    printf("  -r        : sampling rate in Hz, default 250000Hz\n");
+    printf("  -h         : print help\n");
+    printf("  -i <file>  : input data filename\n");
+    printf("  -t <thsh>  : detection threshold above psd, default: 10 dB\n");
+    printf("  -p         : use STDIN as input\n");
+    printf("  -s <rate>  : sampling rate in Hz, default 250000Hz\n");
+    printf("  -m <mult>  : multiply default timestep by <mult>. Use C float notation <x.y>f\n");
 	//printf("  -n        : number of bins used for fftw\n");
 }
 
@@ -46,6 +47,8 @@ unsigned int buf_read(FILE *          _fid,
                       unsigned int    _buf_len);
 
 // forward declaration of methods for signal detection
+//void  allocate_memory();
+//void  free_memory();
 int   update_detect(float _threshold);
 int   update_count();
 int   update_groups();
@@ -57,6 +60,7 @@ float get_group_max_sig (int _group_id);
 int   clear_group_count	(int _group_id);
 int   step(float _threshold, unsigned int _sampling_rate);
 void  get_timestamp(char * _buf, unsigned long _buf_len);
+void  set_timestep(float _mult);
 
 // main program
 int main(int argc, char*argv[])
@@ -68,13 +72,14 @@ int main(int argc, char*argv[])
 
     // read command-line options
     int dopt;
-    while ((dopt = getopt(argc,argv,"hi:t:sr:")) != EOF) {
+    while ((dopt = getopt(argc,argv,"hi:t:s:pm")) != EOF) {
         switch (dopt) {
         case 'h': usage();                              return 0;
         case 'i': strncpy(filename_input,optarg,256);   break;
         case 't': threshold = atof(optarg);             break;
-        case 's': read_from_stdin = 1;                  break;
-        case 'r': sampling_rate = atoi(optarg);         break;
+        case 's': sampling_rate = atoi(optarg);         break;
+        case 'p': read_from_stdin = 1;                  break;
+        case 'm': set_timestep(atof(optarg));           break;
 		//case 'n': nfft = atoi(optarg);         			break;
         default:  exit(1);
         }
@@ -126,7 +131,7 @@ int main(int argc, char*argv[])
 
         // accumulate spectrum
         spgramcf_write(periodogram, buf, buf_len);
-		
+
 		//get number of transforms per cycle tmp_transforms
 		tmp_transforms = spgramcf_get_num_transforms(periodogram);
 
@@ -167,6 +172,13 @@ int main(int argc, char*argv[])
 
     return 0;
 }
+
+// allocate memory according to given number of fft bins
+//void allocate_memory()
+//{
+//
+//
+//}
 
 // read samples from file and store into buffer
 unsigned int buf_read(FILE *          _fid,
@@ -368,4 +380,13 @@ void get_timestamp(char * _buf, unsigned long _buf_len)
     strftime(_buf, _buf_len, "%F %T",gmtime(&tm));
     sprintf(buffer, ".%-9ld", time.tv_nsec);
     strncat(_buf, buffer, 10);
+}
+
+void set_timestep(float _mult)
+{
+    if (_mult == 0)
+        fprintf(stderr,"Error: invalid timestep multiplier 0. Using default timestep.\n");
+    else
+        timestep = (int) (timestep*_mult);
+    fprintf(stderr, "Timestep is now %d.\n", timestep);
 }
