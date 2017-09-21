@@ -83,7 +83,7 @@ int main(int argc, char*argv[])
     // reset counters, etc.
     memset(psd_template, 0x0, nfft*sizeof(float));
     memset(psd,          0x0, nfft*sizeof(float));
-	memset(psd_max,          0x0, nfft*sizeof(int  ));
+	memset(psd_max,      0x0, nfft*sizeof(int  ));
     memset(detect,       0x0, nfft*sizeof(int  ));
     memset(count,        0x0, nfft*sizeof(int  ));
     memset(groups,       0x0, nfft*sizeof(int  ));
@@ -203,6 +203,7 @@ int update_detect(float _threshold)
 		}
 		else{
 			detect[i]=0;
+			psd_max[i]=0;
 		}
         // absolute
         //detect[i] = (psd[i] > _threshold) ? 1 : 0;
@@ -218,6 +219,7 @@ int update_count()
     int total=0;
     for (i=0; i<nfft; i++) {
         count[i] += detect[i];
+		psd_max[i] = (psd_max[i]<psd[i]) ? psd[i] : psd_max[i];
         total += count[i];
     }
     return total;
