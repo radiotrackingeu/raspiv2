@@ -14,7 +14,7 @@
 #include <getopt.h>
 #include <time.h>
 
-#define nfft (400)
+//#define nfft (400)
 
 //int nfft = 400;
 //float psd_template[nfft];
@@ -67,6 +67,7 @@ int   clear_group_count	(int _group_id);
 int   step(float _threshold, unsigned int _sampling_rate);
 void  get_timestamp(char * _buf, unsigned long _buf_len);
 void  set_timestep(float _mult);
+void  free_memory();
 
 // main program
 int main(int argc, char*argv[])
