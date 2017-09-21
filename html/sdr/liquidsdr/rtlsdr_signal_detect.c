@@ -312,7 +312,7 @@ float get_group_time(int _group_id)
 float get_group_max_sig(int _group_id)
 {
     int i;
-    float max = -100;
+    float max = -1000;
     for (i=0; i<nfft; i++) {
         if (groups[i] == _group_id && psd_max[i] > max)
             max = psd_max[i];
@@ -327,7 +327,7 @@ int clear_group_count(int _group_id)
     for (i=0; i<nfft; i++) {
         if (groups[i] == _group_id)
             count[i] = 0;
-			psd_max[i] = 0;
+			psd_max[i] = -1000;
     }
     return 0;
 }
