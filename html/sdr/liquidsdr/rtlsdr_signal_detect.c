@@ -345,7 +345,7 @@ int step(float _threshold, unsigned int _sampling_rate)
             // signal started & stopped
             get_timestamp(timestamp, 30);
             float duration    = tmp_transforms*get_group_time(i)*timestep/_sampling_rate; // duration [samples]
-            float max_signal  = get_group_max_sig(i);					   // maximum signal strength per group
+            float max_signal  = get_group_max_sig(i)*(-1);					   // maximum signal strength per group
 			float signal_freq = get_group_freq(i)*_sampling_rate;          // center frequency estimate (normalized)
             float signal_bw   = get_group_bw(i)*_sampling_rate;            // bandwidth estimate (normalized)
 //            float start_time  = num_transforms*timestep - duration; // approximate starting time
