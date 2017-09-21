@@ -81,7 +81,7 @@
 	
 	//Logger Functions
 	 if (isset($_POST["log_start"])){
-	 $cmd = "sudo docker run --rm --name=raw-sdr-d1 -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ rtlsdr bash -c 'rtl_sdr -d ".$_POST["device"]."-f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -g ".$_POST["log_gain"]." - | liquidsdr/rtlsdr_signal_detect -p -t ".$_POST["threshold"]." -s ".$_POST["sampling_rate"]." -n ".$_POST["nfft"]." -f ".$_POST["timestep_factor"]." > /tmp/".$_POST["pre_log_name"].$_POST["log_name"]."'";
+	 $cmd = "sudo docker run --rm --name=raw-sdr-d1 -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ rtlsdr bash -c 'rtl_sdr -d ".$config['logger']['device']."-f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -g ".$_POST["log_gain"]." - | liquidsdr/rtlsdr_signal_detect -p -t ".$_POST["threshold"]." -s ".$_POST["sampling_rate"]." -n ".$_POST["nfft"]." -f ".$_POST["timestep_factor"]." > /tmp/".$_POST["pre_log_name"].$_POST["log_name"]."'";
 		console_log($cmd);
 		start_docker_quite($cmd,'tab_logger');
 		 
