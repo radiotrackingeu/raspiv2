@@ -68,6 +68,8 @@ int main(int argc, char*argv[])
                     nfft                = 400;
     int             timestep_factor     = 8;
 
+	//no output buffering
+	setbuf(stdout, NULL);
 
     // read command-line options
     int dopt;
