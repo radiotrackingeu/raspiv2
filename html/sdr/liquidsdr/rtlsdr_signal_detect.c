@@ -16,6 +16,7 @@
 
 #define nfft (400)
 
+//int nfft = 400;
 float psd_template[nfft];
 float psd         [nfft];
 int   detect      [nfft];
@@ -23,6 +24,8 @@ int   count       [nfft];
 int   groups      [nfft];
 int   timestep    =nfft/8; // time between transforms [samples]
 unsigned long int num_transforms = 0;
+int tmp_transforms = 0;
+
 
 // print usage/help message
 void usage()
@@ -32,7 +35,8 @@ void usage()
     printf("  -i <file> : input data filename\n");
     printf("  -t <thsh> : detection threshold above psd, default: 10 dB\n");
     printf("  -s        : use STDIN as input\n");
-    printf("  -s        : sampling rate in Hz, default 250000Hz\n");
+    printf("  -r        : sampling rate in Hz, default 250000Hz\n");
+	//printf("  -n        : number of bins used for fftw\n");
 }
 
 // read samples from file and store into buffer
@@ -69,6 +73,7 @@ int main(int argc, char*argv[])
         case 't': threshold = atof(optarg);             break;
         case 's': read_from_stdin = 1;                  break;
         case 'r': sampling_rate = atoi(optarg);         break;
+		//case 'n': nfft = atoi(optarg);         			break;
         default:  exit(1);
         }
     }
@@ -118,8 +123,11 @@ int main(int argc, char*argv[])
 
         // accumulate spectrum
         spgramcf_write(periodogram, buf, buf_len);
+		
+		//get number of transforms per cycle tmp_transforms
+		tmp_transforms = spgramcf_get_num_transforms(periodogram);
 
-        if (spgramcf_get_num_transforms(periodogram) >= 16)
+        if (tmp_transforms >= 16)
         {
             // compute power spectral density output
             spgramcf_get_psd(periodogram, psd);
@@ -340,7 +348,7 @@ int step(float _threshold, unsigned int _sampling_rate)
         if (signal_complete(i)) {
             // signal started & stopped
             get_timestamp(timestamp, 30);
-            float duration    = get_group_time(i)*timestep/_sampling_rate; // duration [samples]
+            float duration    = tmp_transforms*get_group_time(i)*timestep/_sampling_rate; // duration [samples]
             float signal_freq = get_group_freq(i)*_sampling_rate;          // center frequency estimate (normalized)
             float signal_bw   = get_group_bw(i)*_sampling_rate;            // bandwidth estimate (normalized)
 //            float start_time  = num_transforms*timestep - duration; // approximate starting time
