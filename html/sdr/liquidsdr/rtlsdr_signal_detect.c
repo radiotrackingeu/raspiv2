@@ -203,7 +203,7 @@ int update_detect(float _threshold)
 		}
 		else{
 			detect[i]=0;
-			psd_max[i]=0;
+			//psd_max[i]=0;
 		}
         // absolute
         //detect[i] = (psd[i] > _threshold) ? 1 : 0;
@@ -311,7 +311,7 @@ float get_group_time(int _group_id)
 float get_group_max_sig(int _group_id)
 {
     int i;
-    float max = -1;
+    float max = 0;
     for (i=0; i<nfft; i++) {
         if (groups[i] == _group_id && psd_max[i] > max)
             max = psd_max[i];
