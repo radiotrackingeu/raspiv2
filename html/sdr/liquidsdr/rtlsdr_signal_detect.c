@@ -19,6 +19,7 @@
 //int nfft = 400;
 float psd_template[nfft];
 float psd         [nfft];
+float psd_max     [nfft];
 int   detect      [nfft];
 int   count       [nfft];
 int   groups      [nfft];
@@ -81,6 +82,7 @@ int main(int argc, char*argv[])
     // reset counters, etc.
     memset(psd_template, 0x0, nfft*sizeof(float));
     memset(psd,          0x0, nfft*sizeof(float));
+	memset(psd_max,          0x0, nfft*sizeof(int  ));
     memset(detect,       0x0, nfft*sizeof(int  ));
     memset(count,        0x0, nfft*sizeof(int  ));
     memset(groups,       0x0, nfft*sizeof(int  ));
@@ -194,6 +196,14 @@ int update_detect(float _threshold)
     for (i=0; i<nfft; i++) {
         // relative
         detect[i] = ((psd[i] - psd_template[i]) > _threshold) ? 1 : 0;
+		if((psd[i] - psd_template[i]) > _threshold){
+			detect[i]=1; //write matrix for detection
+			psd_max[i] = (psd_max[i]<psd[i]) ? psd_max[i] : psd[i]; //save highes values
+		}
+		else{
+			detect[i]=0;
+			psd_max[i]=0;
+		}
         // absolute
         //detect[i] = (psd[i] > _threshold) ? 1 : 0;
         total += detect[i];
@@ -268,34 +278,6 @@ float get_group_freq(int _group_id)
     return fc / (float)n;
 }
 
-// get group maximal signal strength - to be done
-float get_group_max(int _group_id)
-{
-    int i, n=0;
-    float fc = 0.0f;
-    for (i=0; i<nfft; i++) {
-        if (groups[i] == _group_id) {
-            fc += ((float)i/(float)nfft - 0.5f) * count[i];
-            n  += count[i];
-        }
-    }
-    return fc / (float)n;
-}
-
-// get group mean signal strength - to be done
-float get_group_mean(int _group_id)
-{
-    int i, n=0;
-    float fc = 0.0f;
-    for (i=0; i<nfft; i++) {
-        if (groups[i] == _group_id) {
-            fc += ((float)i/(float)nfft - 0.5f) * count[i];
-            n  += count[i];
-        }
-    }
-    return fc / (float)n;
-}
-
 // get group bandwidth
 float get_group_bw(int _group_id)
 {
@@ -324,13 +306,14 @@ float get_group_time(int _group_id)
     return max;
 }
 
-// clear count for group
+// clear count and max for group
 int clear_group_count(int _group_id)
 {
     int i;
     for (i=0; i<nfft; i++) {
         if (groups[i] == _group_id)
             count[i] = 0;
+			psd_max[i] = 0;
     }
     return 0;
 }
