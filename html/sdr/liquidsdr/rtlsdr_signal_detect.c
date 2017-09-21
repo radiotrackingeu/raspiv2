@@ -349,7 +349,7 @@ int step(float _threshold, unsigned int _sampling_rate)
 			float signal_freq = get_group_freq(i)*_sampling_rate;          // center frequency estimate (normalized)
             float signal_bw   = get_group_bw(i)*_sampling_rate;            // bandwidth estimate (normalized)
 //            float start_time  = num_transforms*timestep - duration; // approximate starting time
-            printf("signal detected! time=%s, duration=%-10.6f, freq=%9.6f, bw=%9.6f, strength=%9.6f\n",
+            printf("signal detected! time=%s, duration=%-10.6f, freq=%9.6f, bw=%9.6f, strength=%-10.6f\n",
                     timestamp, duration, signal_freq, signal_bw,max_signal);
 
             // reset counters for group
