@@ -108,9 +108,6 @@
 				Detection - Threshold (default 10):<br>
 				<input type="text" name="threshold" value="<?php echo isset($config['logger']['threshold'][$config['logger']['device']]) ? $config['logger']['threshold'][$config['logger']['device']] : 10 ?>"><br>
 				<br>
-				Detection - Sampling_Rate in Hz (default: 250000):<br>
-				<input type="text" name="sampling_rate" value="<?php echo isset($config['logger']['sampling_rate'][$config['logger']['device']]) ? $config['logger']['sampling_rate'][$config['logger']['device']] : 250000 ?>"><br>
-				<br>
 				Detection - Number of bins in FFT (default: 400):<br>
 				<input type="text" name="nfft" value="<?php echo isset($config['logger']['nfft'][$config['logger']['device']]) ? $config['logger']['nfft'][$config['logger']['device']] : 400 ?>"><br>
 				<br>
