@@ -1,4 +1,3 @@
-
 <div id="output_php" class="w3-modal">
 	<div class="w3-modal-content" style="width: 90%">
 		<div class="w3-container w3-blue">
@@ -272,6 +271,7 @@
 </div>
 
 <script>
+// Script to close the window upon click outside the box - special request of Philipp - otherwise he quits
 // Get the modal
 var modal = document.getElementById('output_php');
 

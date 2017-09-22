@@ -116,8 +116,8 @@
 				<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
 				Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a><br><br>
 				
-			<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start" />
-			<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop" />
+			<input type="submit" class="w3-btn w3-brown" value="Start Receiver <?php echo $config['logger']['device']+1;?>" name="log_start" />
+			<input type="submit" class="w3-btn w3-brown" value="Stop Receiver <?php echo $config['logger']['device']+1;?>" name="log_stop" />
 		</form>
 		<br>
 	</div>
