@@ -19,7 +19,7 @@
 	
 	//define config section and items.
 	define ('confSection', 'logger');
-	define ('confKeys', array('device','log_gain','center_freq','freq_range','log_level','pre_log_name','raw_log_log_gain','raw_center_freq','raw_freq_range','raw_pre_log_name','time_center_freq','time_freq_range','time_log_level','time_start_timer','time_start_min','time_start_hour','time_stop_timer','time_stop_min','time_stop_hour','time_pre_log_name', 'threshold', 'sampling_rate','nfft','timestep_factor'));
+	define ('confKeys', array('device','log_gain','center_freq','freq_range','pre_log_name','raw_log_log_gain','raw_center_freq','raw_freq_range','raw_pre_log_name','time_center_freq','time_freq_range','time_log_level','time_start_timer','time_start_min','time_start_hour','time_stop_timer','time_stop_min','time_stop_hour','time_pre_log_name', 'threshold' ,'nfft','timestep_factor'));
 	
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
@@ -86,7 +86,7 @@
 			<input type='submit' class='w3-btn w3-brown' value='Switch receiver' name='change_device_tab_logger'/>
 			<br><br>
 		</form>
-		<h3>Logger Analyzer settings - Receiver <?php echo $config['logger']['device'];?></h3><br>
+		<h3>Logger Analyzer settings - Receiver <?php echo $config['logger']['device']+1;?></h3><br>
 		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
 
 				Gain in DB:<br>
