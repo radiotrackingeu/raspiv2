@@ -1,5 +1,5 @@
 <script>
-var modal = document.getElementById('ouput_php');
+var modal = document.getElementById('output_php');
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
