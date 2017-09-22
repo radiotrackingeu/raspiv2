@@ -1,13 +1,4 @@
 <script>
-var modal = document.getElementById('output_php');
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
 function openCity(cityName) {
     var i;
     var x = document.getElementsByClassName("city");
