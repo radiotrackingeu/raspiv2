@@ -101,10 +101,6 @@
 					<option value="1024000" <?php echo isset($config['logger']['freq_range'][$config['logger']['device']]) && $config['logger']['freq_range'][$config['logger']['device']] == "1024000" ? "selected" : "" ?>>1024kHz</option>
 				</select> 
 				<br>
-				Log Detection Level:<br>
-				<input type="text" name="log_level" value="<?php echo isset($config['logger']['log_level'][$config['logger']['device']]) ? $config['logger']['log_level'][$config['logger']['device']] : 1 ?>"><br>
-				0 means automatic - level up to 16384 - the tricky part is setting a good log level compared to the gain: try and error
-				<br><br>
 				Detection - Threshold (default 10):<br>
 				<input type="text" name="threshold" value="<?php echo isset($config['logger']['threshold'][$config['logger']['device']]) ? $config['logger']['threshold'][$config['logger']['device']] : 10 ?>"><br>
 				<br>
