@@ -243,6 +243,10 @@
 		start_docker($cmd, 'tab_logger');
 	}
 	
+	//Check wether Receivers are running update_device_info
+	if (isset($_POST["update_device_info"])){
+		echo "<script type='text/javascript'>document.getElementById('device_info').style.display = 'block';</script>";
+	}
 	
 	//General Functions
 	function start_docker($docker_cmd,$block_to_jump){
