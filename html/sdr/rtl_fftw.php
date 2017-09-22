@@ -80,8 +80,8 @@
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
 			<br>
 			<select name="device">
-				<option value=1 <?php echo isset($config['logger']['device']) && $config['logger']['device'] == "1" ? "selected" : "" ?>>Receiver 1</option>
-				<option value=2 <?php echo isset($config['logger']['device']) && $config['logger']['device'] == "2" ? "selected" : "" ?>>Receiver 2</option>
+				<option value=0 <?php echo isset($config['logger']['device']) && $config['logger']['device'] == "1" ? "selected" : "" ?>>Receiver 1</option>
+				<option value=1 <?php echo isset($config['logger']['device']) && $config['logger']['device'] == "2" ? "selected" : "" ?>>Receiver 2</option>
 			</select> 
 			<input type='submit' class='w3-btn w3-brown' value='Switch receiver' name='change_device_tab_logger'/>
 			<br><br>

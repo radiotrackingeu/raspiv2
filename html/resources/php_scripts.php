@@ -82,7 +82,7 @@
 	//Logger Functions
 	 if (isset($_POST["log_start"])){
 		$file_name = "/tmp/record/" . $_POST['pre_log_name'] . $_POST['log_name'];
-		$logger_num = $config['logger']['device'] - 1;
+		$logger_num = $config['logger']['device'];
 		$cmd = "sudo docker run --rm --name=logger-sdr-d".$logger_num." -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ liquidsdr bash -c 'rtl_sdr -d ".$logger_num." -f ".$_POST['center_freq']." -s ".$_POST['freq_range']." -g ".$_POST['log_gain']." - 2> ".$file_name." | /tmp/liquidsdr/rtlsdr_signal_detect -p -t ".$_POST['threshold']." -s ".$_POST['sampling_rate']." -n ".$_POST['nfft']." -f ".$_POST['timestep_factor']." >> ". $file_name ." 2>&1'";
 		start_docker_quite($cmd,'tab_logger');
 		 
