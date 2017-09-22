@@ -24,13 +24,15 @@
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
 ?>
 
-<!---------------- Single Frequency -------------------------->
+<!---------------- Tab Menu -------------------------->
 <div class="w3-bar w3-brown">
 	<button class="w3-bar-item w3-button" onclick="openCity('single_freq')">Single Frequency</button>
 	<button class="w3-bar-item w3-button" onclick="openCity('multiple_freq')">Multiple Frequencies</button>
 	<button class="w3-bar-item w3-button" onclick="openCity('freq_settings')">Frequencies Settings</button>
 	<button class="w3-bar-item w3-button" onclick="openCity('single_freq_rec')">Single Frequency Recorder</button>
 </div>
+
+<!---------------- Single Frequency -------------------------->
 <div id="single_freq" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">

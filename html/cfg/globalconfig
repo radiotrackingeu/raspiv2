@@ -86,6 +86,13 @@ time_nfft[2] = 400
 time_timestep_factor[1] = 8
 time_timestep_factor[2] = 8
 
-
 [remote]
 time_start_vpn = "reboot"
+
+[WebRX]
+device = 0
+fft_size = 512
+fft_fps = 27
+samp_rate = 250000
+center_freq = 150100000
+rf_gain = 20
