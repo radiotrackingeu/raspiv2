@@ -135,7 +135,7 @@
 			<br><br>
 		</form>
 -->
-		<h3>Logger settings - Receiver <?php echo $config['logger']['device'];?></h3><br>
+		<h3>Logger settings - Receiver <?php echo $config['logger']['device']+1;?></h3><br>
 
 		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			Gain in DB:<br>
@@ -232,8 +232,12 @@
 <div id="device_info" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
+		<form method="post" enctype="multipart/form-data">
+			<input type='submit' class='w3-btn w3-brown' value='Update' name='update_device_info'/>
+			<br><br>
+		</form>
 		<?php 
-		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
+		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d0)")){
 			echo "<span class='w3-tag w3-red w3-xlarge'>Radio 1 running</span> \n \n";
 		}
 		else{
@@ -242,7 +246,7 @@
 		?>
 		<br><br>
 		<?php 
-		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d2)")){
+		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
 			echo "<span class='w3-tag w3-red w3-xlarge'>Radio 2 running</span> \n \n";
 		}
 		else{
