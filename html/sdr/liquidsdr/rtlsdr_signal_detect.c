@@ -14,14 +14,16 @@
 #include <getopt.h>
 #include <time.h>
 
-int nfft;
-float *psd_template;
-float *psd;
-float *psd_max;
-int   *detect;
-int   *count;
-int   *groups;
-int   timestep;
+#define nfft (400)
+
+//int nfft = 400;
+float psd_template[nfft];
+float psd         [nfft];
+float psd_max     [nfft];
+int   detect      [nfft];
+int   count       [nfft];
+int   groups      [nfft];
+int   timestep    =nfft/8; // time between transforms [samples]
 unsigned long int num_transforms = 0;
 int tmp_transforms = 0;
 
@@ -30,13 +32,12 @@ int tmp_transforms = 0;
 void usage()
 {
     printf("%s [options]\n", __FILE__);
-    printf("  -h         : print help\n");
-    printf("  -i <file>  : input data filename\n");
-    printf("  -t <thsh>  : detection threshold above psd, default: 10 dB\n");
-    printf("  -p         : use STDIN as input\n");
-    printf("  -s <rate>  : sampling rate in Hz, default: 250000Hz\n");
-    printf("  -f <frac>  : set timestep as fraction of nfft, ie timestep = nfft/<frac>. default: 400/[1mbold8[0m=50\n");
-	printf("  -n         : number of bins used for fft, default: 400\n");
+    printf("  -h        : print help\n");
+    printf("  -i <file> : input data filename\n");
+    printf("  -t <thsh> : detection threshold above psd, default: 10 dB\n");
+    printf("  -s        : use STDIN as input\n");
+    printf("  -r        : sampling rate in Hz, default 250000Hz\n");
+	//printf("  -n        : number of bins used for fftw\n");
 }
 
 // read samples from file and store into buffer
@@ -56,7 +57,6 @@ float get_group_max_sig (int _group_id);
 int   clear_group_count	(int _group_id);
 int   step(float _threshold, unsigned int _sampling_rate);
 void  get_timestamp(char * _buf, unsigned long _buf_len);
-void  free_memory();
 
 // main program
 int main(int argc, char*argv[])
@@ -65,32 +65,28 @@ int main(int argc, char*argv[])
     float           threshold           = 10.0f; //-60.0f;
     char            read_from_stdin     = 0;
     unsigned long   sampling_rate       = 250000;
-    int             nfft                = 400;
-    int             timestep_factor     = 8;
 
     // read command-line options
     int dopt;
-    while ((dopt = getopt(argc,argv,"hi:t:s:pn:f:")) != EOF) {
+    while ((dopt = getopt(argc,argv,"hi:t:sr:")) != EOF) {
         switch (dopt) {
         case 'h': usage();                              return 0;
         case 'i': strncpy(filename_input,optarg,256);   break;
         case 't': threshold = atof(optarg);             break;
-        case 's': sampling_rate = atoi(optarg);         break;
-        case 'p': read_from_stdin = 1;                  break;
-		case 'n': nfft = atoi(optarg);         			break;
-        case 'f': timestep_factor = atoi(optarg);       break;
+        case 's': read_from_stdin = 1;                  break;
+        case 'r': sampling_rate = atoi(optarg);         break;
+		//case 'n': nfft = atoi(optarg);         			break;
         default:  exit(1);
         }
     }
-    timestep = nfft/timestep_factor;
-    fprintf(stderr,"Setting nfft=%d and timestep=%d\n",nfft,timestep);
 
-    psd_template = (float*) calloc(nfft, sizeof(float));
-    psd          = (float*) calloc(nfft, sizeof(float));
-	psd_max      = (float*) calloc(nfft, sizeof(float));
-    detect       = (int*)   calloc(nfft, sizeof(int  ));
-    count        = (int*)   calloc(nfft, sizeof(int  ));
-    groups       = (int*)   calloc(nfft, sizeof(int  ));
+    // reset counters, etc.
+    memset(psd_template, 0x0, nfft*sizeof(float));
+    memset(psd,          0x0, nfft*sizeof(float));
+	memset(psd_max,      0x0, nfft*sizeof(float));
+    memset(detect,       0x0, nfft*sizeof(int  ));
+    memset(count,        0x0, nfft*sizeof(int  ));
+    memset(groups,       0x0, nfft*sizeof(int  ));
 
     // create spectrogram
     spgramcf periodogram = spgramcf_create(nfft, LIQUID_WINDOW_HAMMING, nfft/2, timestep);
@@ -105,7 +101,7 @@ int main(int argc, char*argv[])
     // open input file
     FILE * fid;
     if (read_from_stdin){
-        fprintf(stderr,"Reading from stdin.\n");
+        fprintf(stderr,"reading from stdin.\n");
         fid = stdin;
     } else {
         fid = fopen(filename_input,"r");
@@ -130,7 +126,7 @@ int main(int argc, char*argv[])
 
         // accumulate spectrum
         spgramcf_write(periodogram, buf, buf_len);
-
+		
 		//get number of transforms per cycle tmp_transforms
 		tmp_transforms = spgramcf_get_num_transforms(periodogram);
 
@@ -169,7 +165,6 @@ int main(int argc, char*argv[])
     printf("total samples in : %lu\n", total_samples);
     printf("total transforms : %lu\n", num_transforms);
 
-    free_memory();
     return 0;
 }
 
@@ -206,7 +201,6 @@ int update_detect(float _threshold)
 		if((psd[i] - psd_template[i]) > _threshold){
 			detect[i]=1; //write matrix for detection
 			psd_max[i] = (psd_max[i]>psd[i]) ? psd_max[i] : psd[i]; //save highes values
-			printf("test");
 		}
 		else{
 			detect[i]=0;
@@ -357,7 +351,6 @@ int step(float _threshold, unsigned int _sampling_rate)
 //            float start_time  = num_transforms*timestep - duration; // approximate starting time
             printf("signal detected! time=%s, duration=%-10.6f, freq=%9.6f, bw=%9.6f, strength=%f\n",
                     timestamp, duration, signal_freq, signal_bw,max_signal);
-			fflush(stdout);
 
             // reset counters for group
             clear_group_count(i);
@@ -375,15 +368,4 @@ void get_timestamp(char * _buf, unsigned long _buf_len)
     strftime(_buf, _buf_len, "%F %T",gmtime(&tm));
     sprintf(buffer, ".%-9ld", time.tv_nsec);
     strncat(_buf, buffer, 10);
-}
-
-//release allocate memory space
-void free_memory()
-{
-    free(psd_template);
-    free(psd);
-    free(psd_max);
-    free(detect);
-    free(count);
-    free(groups);
 }
