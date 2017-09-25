@@ -206,6 +206,7 @@ int update_detect(float _threshold)
 		if((psd[i] - psd_template[i]) > _threshold){
 			detect[i]=1; //write matrix for detection
 			psd_max[i] = (psd_max[i]>psd[i]) ? psd_max[i] : psd[i]; //save highes values
+			printf("test");
 		}
 		else{
 			detect[i]=0;
@@ -345,7 +346,6 @@ int step(float _threshold, unsigned int _sampling_rate)
     char timestamp[30];
     // determine if signal has stopped based on group and detection
     int i;
-	printf("test");
     for (i=1; i<=num_groups; i++) {
         if (signal_complete(i)) {
             // signal started & stopped
