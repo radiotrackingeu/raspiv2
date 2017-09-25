@@ -33,6 +33,19 @@
 <!-- Enter text here-->
 
 <div id="webrx_tab" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		<br><br>
+		<form method="POST" enctype="multipart/form-data">
+			<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr">
+			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop">
+			<br><br>
+			<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1)?>"> Link to OpenWebRX </a>
+			<br><br>
+		</form>
+	</div>
+</div>
+
+<div id="settings_webrx_tab" class="w3-container city" style="display:none">
 	<div id="UMTS" class="w3-container">
 		<div class="w3-panel w3-green w3-round">
 		<br><br>
@@ -66,103 +79,18 @@
 	</div>
 </div>
 </div>
-
-<br><br>
-
-
-	<?php
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
-	if (isset($_POST["rtl_websdr"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($_SERVER['SERVER_PORT']+1).":8073 webrx sh /cfiles/start_openwebrx.sh";
-		$result = unliveExecuteCommand($cmd);
-	}
-	if (isset($_POST["rtl_websdr_stop"])){
-		echo '<pre>';
-		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=webrx) 2>&1";
-		$result = liveExecuteCommand($cmd);
-		#echo $result;
-		echo '</pre>';
-	}
-	if (isset($_POST["change_config_websdr"])){
-		echo '<pre>';
-		$cmd = "sh /var/www/html/sdr/change_config_webrx.sh ".$_POST["fft_fps"]." ".$_POST["fft_size"]." ".$_POST["samp_rate"]." ".$_POST["center_freq"]." ".$_POST["rf_gain"]." 2>&1";
-		$result = liveExecuteCommand($cmd);
-		echo $result;
-		echo '</pre>';
-	}
-	?>
 	
-<br><br>
-
-<br><br>
-</div>
 
 <!-- Enter text here-->
 
-
-<script>
-function openCity(cityName) {
-    var i;
-    var x = document.getElementsByClassName("city");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(cityName).style.display = "block";  
-}
-function w3_switch(name) {
-	var x = document.getElementById(name);
-    if (x.style.display == "none") {
-        x.style.display = "block";
-    } else { 
-        x.style.display = "none";
-    }
-}
-</script>
-
+<?php
+	//load footer
+	require_once RESOURCES_PATH.'/footer.php';
+	//load javascripts
+	require_once RESOURCES_PATH.'/javascript.php';
+	//load php_scripts
+	require_once RESOURCES_PATH.'/php_scripts.php';
+ ?>
 
 </body>
-
 </html>
-
-<?php 
-
-function liveExecuteCommand($cmd)
-{
-
-    while (@ ob_end_flush()); // end all output buffers if any
-
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-
-    $live_output     = "";
-    $complete_output = "";
-
-    while (!feof($proc))
-    {
-        $live_output     = fread($proc, 4096);
-        $complete_output = $complete_output . $live_output;
-        echo "$live_output";
-        @ flush();
-    }
-
-    pclose($proc);
-
-    // get exit status
-    preg_match('/[0-9]+$/', $complete_output, $matches);
-
-    // return exit status and intended output
-    return array (
-                    'exit_status'  => intval($matches[0]),
-                    'output'       => str_replace("Exit status : " . $matches[0], '', $complete_output)
-                 );
-}
-function unliveExecuteCommand($cmd)
-{
-    while (@ ob_end_flush()); // end all output buffers if any
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-    pclose($proc);
-}
-
-
-
-?>

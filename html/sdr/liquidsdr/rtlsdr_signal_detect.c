@@ -65,7 +65,7 @@ int main(int argc, char*argv[])
     float           threshold           = 10.0f; //-60.0f;
     char            read_from_stdin     = 0;
     unsigned long   sampling_rate       = 250000;
-                    nfft                = 400;
+    int             nfft                = 400;
     int             timestep_factor     = 8;
 
     // read command-line options
