@@ -110,6 +110,9 @@ int main(int argc, char*argv[])
         	exit(-1);
 	}
     }
+	//print row names
+	printf("time;duration;freq;bw;strength;\n",
+                    timestamp, duration, signal_freq, signal_bw,max_signal);
 
     // continue processing as long as there are samples in the file
     unsigned long int total_samples  = 0;
@@ -349,7 +352,7 @@ int step(float _threshold, unsigned int _sampling_rate)
             float signal_bw   = get_group_bw(i)*_sampling_rate;            // bandwidth estimate (normalized)
 			float max_signal  = get_group_max_sig(i);						// maximum signal strength per group
 //            float start_time  = num_transforms*timestep - duration; // approximate starting time
-            printf("signal detected! time=%s, duration=%-10.6f, freq=%9.6f, bw=%9.6f, strength=%f\n",
+            printf("%s;%-10.6f;%9.6f;%9.6f;%f;\n",
                     timestamp, duration, signal_freq, signal_bw,max_signal);
 			fflush(stdout);
 
