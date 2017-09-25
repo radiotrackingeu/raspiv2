@@ -111,8 +111,7 @@ int main(int argc, char*argv[])
 	}
     }
 	//print row names
-	printf("time;duration;freq;bw;strength;\n",
-                    timestamp, duration, signal_freq, signal_bw,max_signal);
+	printf("time;duration;freq;bw;strength;\n");
 
     // continue processing as long as there are samples in the file
     unsigned long int total_samples  = 0;
