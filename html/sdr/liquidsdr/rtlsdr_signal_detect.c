@@ -13,6 +13,7 @@
 #include <liquid/liquid.h>
 #include <getopt.h>
 #include <time.h>
+#include <limits.h>
 
 #define nfft (400)
 
@@ -58,7 +59,8 @@ float get_group_time   	(int _group_id);
 float get_group_max_sig (int _group_id);
 int   clear_group_count	(int _group_id);
 int   step(float _threshold, unsigned int _sampling_rate);
-void  get_timestamp(char * _buf, unsigned long _buf_len);
+void  get_timestamp(const struct timespec time, char * _buf, unsigned long _buf_len);
+char  before(const struct timespec a, const struct timespec b);
 
 // main program
 int main(int argc, char*argv[])
@@ -347,7 +349,7 @@ int clear_group_count(int _group_id)
         {
             count[i] = 0;
 			psd_max[i] = -1000;
-			psd_time[i] = {INT_MAX, 999999999}; //will break on 2038-01-19T03:14:08Z
+			psd_time[i] = (struct timespec) {INT_MAX, 999999999}; //will break on 2038-01-19T03:14:08Z
         }
     }
     return 0;
