@@ -16,6 +16,7 @@
 #include <limits.h>
 
 #define nfft (400)
+#define KEEPALIVE (300) // keepalive interval in seconds
 
 //int nfft = 400;
 float psd_template[nfft];
@@ -29,6 +30,7 @@ int   timestep    =nfft/8; // time between transforms [samples]
 unsigned long int num_transforms = 0;
 int tmp_transforms = 0;
 struct timespec now;
+unsigned int keepalive;
 
 
 // print usage/help message
@@ -40,7 +42,7 @@ void usage()
     printf("  -t <thsh> : detection threshold above psd, default: 10 dB\n");
     printf("  -s        : use STDIN as input\n");
     printf("  -r        : sampling rate in Hz, default 250000Hz\n");
-	//printf("  -n        : number of bins used for fftw\n");
+	//printf("  -n        : number of bins used for fft\n");
 }
 
 // read samples from file and store into buffer
@@ -94,7 +96,9 @@ int main(int argc, char*argv[])
     memset(count,        0x0, nfft*sizeof(int  ));
     memset(groups,       0x0, nfft*sizeof(int  ));
     init_time();
-    
+	keepalive = KEEPALIVE * sampling_rate / timestep;
+	keepalive += keepalive%16;
+
 
     // create spectrogram
     spgramcf periodogram = spgramcf_create(nfft, LIQUID_WINDOW_HAMMING, nfft/2, timestep);
@@ -118,8 +122,13 @@ int main(int argc, char*argv[])
         	exit(-1);
 	}
     }
+	clock_gettime(CLOCK_REALTIME,&now);
+	char tbuf[30];
+	format_timestamp(now,tbuf,30);
+	printf("Will print timestamp every %d seconds / %u transforms\n", KEEPALIVE, keepalive);
+	printf("%s\n",tbuf);
 	//print row names
-	printf("time;duration;freq;bw;strength;\n");
+	printf("time;duration;freq;bw;strength\n");
 
     // continue processing as long as there are samples in the file
     unsigned long int total_samples  = 0;
@@ -158,6 +167,14 @@ int main(int argc, char*argv[])
             // update counters and reset spectrogram object
             num_transforms += spgramcf_get_num_transforms(periodogram);
             spgramcf_reset(periodogram);
+            if (num_transforms%keepalive == 0) {
+                clock_gettime(CLOCK_REALTIME,&now);
+                char tbuf[30];
+                format_timestamp(now,tbuf,30);
+                printf("%s;;;;\n",tbuf);
+				fflush(stdout);
+            }
+
         }
 
         // update total sample count
@@ -414,6 +431,6 @@ void init_time() {
         psd_time[i].tv_sec = INT_MAX;
 		psd_time[i].tv_nsec = 999999999;
 	}
-} 
+}
 
 
