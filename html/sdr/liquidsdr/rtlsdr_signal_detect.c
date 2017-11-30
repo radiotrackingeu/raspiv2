@@ -59,8 +59,10 @@ float get_group_time   	(int _group_id);
 float get_group_max_sig (int _group_id);
 int   clear_group_count	(int _group_id);
 int   step(float _threshold, unsigned int _sampling_rate);
-void  get_timestamp(const struct timespec time, char * _buf, unsigned long _buf_len);
-char  before(const struct timespec a, const struct timespec b);
+void  format_timestamp(const struct timespec _time, char * _buf, const unsigned long _buf_len);
+char  before(const struct timespec _a, const struct timespec _b);
+void  init_time();
+
 
 // main program
 int main(int argc, char*argv[])
@@ -91,6 +93,8 @@ int main(int argc, char*argv[])
     memset(detect,       0x0, nfft*sizeof(int  ));
     memset(count,        0x0, nfft*sizeof(int  ));
     memset(groups,       0x0, nfft*sizeof(int  ));
+    init_time();
+    
 
     // create spectrogram
     spgramcf periodogram = spgramcf_create(nfft, LIQUID_WINDOW_HAMMING, nfft/2, timestep);
@@ -206,7 +210,7 @@ int update_detect(float _threshold)
         // detect[i] = ((psd[i] - psd_template[i]) > _threshold) ? 1 : 0;
 		if((psd[i] - psd_template[i]) > _threshold){
             clock_gettime(CLOCK_REALTIME,&now);
-            if (psd_time[i].tv_sec==0) psd_time[i]=now;
+            if (psd_time[i].tv_sec==INT_MAX) psd_time[i]=now;
 			detect[i]=1; //write matrix for detection
 			psd_max[i] = (psd_max[i]>psd[i]) ? psd_max[i] : psd[i]; //save highest values
 		}
@@ -335,7 +339,7 @@ struct timespec get_group_start_time(int _group_id)
     for (i=0; i<nfft; i++) {
         if (groups[i] == _group_id && before(psd_time[i],starttime)) {
             starttime=psd_time[i];
-        }
+		}
     }
     return starttime;
 };
@@ -367,7 +371,7 @@ int step(float _threshold, unsigned int _sampling_rate)
     for (i=1; i<=num_groups; i++) {
         if (signal_complete(i)) {
             // signal started & stopped
-            get_timestamp(get_group_start_time(i), timestamp, 30);
+            format_timestamp(get_group_start_time(i), timestamp, 30);
             float duration    = tmp_transforms*get_group_time(i)*timestep/_sampling_rate; // duration [samples]
 			float signal_freq = get_group_freq(i)*_sampling_rate;          // center frequency estimate (normalized)
             float signal_bw   = get_group_bw(i)*_sampling_rate;            // bandwidth estimate (normalized)
@@ -384,19 +388,32 @@ int step(float _threshold, unsigned int _sampling_rate)
     return 0;
 }
 
-void get_timestamp(struct timespec time, char * _buf, unsigned long _buf_len)
+// pretty-prints _time into _buf
+void format_timestamp(const struct timespec _time, char * _buf, const unsigned long _buf_len)
 {
     char buffer[11];
-    const time_t tm = (time_t) time.tv_sec;
+    const time_t tm = (time_t) _time.tv_sec;
     strftime(_buf, _buf_len, "%F %T",gmtime(&tm));
-    sprintf(buffer, ".%-9ld", time.tv_nsec);
+    sprintf(buffer, ".%-9ld", _time.tv_nsec);
     strncat(_buf, buffer, 10);
 }
 
-char before(const struct timespec a, const struct timespec b)
+// returns true iff a is smaller than b
+char before(const struct timespec _a, const struct timespec _b)
 {
-    if (a.tv_sec==b.tv_sec)
-        return a.tv_nsec < b.tv_nsec;
+    if (_a.tv_sec==_b.tv_sec)
+        return _a.tv_nsec < _b.tv_nsec;
     else
-        return a.tv_sec < b.tv_sec;
+        return _a.tv_sec < _b.tv_sec;
 }
+
+// initialize psd_time
+void init_time() {
+    int i;
+    for (i=0; i<nfft; i++) {
+        psd_time[i].tv_sec = INT_MAX;
+		psd_time[i].tv_nsec = 999999999;
+	}
+} 
+
+
