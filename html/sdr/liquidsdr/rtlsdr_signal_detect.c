@@ -37,6 +37,7 @@ unsigned long int num_transforms = 0;
 int tmp_transforms = 0;
 struct timespec now;
 unsigned int keepalive;
+MYSQL * con;
 
 
 // print usage/help message
@@ -117,7 +118,7 @@ int main(int argc, char*argv[])
     iirfilt_crcf dcblock = iirfilt_crcf_create_dc_blocker(1e-3f);
 
     // open SQL database
-    MYSQL * con =mysql_init(NULL);
+    con =mysql_init(NULL);
     if (con==NULL) {
         fprintf(stderr, "ERROR: %s\n", mysql_error(con));
         exit(1);
@@ -422,7 +423,7 @@ int step(float _threshold, unsigned int _sampling_rate)
             printf("%s;%-10.6f;%9.6f;%9.6f;%f;\n",
                     timestamp, duration, signal_freq, signal_bw,max_signal);
 			fflush(stdout);
-			snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s VALUES(\"%s\",%-10.6f,%9.6f,%9.6f,%f)", timestamp, duration, signal_freq, signal_bw, max_signal);
+			snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s VALUES(\"%s\",%-10.6f,%9.6f,%9.6f,%f)", DB_TABLE, timestamp, duration, signal_freq, signal_bw, max_signal);
 			mysql_query(con, sql_statement);
 
             // reset counters for group
