@@ -119,8 +119,8 @@ int main(int argc, char*argv[])
     // open SQL database
     MYSQL * con =mysql_init(NULL);
     if (con==NULL) {
-        fprintf(stderr, "ERROR: %s\n", mysql_error(con))
-        exit(1)
+        fprintf(stderr, "ERROR: %s\n", mysql_error(con));
+        exit(1);
     }
 
     if (mysql_real_connect(con, DB_HOST, DB_USER, DB_PASS,
@@ -407,7 +407,7 @@ int step(float _threshold, unsigned int _sampling_rate)
     update_count ();
     int num_groups = update_groups();
     char timestamp[30];
-    char sql_statement[256]
+    char sql_statement[256];
     // determine if signal has stopped based on group and detection
     int i;
     for (i=1; i<=num_groups; i++) {
@@ -422,7 +422,7 @@ int step(float _threshold, unsigned int _sampling_rate)
             printf("%s;%-10.6f;%9.6f;%9.6f;%f;\n",
                     timestamp, duration, signal_freq, signal_bw,max_signal);
 			fflush(stdout);
-			snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s VALUES(\"%s\",%-10.6f,%9.6f,%9.6f,%f)");
+			snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s VALUES(\"%s\",%-10.6f,%9.6f,%9.6f,%f)", timestamp, duration, signal_freq, signal_bw, max_signal);
 			mysql_query(con, sql_statement);
 
             // reset counters for group
