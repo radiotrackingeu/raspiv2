@@ -14,9 +14,15 @@
 #include <getopt.h>
 #include <time.h>
 #include <limits.h>
+#include <mysql.h>
 
 #define nfft (400)
 #define KEEPALIVE (300) // keepalive interval in seconds
+#define DB_HOST "localhost"
+#define DB_USER "root"
+#define DB_PASS "rteuv2!"
+#define DB_BASE "tolletestdatenbank"
+#define DB_TABLE "tolltesttabelle"
 
 //int nfft = 400;
 float psd_template[nfft];
@@ -110,6 +116,22 @@ int main(int argc, char*argv[])
     // DC-blocking filter 1e-3f
     iirfilt_crcf dcblock = iirfilt_crcf_create_dc_blocker(1e-3f);
 
+    // open SQL database
+    MYSQL * con =mysql_init(NULL);
+    if (con==NULL) {
+        fprintf(stderr, "ERROR: %s\n", mysql_error(con))
+        exit(1)
+    }
+
+    if (mysql_real_connect(con, DB_HOST, DB_USER, DB_PASS,
+          DB_BASE, 0, NULL, 0) == NULL)
+  {
+      fprintf(stderr, "%s\n", mysql_error(con));
+      mysql_close(con);
+      exit(1);
+  }
+
+
     // open input file
     FILE * fid;
     if (read_from_stdin){
@@ -184,6 +206,8 @@ int main(int argc, char*argv[])
 
     // close input files
     fclose(fid);
+    mysql_close(con);
+
 
     // write accumulated PSD
     spgramcf_destroy(periodogram);
@@ -383,6 +407,7 @@ int step(float _threshold, unsigned int _sampling_rate)
     update_count ();
     int num_groups = update_groups();
     char timestamp[30];
+    char sql_statement[256]
     // determine if signal has stopped based on group and detection
     int i;
     for (i=1; i<=num_groups; i++) {
@@ -397,6 +422,8 @@ int step(float _threshold, unsigned int _sampling_rate)
             printf("%s;%-10.6f;%9.6f;%9.6f;%f;\n",
                     timestamp, duration, signal_freq, signal_bw,max_signal);
 			fflush(stdout);
+			snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s VALUES(\"%s\",%-10.6f,%9.6f,%9.6f,%f)");
+			mysql_query(con, sql_statement);
 
             // reset counters for group
             clear_group_count(i);
@@ -404,6 +431,7 @@ int step(float _threshold, unsigned int _sampling_rate)
     }
     return 0;
 }
+
 
 // pretty-prints _time into _buf
 void format_timestamp(const struct timespec _time, char * _buf, const unsigned long _buf_len)

@@ -29,12 +29,13 @@
 <div class="w3-bar w3-brown w3-mobile">
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger')">Logger</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_timer')">Logger Timer</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_spectrum')">Spectrum</button>
+	<!--<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_spectrum')">Spectrum</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data')">Raw Data Recorder</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data_ana')">Raw Data Analyzer</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data_ana')">Raw Data Analyzer</button> -->
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('device_info')">Device Information</button>
 </div>
 
+<!--------------------------------- Spectrum -------------------------------------
 <div id="tab_spectrum" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
@@ -74,6 +75,8 @@
 		<br>
 	</div>
 </div>
+-->
+<!-------------------------------- Logger -------------------------------------------------------------------->
 
 <div id="tab_logger" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
@@ -122,6 +125,8 @@
 		<br>
 	</div>
 </div>
+
+<!-------------------------------- Logger Timer -------------------------------------------------------------------->
 
 <div id="tab_logger_timer" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
@@ -179,6 +184,7 @@
 	</div>
 </div>
 
+<!--
 <div id="tab_raw_data" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
@@ -205,7 +211,8 @@
 		<br>
 	</div>
 </div>
-
+-->
+<!--
 <div id="tab_raw_data_ana" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
@@ -228,7 +235,7 @@
 		<br>
 	</div>
 </div>
-
+-->
 <div id="device_info" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>

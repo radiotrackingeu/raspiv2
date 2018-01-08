@@ -85,6 +85,9 @@
 		
 		<hr>
 		<input type="submit" class="w3-btn" value="LiquidSDR" name="install_liquidsdr"/> <br> <br>
+				
+		<hr>
+		<input type="submit" class="w3-btn" value="LiquidSDR" name="install_liquidsdr_sql"/> <br> <br>
 		
 		<hr>
 		<input type="submit" class="w3-btn" value="MySQL" name="install_mysql"/> <br> <br>
