@@ -3,7 +3,7 @@ FROM rtlsdr
 MAINTAINER ralf.zeidler@radio-tracking.eu
 
 RUN apt-get update && \
-    apt-get install -y autotools-dev autoconf automake 
+    apt-get install -y autotools-dev autoconf automake libmysqlclient-dev
 
 RUN mkdir liquidsdr && \
 	cd liquidsdr && \
