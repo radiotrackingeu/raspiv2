@@ -25,10 +25,10 @@
 			<i class="fa fa-podcast"></i> Radio <i class="fa fa-caret-down"></i>
 		</button>
 		<div id="radio" class="w3-dropdown-content w3-card-4">
+			<a href="/sdr/rtl_fftw.php">Logger</a>
+			<a href="/sdr/websdr.php">Spectrogram</a>
 			<a href="/sdr/rtl_fm.php">WebRadio</a>
-			<a href="/sdr/rtl_fftw.php">Recorder</a>
 			<a href="/sdr/rtl_tcp.php">SDR#-Server</a>
-			<a href="/sdr/websdr.php">WebRX</a>
 		</div>
 	</div>
 

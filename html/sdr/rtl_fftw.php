@@ -235,7 +235,7 @@
 		<br>
 	</div>
 </div>
--->
+
 <div id="device_info" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>

@@ -32,16 +32,30 @@
 
 <!-- Enter text here-->
 
-<div id="webrx_tab" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<br><br>
-		<form method="POST" enctype="multipart/form-data">
-			<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr">
-			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop">
-			<br><br>
-			<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1)?>"> Link to OpenWebRX </a>
-			<br><br>
-		</form>
+<div id="webrx_tab" class="w3-container city w3-row-padding w3-mobile" style="display:none">
+	<div class="w3-half">
+		<div class="w3-panel w3-green w3-round">
+			<br><h2>Receiver 1</h2><br>
+			<form method="POST" enctype="multipart/form-data">
+				<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr">
+				<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop">
+				<br><br>
+				<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1)?>"> Link to OpenWebRX </a>
+				<br><br>
+			</form>
+		</div>
+	</div>
+	<div class="w3-half">
+		<div class="w3-panel w3-green w3-round">
+			<br><h2>Receiver 2</h2><br>
+			<form method="POST" enctype="multipart/form-data">
+				<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr_d2">
+				<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop_d2">
+				<br><br>
+				<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1)?>"> Link to OpenWebRX </a>
+				<br><br>
+			</form>
+		</div>
 	</div>
 </div>
 

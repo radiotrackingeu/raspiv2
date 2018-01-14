@@ -262,6 +262,18 @@
 		$cmd = "sh /var/www/html/sdr/change_config_webrx.sh ".$_POST["fft_fps"]." ".$_POST["fft_size"]." ".$_POST["samp_rate"]." ".$_POST["center_freq"]." ".$_POST["rf_gain"]." 2>&1";
 		start_docker($cmd,'settings_webrx_tab');
 	}
+	if (isset($_POST["rtl_websdr_d1"])){
+		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($_SERVER['SERVER_PORT']+2).":8073 webrx sh /cfiles/start_openwebrx_d1.sh";
+		start_docker_quite($cmd,'webrx_tab');
+	}
+	if (isset($_POST["rtl_websdr_stop_d1"])){
+		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=webrx) 2>&1";
+		start_docker($cmd,'webrx_tab');
+	}
+	if (isset($_POST["change_config_websdr_d1"])){
+		$cmd = "sh /var/www/html/sdr/change_config_webrx_d1.sh ".$_POST["fft_fps"]." ".$_POST["fft_size"]." ".$_POST["samp_rate"]." ".$_POST["center_freq"]." ".$_POST["rf_gain"]." 2>&1";
+		start_docker($cmd,'settings_webrx_tab');
+	}
 	
 	//General Functions
 	function start_docker($docker_cmd,$block_to_jump){
