@@ -49,8 +49,8 @@
 		<div class="w3-panel w3-green w3-round">
 			<br><h2>Receiver 2</h2><br>
 			<form method="POST" enctype="multipart/form-data">
-				<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr_d2">
-				<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop_d2">
+				<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr_d1">
+				<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop_d1">
 				<br><br>
 				<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1)?>"> Link to OpenWebRX </a>
 				<br><br>
@@ -59,38 +59,38 @@
 	</div>
 </div>
 
-<div id="settings_webrx_tab" class="w3-container city" style="display:none">
-	<div id="UMTS" class="w3-container">
-		<div class="w3-panel w3-green w3-round">
-		<br><br>
-		<form method="POST" enctype="multipart/form-data action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
-			FFTs per second: <br>
-			<input type="number" name="fft_fps" value="<?php echo isset($config['WebRX']['fft_fps']) ? $config['WebRX']['fft_fps'] : 27 ?>"><br> <br>
-			Number of bins in FFT: <br>
-			<select name="fft_size">
-				<option value="256" <?php echo isset($config['WebRX']['fft_size']) && $config['WebRX']['fft_size'] == "256" ? "selected" : "" ?>>256</option>
-				<option value="512" <?php echo isset($config['WebRX']['fft_size']) && $config['WebRX']['fft_size'] == "512" ? "selected" : "" ?>>512</option>
-				<option value="1024" <?php echo isset($config['WebRX']['fft_size']) && $config['WebRX']['fft_size'] == "1024" ? "selected" : "" ?>>1024</option>
-				<option value="2048" <?php echo isset($config['WebRX']['fft_size']) && $config['WebRX']['fft_size'] == "2048" ? "selected" : "" ?>>2048</option>
-				<option value="4096" <?php echo isset($config['WebRX']['fft_size']) && $config['WebRX']['fft_size'] == "4096" ? "selected" : "" ?>>4096</option>
-			</select> <br><br>
-			Sample rate / Frequency Range: <br>
-			<select name="samp_rate">
-				<option value="250000" <?php echo isset($config['WebRX']['samp_rate']) && $config['WebRX']['samp_rate'] == "250000" ? "selected" : "" ?>>250k</option>
-				<option value="1024000" <?php echo isset($config['WebRX']['samp_rate']) && $config['WebRX']['samp_rate'] == "1024000" ? "selected" : "" ?>>1024k</option>
-			</select><br><br>
-			Center Frequency in Hz: <br>
-			<input type="number" name="center_freq" value="<?php echo isset($config['WebRX']['center_freq']) ? $config['WebRX']['center_freq'] : 150100000 ?>"><br><br>
-			Gain: <br>
-			<input type="number" name="rf_gain" value="<?php echo isset($config['WebRX']['rf_gain']) ? $config['WebRX']['rf_gain'] : 20 ?>"><br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Change settings befor start" name="change_config_websdr">
-			<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr">
-			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop">
+<div id="settings_webrx_tab" class="w3-container city w3-row-padding w3-mobile" style="display:none">
+	<div class="w3-half">
+			<div class="w3-panel w3-green w3-round">
 			<br><br>
-			<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1)?>"> Link to OpenWebRX </a>
-			<br><br>
-		</form>
-	</div>
+			<form method="POST" enctype="multipart/form-data action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
+				FFTs per second: <br>
+				<input type="number" name="fft_fps" value="<?php echo isset($config['WebRX']['fft_fps']) ? $config['WebRX']['fft_fps'] : 27 ?>"><br> <br>
+				Number of bins in FFT: <br>
+				<select name="fft_size">
+					<option value="256" <?php echo isset($config['WebRX']['fft_size']) && $config['WebRX']['fft_size'] == "256" ? "selected" : "" ?>>256</option>
+					<option value="512" <?php echo isset($config['WebRX']['fft_size']) && $config['WebRX']['fft_size'] == "512" ? "selected" : "" ?>>512</option>
+					<option value="1024" <?php echo isset($config['WebRX']['fft_size']) && $config['WebRX']['fft_size'] == "1024" ? "selected" : "" ?>>1024</option>
+					<option value="2048" <?php echo isset($config['WebRX']['fft_size']) && $config['WebRX']['fft_size'] == "2048" ? "selected" : "" ?>>2048</option>
+					<option value="4096" <?php echo isset($config['WebRX']['fft_size']) && $config['WebRX']['fft_size'] == "4096" ? "selected" : "" ?>>4096</option>
+				</select> <br><br>
+				Sample rate / Frequency Range: <br>
+				<select name="samp_rate">
+					<option value="250000" <?php echo isset($config['WebRX']['samp_rate']) && $config['WebRX']['samp_rate'] == "250000" ? "selected" : "" ?>>250k</option>
+					<option value="1024000" <?php echo isset($config['WebRX']['samp_rate']) && $config['WebRX']['samp_rate'] == "1024000" ? "selected" : "" ?>>1024k</option>
+				</select><br><br>
+				Center Frequency in Hz: <br>
+				<input type="number" name="center_freq" value="<?php echo isset($config['WebRX']['center_freq']) ? $config['WebRX']['center_freq'] : 150100000 ?>"><br><br>
+				Gain: <br>
+				<input type="number" name="rf_gain" value="<?php echo isset($config['WebRX']['rf_gain']) ? $config['WebRX']['rf_gain'] : 20 ?>"><br><br>
+				<input type="submit" class="w3-btn w3-brown" value="Change settings befor start" name="change_config_websdr">
+				<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr">
+				<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop">
+				<br><br>
+				<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1)?>"> Link to OpenWebRX </a>
+				<br><br>
+			</form>
+		</div>
 </div>
 </div>
 	
