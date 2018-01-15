@@ -28,7 +28,7 @@ RUN { \
 # comment out a few problematic configuration values
 RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf
 
-RUN useradd mysql www-data
+RUN adduser mysql www-data
 
 VOLUME /var/lib/mysql
 
