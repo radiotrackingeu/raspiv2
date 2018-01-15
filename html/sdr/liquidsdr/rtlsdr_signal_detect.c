@@ -18,7 +18,7 @@
 
 #define nfft (400)
 #define KEEPALIVE (300) // keepalive interval in seconds
-#define DB_HOST "localhost"
+#define DB_HOST "rec3.fritz.box"
 #define DB_USER "root"
 #define DB_PASS "rteuv2!"
 #define DB_BASE "tolletestdatenbank"
@@ -37,7 +37,19 @@ unsigned long int num_transforms = 0;
 int tmp_transforms = 0;
 struct timespec now;
 unsigned int keepalive;
+char * device_name="none";
+int write_to_db = 0;
 MYSQL * con;
+char *db_host = NULL, *db_user = NULL, *db_pass = NULL;
+
+
+struct option longopts[] = {
+    {"sql", no_argument, &write_to_db, 1},
+    {"db_host", required_argument, NULL, 900},
+    {"db_user", required_argument, NULL, 901},
+    {"db_pass", required_argument, NULL, 902},
+    {0,0,0,0}
+};
 
 
 // print usage/help message
@@ -49,7 +61,12 @@ void usage()
     printf("  -t <thsh> : detection threshold above psd, default: 10 dB\n");
     printf("  -s        : use STDIN as input\n");
     printf("  -r        : sampling rate in Hz, default 250000Hz\n");
-	//printf("  -n        : number of bins used for fft\n");
+    printf("  -d        : device name\n");
+    //printf("  -n        : number of bins used for fft\n");
+    printf(" --sql      : write to database, requires --db_user, --db_pass\n");
+    printf(" --db_host  : address of sql server to use, default is localhost\n");
+    printf(" --db_user  : username for sql server \n");
+    printf(" --db_pass  : matching password\n");
 }
 
 // read samples from file and store into buffer
@@ -83,13 +100,18 @@ int main(int argc, char*argv[])
 
     // read command-line options
     int dopt;
-    while ((dopt = getopt(argc,argv,"hi:t:sr:")) != EOF) {
+    while ((dopt = getopt_long(argc,argv,"hi:t:sr:d:", longopts, NULL)) != -1) {
         switch (dopt) {
         case 'h': usage();                              return 0;
         case 'i': strncpy(filename_input,optarg,256);   break;
         case 't': threshold = atof(optarg);             break;
         case 's': read_from_stdin = 1;                  break;
         case 'r': sampling_rate = atoi(optarg);         break;
+        case 'd': device_name = optarg;                 break;
+        case 900: db_host = optarg;                     break;
+        case 901: db_user = optarg;                     break;
+        case 902: db_pass = optarg;                     break;
+        case 0  :                                       break; // return value of getopt_long() when setting a flag
 		//case 'n': nfft = atoi(optarg);         			break;
         default:  exit(1);
         }
@@ -117,20 +139,35 @@ int main(int argc, char*argv[])
     // DC-blocking filter 1e-3f
     iirfilt_crcf dcblock = iirfilt_crcf_create_dc_blocker(1e-3f);
 
+    printf("write_to_db=%i\n", write_to_db);
     // open SQL database
-    con =mysql_init(NULL);
-    if (con==NULL) {
-        fprintf(stderr, "ERROR: %s\n", mysql_error(con));
-        exit(1);
-    }
+    if (write_to_db!=0)
+    {
+        if (db_user==NULL || db_pass==NULL) {
+            fprintf(stderr, "Incomplete credentials supplied. Not writing to database.\n");
+            write_to_db = 0;
+        } else {
+            if (db_host == NULL){
+                db_host = "127.0.0.1";
+                fprintf(stderr, "No hostname given, trying 127.0.0.1.\n");
+            }
 
-    if (mysql_real_connect(con, DB_HOST, DB_USER, DB_PASS,
-          DB_BASE, 0, NULL, 0) == NULL)
-  {
-      fprintf(stderr, "%s\n", mysql_error(con));
-      mysql_close(con);
-      exit(1);
-  }
+            con =mysql_init(NULL);
+            if (con!=NULL) {
+                if (mysql_real_connect(con, db_host, db_user, db_pass,
+                      DB_BASE, 0, NULL, 0) == NULL)
+                {
+                  fprintf(stderr, "%s\n", mysql_error(con));
+                  mysql_close(con);
+                  write_to_db = 0;
+                }
+            } else {
+                fprintf(stderr, "ERROR: %s\n", mysql_error(con));
+                write_to_db = 0;
+            }
+        }
+
+    }
 
 
     // open input file
@@ -145,6 +182,8 @@ int main(int argc, char*argv[])
         	exit(-1);
 	}
     }
+    if (write_to_db!=0)
+	    printf("Also sending data to SQL Server at %s.\n", db_host);
 	clock_gettime(CLOCK_REALTIME,&now);
 	char tbuf[30];
 	format_timestamp(now,tbuf,30);
@@ -207,7 +246,8 @@ int main(int argc, char*argv[])
 
     // close input files
     fclose(fid);
-    mysql_close(con);
+    if (con!=NULL)
+	mysql_close(con);
 
 
     // write accumulated PSD
@@ -423,8 +463,10 @@ int step(float _threshold, unsigned int _sampling_rate)
             printf("%s;%-10.6f;%9.6f;%9.6f;%f;\n",
                     timestamp, duration, signal_freq, signal_bw,max_signal);
 			fflush(stdout);
-			snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s VALUES(\"%s\",%-10.6f,%9.6f,%9.6f,%f)", DB_TABLE, timestamp, duration, signal_freq, signal_bw, max_signal);
-			mysql_query(con, sql_statement);
+			if (write_to_db!=0) {
+				snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s VALUES(\"%s\",%-10.6f,%9.6f,%9.6f,%f,\"%s\")", DB_TABLE, timestamp, duration, signal_freq, signal_bw, max_signal, device_name);
+				mysql_query(con, sql_statement);
+			}
 
             // reset counters for group
             clear_group_count(i);
