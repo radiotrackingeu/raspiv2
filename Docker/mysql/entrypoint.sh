@@ -49,7 +49,7 @@ if [ "$1" = 'mysqld' ]; then
 		set -- "$@" --init-file="$tempSqlFile"
 	fi
 	
-	chown -R mysql:mysql "$DATADIR"
+	#chown -R mysql:mysql "$DATADIR"
 fi
 
 exec "$@"
