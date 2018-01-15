@@ -19,4 +19,4 @@ echo Switched to $1 branch.
 echo '<br> Copy new repositry.'
 cp -R /home/pi/gitrep/raspiv2/html/ /var/www/
 echo 'Refresh porperty rights. <br>'
-chown -R www-data:www-data /var/www/
+chown -R www-data:www-data /var/www/ !(mysql)
