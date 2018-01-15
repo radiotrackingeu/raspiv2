@@ -35,4 +35,4 @@ RUN chmod +x entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 3306
-CMD ["mysqld"]
+CMD ["mysqld --user=www-data"]
