@@ -104,7 +104,7 @@
 	}
 	if (isset($_POST["start_mysql"])){
 		echo '<pre>';
-		$test = system("sudo docker run -t --rm -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql mysql 2>&1", $ret);
+		$test = system("sudo docker run -t --rm -e MYSQL_ROOT_PASSWORD=rteuv2! -v /etc/group:/etc/group:ro -v /etc/passwd:/etc/passwd:ro -u www-data:www-data -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql mysql 2>&1", $ret);
 		echo '</pre>';
 	}
 	if (isset($_POST["start_phpmyadmin"])){

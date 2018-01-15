@@ -28,8 +28,6 @@ RUN { \
 # comment out a few problematic configuration values
 RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf
 
-RUN adduser mysql www-data
-
 VOLUME /var/lib/mysql
 
 COPY entrypoint.sh /
