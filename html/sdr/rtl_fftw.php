@@ -27,8 +27,9 @@
 
 <!-- Enter text here-->
 <div class="w3-bar w3-brown w3-mobile">
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger')">Logger</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_timer')">Logger Settings</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_range')">Frequency Range</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger')">Single Frequency</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_timer')">Settings</button>
 	<!--
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data')">Raw Data Recorder</button>-->
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data_ana')">Raw Data Analyzer</button>
@@ -37,13 +38,13 @@
 
 <!-------------------------------- Logger Settings-------------------------------------------------------------------->
 
-<div id="tab_logger" class="w3-container city w3-row-padding w3-mobile" style="display:none">
+<div id="tab_logger_range" class="w3-container city w3-row-padding w3-mobile" style="display:none">
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 0</h3><br>
-			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
-				<input type="submit" class="w3-btn w3-brown" value="Start Receiver <?php echo $config['logger']['device']+1;?>" name="log_start" />
-				<input type="submit" class="w3-btn w3-brown" value="Stop Receiver <?php echo $config['logger']['device']+1;?>" name="log_stop" />
+			<form method="POST" enctype="multipart/form-data" action="">
+				<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start" />
+				<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop" />
 			</form>
 			<br>
 		</div>
@@ -51,7 +52,7 @@
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 1</h3><br>
-			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
+			<form method="POST" enctype="multipart/form-data" action="">
 				<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start" />
 				<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop" />
 			</form>
