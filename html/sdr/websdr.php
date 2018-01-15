@@ -64,7 +64,7 @@
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 0</h3>
-			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
+			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config,1); echo $_SERVER['PHP_SELF']; ?>" >
 
 				FFTs per second: <br>
 				<input type="number" name="fft_fps" value="<?php echo isset($config['WebRX']['fft_fps'][1]) ? $config['WebRX']['fft_fps'][1] : 27 ?>"><br> <br>
@@ -93,7 +93,7 @@
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 1</h3>
-			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
+			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config,2); echo $_SERVER['PHP_SELF']; ?>" >
 				FFTs per second: <br>
 				<input type="number" name="fft_fps" value="<?php echo isset($config['WebRX']['fft_fps'][2]) ? $config['WebRX']['fft_fps'][2] : 27 ?>"><br> <br>
 				Number of bins in FFT: <br>
