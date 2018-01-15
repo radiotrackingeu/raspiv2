@@ -64,7 +64,7 @@
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 0</h3>
-			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
+			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); ?>" >
 				<?php $device = 1; ?>
 				Gain in DB:<br>
 				<input type="number" name="rf_gain" value="<?php echo isset($config['WebRX']['rf_gain'][$device]) ? $config['WebRX']['rf_gain'][$device] : 20 ?>"><br>
@@ -72,7 +72,7 @@
 				FFTs per second: <br>
 				<input type="number" name="fft_fps" value="<?php echo isset($config['WebRX']['fft_fps'][$device]) ? $config['WebRX']['fft_fps'][$device] : 27 ?>"><br> <br>
 				Number of bins in FFT: <br>
-				<select name="fft_size">
+				<select name="fft_size[<?php$device?>]">
 					<option value="256" <?php echo isset($config['WebRX']['fft_size'][$device]) && $config['WebRX']['fft_size'][$device] == "256" ? "selected" : "" ?>>256</option>
 					<option value="512" <?php echo isset($config['WebRX']['fft_size'][$device]) && $config['WebRX']['fft_size'][$device] == "512" ? "selected" : "" ?>>512</option>
 					<option value="1024" <?php echo isset($config['WebRX']['fft_size'][$device]) && $config['WebRX']['fft_size'][$device] == "1024" ? "selected" : "" ?>>1024</option>
