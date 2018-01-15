@@ -3,7 +3,8 @@ FROM resin/rpi-raspbian:jessie
 MAINTAINER ralf.zeidler@radio-tracking.eu
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-RUN groupadd -r www-data && useradd -r -g www-data www-data
+# RUN groupadd -r mysql 
+RUN useradd -r -g mysql www-data
 
 # FATAL ERROR: please install the following Perl modules before executing /usr/local/mysql/scripts/mysql_install_db:
 # File::Basename
