@@ -17,7 +17,7 @@ if [ "$1" = 'mysqld' ]; then
 		fi
 		
 		echo 'Initializing database'
-    mysql_install_db --datadir="$DATADIR" --user=www-data
+    mysql_install_db --datadir="$DATADIR"
 		echo 'Database initialized'
 		
 		# These statements _must_ be on individual lines, and _must_ end with
@@ -49,7 +49,7 @@ if [ "$1" = 'mysqld' ]; then
 		set -- "$@" --init-file="$tempSqlFile"
 	fi
 	
-	#chown -R mysql:mysql "$DATADIR"
+	chown -R mysql:mysql "$DATADIR"
 fi
 
 exec "$@"
