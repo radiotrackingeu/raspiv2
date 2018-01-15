@@ -19,7 +19,7 @@
 	
 	//define config section and items.
 	define ('confSection', 'WebRX');
-	define ('confKeys', array('fft_size','fft_fps','samp_rate','center_freq','rf_gain'));
+	define ('confKeys', array('fft_size_0','fft_fps_0','samp_rate_0','center_freq_0','rf_gain_0','fft_size_1','fft_fps_1','samp_rate_1','center_freq_1','rf_gain_1'));
 	
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
