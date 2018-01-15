@@ -63,7 +63,7 @@
 		<form method='POST' enctype="multipart/form-data">
 			<input type="submit" class="w3-btn w3-brown" value="Start Database" name="start_mysql" /> <br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Start ManagementTool" name="start_phpmyadmin" /> <br><br>
-			<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+8000)."/phpmyadmin/"?>"> Link to Device PphMyAdmin </a>
+			<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+8000)."/phpmyadmin/"?>"> Link to Device PhpMyAdmin </a>
 		</form>
 		Start Database upon start
 		Stop starting DB upon start
