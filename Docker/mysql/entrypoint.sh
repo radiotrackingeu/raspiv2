@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+adduser mysql www-data
+
 if [ "${1:0:1}" = '-' ]; then
 	set -- mysqld "$@"
 fi
