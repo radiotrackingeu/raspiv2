@@ -76,8 +76,8 @@
 				</select> <br><br>
 				Sample rate / Frequency Range: <br>
 				<select name="samp_rate">
-					<option value="250000" <?php echo isset($config['WebRX']['samp_rate']) && $config['WebRX']['samp_rate'] == "250000" ? "selected" : "" ?>>250k</option>
-					<option value="1024000" <?php echo isset($config['WebRX']['samp_rate']) && $config['WebRX']['samp_rate'] == "1024000" ? "selected" : "" ?>>1024k</option>
+					<option value="250000" <?php echo isset($config['WebRX']['samp_rate'][1]) && $config['WebRX']['samp_rate'][1] == "250000" ? "selected" : "" ?>>250k</option>
+					<option value="1024000" <?php echo isset($config['WebRX']['samp_rate'][1]) && $config['WebRX']['samp_rate'][1] == "1024000" ? "selected" : "" ?>>1024k</option>
 				</select><br><br>
 				Center Frequency in Hz: <br>
 				<input type="number" name="center_freq" value="<?php echo isset($config['WebRX']['center_freq'][1]) ? $config['WebRX']['center_freq'][1] : 150100000 ?>"><br><br>
