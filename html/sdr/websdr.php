@@ -89,7 +89,6 @@
 			</form>
 		</div>
 	</div>
-	<!--
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 1</h3>
@@ -117,7 +116,6 @@
 			</form>
 		</div>
 	</div>
-	-->
 </div>
 	
 
