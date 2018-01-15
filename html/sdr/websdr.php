@@ -17,8 +17,9 @@
 	//load ConfigLite
 	require_once CONFIGLITE_PATH.'/Lite.php';	
 	//define config section and items.
+	
 	define ('confSection', 'WebRX');
-	define ('confKeys', array('device','fft_size','fft_fps','samp_rate','center_freq','rf_gain'));
+	define ('confKeys', array('fft_size','fft_fps','samp_rate','center_freq','rf_gain'));
 	
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
