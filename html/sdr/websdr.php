@@ -65,6 +65,10 @@
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 0</h3>
 			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
+				
+				Gain in DB:<br>
+				<input type="number" name="rf_gain" value="<?php echo isset($config['WebRX']['rf_gain'][1]) ? $config['WebRX']['rf_gain'][1] : 20 ?>"><br>
+			
 				FFTs per second: <br>
 				<input type="number" name="fft_fps" value="<?php echo isset($config['WebRX']['fft_fps'][1]) ? $config['WebRX']['fft_fps'][1] : 27 ?>"><br> <br>
 				Number of bins in FFT: <br>
@@ -83,7 +87,7 @@
 				Center Frequency in Hz: <br>
 				<input type="number" name="center_freq" value="<?php echo isset($config['WebRX']['center_freq'][1]) ? $config['WebRX']['center_freq'][1] : 150100000 ?>"><br><br>
 				Gain: <br>
-				<input type="number" name="rf_gain" value="<?php echo isset($config['WebRX']['rf_gain'][1]) ? $config['WebRX']['rf_gain'][1] : 20 ?>"><br><br>
+				<!-- <input type="number" name="rf_gain" value="<?php echo isset($config['WebRX']['rf_gain'][1]) ? $config['WebRX']['rf_gain'][1] : 20 ?>"><br><br> -->
 				<input type="submit" class="w3-btn w3-brown" value="Change settings" name="change_config_websdr">
 			</form>
 		</div>
@@ -111,7 +115,7 @@
 				<input type="number" name="center_freq" value="<?php echo isset($config['WebRX']['center_freq'][2]) ? $config['WebRX']['center_freq'][2] : 150100000 ?>"><br><br>
 				Gain: <br>
 				<input type="number" name="rf_gain" value="<?php echo isset($config['WebRX']['rf_gain'][2]) ? $config['WebRX']['rf_gain'][2] : 20 ?>"><br><br>
-				<input type="submit" class="w3-btn w3-brown" value="Change settings" name="change_config_websdr">
+				<input type="submit" class="w3-btn w3-brown" value="Change settings" name="change_config_websdr_d1">
 			</form>
 		</div>
 	</div>
