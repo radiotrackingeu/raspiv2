@@ -23,7 +23,7 @@
 	
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
- ?>
+?>
 
 <!-- Enter text here-->
 <div class="w3-bar w3-brown w3-mobile">

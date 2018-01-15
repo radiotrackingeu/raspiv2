@@ -16,8 +16,8 @@
 	require_once RESOURCES_PATH.'/helpers.php';
 	//load ConfigLite
 	require_once CONFIGLITE_PATH.'/Lite.php';	
-	//define config section and items.
 	
+	//define config section and items.
 	define ('confSection', 'WebRX');
 	define ('confKeys', array('fft_size','fft_fps','samp_rate','center_freq','rf_gain'));
 	
@@ -64,30 +64,27 @@
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 0</h3>
-			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); ?>" >
-				<?php $device = 1; ?>
-				Gain in DB:<br>
-				<input type="number" name="rf_gain" value="<?php echo isset($config['WebRX']['rf_gain'][$device]) ? $config['WebRX']['rf_gain'][$device] : 20 ?>"><br>
-			
+			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
+
 				FFTs per second: <br>
-				<input type="number" name="fft_fps" value="<?php echo isset($config['WebRX']['fft_fps'][$device]) ? $config['WebRX']['fft_fps'][$device] : 27 ?>"><br> <br>
+				<input type="number" name="fft_fps" value="<?php echo isset($config['WebRX']['fft_fps'][1]) ? $config['WebRX']['fft_fps'][1] : 27 ?>"><br> <br>
 				Number of bins in FFT: <br>
-				<select name="fft_size[<?php$device?>]">
-					<option value="256" <?php echo isset($config['WebRX']['fft_size'][$device]) && $config['WebRX']['fft_size'][$device] == "256" ? "selected" : "" ?>>256</option>
-					<option value="512" <?php echo isset($config['WebRX']['fft_size'][$device]) && $config['WebRX']['fft_size'][$device] == "512" ? "selected" : "" ?>>512</option>
-					<option value="1024" <?php echo isset($config['WebRX']['fft_size'][$device]) && $config['WebRX']['fft_size'][$device] == "1024" ? "selected" : "" ?>>1024</option>
-					<option value="2048" <?php echo isset($config['WebRX']['fft_size'][$device]) && $config['WebRX']['fft_size'][$device] == "2048" ? "selected" : "" ?>>2048</option>
-					<option value="4096" <?php echo isset($config['WebRX']['fft_size'][$device]) && $config['WebRX']['fft_size'][$device] == "4096" ? "selected" : "" ?>>4096</option>
+				<select name="fft_size">
+					<option value="256" <?php echo isset($config['WebRX']['fft_size'][1]) && $config['WebRX']['fft_size'][1] == "256" ? "selected" : "" ?>>256</option>
+					<option value="512" <?php echo isset($config['WebRX']['fft_size'][1]) && $config['WebRX']['fft_size'][1] == "512" ? "selected" : "" ?>>512</option>
+					<option value="1024" <?php echo isset($config['WebRX']['fft_size'][1]) && $config['WebRX']['fft_size'][1] == "1024" ? "selected" : "" ?>>1024</option>
+					<option value="2048" <?php echo isset($config['WebRX']['fft_size'][1]) && $config['WebRX']['fft_size'][1] == "2048" ? "selected" : "" ?>>2048</option>
+					<option value="4096" <?php echo isset($config['WebRX']['fft_size'][1]) && $config['WebRX']['fft_size'][1] == "4096" ? "selected" : "" ?>>4096</option>
 				</select> <br><br>
 				Sample rate / Frequency Range: <br>
 				<select name="samp_rate">
-					<option value="250000" <?php echo isset($config['WebRX']['samp_rate'][$device]) && $config['WebRX']['samp_rate'][$device] == "250000" ? "selected" : "" ?>>250k</option>
-					<option value="1024000" <?php echo isset($config['WebRX']['samp_rate'][$device]) && $config['WebRX']['samp_rate'][$device] == "1024000" ? "selected" : "" ?>>1024k</option>
+					<option value="250000" <?php echo isset($config['WebRX']['samp_rate'][1]) && $config['WebRX']['samp_rate'][1] == "250000" ? "selected" : "" ?>>250k</option>
+					<option value="1024000" <?php echo isset($config['WebRX']['samp_rate'][1]) && $config['WebRX']['samp_rate'][1] == "1024000" ? "selected" : "" ?>>1024k</option>
 				</select><br><br>
 				Center Frequency in Hz: <br>
-				<input type="number" name="center_freq" value="<?php echo isset($config['WebRX']['center_freq'][$device]) ? $config['WebRX']['center_freq'][$device] : 150100000 ?>"><br><br>
+				<input type="number" name="center_freq" value="<?php echo isset($config['WebRX']['center_freq'][1]) ? $config['WebRX']['center_freq'][1] : 150100000 ?>"><br><br>
 				Gain: <br>
-				<!-- <input type="number" name="rf_gain" value="<?php echo isset($config['WebRX']['rf_gain'][$device]) ? $config['WebRX']['rf_gain'][$device] : 20 ?>"><br><br> -->
+				<input type="number" name="rf_gain" value="<?php echo isset($config['WebRX']['rf_gain'][1]) ? $config['WebRX']['rf_gain'][1] : 20 ?>"><br><br>
 				<input type="submit" class="w3-btn w3-brown" value="Change settings" name="change_config_websdr">
 			</form>
 		</div>
