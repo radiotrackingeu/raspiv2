@@ -64,54 +64,54 @@
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 0</h3>
-			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config,1); echo $_SERVER['PHP_SELF']; ?>" >
+			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
 
 				FFTs per second: <br>
-				<input type="number" name="fft_fps" value="<?php echo isset($config['WebRX']['fft_fps'][1]) ? $config['WebRX']['fft_fps'][1] : 27 ?>"><br> <br>
+				<input type="number" name="fft_fps_0" value="<?php echo isset($config['WebRX']['fft_fps_0']) ? $config['WebRX']['fft_fps_0'] : 27 ?>"><br> <br>
 				Number of bins in FFT: <br>
-				<select name="fft_size">
-					<option value="256" <?php echo isset($config['WebRX']['fft_size'][1]) && $config['WebRX']['fft_size'][1] == "256" ? "selected" : "" ?>>256</option>
-					<option value="512" <?php echo isset($config['WebRX']['fft_size'][1]) && $config['WebRX']['fft_size'][1] == "512" ? "selected" : "" ?>>512</option>
-					<option value="1024" <?php echo isset($config['WebRX']['fft_size'][1]) && $config['WebRX']['fft_size'][1] == "1024" ? "selected" : "" ?>>1024</option>
-					<option value="2048" <?php echo isset($config['WebRX']['fft_size'][1]) && $config['WebRX']['fft_size'][1] == "2048" ? "selected" : "" ?>>2048</option>
-					<option value="4096" <?php echo isset($config['WebRX']['fft_size'][1]) && $config['WebRX']['fft_size'][1] == "4096" ? "selected" : "" ?>>4096</option>
+				<select name="fft_size_0">
+					<option value="256" <?php echo isset($config['WebRX']['fft_size_0']) && $config['WebRX']['fft_size_0'] == "256" ? "selected" : "" ?>>256</option>
+					<option value="512" <?php echo isset($config['WebRX']['fft_size_0']) && $config['WebRX']['fft_size_0'] == "512" ? "selected" : "" ?>>512</option>
+					<option value="1024" <?php echo isset($config['WebRX']['fft_size_0']) && $config['WebRX']['fft_size_0'] == "1024" ? "selected" : "" ?>>1024</option>
+					<option value="2048" <?php echo isset($config['WebRX']['fft_size_0']) && $config['WebRX']['fft_size_0'] == "2048" ? "selected" : "" ?>>2048</option>
+					<option value="4096" <?php echo isset($config['WebRX']['fft_size_0']) && $config['WebRX']['fft_size_0'] == "4096" ? "selected" : "" ?>>4096</option>
 				</select> <br><br>
 				Sample rate / Frequency Range: <br>
-				<select name="samp_rate">
-					<option value="250000" <?php echo isset($config['WebRX']['samp_rate'][1]) && $config['WebRX']['samp_rate'][1] == "250000" ? "selected" : "" ?>>250k</option>
-					<option value="1024000" <?php echo isset($config['WebRX']['samp_rate'][1]) && $config['WebRX']['samp_rate'][1] == "1024000" ? "selected" : "" ?>>1024k</option>
+				<select name="samp_rate_0">
+					<option value="250000" <?php echo isset($config['WebRX']['samp_rate_0']) && $config['WebRX']['samp_rate_0'] == "250000" ? "selected" : "" ?>>250k</option>
+					<option value="1024000" <?php echo isset($config['WebRX']['samp_rate_0']) && $config['WebRX']['samp_rate_0'] == "1024000" ? "selected" : "" ?>>1024k</option>
 				</select><br><br>
 				Center Frequency in Hz: <br>
-				<input type="number" name="center_freq" value="<?php echo isset($config['WebRX']['center_freq'][1]) ? $config['WebRX']['center_freq'][1] : 150100000 ?>"><br><br>
+				<input type="number" name="center_freq_0" value="<?php echo isset($config['WebRX']['center_freq_0']) ? $config['WebRX']['center_freq_0'] : 150100000 ?>"><br><br>
 				Gain: <br>
-				<input type="number" name="rf_gain" value="<?php echo isset($config['WebRX']['rf_gain'][1]) ? $config['WebRX']['rf_gain'][1] : 20 ?>"><br><br>
-				<input type="submit" class="w3-btn w3-brown" value="Change settings" name="change_config_websdr">
+				<input type="number" name="rf_gain_0" value="<?php echo isset($config['WebRX']['rf_gain_0']) ? $config['WebRX']['rf_gain_0'] : 20 ?>"><br><br>
+				<input type="submit" class="w3-btn w3-brown" value="Change settings" name="change_config_websdr_d0">
 			</form>
 		</div>
 	</div>
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 1</h3>
-			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config,2); echo $_SERVER['PHP_SELF']; ?>" >
+			<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
 				FFTs per second: <br>
-				<input type="number" name="fft_fps" value="<?php echo isset($config['WebRX']['fft_fps'][2]) ? $config['WebRX']['fft_fps'][2] : 27 ?>"><br> <br>
+				<input type="number" name="fft_fps_1" value="<?php echo isset($config['WebRX']['fft_fps_1']) ? $config['WebRX']['fft_fps_1'] : 27 ?>"><br> <br>
 				Number of bins in FFT: <br>
-				<select name="fft_size">
-					<option value="256" <?php echo isset($config['WebRX']['fft_size'][2]) && $config['WebRX']['fft_size'][2] == "256" ? "selected" : "" ?>>256</option>
-					<option value="512" <?php echo isset($config['WebRX']['fft_size'][2]) && $config['WebRX']['fft_size'][2] == "512" ? "selected" : "" ?>>512</option>
-					<option value="1024" <?php echo isset($config['WebRX']['fft_size'][2]) && $config['WebRX']['fft_size'][2] == "1024" ? "selected" : "" ?>>1024</option>
-					<option value="2048" <?php echo isset($config['WebRX']['fft_size'][2]) && $config['WebRX']['fft_size'][2] == "2048" ? "selected" : "" ?>>2048</option>
-					<option value="4096" <?php echo isset($config['WebRX']['fft_size'][2]) && $config['WebRX']['fft_size'][2] == "4096" ? "selected" : "" ?>>4096</option>
+				<select name="fft_size_1">
+					<option value="256" <?php echo isset($config['WebRX']['fft_size_1']) && $config['WebRX']['fft_size_1'] == "256" ? "selected" : "" ?>>256</option>
+					<option value="512" <?php echo isset($config['WebRX']['fft_size_1']) && $config['WebRX']['fft_size_1'] == "512" ? "selected" : "" ?>>512</option>
+					<option value="1024" <?php echo isset($config['WebRX']['fft_size_1']) && $config['WebRX']['fft_size_1'] == "1024" ? "selected" : "" ?>>1024</option>
+					<option value="2048" <?php echo isset($config['WebRX']['fft_size_1']) && $config['WebRX']['fft_size_1'] == "2048" ? "selected" : "" ?>>2048</option>
+					<option value="4096" <?php echo isset($config['WebRX']['fft_size_1']) && $config['WebRX']['fft_size_1'] == "4096" ? "selected" : "" ?>>4096</option>
 				</select> <br><br>
 				Sample rate / Frequency Range: <br>
-				<select name="samp_rate">
-					<option value="250000" <?php echo isset($config['WebRX']['samp_rate'][2]) && $config['WebRX']['samp_rate'][2] == "250000" ? "selected" : "" ?>>250k</option>
-					<option value="1024000" <?php echo isset($config['WebRX']['samp_rate'][2]) && $config['WebRX']['samp_rate'][2] == "1024000" ? "selected" : "" ?>>1024k</option>
+				<select name="samp_rate_1">
+					<option value="250000" <?php echo isset($config['WebRX']['samp_rate_1']) && $config['WebRX']['samp_rate_1'] == "250000" ? "selected" : "" ?>>250k</option>
+					<option value="1024000" <?php echo isset($config['WebRX']['samp_rate_1']) && $config['WebRX']['samp_rate_1'] == "1024000" ? "selected" : "" ?>>1024k</option>
 				</select><br><br>
 				Center Frequency in Hz: <br>
-				<input type="number" name="center_freq" value="<?php echo isset($config['WebRX']['center_freq'][2]) ? $config['WebRX']['center_freq'][2] : 150100000 ?>"><br><br>
+				<input type="number" name="center_freq_1" value="<?php echo isset($config['WebRX']['center_freq_1']) ? $config['WebRX']['center_freq_1'] : 150100000 ?>"><br><br>
 				Gain: <br>
-				<input type="number" name="rf_gain" value="<?php echo isset($config['WebRX']['rf_gain'][2]) ? $config['WebRX']['rf_gain'][2] : 20 ?>"><br><br>
+				<input type="number" name="rf_gain_1" value="<?php echo isset($config['WebRX']['rf_gain_1']) ? $config['WebRX']['rf_gain_1'] : 20 ?>"><br><br>
 				<input type="submit" class="w3-btn w3-brown" value="Change settings" name="change_config_websdr_d1">
 			</form>
 		</div>
