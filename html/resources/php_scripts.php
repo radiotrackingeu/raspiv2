@@ -13,6 +13,7 @@
 	//System - Software Functions
 	if (isset($_POST["update_rep"])){
 		$cmd='sudo docker run --rm -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh '.$_POST["git_checkout"].' '.$_POST["git_keepcfg"].' 2>&1';
+		echo $cmd;
 		start_docker($cmd,'GIT');
 	}
 	if (isset($_POST["running_containers"])){
