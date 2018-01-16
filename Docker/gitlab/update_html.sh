@@ -19,7 +19,7 @@ echo Switched to $1 branch.
 echo '<br> Copy new repositry.'
 if [ $2 = 'keepcfg' ]
 then 
-	cp /var/www/cfg/globalconfig /home/pi/globalconfig
+	cp /var/www/html/cfg/globalconfig /home/pi/globalconfig
 fi
 
 cp -R /home/pi/gitrep/raspiv2/html/ /var/www/
@@ -28,5 +28,5 @@ chown -R www-data:www-data /var/www/
 
 if [ $2 = 'keepcfg' ]
 then 
-	cp /home/pi/globalconfig /var/www/cfg/globalconfig 
+	cp /home/pi/globalconfig /var/www/html/cfg/globalconfig 
 fi
