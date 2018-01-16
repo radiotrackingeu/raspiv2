@@ -19,6 +19,7 @@ echo Switched to $1 branch.
 echo '<br> Copy new repositry.'
 if [ $2 = 'keepcfg' ]
 then 
+	echo '<br> Save old config.'
 	cp /var/www/html/cfg/globalconfig /home/pi/globalconfig
 fi
 
@@ -28,5 +29,6 @@ chown -R www-data:www-data /var/www/
 
 if [ $2 = 'keepcfg' ]
 then 
+	echo '<br> Copy back old config.'
 	cp /home/pi/globalconfig /var/www/html/cfg/globalconfig 
 fi
