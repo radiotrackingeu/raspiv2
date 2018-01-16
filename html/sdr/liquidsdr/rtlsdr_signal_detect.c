@@ -16,32 +16,32 @@
 #include <limits.h>
 #include <mysql.h>
 
-#define nfft (400)
 #define KEEPALIVE (300) // keepalive interval in seconds
-#define DB_HOST "rec3.fritz.box"
-#define DB_USER "root"
-#define DB_PASS "rteuv2!"
 #define DB_BASE "tolletestdatenbank"
 #define DB_TABLE "tolltesttabelle"
 
-//int nfft = 400;
-float psd_template[nfft];
-float psd         [nfft];
-float psd_max     [nfft];
-struct timespec psd_time[nfft];
-int   detect      [nfft];
-int   count       [nfft];
-int   groups      [nfft];
-int   timestep    =nfft/8; // time between transforms [samples]
-unsigned long int num_transforms = 0;
-int tmp_transforms = 0;
-struct timespec now;
-unsigned int keepalive;
-char * device_name="none";
-int write_to_db = 0;
-MYSQL * con;
-char *db_host = NULL, *db_user = NULL, *db_pass = NULL;
+float           *   psd_template;
+float           *   psd;
+float           *   psd_max;
+struct timespec *   psd_time;
+int             *   detect;
+int             *   count;
+int             *   groups;
 
+int                 timestep;
+int                 nfft;
+
+unsigned long int   num_transforms = 0;
+int                 tmp_transforms = 0;
+
+struct              timespec now;
+int                 keepalive = 300;
+
+char            *   device_name="none";
+
+int                 write_to_db = 0;
+MYSQL           *   con;
+char            *   db_host = NULL, *db_user = NULL, *db_pass = NULL;
 
 struct option longopts[] = {
     {"sql", no_argument, &write_to_db, 1},
@@ -51,22 +51,23 @@ struct option longopts[] = {
     {0,0,0,0}
 };
 
-
 // print usage/help message
 void usage()
 {
-    printf("%s [options]\n", __FILE__);
-    printf("  -h        : print help\n");
-    printf("  -i <file> : input data filename\n");
-    printf("  -t <thsh> : detection threshold above psd, default: 10 dB\n");
-    printf("  -s        : use STDIN as input\n");
-    printf("  -r        : sampling rate in Hz, default 250000Hz\n");
-    printf("  -d        : device name\n");
-    //printf("  -n        : number of bins used for fft\n");
-    printf(" --sql      : write to database, requires --db_user, --db_pass\n");
-    printf(" --db_host  : address of sql server to use, default is localhost\n");
-    printf(" --db_user  : username for sql server \n");
-    printf(" --db_pass  : matching password\n");
+    printf("%s [-b num] [-d name] [-h] [-i file] [-k sec] [-n num] [-r rate] [-s] [--sql [--db_host host] --db_user user --db_pass pass] [-t thre]\n", __FILE__);
+    printf("  -h                : print this help\n");
+    printf("  -i <file>         : input data filename\n");
+    printf("  -t <threshold>         : detection threshold above psd, default: 10 dB\n");
+    printf("  -s                : use STDIN as input\n");
+    printf("  -r <rate>         : sampling rate in Hz, default 250000Hz\n");
+    printf("  -d <name>         : device name\n");
+    printf("  -b <number>       : number of bins used for fft, default is 400\n");
+    printf("  -n <number>       : number of samples per fft, default is 50\n");
+    printf("  -k <seconds>      : prints a keep-alive statement every <sec> seconds, default is 300\n");
+    printf(" --sql              : write to database, requires --db_user, --db_pass\n");
+    printf(" --db_host <host>   : address of sql server to use, default is localhost\n");
+    printf(" --db_user <user>   : username for sql server \n");
+    printf(" --db_pass <pass>   : matching password\n");
 }
 
 // read samples from file and store into buffer
@@ -88,6 +89,7 @@ int   step(float _threshold, unsigned int _sampling_rate);
 void  format_timestamp(const struct timespec _time, char * _buf, const unsigned long _buf_len);
 char  before(const struct timespec _a, const struct timespec _b);
 void  init_time();
+void  free_memory();
 
 
 // main program
@@ -97,35 +99,40 @@ int main(int argc, char*argv[])
     float           threshold           = 10.0f; //-60.0f;
     char            read_from_stdin     = 0;
     unsigned long   sampling_rate       = 250000;
+                    nfft                = 400;
+                    timestep            = 50;
 
     // read command-line options
     int dopt;
-    while ((dopt = getopt_long(argc,argv,"hi:t:sr:d:", longopts, NULL)) != -1) {
+    while ((dopt = getopt_long(argc,argv,"hi:t:sr:b:n:d:k:", longopts, NULL)) != -1) {
         switch (dopt) {
         case 'h': usage();                              return 0;
         case 'i': strncpy(filename_input,optarg,256);   break;
         case 't': threshold = atof(optarg);             break;
         case 's': read_from_stdin = 1;                  break;
         case 'r': sampling_rate = atoi(optarg);         break;
+		case 'b': nfft = atoi(optarg);         			break;
+        case 'n': timestep = atoi(optarg);         		break;
         case 'd': device_name = optarg;                 break;
+        case 'k': keepalive = atoi(optarg);             break;
         case 900: db_host = optarg;                     break;
         case 901: db_user = optarg;                     break;
         case 902: db_pass = optarg;                     break;
         case 0  :                                       break; // return value of getopt_long() when setting a flag
-		//case 'n': nfft = atoi(optarg);         			break;
-        default:  exit(1);
+        default : exit(1);
         }
     }
 
     // reset counters, etc.
-    memset(psd_template, 0x0, nfft*sizeof(float));
-    memset(psd,          0x0, nfft*sizeof(float));
-	memset(psd_max,      0x0, nfft*sizeof(float));
-    memset(detect,       0x0, nfft*sizeof(int  ));
-    memset(count,        0x0, nfft*sizeof(int  ));
-    memset(groups,       0x0, nfft*sizeof(int  ));
+    psd_template =  (float*) calloc(nfft, sizeof(float));
+    psd =           (float*) calloc(nfft, sizeof(float));
+    psd_max =       (float*) calloc(nfft, sizeof(float));
+    detect =        (int*)   calloc(nfft, sizeof(int));
+    count =         (int*)   calloc(nfft, sizeof(int));
+    groups =        (int*)   calloc(nfft, sizeof(int));
+    psd_time =      (struct timespec*) calloc(nfft, sizeof(struct timespec));
     init_time();
-	keepalive = KEEPALIVE * sampling_rate / timestep;
+	keepalive *= sampling_rate / timestep;
 	keepalive += keepalive%16;
 
 
@@ -256,6 +263,8 @@ int main(int argc, char*argv[])
 
     printf("total samples in : %lu\n", total_samples);
     printf("total transforms : %lu\n", num_transforms);
+
+    free_memory();
 
     return 0;
 }
@@ -502,6 +511,15 @@ void init_time() {
         psd_time[i].tv_sec = INT_MAX;
 		psd_time[i].tv_nsec = 999999999;
 	}
+}
+
+void free_memory() {
+    free(psd_template);
+    free(psd);
+    free(psd_max);
+    free(detect);
+    free(count);
+    free(groups);
 }
 
 
