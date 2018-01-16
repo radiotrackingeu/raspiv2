@@ -288,6 +288,7 @@
 		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";	
 	}
 	function start_docker_echo($docker_cmd,$block_to_jump,$statement){
+		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
 		system($docker_cmd." >/dev/null 2>/dev/null &");
 		echo $statement;
 		echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";	
