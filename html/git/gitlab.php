@@ -47,8 +47,8 @@
 				Please choose to keep your old config file or update it with standard settings.
 				<br>
 				<select name="git_keepcfg">
-					<option value="master" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "keep" ?  "selected" : ""; ?>>Keep old Config file</option>
-					<option value="live" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "update" ? "selected" : ""; ?>>Update Config file</option>
+					<option value="master" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "keepcfg" ?  "selected" : ""; ?>>Keep old Config file</option>
+					<option value="live" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "updatecfg" ? "selected" : ""; ?>>Update Config file</option>
 				</select>
 			<input class="w3-btn w3-brown" type="submit" value="Update User Interface" name="update_rep" onclick="openCity('GIT')"/>
 		</form>
