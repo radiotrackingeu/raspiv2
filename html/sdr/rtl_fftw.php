@@ -30,6 +30,7 @@
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_range')">Frequency Range</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger')">Single Frequency</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_timer')">Settings</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_settings')">Settings_new</button>
 	<!--
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data')">Raw Data Recorder</button>-->
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data_ana')">Raw Data Analyzer</button>
@@ -62,7 +63,7 @@
 </div>
 
 
-<!-------------------------------- Logger-------------------------------------------------------------------->
+<!-------------------------------- Logger-------------------------------------------------------------------
 <div id="tab_logger_settings" class="w3-container city w3-row-padding w3-mobile" style="display:none">
 	<div class="w3-half w3-panel w3-green w3-round">
 		<h3>Logger Analyzer settings - Receiver 0</h3><br>
@@ -101,7 +102,7 @@
 	</div>
 </div>
 
-<!-------------------------------- Logger Settings-------------------------------------------------------------------->
+<!-------------------------------- Logger Settings-------------------------------------------------------------------
 
 <div id="tab_logger_settings" class="w3-container city w3-row-padding w3-mobile" style="display:none">
 	<div class="w3-half w3-panel w3-green w3-round">
@@ -138,6 +139,168 @@
 			<input type="submit" class="w3-btn w3-brown" value="Stop Receiver <?php echo $config['logger']['device']+1;?>" name="log_stop" />
 		</form>
 		<br>
+	</div>
+</div>
+
+<!------------------------------------------------- Tab Logger Settings ------------------------------------------------->
+
+<div id="tab_logger_settings" class="w3-container city w3-row-padding" style="display:none">
+	<div class="w3-half">
+		<div class="w3-container w3-panel w3-green w3-round">
+			<h3>Logger settings - Receiver 1</h3><br>
+
+			<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
+				<h4> Antenna Settings </h4>
+				<p>
+					Unique name for this Antenna:<br>
+					<input class="w3-input" type="text" name="antenna_id_0" value="<?php echo isset($config['logger']['antenna_id_0']) ? $config['logger']['antenna_id_0'] : rteu_r0_?>">
+					<small>This - together with a timestamp - will be used as filename and antenna id in the database.</small>
+				</p>
+				<p>
+					Antenna Position in decimal degrees N and E:<br>
+					<div class="w3-half">
+					<input class="w3-input w3-animate-input" style="width:30%" type="text" name="antenna_position_N_0" value="<?php echo isset($config['logger']['antenna_position_N_0']) ? $config['logger']['antenna_position_N_0'] : 1.234?>">
+					<label>°N</label>
+					</div>
+					<div class="w3-half">
+					<input class="w3-input w3-animate-input" style="width:30%" type="text" name="antenna_position_E_0" value="<?php echo isset($config['logger']['antenna_position_E_0']) ? $config['logger']['antenna_position_E_0'] : 5.678?>">
+					<label>°E</label>
+					</div>
+				</p>
+				<p>
+					Antenna Orientation in degrees (i.e. N=0, E=90, S=180):<br>
+					<input class="w3-input w3-animate-input" style="width:30%" type="text" name="antenna_orientation_0" value="<?php echo isset($config['logger']['antenna_orientation_0']) ? $config['logger']['antenna_orientation_0'] : 42?>">
+				</p>
+				<br>
+				<h4> Receiver Settings</h4>
+				<p>
+				Gain in dB (default 20):<br>
+				<input class="w3-input w3-animate-input" style="width:30%" type="number" name="log_gain_0" value="<?php echo isset($config['logger']['log_gain_0']) ? $config['logger']['log_gain_0'] : 20 ?>">
+				<small>Gain of the recording device. Higher gain results in more noise. max 49DB</small>
+				</p>
+				<p>
+				Center Frequency in Hz:<br>
+				<input class="w3-input w3-animate-input" style="width:30%" type="number" name="center_freq_0" value="<?php echo isset($config['logger']['center_freq_0']) ? $config['logger']['center_freq_0'] : 150100000 ?>">
+				</p>
+				<p>
+				Frequency Range to monitor:<br>
+				<select class="w3-select" name="freq_range_0">
+					<option value="250000" <?php echo isset($config['logger']['freq_range_0']) && $config['logger']['freq_range_0'] == "250000" ? "selected" : "" ?>>250kHz</option>
+					<option value="1024000" <?php echo isset($config['logger']['freq_range_0']) && $config['logger']['freq_range_0'] == "1024000" ? "selected" : "" ?>>1024kHz</option>
+				</select> 
+				</p>
+				<br>
+				<h4> Detection Settings </h4>
+				
+					<label for="threshold_0"> Log Level </label>
+					<input class="w3-input" class="w3-input" type="text" id="threshold_0" name="threshold_0" value="<?php echo isset($config['logger']['threshold_0']) ? $config['logger']['threshold_0'] : 10 ?>">
+					
+				
+				<p>
+					Number of bins in FFT (default: 400):<br>
+					<input class="w3-input" type="text" name="nfft_0" value="<?php echo isset($config['logger']['nfft_0']) ? $config['logger']['nfft_0'] : 400 ?>">
+				</p>
+				<p>
+					Number of samples per FFT (default: 50):<br>
+					<input class="w3-input" type="text" name="timestep_0" value="<?php echo isset($config['logger']['timestep_factor_0']) ? $config['logger']['timestep_factor_0'] : 50 ?>">
+				</p>
+				<br>
+				<h4> Logging Settings </h4>
+				<p>
+					Enable logging to SQL database:
+					<input class="w3-input" type="checkbox" name="use_sql_0" value="use_sql_0" <?php echo isset($config['logger']['use_sql_0']) && $config['logger']['use_sql_0'] == "1" ? "checked" : "" ?>>
+				</p>
+				<p>
+					Adress of SQL Server:
+					<input class="w3-input" type="text" name="db_host_0" value="<?php echo isset($config['logger']['db_host_0']) ? $config['logger']['db_host_0'] : "127.0.0.1:3306" ?>">
+				</p>
+				<p>			
+					User:
+					<input class="w3-input" type="text" name="db_user_0" value="<?php echo isset($config['logger']['db_user_0']) ? $config['logger']['db_user_0'] : "root" ?>">
+				</p>
+				<p>		
+					Password:
+					<input class="w3-input w3-animate-input" style="30%" type="text" name="db_pass_0" value="<?php echo isset($config['logger']['db_pass_0']) ? $config['logger']['db_pass_0'] : "" ?>">
+				</p>
+				<input class="w3-input" type="submit" class="w3-btn w3-brown" value="Change Settings" name="change_logger_settings_0" />
+			</form>
+		</div>
+	</div>
+	<div class="w3-half">
+		<div class="w3-container w3-panel w3-green w3-round">
+			<h3>Logger settings - Receiver 2</h3><br>
+
+			<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
+				<h4> Antenna Settings </h4>
+				<p>
+					Unique name for this Antenna:<br>
+					<input class="w3-input" type="text" name="antenna_id_1" value="<?php echo isset($config['logger']['antenna_id_1']) ? $config['logger']['antenna_id_1'] : rteu_r0_?>">
+					<input class="w3-input" type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
+					This - together with a timestamp - will be used as filename and antenna id in the database.
+				</p>
+				<p>
+					Antenna Position in decimal degrees N and E:<br>
+					<input class="w3-input" type="text" name="antenna_position_N_1" value="<?php echo isset($config['logger']['antenna_position_N_1']) ? $config['logger']['antenna_position_N_1'] : 1.234?>"> °N  
+					<input class="w3-input" type="text" name="antenna_position_E_1" value="<?php echo isset($config['logger']['antenna_position_E_1']) ? $config['logger']['antenna_position_E_1'] : 5.678?>"> °E
+				</p>
+				<p>
+					Antenna Orientation in degrees (i.e. N=0, E=90, S=180):<br>
+					<input class="w3-input" type="text" name="antenna_orientation_1" value="<?php echo isset($config['logger']['antenna_orientation_1']) ? $config['logger']['antenna_orientation_1'] : 42?>"> °
+				</p>
+				<br>
+				<h4> Receiver Settings</h4>
+				<p>
+				Gain in dB (default 20):<br>
+				<input class="w3-input" type="number" name="log_gain_1" value="<?php echo isset($config['logger']['log_gain_1']) ? $config['logger']['log_gain_1'] : 20 ?>"><br>
+				Gain of the recording device. Higher gain results in more noise. max 49DB
+				</p>
+				<p>
+				Center Frequency in Hz:<br>
+				<input class="w3-input" type="number" name="center_freq_1" value="<?php echo isset($config['logger']['center_freq_1']) ? $config['logger']['center_freq_1'] : 150100000 ?>"><br>
+				</p>
+				<p>
+				Frequency Range to monitor: <br>
+				<select name="freq_range_1">
+					<option value="250000" <?php echo isset($config['logger']['freq_range_1']) && $config['logger']['freq_range_1'] == "250000" ? "selected" : "" ?>>250kHz</option>
+					<option value="1024000" <?php echo isset($config['logger']['freq_range_1']) && $config['logger']['freq_range_1'] == "1024000" ? "selected" : "" ?>>1024kHz</option>
+				</select> 
+				</p>
+				<br>
+				<h4> Detection Settings </h4>
+				
+					<input class="w3-input" class="w3-input" type="text" id="threshold_1" name="threshold_1" value="<?php echo isset($config['logger']['threshold_1']) ? $config['logger']['threshold_1'] : 10 ?>">
+					<label for="threshold_1"> Log Level </label>
+					
+				
+				<p>
+					Number of bins in FFT (default: 400):<br>
+					<input class="w3-input" type="text" name="nfft_1" value="<?php echo isset($config['logger']['nfft_1']) ? $config['logger']['nfft_1'] : 400 ?>">
+				</p>
+				<p>
+					Number of samples per FFT (default: 50):<br>
+					<input class="w3-input" type="text" name="timestep_1" value="<?php echo isset($config['logger']['timestep_factor_1']) ? $config['logger']['timestep_factor_1'] : 50 ?>">
+				</p>
+				<br>
+				<h4> Logging Settings </h4>
+				<p>
+					Enable logging to SQL database:
+					<input class="w3-input" type="checkbox" name="use_sql_1" value="use_sql_1" <?php echo isset($config['logger']['use_sql_1']) && $config['logger']['use_sql_1'] == "1" ? "checked" : "" ?>>
+				</p>
+				<p>
+					Adress of SQL Server:
+					<input class="w3-input" type="text" name="db_host_1" value="<?php echo isset($config['logger']['db_host_1']) ? $config['logger']['db_host_1'] : "127.0.0.1:3306" ?>">
+				</p>
+				<p>			
+					User:
+					<input class="w3-input" type="text" name="db_user_1" value="<?php echo isset($config['logger']['db_user_1']) ? $config['logger']['db_user_1'] : "root" ?>">
+				</p>
+				<p>		
+					Password:
+					<input class="w3-input w3-animate-input" style="30%" type="text" name="db_pass_1" value="<?php echo isset($config['logger']['db_pass_1']) ? $config['logger']['db_pass_1'] : "" ?>">
+				</p>
+				<input class="w3-input" type="submit" class="w3-btn w3-brown" value="Change Settings" name="change_logger_settings_1" />
+			</form>
+		</div>
 	</div>
 </div>
 
