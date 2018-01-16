@@ -44,8 +44,8 @@
 					<option value="live" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "live" ? "selected" : ""; ?>>Development Version</option>
 				</select>
 				<select name="git_keepcfg">
-					<option value="keepcfg" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "keepcfg" ?  "selected" : ""; ?>>Keep old Config file</option>
-					<option value="updatecfg" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "updatecfg" ? "selected" : ""; ?>>Update Config file</option>
+					<option value="updatecfg" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "updatecfg" ? "selected" : ""; ?>>Update config file</option>
+					<option value="keepcfg" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "keepcfg" ?  "selected" : ""; ?>>Keep old config file</option>
 				</select>
 			<input class="w3-btn w3-brown" type="submit" value="Update User Interface" name="update_rep" onclick="openCity('GIT')"/>
 		</form>

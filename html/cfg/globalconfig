@@ -31,6 +31,8 @@ Freq6[2] = "151.14M"
 [gitlab_updates]
 online_repository = "github"
 lokal_branch = "live"
+git_keepcfg = "updatecfg"
+
 
 [logger]
 device = 1
