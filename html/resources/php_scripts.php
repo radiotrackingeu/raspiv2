@@ -250,16 +250,16 @@
 	}
 	
 	//WebRX
-	if (isset($_POST["rtl_websdr"])){
+	if (isset($_POST["rtl_websdr_d0"])){
 		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($_SERVER['SERVER_PORT']+1).":8073 webrx sh /cfiles/start_openwebrx.sh";
 		start_docker_quite($cmd,'webrx_tab');
 	}
-	if (isset($_POST["rtl_websdr_stop"])){
+	if (isset($_POST["rtl_websdr_stop_d0"])){
 		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=webrx) 2>&1";
 		start_docker($cmd,'webrx_tab');
 	}
 	if (isset($_POST["change_config_websdr_d0"])){
-		$cmd = "sh /var/www/html/sdr/change_config_webrx.sh ".$_POST["fft_fps"]." ".$_POST["fft_size"]." ".$_POST["samp_rate"]." ".$_POST["center_freq"]." ".$_POST["rf_gain"]." 2>&1";
+		$cmd = "sh /var/www/html/sdr/change_config_webrx.sh ".$_POST["fft_fps_0"]." ".$_POST["fft_size_0"]." ".$_POST["samp_rate_0"]." ".$_POST["center_freq_0"]." ".$_POST["rf_gain_0"]." 2>&1";
 		start_docker($cmd,'settings_webrx_tab');
 	}
 	if (isset($_POST["rtl_websdr_d1"])){
@@ -271,7 +271,7 @@
 		start_docker($cmd,'webrx_tab');
 	}
 	if (isset($_POST["change_config_websdr_d1"])){
-		$cmd = "sh /var/www/html/sdr/change_config_webrx_d1.sh ".$_POST["fft_fps"]." ".$_POST["fft_size"]." ".$_POST["samp_rate"]." ".$_POST["center_freq"]." ".$_POST["rf_gain"]." 2>&1";
+		$cmd = "sh /var/www/html/sdr/change_config_webrx_d1.sh ".$_POST["fft_fps_1"]." ".$_POST["fft_size_1"]." ".$_POST["samp_rate_1"]." ".$_POST["center_freq_1"]." ".$_POST["rf_gain_1"]." 2>&1";
 		start_docker($cmd,'settings_webrx_tab');
 	}
 	
