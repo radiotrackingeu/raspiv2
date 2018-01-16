@@ -251,11 +251,11 @@
 	
 	//WebRX
 	if (isset($_POST["rtl_websdr_d0"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($_SERVER['SERVER_PORT']+1).":8073 webrx sh /cfiles/start_openwebrx.sh";
+		$cmd = "sudo docker run --rm -t --name webrx-sdr-d1 --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($_SERVER['SERVER_PORT']+1).":8073 webrx sh /cfiles/start_openwebrx.sh";
 		start_docker_quite($cmd,'webrx_tab');
 	}
 	if (isset($_POST["rtl_websdr_stop_d0"])){
-		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=webrx) 2>&1";
+		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d) 2>&1";
 		start_docker($cmd,'webrx_tab');
 	}
 	if (isset($_POST["change_config_websdr_d0"])){
