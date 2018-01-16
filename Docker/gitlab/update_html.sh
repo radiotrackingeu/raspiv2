@@ -16,7 +16,7 @@ git pull
 git checkout $1
 git reset --hard origin/$1
 echo Switched to $1 branch.
-echo '<br> Copy new repositry.'
+echo '<br>Copy new repositry.'
 if [ $2 = 'keepcfg' ]
 then 
 	echo '<br> Save old config.'
