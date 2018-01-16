@@ -17,7 +17,7 @@ git checkout $1
 git reset --hard origin/$1
 echo Switched to $1 branch.
 echo '<br> Copy new repositry.'
-if [ $2 = 'keepcfg']
+if [ $2 = 'keepcfg' ]
 then 
 	cp /var/www/cfg/globalconfig /home/pi/globalconfig
 fi
@@ -26,7 +26,7 @@ cp -R /home/pi/gitrep/raspiv2/html/ /var/www/
 echo 'Refresh porperty rights. <br>'
 chown -R www-data:www-data /var/www/ !(mysql)
 
-if [ $2 = 'keepcfg']
+if [ $2 = 'keepcfg' ]
 then 
 	cp /home/pi/globalconfig /var/www/cfg/globalconfig 
 fi

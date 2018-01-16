@@ -20,7 +20,7 @@
 	
 	//define config section and items.
 	define ('confSection', 'gitlab_updates');
-	define ('confKeys', array('online_repository','lokal_branch'));
+	define ('confKeys', array('online_repository','lokal_branch','git_keepcfg'));
 	
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');	
