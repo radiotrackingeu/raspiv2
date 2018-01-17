@@ -232,11 +232,7 @@ int main(int argc, char*argv[])
 						psd_template[i] = psd[i];
 					}
 				}
-				if (num_transforms==sampling_rate / timestep) {			
-					//memmove(psd_template, fft_min, nfft*sizeof(float));
-					memmove(psd_max, psd, nfft*sizeof(float));
-				}
-
+				memmove(psd_max, psd, nfft*sizeof(float));
             } else {
                 // detect differences between current PSD estimate and template
                 step(threshold, sampling_rate);
@@ -246,6 +242,10 @@ int main(int argc, char*argv[])
             num_transforms += spgramcf_get_num_transforms(periodogram);
             spgramcf_reset(periodogram);
             if (num_transforms%keepalive == 0) {
+				int i;
+				for (i=0;i<nfft;i++) {
+						printf("%f",psd_template[i]);
+				}
                 clock_gettime(CLOCK_REALTIME,&now);
                 char tbuf[30];
                 format_timestamp(now,tbuf,30);
