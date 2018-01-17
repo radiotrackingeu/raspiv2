@@ -224,10 +224,19 @@ int main(int argc, char*argv[])
             spgramcf_get_psd(periodogram, psd);
 
             // compute average template
-            if (num_transforms==0) {
+            if (num_transforms<= sampling_rate / timestep) {
                 // set template PSD for relative signal detection
-                memmove(psd_template, psd, nfft*sizeof(float));
-				memmove(psd_max, psd, nfft*sizeof(float));
+				// Add up all singal strength to derive minimum value
+				for (i=0;i<nfft;i++) {
+					if ( psd[i] < psd_template[i] ) {
+						psd_template[i] = psd[i];
+					}
+				}
+				if (num_transforms=sampling_rate / timestep) {			
+					//memmove(psd_template, fft_min, nfft*sizeof(float));
+					memmove(psd_max, psd, nfft*sizeof(float));
+				}
+
             } else {
                 // detect differences between current PSD estimate and template
                 step(threshold, sampling_rate);
