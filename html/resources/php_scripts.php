@@ -80,19 +80,22 @@
 	
 	//Logger Functions
 	 if (isset($_POST["log_start_0"])){
-		$file_name = $_POST['antenna_id_0'] . date('Y_m_d_H_i');
+		$file_name = $config['logger']['antenna_id_0'] . date('Y_m_d_H_i');
 		$file_path = "/tmp/record/" . $file_name;
-		$sql = isset($POST[use_sql_0]) ? "--sql --db_host ".$POST[db_host_0]." --db_user ".$POST[db_user_0]." --db_pass ".$POST[db_pass_0] : "";
-		$cmd = "sudo docker run --rm --name=logger-sdr-d0 --net=host -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ liquidsdr bash -c 'rtl_sdr -d 0 -f ".$_POST['center_freq_0']." -s ".$_POST['freq_range_0']." -g ".$_POST['log_gain_0']." - 2> ".$file_path." | /tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$_POST['threshold_0']." -r ".$_POST['freq_range_0']." -d ".$file_name." -b ".$_POST['nfft_0']." -n ".$_POST['timestep_0']." ".$sql." >> ". $file_path ." 2>&1'";
-		start_docker_quite($cmd,'tab_logger');
+		$sql = isset($config['logger']['use_sql_0']) ? "--sql --db_host ".$config['logger']['db_host_0']." --db_user ".$config['logger']['db_user_0']." --db_pass ".$config['logger']['db_pass_0'] : "";
+		$cmd_docker = "sudo docker run --rm --name=logger-sdr-d0 --net=host -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ liquidsdr bash -c";
+		$cmd_rtl_sdr = "rtl_sdr -d 0 -f ".$config['logger']['center_freq_0']." -s ".$config['logger']['freq_range_0']." -g ".$config['logger']['log_gain_0']." - 2> ".$file_path;
+		$cmd_liquidsdr = "/tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$config['logger']['threshold_0']." -r ".$config['logger']['freq_range_0']." -d ".$file_name." -b ".$config['logger']['nfft_0']." -n ".$config['logger']['timestep_0']." ".$sql;
+		$cmd = $cmd_docker." '".$cmd_rtl_sdr." | ".$cmd_liquidsdr." >> ". $file_path ." 2>&1'";
+		start_docker_echo($cmd,'tab_logger',$cmd);
 		 
 		// older version - depreciated 
 		// check_docker("logger-sdr-d1");
 		// $cmd = "sudo docker run --rm --name logger-sdr-d1 -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
 		// start_docker_quite($cmd,'tab_logger');
 	 }
-	if (isset($_POST["log_stop"])){
-		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d".$config['logger']['device'].") 2>&1";
+	if (isset($_POST["log_stop_0"])){
+		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d0) 2>&1";
 		start_docker($cmd, 'tab_logger');
 	}
 	
