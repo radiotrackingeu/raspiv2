@@ -196,7 +196,7 @@ int main(int argc, char*argv[])
 	printf("Will print timestamp every %i transforms\n", keepalive);
 	printf("%s\n",tbuf);
 	//print row names
-	printf("time;duration;freq;bw;strength\n");
+	printf("time;duration;freq;bw;strength;sample\n");
 
     // continue processing as long as there are samples in the file
     unsigned long int total_samples  = 0;
@@ -245,7 +245,7 @@ int main(int argc, char*argv[])
                 clock_gettime(CLOCK_REALTIME,&now);
                 char tbuf[30];
                 format_timestamp(now,tbuf,30);
-                printf("%s;;;;\n",tbuf);
+                printf("%s;;;;;\n",tbuf);
 				fflush(stdout);
             }
 
@@ -474,8 +474,8 @@ int step(float _threshold, unsigned int _sampling_rate)
             float signal_bw   = get_group_bw(i)*_sampling_rate;            // bandwidth estimate (normalized)
 			float max_signal  = get_group_max_sig(i);						// maximum signal strength per group
 //            float start_time  = num_transforms*timestep - duration; // approximate starting time
-            printf("%s;%-10.6f;%9.6f;%9.6f;%f;\n",
-                    timestamp, duration, signal_freq, signal_bw,max_signal);
+            printf("%s;%-10.6f;%9.6f;%9.6f;%f;%lu\n",
+                    timestamp, duration, signal_freq, signal_bw,max_signal, num_transforms);
 			fflush(stdout);
 			if (write_to_db!=0) {
 				snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s VALUES(\"%s\",%-10.6f,%9.6f,%9.6f,%f,\"%s\")", DB_TABLE, timestamp, duration, signal_freq, signal_bw, max_signal, device_name);

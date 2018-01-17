@@ -87,7 +87,7 @@
 		$cmd_rtl_sdr = "rtl_sdr -d 0 -f ".$config['logger']['center_freq_0']." -s ".$config['logger']['freq_range_0']." -g ".$config['logger']['log_gain_0']." - 2> ".$file_path;
 		$cmd_liquidsdr = "/tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$config['logger']['threshold_0']." -r ".$config['logger']['freq_range_0']." -d ".$file_name." -b ".$config['logger']['nfft_0']." -n ".$config['logger']['timestep_0']." ".$sql;
 		$cmd = $cmd_docker." '".$cmd_rtl_sdr." | ".$cmd_liquidsdr." >> ". $file_path ." 2>&1'";
-		start_docker($cmd,'tab_logger','Started Receiver 0');
+		start_docker_echo($cmd,'tab_logger','Started Receiver 0');
 		 
 		// older version - depreciated 
 		// check_docker("logger-sdr-d1");
