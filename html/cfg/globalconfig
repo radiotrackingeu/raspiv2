@@ -33,7 +33,6 @@ online_repository = "github"
 lokal_branch = "live"
 git_keepcfg = "updatecfg"
 
-
 [logger]
 device = 1
 log_gain[1] = 20
