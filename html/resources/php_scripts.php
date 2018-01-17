@@ -79,10 +79,11 @@
 	}
 	
 	//Logger Functions
-	 if (isset($_POST["log_start"])){
-		$file_name = "/tmp/record/" . $_POST['pre_log_name'] . $_POST['log_name'];
-		$logger_num = $config['logger']['device'];
-		$cmd = "sudo docker run --rm --name=logger-sdr-d".$logger_num." --net=host -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ liquidsdr bash -c 'rtl_sdr -d ".$logger_num." -f ".$_POST['center_freq']." -s ".$_POST['freq_range']." -g ".$_POST['log_gain']." - 2> ".$file_name." | /tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$_POST['threshold']." -r ".$_POST['freq_range']." >> ". $file_name ." 2>&1'";
+	 if (isset($_POST["log_start_0"])){
+		$file_name = $_POST['antenna_id_0'] . date('Y_m_d_H_i');
+		$file_path = "/tmp/record/" . $file_name;
+		$sql = isset($POST[use_sql_0]) ? "--sql --db_host ".$POST[db_host_0]." --db_user ".$POST[db_user_0]." --db_pass ".$POST[db_pass_0] : "";
+		$cmd = "sudo docker run --rm --name=logger-sdr-d0 --net=host -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ liquidsdr bash -c 'rtl_sdr -d 0 -f ".$_POST['center_freq_0']." -s ".$_POST['freq_range_0']." -g ".$_POST['log_gain_0']." - 2> ".$file_path." | /tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$_POST['threshold_0']." -r ".$_POST['freq_range_0']." -d ".$file_name." -b ".$_POST['nfft_0']." -n ".$_POST['timestep_0']." ".$sql." >> ". $file_path ." 2>&1'";
 		start_docker_quite($cmd,'tab_logger');
 		 
 		// older version - depreciated 
