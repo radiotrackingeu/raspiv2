@@ -87,11 +87,11 @@
 		$cmd_rtl_sdr = "rtl_sdr -d 0 -f ".$config['logger']['center_freq_0']." -s ".$config['logger']['freq_range_0']." -g ".$config['logger']['log_gain_0']." - 2> ".$file_path;
 		$cmd_liquidsdr = "/tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$config['logger']['threshold_0']." -r ".$config['logger']['freq_range_0']." -d ".$file_name." -b ".$config['logger']['nfft_0']." -n ".$config['logger']['timestep_0']." ".$sql;
 		$cmd = $cmd_docker." '".$cmd_rtl_sdr." | ".$cmd_liquidsdr." >> ". $file_path ." 2>&1'";
-		start_docker_echo($cmd,'tab_logger','Started Receiver 0');
+		start_docker_echo($cmd,'tab_logger_range','Started Receiver 0');
 	}
 	if (isset($_POST["log_stop_0"])){
 		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d0) 2>&1";
-		start_docker($cmd, 'tab_logger');
+		start_docker($cmd, 'tab_logger_range');
 	}
 	
 	if (isset($_POST["log_start_1"])){
@@ -102,12 +102,12 @@
 		$cmd_rtl_sdr = "rtl_sdr -d 0 -f ".$config['logger']['center_freq_1']." -s ".$config['logger']['freq_range_1']." -g ".$config['logger']['log_gain_1']." - 2> ".$file_path;
 		$cmd_liquidsdr = "/tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$config['logger']['threshold_1']." -r ".$config['logger']['freq_range_1']." -d ".$file_name." -b ".$config['logger']['nfft_1']." -n ".$config['logger']['timestep_1']." ".$sql;
 		$cmd = $cmd_docker." '".$cmd_rtl_sdr." | ".$cmd_liquidsdr." >> ". $file_path ." 2>&1'";
-		start_docker($cmd,'tab_logger','Started Receiver 1');
+		start_docker($cmd,'tab_logger_range','Started Receiver 1');
 	}
 	 
 	if (isset($_POST["log_stop_1"])){
 		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d0) 2>&1";
-		start_docker($cmd, 'tab_logger');
+		start_docker($cmd, 'tab_logger_range');
 	}
 	
 	//Logger Cornjob Functions
