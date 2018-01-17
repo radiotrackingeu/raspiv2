@@ -79,6 +79,7 @@
 	}
 	
 	//Logger Functions
+	 if (isset($_POST["log_start_0"])){
 	if (isset($_POST["log_start_0"])){
 		$file_name = $config['logger']['antenna_id_0'] . date('Y_m_d_H_i');
 		$file_path = "/tmp/record/" . $file_name;
@@ -87,7 +88,8 @@
 		$cmd_rtl_sdr = "rtl_sdr -d 0 -f ".$config['logger']['center_freq_0']." -s ".$config['logger']['freq_range_0']." -g ".$config['logger']['log_gain_0']." - 2> ".$file_path;
 		$cmd_liquidsdr = "/tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$config['logger']['threshold_0']." -r ".$config['logger']['freq_range_0']." -d ".$file_name." -b ".$config['logger']['nfft_0']." -n ".$config['logger']['timestep_0']." ".$sql;
 		$cmd = $cmd_docker." '".$cmd_rtl_sdr." | ".$cmd_liquidsdr." >> ". $file_path ." 2>&1'";
-		start_docker_echo($cmd,'tab_logger',$cmd);
+		start_docker($cmd,'tab_logger','Started Receiver 0');
+
 	}
 	 
 	if (isset($_POST["log_stop_0"])){
@@ -103,7 +105,7 @@
 		$cmd_rtl_sdr = "rtl_sdr -d 0 -f ".$config['logger']['center_freq_1']." -s ".$config['logger']['freq_range_1']." -g ".$config['logger']['log_gain_1']." - 2> ".$file_path;
 		$cmd_liquidsdr = "/tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$config['logger']['threshold_1']." -r ".$config['logger']['freq_range_1']." -d ".$file_name." -b ".$config['logger']['nfft_1']." -n ".$config['logger']['timestep_1']." ".$sql;
 		$cmd = $cmd_docker." '".$cmd_rtl_sdr." | ".$cmd_liquidsdr." >> ". $file_path ." 2>&1'";
-		start_docker_echo($cmd,'tab_logger',$cmd);
+		start_docker($cmd,'tab_logger','Started Receiver 1');
 	}
 	 
 	if (isset($_POST["log_stop_1"])){
@@ -251,6 +253,12 @@
 	
 	if (isset($_POST["compile"])){
 		$gcc="gcc -g -O2  -ffast-math -mcpu=cortex-a7 -mfloat-abi=hard -mfpu=neon-vfpv4 -Wall -I/usr/include/mysql -fPIC  /tmp/rtlsdr_signal_detect.c /liquidsdr/liquid-dsp/libliquid.a -o /tmp/rtlsdr_signal_detect -lfftw3f -lm -lc -I/usr/include/mysql -L/usr/lib/arm-linux-gnueabihf -lmysqlclient -lpthread -lz -lm -ldl";
+		$cmd = "sudo docker run -t --rm -v /var/www/html/sdr/liquidsdr/:/tmp/ liquidsdr ".$gcc;
+		start_docker($cmd,'tab_raw_data_ana');
+	}
+	
+	if (isset($_POST["compile_raspi_zero"])){
+		$gcc="gcc -g -O2  -ffast-math -Wall -I/usr/include/mysql -fPIC  /tmp/rtlsdr_signal_detect.c /liquidsdr/liquid-dsp/libliquid.a -o /tmp/rtlsdr_signal_detect -lfftw3f -lm -lc -I/usr/include/mysql -L/usr/lib/arm-linux-gnueabihf -lmysqlclient -lpthread -lz -lm -ldl";
 		$cmd = "sudo docker run -t --rm -v /var/www/html/sdr/liquidsdr/:/tmp/ liquidsdr ".$gcc;
 		start_docker($cmd,'tab_raw_data_ana');
 	}

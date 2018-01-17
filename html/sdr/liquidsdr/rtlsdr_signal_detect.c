@@ -232,11 +232,7 @@ int main(int argc, char*argv[])
 						psd_template[i] = psd[i];
 					}
 				}
-				if (num_transforms==sampling_rate / timestep) {			
-					//memmove(psd_template, fft_min, nfft*sizeof(float));
-					memmove(psd_max, psd, nfft*sizeof(float));
-				}
-
+				memmove(psd_max, psd, nfft*sizeof(float));
             } else {
                 // detect differences between current PSD estimate and template
                 step(threshold, sampling_rate);

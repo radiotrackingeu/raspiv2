@@ -456,7 +456,8 @@ function setVisibility(menu, label, element) {
 				?>
 			</select> 
 			<br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Compile" name="compile"/>
+			<input type="submit" class="w3-btn w3-brown" value="Compile Raspi 3" name="compile"/>
+			<input type="submit" class="w3-btn w3-brown" value="Compile Raspi Zero" name="compile_raspi_zero"/>
 			<input type="submit" class="w3-btn w3-brown" value="Start" name="start_analyze"/>
 			<input type="submit" class="w3-btn w3-brown" value="Stop" name="stop_analyze"/>
 		</form>
