@@ -88,6 +88,7 @@
 		$cmd_liquidsdr = "/tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$config['logger']['threshold_0']." -r ".$config['logger']['freq_range_0']." -d ".$file_name." -b ".$config['logger']['nfft_0']." -n ".$config['logger']['timestep_0']." ".$sql;
 		$cmd = $cmd_docker." '".$cmd_rtl_sdr." | ".$cmd_liquidsdr." >> ". $file_path ." 2>&1'";
 		start_docker_echo($cmd,'tab_logger','Started Receiver 0');
+	}
 	if (isset($_POST["log_stop_0"])){
 		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d0) 2>&1";
 		start_docker($cmd, 'tab_logger');
