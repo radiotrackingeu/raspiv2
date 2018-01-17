@@ -79,7 +79,6 @@
 	}
 	
 	//Logger Functions
-	 if (isset($_POST["log_start_0"])){
 	if (isset($_POST["log_start_0"])){
 		$file_name = $config['logger']['antenna_id_0'] . date('Y_m_d_H_i');
 		$file_path = "/tmp/record/" . $file_name;
