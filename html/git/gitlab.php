@@ -20,7 +20,7 @@
 	
 	//define config section and items.
 	define ('confSection', 'gitlab_updates');
-	define ('confKeys', array('online_repository','lokal_branch'));
+	define ('confKeys', array('online_repository','lokal_branch','git_keepcfg'));
 	
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');	
@@ -37,12 +37,16 @@
 
 <div id="GIT" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
-		<br>First update the User Interface - if a single Application has been updated - please go afterwards to Applications<br><br>
+		<br>Update the User Interface - if a single Application has been updated - please go afterwards to Applications. Please also choose to keep your old config file or update it with standard settings.<br><br>
 		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
 				<select name="git_checkout">
 					<option value="master" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "master" ?  "selected" : ""; ?>>Stable Version</option>
 					<option value="live" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "live" ? "selected" : ""; ?>>Development Version</option>
-				</select> 
+				</select>
+				<select name="git_keepcfg">
+					<option value="updatecfg" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "updatecfg" ? "selected" : ""; ?>>Update config file</option>
+					<option value="keepcfg" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "keepcfg" ?  "selected" : ""; ?>>Keep old config file</option>
+				</select>
 			<input class="w3-btn w3-brown" type="submit" value="Update User Interface" name="update_rep" onclick="openCity('GIT')"/>
 		</form>
 		<br>

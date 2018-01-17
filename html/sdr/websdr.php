@@ -38,8 +38,8 @@
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 0</h3>
 			<form method="POST" enctype="multipart/form-data">
-				<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr">
-				<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop">
+				<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr_d0">
+				<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop_d0">
 				<br><br>
 				<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1)?>"> Link to Device 0 </a>
 				<br><br>

@@ -16,7 +16,6 @@
 #include <limits.h>
 #include <mysql.h>
 
-#define KEEPALIVE (300) // keepalive interval in seconds
 #define DB_BASE "tolletestdatenbank"
 #define DB_TABLE "tolltesttabelle"
 
@@ -194,7 +193,7 @@ int main(int argc, char*argv[])
 	clock_gettime(CLOCK_REALTIME,&now);
 	char tbuf[30];
 	format_timestamp(now,tbuf,30);
-	printf("Will print timestamp every %d seconds / %u transforms\n", KEEPALIVE, keepalive);
+	printf("Will print timestamp every %i transforms\n", keepalive);
 	printf("%s\n",tbuf);
 	//print row names
 	printf("time;duration;freq;bw;strength\n");
@@ -224,10 +223,20 @@ int main(int argc, char*argv[])
             spgramcf_get_psd(periodogram, psd);
 
             // compute average template
-            if (num_transforms==0) {
+            if (num_transforms<= sampling_rate / timestep) {
                 // set template PSD for relative signal detection
-                memmove(psd_template, psd, nfft*sizeof(float));
-				memmove(psd_max, psd, nfft*sizeof(float));
+				// Add up all singal strength to derive minimum value
+				int i;
+				for (i=0;i<nfft;i++) {
+					if ( psd[i] < psd_template[i] ) {
+						psd_template[i] = psd[i];
+					}
+				}
+				if (num_transforms==sampling_rate / timestep) {			
+					//memmove(psd_template, fft_min, nfft*sizeof(float));
+					memmove(psd_max, psd, nfft*sizeof(float));
+				}
+
             } else {
                 // detect differences between current PSD estimate and template
                 step(threshold, sampling_rate);
