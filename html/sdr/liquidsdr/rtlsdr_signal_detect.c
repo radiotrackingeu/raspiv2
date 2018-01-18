@@ -16,8 +16,8 @@
 #include <limits.h>
 #include <mysql.h>
 
-#define DB_BASE "tolletestdatenbank"
-#define DB_TABLE "tolltesttabelle"
+#define DB_BASE "rteu"
+#define DB_TABLE "rteu.signals"
 
 float           *   psd_template;
 float           *   psd;
@@ -36,17 +36,19 @@ int                 tmp_transforms = 0;
 struct              timespec now;
 int                 keepalive = 300;
 
-char            *   device_name="none";
+//char            *   device_name="none";
+int					run_id=0;
 
 int                 write_to_db = 0;
 MYSQL           *   con;
 char            *   db_host = NULL, *db_user = NULL, *db_pass = NULL;
 
 struct option longopts[] = {
-    {"sql", no_argument, &write_to_db, 1},
-    {"db_host", required_argument, NULL, 900},
-    {"db_user", required_argument, NULL, 901},
-    {"db_pass", required_argument, NULL, 902},
+    {"sql",       no_argument, &write_to_db, 1},
+    {"db_host",   required_argument, NULL, 900},
+    {"db_user",   required_argument, NULL, 901},
+    {"db_pass",   required_argument, NULL, 902},
+	{"db_run_id", required_argument, NULL, 903},
     {0,0,0,0}
 };
 
@@ -56,17 +58,18 @@ void usage()
     printf("%s [-b num] [-d name] [-h] [-i file] [-k sec] [-n num] [-r rate] [-s] [--sql [--db_host host] --db_user user --db_pass pass] [-t thre]\n", __FILE__);
     printf("  -h                : print this help\n");
     printf("  -i <file>         : input data filename\n");
-    printf("  -t <threshold>         : detection threshold above psd, default: 10 dB\n");
+    printf("  -t <threshold>    : detection threshold above psd, default: 10 dB\n");
     printf("  -s                : use STDIN as input\n");
     printf("  -r <rate>         : sampling rate in Hz, default 250000Hz\n");
-    printf("  -d <name>         : device name\n");
+    //printf("  -d <name>         : device name\n");
     printf("  -b <number>       : number of bins used for fft, default is 400\n");
     printf("  -n <number>       : number of samples per fft, default is 50\n");
     printf("  -k <seconds>      : prints a keep-alive statement every <sec> seconds, default is 300\n");
     printf(" --sql              : write to database, requires --db_user, --db_pass\n");
-    printf(" --db_host <host>   : address of sql server to use, default is localhost\n");
-    printf(" --db_user <user>   : username for sql server \n");
+    printf(" --db_host <host>   : address of SQL server to use, default is localhost\n");
+    printf(" --db_user <user>   : username for SQL server \n");
     printf(" --db_pass <pass>   : matching password\n");
+	printf(" --db_run_id <id>	: numeric id of this recording run. Used to link it to its metadata in the SQL database")
 }
 
 // read samples from file and store into buffer
@@ -112,11 +115,12 @@ int main(int argc, char*argv[])
         case 'r': sampling_rate = atoi(optarg);         break;
 		case 'b': nfft = atoi(optarg);         			break;
         case 'n': timestep = atoi(optarg);         		break;
-        case 'd': device_name = optarg;                 break;
+//        case 'd': device_name = optarg;                 break;
         case 'k': keepalive = atoi(optarg);             break;
         case 900: db_host = optarg;                     break;
         case 901: db_user = optarg;                     break;
         case 902: db_pass = optarg;                     break;
+        case 903: run_id = optarg;                      break;
         case 0  :                                       break; // return value of getopt_long() when setting a flag
         default : exit(1);
         }
@@ -478,7 +482,7 @@ int step(float _threshold, unsigned int _sampling_rate)
                     timestamp, duration, signal_freq, signal_bw,max_signal, num_transforms);
 			fflush(stdout);
 			if (write_to_db!=0) {
-				snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s VALUES(\"%s\",%-10.6f,%9.6f,%9.6f,%f,\"%s\")", DB_TABLE, timestamp, duration, signal_freq, signal_bw, max_signal, device_name);
+				snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s ('timestamp','duration','signal_freq','signal_bw', 'max_signal', 'run') VALUE(\"%s\",%-10.6f,%9.6f,%9.6f,%f,%i)", DB_TABLE, timestamp, duration, signal_freq, signal_bw, max_signal, run_id);
 				mysql_query(con, sql_statement);
 			}
 
