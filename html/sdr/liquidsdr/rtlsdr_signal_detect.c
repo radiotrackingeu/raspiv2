@@ -482,7 +482,7 @@ int step(float _threshold, unsigned int _sampling_rate)
                     timestamp, duration, signal_freq, signal_bw,max_signal, num_transforms);
 			fflush(stdout);
 			if (write_to_db!=0) {
-				snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s ('timestamp','duration','signal_freq','signal_bw', 'max_signal', 'run') VALUE(\"%s\",%-10.6f,%9.6f,%9.6f,%f,%i)", DB_TABLE, timestamp, duration, signal_freq, signal_bw, max_signal, run_id);
+				snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s (timestamp,duration,signal_freq,signal_bw, max_signal, run) VALUE(\"%s\",%-10.6f,%9.6f,%9.6f,%f,%i)", DB_TABLE, timestamp, duration, signal_freq, signal_bw, max_signal, run_id);
 				mysql_query(con, sql_statement);
 			}
 
