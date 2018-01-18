@@ -69,7 +69,7 @@ void usage()
     printf(" --db_host <host>   : address of SQL server to use, default is localhost\n");
     printf(" --db_user <user>   : username for SQL server \n");
     printf(" --db_pass <pass>   : matching password\n");
-	printf(" --db_run_id <id>	: numeric id of this recording run. Used to link it to its metadata in the SQL database")
+	printf(" --db_run_id <id>	: numeric id of this recording run. Used to link it to its metadata in the SQL database");
 }
 
 // read samples from file and store into buffer
@@ -120,7 +120,7 @@ int main(int argc, char*argv[])
         case 900: db_host = optarg;                     break;
         case 901: db_user = optarg;                     break;
         case 902: db_pass = optarg;                     break;
-        case 903: run_id = optarg;                      break;
+        case 903: run_id = atoi(optarg);                break;
         case 0  :                                       break; // return value of getopt_long() when setting a flag
         default : exit(1);
         }
