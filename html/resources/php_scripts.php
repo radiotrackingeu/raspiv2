@@ -347,7 +347,7 @@
 				return "Connection failed: " . mysqli_connect_error();	
 			} else {
 				$cmd_sql = "INSERT INTO rteu.runs (device,pos_x,pos_y,orientation,beam_width,gain,center_freq,freq_range,threshold,fft_bins,fft_samples)".
-					"VALUE ('".	$config['logger']['antenna_id_'.$device]."',".       $config['logger']['antenna_position_N_'.$device].",".
+					" VALUE ('".	$config['logger']['antenna_id_'.$device]."',".       $config['logger']['antenna_position_N_'.$device].",".
 								$config['logger']['antenna_position_E_'.$device].",".$config['logger']['antenna_orientation_'.$device].",".
 								$config['logger']['beam_width_'.$device].",".        $config['logger']['log_gain_'.$device].",".
 								$config['logger']['center_freq_'.$device].",".       $config['logger']['freq_range_'.$device].",".
