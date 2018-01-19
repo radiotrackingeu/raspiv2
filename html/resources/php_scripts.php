@@ -82,17 +82,8 @@
 	 if (isset($_POST["log_start_0"])){
 		$file_name = $config['logger']['antenna_id_0'] . date('Y_m_d_H_i');
 		$file_path = "/tmp/record/" . $file_name;
-		$cmd_docker = "sudo docker run --rm --name=logger-sdr-d0 --net=host -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ liquidsdr bash -c";
-		$cmd_rtl_sdr = "rtl_sdr -d 0 -f ".$config['logger']['center_freq_0']." -s ".$config['logger']['freq_range_0']." -g ".$config['logger']['log_gain_0']." - 2> ".$file_path;
-		$cmd_liquidsdr = "/tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$config['logger']['threshold_0']." -r ".$config['logger']['freq_range_0']." -b ".$config['logger']['nfft_0']." -n ".$config['logger']['timestep_0'];
-		$run_id = write_run_to_db($config, 0);
-		if (!is_int($run_id)) {
-			echo $run_id;
-		} else if ($run_id >0) {
-			$cmd_liquidsdr .= " --sql --db_host ".$config['logger']['db_host_0']." --db_user ".$config['logger']['db_user_0']." --db_pass ".$config['logger']['db_pass_0'];
-			$cmd_liquidsdr .= " --db_run_id ".$run_id;
-		}
-		$cmd = $cmd_docker." '".$cmd_rtl_sdr." | ".$cmd_liquidsdr." >> ". $file_path ." 2>&1'";
+		$run_id = write_run_to_db($config, 0, $file_name);
+		$cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." | ".cmd_liquidsdr($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
 		start_docker_echo($cmd,'tab_logger_range','Started Receiver 1');
 	}
 	if (isset($_POST["log_stop_0"])){
@@ -103,23 +94,33 @@
 	if (isset($_POST["log_start_1"])){
 		$file_name = $config['logger']['antenna_id_1'] . date('Y_m_d_H_i');
 		$file_path = "/tmp/record/" . $file_name;
-		$cmd_docker = "sudo docker run --rm --name=logger-sdr-d1 --net=host -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ liquidsdr bash -c";
-		$cmd_rtl_sdr = "rtl_sdr -d 1 -f ".$config['logger']['center_freq_1']." -s ".$config['logger']['freq_range_1']." -g ".$config['logger']['log_gain_1']." - 2> ".$file_path;
-		$cmd_liquidsdr = "/tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$config['logger']['threshold_1']." -r ".$config['logger']['freq_range_1']." -b ".$config['logger']['nfft_1']." -n ".$config['logger']['timestep_1'];
-		$run_id = write_run_to_db($config, 1);
-		if (!is_int($run_id)) {
-			echo $run_id;
-		} else if ($run_id >0) {
-			$cmd_liquidsdr .= " --sql --db_host ".$config['logger']['db_host_1']." --db_user ".$config['logger']['db_user_1']." --db_pass ".$config['logger']['db_pass_1'];
-			$cmd_liquidsdr .= " --db_run_id ".$run_id;
-		}
-		$cmd = $cmd_docker." '".$cmd_rtl_sdr." | ".$cmd_liquidsdr." >> ". $file_path ." 2>&1'";
+		$run_id = write_run_to_db($config, 1, $file_name);
+		$cmd = cmd_docker(1)." '".cmd_rtl_sdr($config, 1)." | ".cmd_liquidsdr($config, 1).cmd_sql($config, 1, $run_id)." >> ". $file_path." 2>&1'";
 		start_docker_echo($cmd,'tab_logger_range','Started Receiver 2');
 	}
 	 
 	if (isset($_POST["log_stop_1"])){
-		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d0) 2>&1";
+		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d1) 2>&1";
 		start_docker($cmd, 'tab_logger_range');
+	}
+	
+	function cmd_docker($dev) {
+		return "sudo docker run --rm --name=logger-sdr-d".$dev." --net=host -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ liquidsdr bash -c";
+	}
+	
+	function cmd_sql($config, $dev, $run_id) {
+		if (!is_int($run_id)) {
+			echo $run_id;  // on error write_run_to_db returns error message rather than run id.
+			return "";
+		}
+		return " --sql --db_host ".$config['logger']['db_host_'.$dev]." --db_user ".$config['logger']['db_user_'.$dev]." --db_pass ".$config['logger']['db_pass_'.$dev]." --db_run_id ".$run_id;
+	}
+	
+	function cmd_rtl_sdr($config, $dev) {
+		return "rtl_sdr -d 0 -f ".$config['logger']['center_freq_'.$dev]." -s ".$config['logger']['freq_range_'.$dev]." -g ".$config['logger']['log_gain_'.$dev]." - 2> ".$file_path;
+	}
+	function cmd_liquidsdr($config, $dev) {
+		return "/tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$config['logger']['threshold_'.$dev]." -r ".$config['logger']['freq_range_'.$dev]." -b ".$config['logger']['nfft_'.$dev]." -n ".$config['logger']['timestep_'.$dev];
 	}
 	
 	//Logger Cornjob Functions
@@ -339,17 +340,17 @@
 	
 	// SQL Functions
 	
-	function write_run_to_db($config, $device) {
+	function write_run_to_db($config, $device, $file_name) {
 		if ($config['logger']['use_sql_'.$device] != "On")
 			return -1;
-		$con = mysqli_connect($config['logger']['db_host_'.$device], $config['logger']['db_user_'.$device], $config['logger']['db_pass_'.$device]);
+		$con = mysqli_connect($file_name, $config['logger']['db_user_'.$device], $config['logger']['db_pass_'.$device]);
 			if (mysqli_connect_errno()) {
 				return "Connection failed: " . mysqli_connect_error();	
 			} else {
 				$cmd_sql = "INSERT INTO rteu.runs (device,pos_x,pos_y,orientation,beam_width,gain,center_freq,freq_range,threshold,fft_bins,fft_samples)".
-					" VALUE ('".	$config['logger']['antenna_id_'.$device]."',".       $config['logger']['antenna_position_N_'.$device].",".
+					" VALUE ('".$config['logger']['antenna_id_'.$device]."',".       $config['logger']['antenna_position_N_'.$device].",".
 								$config['logger']['antenna_position_E_'.$device].",".$config['logger']['antenna_orientation_'.$device].",".
-								$config['logger']['antenna_beam_width_'.$device].",".        $config['logger']['log_gain_'.$device].",".
+								$config['logger']['antenna_beam_width_'.$device].",".$config['logger']['log_gain_'.$device].",".
 								$config['logger']['center_freq_'.$device].",".       $config['logger']['freq_range_'.$device].",".
 								$config['logger']['threshold_'.$device].",".         $config['logger']['nfft_'.$device].",".
 								$config['logger']['timestep_'.$device].");";
