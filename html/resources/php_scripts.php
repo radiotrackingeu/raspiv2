@@ -84,7 +84,7 @@
 		$file_path = "/tmp/record/" . $file_name;
 		$run_id = write_run_to_db($config, 0, $file_name);
 		$cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." 2> ".$file_path." | ".cmd_liquidsdr($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
-		start_docker_echo($cmd,'tab_logger_range','Started Receiver 1.<br>Device id: <a href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+		start_docker_echo($cmd,'tab_logger_range','Started Receiver 1.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
 	}
 	if (isset($_POST["log_stop_0"])){
 		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d0) 2>&1";
@@ -96,7 +96,7 @@
 		$file_path = "/tmp/record/" . $file_name;
 		$run_id = write_run_to_db($config, 1, $file_name);
 		$cmd = cmd_docker(1)." '".cmd_rtl_sdr($config, 1)." 2> ".$file_path." | ".cmd_liquidsdr($config, 1).cmd_sql($config, 1, $run_id)." >> ". $file_path." 2>&1'";
-		start_docker_echo($cmd,'tab_logger_range','Started Receiver 2.<br>Device id: <a href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+		start_docker_echo($cmd,'tab_logger_range','Started Receiver 2.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
 	}
 	 
 	if (isset($_POST["log_stop_1"])){
