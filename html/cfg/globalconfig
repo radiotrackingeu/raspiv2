@@ -45,10 +45,7 @@ freq_range_0 = 250000
 threshold_0 = 10
 nfft_0 = 400
 timestep_0 = 50
-use_sql_0 = "On"
-db_host_0 = "127.0.0.1"
-db_user_0 = "rteu"
-db_pass_0 = "rteuv2!"
+use_sql_0 = "Yes"
 antenna_id_1 = "rteu_r1_"
 antenna_position_N_1 = 1.234
 antenna_position_E_1 = 5.678
@@ -60,10 +57,7 @@ freq_range_1 = 250000
 threshold_1 = 10
 nfft_1 = 400
 timestep_1 = 50
-use_sql_1 = "On"
-db_host_1 = "127.0.0.1"
-db_user_1 = "rteu"
-db_pass_1 = "rteuv2!"
+use_sql_1 = "No"
 timer_start_0 = "start_time"
 timer_start_time_0 = "03:57"
 timer_stop_0 = "stop_no"
@@ -72,6 +66,13 @@ timer_start_1 = "start_time"
 timer_start_time_1 = "23:03"
 timer_stop_1 = "stop_time"
 timer_stop_time_1 = "23:45"
+
+[database]
+db_host = "127.0.0.1"
+db_port = 3306
+db_user = "rteu"
+db_pass = "rteuv2!"
+db_start = "Yes"
 
 [remote]
 time_start_vpn = "reboot"

@@ -68,6 +68,8 @@
 	
 	<!-- Data storage -->
 	<div class="w3-dropdown-hover w3-mobile">
+		<a class="w3-bar-item w3-button w3-mobile" href="/data/data.php">Data</a>
+		<!--
 		<button class="w3-button" onclick="dropd('data')">
 			<i class="fa fa-database "></i> Data <i class="fa fa-caret-down"></i>
 		</button>
@@ -75,6 +77,7 @@
 			<a href="/data/data.php">Start</a>
 			<a href="/data/data_setup.php">Setup</a>
 		</div>
+		-->
 	</div>
 	
 	<!-- WiFi -->

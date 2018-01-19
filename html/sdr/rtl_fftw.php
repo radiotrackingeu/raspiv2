@@ -202,8 +202,6 @@ function setVisibility(menu, label, element) {
 				
 					<label for="threshold_0"> Log Level </label>
 					<input class="w3-input w3-mobile" style="width:30%" type="text" id="threshold_0" name="threshold_0" value="<?php echo isset($config['logger']['threshold_0']) ? $config['logger']['threshold_0'] : 10 ?>">
-					
-				
 				<p>
 					Number of bins in FFT (default: 400):<br>
 					<input class="w3-input w3-mobile" style="width:30%" type="text" name="nfft_0" value="<?php echo isset($config['logger']['nfft_0']) ? $config['logger']['nfft_0'] : 400 ?>">
@@ -215,23 +213,16 @@ function setVisibility(menu, label, element) {
 				<br>
 				<h4> Logging Settings </h4>
 				<p>
-				<label for="use_sql_0">Enable logging to SQL database:</label><br>
-				<select class="w3-select w3-mobile" style="width:30%" id="use_sql_0" name="use_sql_0">
-					<option value="On" <?php echo isset($config['logger']['use_sql_0']) && $config['logger']['use_sql_0'] == "On" ? "selected" : "" ?>>On</option>
-					<option value="Off" <?php echo isset($config['logger']['use_sql_0']) && $config['logger']['use_sql_0'] == "Off" ? "selected" : "" ?>>Off</option>
-				</select>
-				</p>
-				<p>
-					Adress of SQL Server:
-					<input class="w3-input" w3-mobile style="width:30%" type="text" name="db_host_0" value="<?php echo isset($config['logger']['db_host_0']) ? $config['logger']['db_host_0'] : "127.0.0.1:3306" ?>">
-				</p>
-				<p>			
-					User:
-					<input class="w3-input w3-mobile" style="width:30%" type="text" name="db_user_0" value="<?php echo isset($config['logger']['db_user_0']) ? $config['logger']['db_user_0'] : "root" ?>">
-				</p>
-				<p>		
-					Password:
-					<input class="w3-input w3-mobile" style="width:30%" type="password" name="db_pass_0" value="<?php echo isset($config['logger']['db_pass_0']) ? $config['logger']['db_pass_0'] : "" ?>">
+					Enable logging to SQL database? 
+					<span class="w3-tooltip"> <i class="fa fa-info-circle" aria-hidden="false"></i>
+						<span class="w3-text w3-small w3-round w3-brown w3-tag">
+							Go to Data <i class="fa fa-caret-right" aria-hidden="true"></i> Start <i class="fa fa-caret-right" aria-hidden="true"></i> Database to setup connection details.
+						</span>
+					</span><br>
+					<input class="w3-radio w3-mobile" id="use_sql_0_y" type="radio" name="use_sql_0" value="Yes" <?php echo isset($config['logger']['use_sql_0']) && $config['logger']['use_sql_0'] == "Yes" ? 'checked="checked"' : ''?>>
+					<label class="w3-margin-right" for="use_sql_0_y">Yes</label>
+					<input class="w3-radio w3-mobile" id="use_sql_0_n" type="radio" name="use_sql_0" value="No" <?php echo isset($config['logger']['use_sql_0']) && $config['logger']['use_sql_0'] == "No" ? 'checked="checked"' : ''?>>
+					<label class="w3-margin-right" for="use_sql_0_n">No</label>	
 				</p>
 				<h4> Timer Settings </h4>
 				<p>
@@ -251,7 +242,7 @@ function setVisibility(menu, label, element) {
 				</select>
 				<input class="w3-input w3-mobile" style="width:30%" type="time" name="timer_stop_time_0" id="timer_stop_time_0" value="<?php echo isset($config['logger']['timer_stop_time_0']) ? $config['logger']['timer_stop_time_0'] : ""?>">
 				</p>
-				<input class="w3-input w3-mobile" style="width:30%; margin-left:auto; margin-right:10%;" type="submit" class="w3-btn w3-brown" value="Change Settings" name="change_logger_settings_0"><br>
+				<input class="w3-input w3-mobile w3-brown" style="width:30%; margin-left:auto; margin-right:10%;" type="submit" class="w3-btn w3-brown" value="Change Settings" name="change_logger_settings_0"><br>
 			</form>
 		</div>
 	</div>
@@ -318,26 +309,18 @@ function setVisibility(menu, label, element) {
 				<br>
 				<h4> Logging Settings </h4>
 				<p>
-				<label for="use_sql_1">Enable logging to SQL database:</label><br>
-				<select class="w3-select w3-mobile" style="width:30%" id="use_sql_1" name="use_sql_1" >
-					<option value="On" <?php echo isset($config['logger']['use_sql_1']) && $config['logger']['use_sql_1'] == "On" ? "selected" : "" ?>>On</option>
-					<option value="Off" <?php echo isset($config['logger']['use_sql_1']) && $config['logger']['use_sql_1'] == "Off" ? "selected" : "" ?>>Off</option>
-				</select>
+					Enable logging to SQL database? 
+					<span class="w3-tooltip"> <i class="fa fa-info-circle" aria-hidden="false"></i>
+						<span class="w3-text w3-small w3-round w3-brown w3-tag">
+							Go to Data <i class="fa fa-caret-right" aria-hidden="true"></i> Start <i class="fa fa-caret-right" aria-hidden="true"></i> Database to setup connection details.
+						</span>
+					</span><br>
+					<input class="w3-radio w3-mobile w3-padding-24" id="use_sql_1_y" type="radio" name="use_sql_1" value="Yes" <?php echo isset($config['logger']['use_sql_1']) && $config['logger']['use_sql_1'] == "Yes" ? 'checked="checked"' : ''?>>
+					<label class=" w3-margin-right" for="use_sql_1_y">Yes</label>
+					<input class="w3-radio w3-mobile" id="use_sql_1_n" type="radio" name="use_sql_1" value="No" <?php echo isset($config['logger']['use_sql_1']) && $config['logger']['use_sql_1'] == "No" ? 'checked="checked"' : ''?>>
+					<label class="w3-margin-right" for="use_sql_1_n">No</label>	
 				</p>
-				
-				<p>
-					Adress of SQL Server:
-					<input class="w3-input w3-mobile" style="width:30%;" type="text" name="db_host_1" value="<?php echo isset($config['logger']['db_host_1']) ? $config['logger']['db_host_1'] : "127.0.0.1:3306" ?>">
-				</p>
-				<p>			
-					User:
-					<input class="w3-input w3-mobile" style="width:30%;" type="text" name="db_user_1" value="<?php echo isset($config['logger']['db_user_1']) ? $config['logger']['db_user_1'] : "root" ?>">
-				</p>
-				<p>		
-					Password:
-					<input class="w3-input w3-mobile" style="width:30%;" type="password" name="db_pass_1" value="<?php echo isset($config['logger']['db_pass_1']) ? $config['logger']['db_pass_1'] : "" ?>">
-				</p>
-				
+							
 				<h4> Timer Settings </h4>
 				<p>
 				<label for="timer_start_1"> Automatically start at</label><br>
@@ -356,7 +339,7 @@ function setVisibility(menu, label, element) {
 				</select>
 				<input class="w3-input w3-mobile" style="width:30%; visibility:<?php echo isset($config['logger']['timer_stop_1']) && $config['logger']['timer_stop_1'] == "stop_time" ? "visible" : "hidden"?>" type="time" name="timer_stop_time_1" id="timer_stop_time_1" value="<?php echo isset($config['logger']['timer_stop_time_1']) ? $config['logger']['timer_stop_time_1'] : ""?>">
 				</p>
-				<input class="w3-input w3-mobile" style="width:30%; margin-left:auto; margin-right:10%;" type="submit" class="w3-btn w3-brown" value="Change settings" name="change_logger_settings_1"><br>				
+				<input class="w3-input w3-mobile w3-brown" style="width:30%; margin-left:auto; margin-right:10%;" type="submit" class="w3-btn w3-brown" value="Change settings" name="change_logger_settings_1"><br>				
 			</form>
 		</div>
 	</div>

@@ -113,7 +113,7 @@
 			echo $run_id;  // on error write_run_to_db returns error message rather than run id.
 			return "";
 		}
-		return " --sql --db_host ".$config['logger']['db_host_'.$dev]." --db_user ".$config['logger']['db_user_'.$dev]." --db_pass ".$config['logger']['db_pass_'.$dev]." --db_run_id ".$run_id;
+		return " --sql --db_host ".$config['database']['db_host'].":".$config['database']['db_port']." --db_user ".$config['database']['db_user']." --db_pass ".$config['database']['db_pass']." --db_run_id ".$run_id;
 	}
 	
 	function cmd_rtl_sdr($config, $dev) {
@@ -341,11 +341,11 @@
 	// SQL Functions
 	
 	function write_run_to_db($config, $device, $file_name) {
-		if ($config['logger']['use_sql_'.$device] != "On")
+		if ($config['logger']['use_sql_'.$device] != "Yes")
 			return -1;
-		$con = mysqli_connect($config['logger']['db_host_'.$device], $config['logger']['db_user_'.$device], $config['logger']['db_pass_'.$device]);
+		$con = mysqli_connect($config['database']['db_host'].":".$config['database']['db_port'], $config['database']['db_user'], $config['database']['db_pass']);
 			if (mysqli_connect_errno()) {
-				return "Connection failed: " . mysqli_connect_error();	
+				return "Connection to ".$config['database']['db_host'].":".$config['database']['db_port']." failed: " . mysqli_connect_error();	
 			} else {
 				$cmd_sql = "INSERT INTO rteu.runs (device,pos_x,pos_y,orientation,beam_width,gain,center_freq,freq_range,threshold,fft_bins,fft_samples)".
 					" VALUE ('".$file_name."',".                                     $config['logger']['antenna_position_N_'.$device].",".
