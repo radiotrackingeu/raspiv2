@@ -83,8 +83,8 @@
 		$file_name = $config['logger']['antenna_id_0'] . date('Y_m_d_H_i');
 		$file_path = "/tmp/record/" . $file_name;
 		$run_id = write_run_to_db($config, 0, $file_name);
-		$cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." | ".cmd_liquidsdr($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
-		start_docker_echo($cmd,'tab_logger_range','Started Receiver 1');
+		$cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." 2> ".$file_path." | ".cmd_liquidsdr($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
+		start_docker_echo($cmd,'tab_logger_range',$cmd);
 	}
 	if (isset($_POST["log_stop_0"])){
 		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d0) 2>&1";
@@ -117,7 +117,7 @@
 	}
 	
 	function cmd_rtl_sdr($config, $dev) {
-		return "rtl_sdr -d 0 -f ".$config['logger']['center_freq_'.$dev]." -s ".$config['logger']['freq_range_'.$dev]." -g ".$config['logger']['log_gain_'.$dev]." - 2> ".$file_path;
+		return "rtl_sdr -d 0 -f ".$config['logger']['center_freq_'.$dev]." -s ".$config['logger']['freq_range_'.$dev]." -g ".$config['logger']['log_gain_'.$dev]." -";
 	}
 	function cmd_liquidsdr($config, $dev) {
 		return "/tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$config['logger']['threshold_'.$dev]." -r ".$config['logger']['freq_range_'.$dev]." -b ".$config['logger']['nfft_'.$dev]." -n ".$config['logger']['timestep_'.$dev];
