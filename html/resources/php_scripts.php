@@ -343,12 +343,12 @@
 	function write_run_to_db($config, $device, $file_name) {
 		if ($config['logger']['use_sql_'.$device] != "On")
 			return -1;
-		$con = mysqli_connect($file_name, $config['logger']['db_user_'.$device], $config['logger']['db_pass_'.$device]);
+		$con = mysqli_connect($config['logger']['db_host_'.$device], $config['logger']['db_user_'.$device], $config['logger']['db_pass_'.$device]);
 			if (mysqli_connect_errno()) {
 				return "Connection failed: " . mysqli_connect_error();	
 			} else {
 				$cmd_sql = "INSERT INTO rteu.runs (device,pos_x,pos_y,orientation,beam_width,gain,center_freq,freq_range,threshold,fft_bins,fft_samples)".
-					" VALUE ('".$config['logger']['antenna_id_'.$device]."',".       $config['logger']['antenna_position_N_'.$device].",".
+					" VALUE ('".$file_name."',".                                     $config['logger']['antenna_position_N_'.$device].",".
 								$config['logger']['antenna_position_E_'.$device].",".$config['logger']['antenna_orientation_'.$device].",".
 								$config['logger']['antenna_beam_width_'.$device].",".$config['logger']['log_gain_'.$device].",".
 								$config['logger']['center_freq_'.$device].",".       $config['logger']['freq_range_'.$device].",".
@@ -360,16 +360,7 @@
 					return mysqli_insert_id($con);
 			}
 	}
-	
-	/*function connectToSQLDB($host, $user, $pass) {
-		$conn = new mysqli($host, $user, $pass)
-		if ($conn->connect_error) {
-			die("Connection failed: " . $conn->connect_error);
-			
-		}
-	}
-	*/
-	//function mysql_error_function()
+
 ?>
 
 		</div>
