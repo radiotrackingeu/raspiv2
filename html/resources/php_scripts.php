@@ -93,7 +93,7 @@
 			$cmd_liquidsdr .= " --db_run_id ".$run_id;
 		}
 		$cmd = $cmd_docker." '".$cmd_rtl_sdr." | ".$cmd_liquidsdr." >> ". $file_path ." 2>&1'";
-		start_docker_echo($cmd,'tab_logger_range',$cmd);
+		start_docker_echo($cmd,'tab_logger_range','Started Receiver 1');
 	}
 	if (isset($_POST["log_stop_0"])){
 		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d0) 2>&1";
@@ -110,11 +110,11 @@
 		if (!is_int($run_id)) {
 			echo $run_id;
 		} else if ($run_id >0) {
-			$cmd_liquidsdr .= "--sql --db_host ".$config['logger']['db_host_1']." --db_user ".$config['logger']['db_user_1']." --db_pass ".$config['logger']['db_pass_1'];
-			$cmd_liquidsdr .= "--db_run_id ".$run_id;
+			$cmd_liquidsdr .= " --sql --db_host ".$config['logger']['db_host_1']." --db_user ".$config['logger']['db_user_1']." --db_pass ".$config['logger']['db_pass_1'];
+			$cmd_liquidsdr .= " --db_run_id ".$run_id;
 		}
 		$cmd = $cmd_docker." '".$cmd_rtl_sdr." | ".$cmd_liquidsdr." >> ". $file_path ." 2>&1'";
-		start_docker($cmd,'tab_logger_range',$cmd);
+		start_docker_echo($cmd,'tab_logger_range','Started Receiver 2');
 	}
 	 
 	if (isset($_POST["log_stop_1"])){
