@@ -113,7 +113,7 @@
 			echo $run_id;  // on error write_run_to_db returns error message rather than run id.
 			return "";
 		}
-		return " --sql --db_host ".$config['database']['db_host'].":".$config['database']['db_port']." --db_user ".$config['database']['db_user']." --db_pass ".$config['database']['db_pass']." --db_run_id ".$run_id;
+		return " --sql --db_host ".$config['database']['db_host']." --db_port ".$config['database']['db_port']." --db_user ".$config['database']['db_user']." --db_pass ".$config['database']['db_pass']." --db_run_id ".$run_id;
 	}
 	
 	function cmd_rtl_sdr($config, $dev) {

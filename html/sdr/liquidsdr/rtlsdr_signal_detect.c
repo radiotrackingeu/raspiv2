@@ -42,13 +42,15 @@ int					run_id=0;
 int                 write_to_db = 0;
 MYSQL           *   con;
 char            *   db_host = NULL, *db_user = NULL, *db_pass = NULL;
+unsigned int 		db_port=0;
 
 struct option longopts[] = {
     {"sql",       no_argument, &write_to_db, 1},
     {"db_host",   required_argument, NULL, 900},
-    {"db_user",   required_argument, NULL, 901},
-    {"db_pass",   required_argument, NULL, 902},
-	{"db_run_id", required_argument, NULL, 903},
+	{"db_port",   required_argument, NULL, 901},
+    {"db_user",   required_argument, NULL, 902},
+    {"db_pass",   required_argument, NULL, 903},
+	{"db_run_id", required_argument, NULL, 904},
     {0,0,0,0}
 };
 
@@ -67,8 +69,9 @@ void usage()
     printf("  -k <seconds>      : prints a keep-alive statement every <sec> seconds, default is 300\n");
     printf(" --sql              : write to database, requires --db_user, --db_pass\n");
     printf(" --db_host <host>   : address of SQL server to use, default is localhost\n");
+    printf(" --db_port <pass>   : port on which to connect, use 0 if unsure\n");
     printf(" --db_user <user>   : username for SQL server \n");
-    printf(" --db_pass <pass>   : matching password\n");
+	printf(" --db_pass <pass>   : matching password\n");
 	printf(" --db_run_id <id>	: numeric id of this recording run. Used to link it to its metadata in the SQL database");
 }
 
@@ -118,9 +121,10 @@ int main(int argc, char*argv[])
 //        case 'd': device_name = optarg;                 break;
         case 'k': keepalive = atoi(optarg);             break;
         case 900: db_host = optarg;                     break;
-        case 901: db_user = optarg;                     break;
-        case 902: db_pass = optarg;                     break;
-        case 903: run_id = atoi(optarg);                break;
+		case 901: db_port = atoi(optarg);               break;
+        case 902: db_user = optarg;                     break;
+        case 903: db_pass = optarg;                     break;
+        case 904: run_id = atoi(optarg);                break;
         case 0  :                                       break; // return value of getopt_long() when setting a flag
         default : exit(1);
         }
@@ -165,7 +169,7 @@ int main(int argc, char*argv[])
             con =mysql_init(NULL);
             if (con!=NULL) {
                 if (mysql_real_connect(con, db_host, db_user, db_pass,
-                      DB_BASE, 0, NULL, 0) == NULL)
+                      DB_BASE, db_port, NULL, 0) == NULL)
                 {
                   fprintf(stderr, "%s\n", mysql_error(con));
                   mysql_close(con);

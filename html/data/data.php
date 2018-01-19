@@ -101,7 +101,7 @@
 							For this to take effect, you need to stop and restart the database with buttons above.
 						</span>
 					</span><br>
-					<input class="w3-radio w3-mobile" id="db_start_yes" type="radio" name="db_start" value="Yes" <?php echo isset($config['database']['db_start']) && $config['database']['db_start'] == "Yes" ? 'checked="checked"' : ''?>>
+					<input class="w3-radio w3-mobile" id="db_start_yes" type="radio" name="db_start" value="Yes" disabled <?php echo isset($config['database']['db_start']) && $config['database']['db_start'] == "Yes" ? 'checked="checked"' : ''?>>
 					<label class="w3-margin-right" for="db_start_yes">Yes</label>
 					<input class="w3-radio w3-mobile" id="db_start_no" type="radio" name="db_start" value="No" <?php echo isset($config['database']['db_start']) && $config['database']['db_start'] == "No" ? 'checked="checked"' : ''?>>
 					<label class="w3-margin-right" for="db_start_no">No</label>		
@@ -146,7 +146,7 @@
 	if (isset($_POST["start_mysql"])){
 		$autostart=isset($config['database']['db_start']) && $config['database']['db_start']=="Yes" ? "--restart=always " : "";
 		echo '<pre>';
-		$test = system("sudo docker run -t ".$autostart."--name=mysqld--rm -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql mysql 2>&1", $ret);
+		$test = system("sudo docker run -t ".$autostart."--name=mysql --rm -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql mysql 2>&1", $ret);
 		echo '</pre>';
 	}
 	if (isset($_POST["stop_mysql"])){
