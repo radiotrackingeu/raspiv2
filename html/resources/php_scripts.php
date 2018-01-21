@@ -189,7 +189,7 @@
 			$file_to_replace="/tmp/crontab";
 			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
 			echo $cmd_change;
-			start_docker_echo($cmd_change,"tab_logger_settings","System will now start logger upon stated time"));			
+			start_docker_echo($cmd_change,"tab_logger_settings","System will now start logger upon stated time");			
 		}
 	}
 	
