@@ -184,7 +184,7 @@
 			start_docker_echo($cmd_change,"tab_logger_settings","System will not start logger upon start");
 		}
 		if($_POST["timer_start_0"]=="start_time"){
-			$change= substr($config['logger']['timer_start_time_0'], 4, 4) . " ".substr($config['logger']['timer_start_time_0'], 0, 1)." * * * root " .$cmd;
+			$change= substr($config['logger']['timer_start_time_0'],3, 2) . " ".substr($config['logger']['timer_start_time_0'], 0, 2)." * * * root " .$cmd;
 			$search = "logger-sdr-d0";
 			$file_to_replace="/tmp/crontab";
 			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
