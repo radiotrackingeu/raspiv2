@@ -175,8 +175,8 @@ function setVisibility(menu, label, element) {
 				<p>
 				<label for="timer_mode_0"> Which detection mode to use</label><br>
 				<select class="w3-select w3-mobile" style="width:30%" id="timer_mode_0" name="timer_mode_0">
-					<option value="freq_range" <?php echo isset($config['logger']['timer_mode_0']) && $config['logger']['timer_mode_0'] == "start_no" ? "selected" : "" ?>>Use Frequency Range</option> 
-					<option value="single_freq" <?php echo isset($config['logger']['timer_mode_0']) && $config['logger']['timer_mode_0'] == "start_boot" ? "selected" : "" ?>>Use single Frequency</option>
+					<option value="freq_range" <?php echo isset($config['logger']['timer_mode_0']) && $config['logger']['timer_mode_0'] == "freq_range" ? "selected" : "" ?>>Use Frequency Range</option> 
+					<option value="single_freq" <?php echo isset($config['logger']['timer_mode_0']) && $config['logger']['timer_mode_0'] == "single_freq" ? "selected" : "" ?>>Use single Frequency</option>
 				</select>
 				</p>
 				<p>
