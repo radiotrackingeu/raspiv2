@@ -325,8 +325,8 @@ function setVisibility(menu, label, element) {
 	</div>
 	<div class="w3-rest w3-center w3-panel w3-green w3-round">
 		<br>
-		<input type="submit" class="w3-btn w3-brown" value="Compile Raspi 3" name="compile"/>
-		<input type="submit" class="w3-btn w3-brown" value="Compile Raspi Zero" name="compile_raspi_zero"/>
+		<input type="button" class="w3-btn w3-brown" value="Compile Raspi 3" name="compile"/>
+		<input type="button" class="w3-btn w3-brown" value="Compile Raspi Zero" name="compile_raspi_zero"/>
 		<br><br>
 	</div>
 </div>
