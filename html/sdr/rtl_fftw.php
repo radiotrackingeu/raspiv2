@@ -301,7 +301,7 @@ function setVisibility(menu, label, element) {
 					</p>
 					<p>
 					<label for="timer_start_1"> Automatically start at</label><br>
-					<select class="w3-select w3-mobile" style="width:30%" id="timer_start_1" name="timer_start_1" onchange="setVisibility(this, 'start_time', 'timer_start_time_1')">
+					<select class="w3-select w3-mobile" style="width:30%" id="timer_start_1" name="timer_start_1">
 						<option value="start_no" <?php echo isset($config['logger']['timer_start_1']) && $config['logger']['timer_start_1'] == "start_no" ? "selected" : ""?>>Don't start automatically</option> 
 						<option value="start_boot" <?php echo isset($config['logger']['timer_start_1']) && $config['logger']['timer_start_1'] == "start_boot" ? "selected" : ""?>>Start on boot</option>
 						<option value="start_time" <?php echo isset($config['logger']['timer_start_1']) && $config['logger']['timer_start_1'] == "start_time" ? "selected" : ""?>>Start at given time</option>
@@ -309,8 +309,8 @@ function setVisibility(menu, label, element) {
 					<input class="w3-input w3-mobile" style="width:30%" type="time" name="timer_start_time_1" id="timer_start_time_1" value="<?php echo isset($config['logger']['timer_start_time_1']) ? $config['logger']['timer_start_time_1'] : ""?>">
 					</p>
 					<p>
-					<label for="timer_start_1"> Automatically stop at</label><br>
-					<select class="w3-select w3-mobile" style="width:30%" id="timer_stop_1" name="timer_stop_1" onchange="setVisibility(this, 'stop_time', 'timer_stop_time_1')">
+					<label for="timer_stop_1"> Automatically stop at</label><br>
+					<select class="w3-select w3-mobile" style="width:30%" id="timer_stop_1" name="timer_stop_1">
 						<option value="stop_no" <?php echo isset($config['logger']['timer_stop_1']) && $config['logger']['timer_stop_1'] == "stop_no" ? "selected" : ""?>>Don't stop automatically</option> 
 						<option value="stop_time" <?php echo isset($config['logger']['timer_stop_1']) && $config['logger']['timer_stop_1'] == "stop_time" ? "selected" : ""?>>Stop at given time</option>
 					</select>

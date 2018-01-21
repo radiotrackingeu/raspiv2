@@ -191,6 +191,24 @@
 			echo $cmd_change;
 			start_docker_echo($cmd_change,"tab_logger_settings","System will now start logger upon stated time");			
 		}
+		if($_POST["timer_stop_0"]=="stop_no"){
+			$stop_cmd="sudo docker stop \\$(sudo docker ps -a -q --filter name=logger-sdr-d0)";
+			$change= "#".$stop_cmd;
+			$search = $stop_cmd;
+			$file_to_replace="/tmp/crontab";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+			echo $cmd_change;
+			start_docker_echo($cmd_change,"tab_logger_settings","System will stop stopping the logger");			
+		}
+		if($_POST["timer_stop_0"]=="stop_time"){
+			$stop_cmd="sudo docker stop \\$(sudo docker ps -a -q --filter name=logger-sdr-d0)";
+			$change=substr($config['logger']['timer_start_time_0'],3, 2) . " ".substr($config['logger']['timer_start_time_0'], 0, 2)." * * * root " .$stop_cmd;
+			$search = $stop_cmd;
+			$file_to_replace="/tmp/crontab";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+			echo $cmd_change;
+			start_docker_echo($cmd_change,"tab_logger_settings","System will now start logger upon stated time");			
+		}
 	}
 	
 	if (isset($_POST["change_logger_settings_1"])){
@@ -252,7 +270,6 @@
 	//Logger Cronjob Functions
 	if (isset($_POST["change_logger_cron"])){
 		$cmd = "sudo docker run --rm --name logger-sdr-d1 -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["time_center_freq"]." -s ".$_POST["time_freq_range"]." -t -q -A -l ".$_POST["time_log_level"]." -g " . $_POST["time_log_gain"]. " 2> /home/".$_POST["time_pre_log_name"]."\$(date +%Y_%m_%k_%M_%S)'";
-		echo $cmd;
 		$stop_cmd="sudo docker stop \\$(sudo docker ps -a -q --filter ancestor=rtl_433_mod)";
 		if($_POST["time_stop_timer"]=="stop_no"){
 			$change= "#".$stop_cmd;
