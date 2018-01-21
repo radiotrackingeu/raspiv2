@@ -293,13 +293,20 @@ function setVisibility(menu, label, element) {
 				<button type=button onclick="myAccordion('tim1_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Timer Settings</h4></button>
 				<div id="tim1_settings" class="w3-container w3-hide">
 					<p>
+					<label for="timer_mode_1"> Which detection mode to use</label><br>
+					<select class="w3-select w3-mobile" style="width:30%" id="timer_mode_1" name="timer_mode_1">
+						<option value="freq_range" <?php echo isset($config['logger']['timer_mode_1']) && $config['logger']['timer_mode_1'] == "freq_range" ? "selected" : "" ?>>Use Frequency Range</option> 
+						<option value="single_freq" <?php echo isset($config['logger']['timer_mode_1']) && $config['logger']['timer_mode_1'] == "single_freq" ? "selected" : "" ?>>Use single Frequency</option>
+					</select>
+					</p>
+					<p>
 					<label for="timer_start_1"> Automatically start at</label><br>
 					<select class="w3-select w3-mobile" style="width:30%" id="timer_start_1" name="timer_start_1" onchange="setVisibility(this, 'start_time', 'timer_start_time_1')">
 						<option value="start_no" <?php echo isset($config['logger']['timer_start_1']) && $config['logger']['timer_start_1'] == "start_no" ? "selected" : ""?>>Don't start automatically</option> 
 						<option value="start_boot" <?php echo isset($config['logger']['timer_start_1']) && $config['logger']['timer_start_1'] == "start_boot" ? "selected" : ""?>>Start on boot</option>
 						<option value="start_time" <?php echo isset($config['logger']['timer_start_1']) && $config['logger']['timer_start_1'] == "start_time" ? "selected" : ""?>>Start at given time</option>
 					</select>
-					<input class="w3-input w3-mobile" style="width:30%; visibility:<?php echo isset($config['logger']['timer_start_1']) && $config['logger']['timer_start_1'] == "start_time" ? "visible" : "hidden"?>" type="time" name="timer_start_time_1" id="timer_start_time_1" value="<?php echo isset($config['logger']['timer_start_time_1']) ? $config['logger']['timer_start_time_1'] : ""?>">
+					<input class="w3-input w3-mobile" style="width:30%" type="time" name="timer_start_time_1" id="timer_start_time_1" value="<?php echo isset($config['logger']['timer_start_time_1']) ? $config['logger']['timer_start_time_1'] : ""?>">
 					</p>
 					<p>
 					<label for="timer_start_1"> Automatically stop at</label><br>

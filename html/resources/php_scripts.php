@@ -193,6 +193,40 @@
 		}
 	}
 	
+	if (isset($_POST["change_logger_settings_1"])){
+		$file_name = $config['logger']['antenna_id_1'] . '\$(date +%Y_%m_%k_%M_%S)';
+		$file_path = "/tmp/record/" . $file_name;
+		$run_id = write_run_to_db($config, 1, $file_name);
+		if($_POST["timer_mode_1"]=="single_freq"){
+			$cmd = cmd_docker(1)." '".cmd_rtl_sdr($config, 1)." 2> ".$file_path." | ".cmd_matched_filters($config, 1).cmd_sql($config, 1, $run_id)." >> ". $file_path." 2>&1'";
+		}
+		if($_POST["timer_mode_1"]=="freq_range"){
+			$cmd = cmd_docker(1)." '".cmd_rtl_sdr($config, 1)." 2> ".$file_path." | ".cmd_matched_filters($config, 1).cmd_sql($config, 1, $run_id)." >> ". $file_path." 2>&1'";
+		}
+		if($_POST["timer_start_1"]=="start_boot"){
+			$change= "@reboot root " .$cmd;
+			$search = "logger-sdr-d1";
+			$file_to_replace="/tmp/crontab";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"";
+			
+			start_docker_echo($cmd_change,"tab_logger_settings","Logger will now start upon boot with the given settings");
+		}
+		if($_POST["timer_start_1"]=="start_no"){
+			$change= "#logger-sdr-d1";
+			$search = "logger-sdr-d1";
+			$file_to_replace="/tmp/crontab";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"";
+			start_docker_echo($cmd_change,"tab_logger_settings","System will not start logger upon start");
+		}
+		if($_POST["timer_start_1"]=="start_time"){
+			$change= substr($config['logger']['timer_start_time_1'],3, 2) . " ".substr($config['logger']['timer_start_time_1'], 0, 2)." * * * root " .$cmd;
+			$search = "logger-sdr-d1";
+			$file_to_replace="/tmp/crontab";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+			echo $cmd_change;
+			start_docker_echo($cmd_change,"tab_logger_settings","System will now start logger upon stated time");			
+		}
+	}
 	
 	//Compile function 
 	if (isset($_POST["compile"])){
