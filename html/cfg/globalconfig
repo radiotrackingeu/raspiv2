@@ -66,6 +66,8 @@ timer_start_1 = "start_time"
 timer_start_time_1 = "23:03"
 timer_stop_1 = "stop_time"
 timer_stop_time_1 = "23:45"
+time_mode_0 = "freq_range"
+time_mode_1 = "freq_range"
 
 [database]
 db_host = "127.0.0.1"
