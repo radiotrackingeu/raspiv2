@@ -207,7 +207,7 @@ function setVisibility(menu, label, element) {
 					<label class="w3-margin-right" for="use_sql_0_n">No</label>	
 				</p>
 			</div>
-			<input class="w3-input w3-mobile w3-brown" style="width:30%; margin-left:auto; margin-right:10%;" type="submit" class="w3-btn w3-brown" value="Change Settings" name="change_logger_settings_0"><br>
+			<input class="w3-input w3-mobile w3-btn w3-brown" style="width:30%; margin-left:auto; margin-right:10%;" type="submit" value="Change Settings" name="change_logger_settings_0"><br>
 			</form>
 		</div>
 	</div>
@@ -319,15 +319,17 @@ function setVisibility(menu, label, element) {
 					<label class="w3-margin-right" for="use_sql_1_n">No</label>	
 					</p>
 				</div>		
-				<input class="w3-input w3-mobile w3-brown" style="width:30%; margin-left:auto; margin-right:10%;" type="submit" class="w3-btn w3-brown" value="Change settings" name="change_logger_settings_1"><br>				
+				<input class="w3-input w3-mobile w3-btn w3-brown" style="width:30%; margin-left:auto; margin-right:10%;" type="submit" value="Change settings" name="change_logger_settings_1"><br>				
 			</form>
 		</div>
 	</div>
 	<div class="w3-rest w3-center w3-panel w3-green w3-round">
-		<br>
-		<input type="button" class="w3-btn w3-brown" value="Compile Raspi 3" name="compile"/>
-		<input type="button" class="w3-btn w3-brown" value="Compile Raspi Zero" name="compile_raspi_zero"/>
-		<br><br>
+		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
+			<br>
+			<input type="button" class="w3-btn w3-brown" value="Compile Raspi 3" name="compile"/>
+			<input type="button" class="w3-btn w3-brown" value="Compile Raspi Zero" name="compile_raspi_zero"/>
+			<br><br>
+		</form>
 	</div>
 </div>
 
