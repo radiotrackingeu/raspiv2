@@ -160,11 +160,11 @@
 		$file_path = "/tmp/record/" . $file_name;
 		$run_id = write_run_to_db($config, 0, $file_name);
 		///home/".$_POST["time_pre_log_name"]."\$(date +%Y_%m_%k_%M_%S)'
-		if($_POST["timer_mode"]=="single_freq"){
+		if($_POST["timer_mode_0"]=="single_freq"){
 			$cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." 2> ".$file_path." | ".cmd_matched_filters($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
 			echo $cmd;
 		}
-		if($_POST["timer_mode"]=="freq_range"){
+		if($_POST["timer_mode_0"]=="freq_range"){
 			$cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." 2> ".$file_path." | ".cmd_matched_filters($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
 			echo $cmd;
 		}
