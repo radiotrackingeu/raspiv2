@@ -27,7 +27,7 @@ function setVisibility(menu, label, element) {
 	//define config section and items.
 	define ('confSection', 'logger');
 	//define ('confKeys', array('device','log_gain','center_freq','freq_range','pre_log_name','raw_log_log_gain','raw_center_freq','raw_freq_range','raw_pre_log_name','time_center_freq','time_freq_range','time_log_level','time_start_timer','time_start_min','time_start_hour','time_stop_timer','time_stop_min','time_stop_hour','time_pre_log_name', 'threshold' ,'nfft','timestep_factor'));
-	define ('confKeys', array('antenna_id_0','antenna_position_N_0','antenna_position_E_0','antenna_orientation_0','antenna_beam_width_0','log_gain_0','center_freq_0','freq_range_0','threshold_0','nfft_0','timestep_0','use_sql_0','db_host_0','db_user_0','db_pass_0','antenna_id_1','antenna_position_N_1','antenna_position_E_1','antenna_orientation_1','antenna_beam_width_1','log_gain_1','center_freq_1','freq_range_1','threshold_1','nfft_1','timestep_1','use_sql_1','db_host_1','db_user_1','db_pass_1','timer_start_0','timer_start_time_0','timer_stop_0','timer_stop_time_0','timer_start_1','timer_start_time_1','timer_stop_1','timer_stop_time_1'));
+	define ('confKeys', array('antenna_id_0','antenna_position_N_0','antenna_position_E_0','antenna_orientation_0','antenna_beam_width_0','log_gain_0','center_freq_0','freq_range_0','threshold_0','nfft_0','timestep_0','use_sql_0','db_host_0','db_user_0','db_pass_0','antenna_id_1','antenna_position_N_1','antenna_position_E_1','antenna_orientation_1','antenna_beam_width_1','log_gain_1','center_freq_1','freq_range_1','threshold_1','nfft_1','timestep_1','use_sql_1','db_host_1','db_user_1','db_pass_1','timer_start_0','timer_start_time_0','timer_stop_0','timer_stop_time_0','timer_start_1','timer_start_time_1','timer_stop_1','timer_stop_time_1','timer_mode_0','timer_mode_1'));
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
 ?>
@@ -173,6 +173,13 @@ function setVisibility(menu, label, element) {
 			<button type=button onclick="myAccordion('tim0_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Timer Settings</h4></button>
 			<div id="tim0_settings" class="w3-container w3-hide">
 				<p>
+				<label for="timer_mode_0"> Which detection mode to use</label><br>
+				<select class="w3-select w3-mobile" style="width:30%" id="timer_mode_0" name="timer_mode_0">
+					<option value="freq_range" <?php echo isset($config['logger']['timer_mode_0']) && $config['logger']['timer_mode_0'] == "start_no" ? "selected" : "" ?>>Use Frequency Range</option> 
+					<option value="single_freq" <?php echo isset($config['logger']['timer_mode_0']) && $config['logger']['timer_mode_0'] == "start_boot" ? "selected" : "" ?>>Use single Frequency</option>
+				</select>
+				</p>
+				<p>
 				<label for="timer_start_0"> Automatically start at</label><br>
 				<select class="w3-select w3-mobile" style="width:30%" id="timer_start_0" name="timer_start_0">
 					<option value="start_no" <?php echo isset($config['logger']['timer_start_0']) && $config['logger']['timer_start_0'] == "start_no" ? "selected" : "" ?>>Don't start automatically</option> 
@@ -182,7 +189,7 @@ function setVisibility(menu, label, element) {
 				<input class="w3-input w3-mobile" style="width:30%" type="time" name="timer_start_time_0" id="timer_start_time_0" value="<?php echo isset($config['logger']['timer_start_time_0']) ? $config['logger']['timer_start_time_0'] : ""?>">
 				</p>
 				<p>
-				<label for="timer_start_0"> Automatically stop at</label><br>
+				<label for="timer_stop_0"> Automatically stop at</label><br>
 				<select class="w3-select w3-mobile" style="width:30%" id="timer_stop_0" name="timer_stop_0">
 					<option value="stop_no" <?php echo isset($config['logger']['timer_stop_0']) && $config['logger']['timer_stop_0'] == "stop_no" ? "selected" : ""?>>Don't stop automatically</option> 
 					<option value="stop_time" <?php echo isset($config['logger']['timer_stop_0']) && $config['logger']['timer_stop_0'] == "stop_time" ? "selected" : ""?>>Stop at given time</option>
@@ -326,8 +333,8 @@ function setVisibility(menu, label, element) {
 	<div class="w3-rest w3-center w3-panel w3-green w3-round">
 		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<br>
-			<input type="button" class="w3-btn w3-brown" value="Compile Raspi 3" name="compile"/>
-			<input type="button" class="w3-btn w3-brown" value="Compile Raspi Zero" name="compile_raspi_zero"/>
+			<input type="submit" class="w3-btn w3-brown" value="Compile Raspi 3" name="compile"/>
+			<input type="submit" class="w3-btn w3-brown" value="Compile Raspi Zero" name="compile_raspi_zero"/>
 			<br><br>
 		</form>
 	</div>
