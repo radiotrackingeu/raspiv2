@@ -314,7 +314,7 @@ function setVisibility(menu, label, element) {
 						<option value="stop_no" <?php echo isset($config['logger']['timer_stop_1']) && $config['logger']['timer_stop_1'] == "stop_no" ? "selected" : ""?>>Don't stop automatically</option> 
 						<option value="stop_time" <?php echo isset($config['logger']['timer_stop_1']) && $config['logger']['timer_stop_1'] == "stop_time" ? "selected" : ""?>>Stop at given time</option>
 					</select>
-					<input class="w3-input w3-mobile" style="width:30%; visibility:<?php echo isset($config['logger']['timer_stop_1']) && $config['logger']['timer_stop_1'] == "stop_time" ? "visible" : "hidden"?>" type="time" name="timer_stop_time_1" id="timer_stop_time_1" value="<?php echo isset($config['logger']['timer_stop_time_1']) ? $config['logger']['timer_stop_time_1'] : ""?>">
+					<input class="w3-input w3-mobile" style="width:30%" type="time" name="timer_stop_time_1" id="timer_stop_time_1" value="<?php echo isset($config['logger']['timer_stop_time_1']) ? $config['logger']['timer_stop_time_1'] : ""?>">
 					</p>
 				</div>
 				
