@@ -202,7 +202,7 @@
 		}
 		if($_POST["timer_stop_0"]=="stop_time"){
 			$stop_cmd="sudo docker stop \\$(sudo docker ps -a -q --filter name=logger-sdr-d0)";
-			$change=substr($config['logger']['timer_start_time_0'],3, 2) . " ".substr($config['logger']['timer_start_time_0'], 0, 2)." * * * root " .$stop_cmd;
+			$change=substr($config['logger']['timer_stop_time_1'],3, 2) . " ".substr($config['logger']['timer_stop_time_1'], 0, 2)." * * * root " .$stop_cmd;
 			$search = $stop_cmd;
 			$file_to_replace="/tmp/crontab";
 			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
