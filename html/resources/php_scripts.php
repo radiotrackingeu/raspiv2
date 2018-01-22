@@ -158,7 +158,7 @@
 	if (isset($_POST["change_logger_settings_0"])){
 		$file_name = $config['logger']['antenna_id_0'] . '\$(date +%Y_%m_%k_%M_%S)';
 		$file_path = "/tmp/record/" . $file_name;
-		$run_id = write_run_to_db($config, 0, $file_name);
+		$run_id = write_run_to_db($config, 0, $config['logger']['antenna_id_0']."_".$config['logger']['timer_start_time_0']);
 		///home/".$_POST["time_pre_log_name"]."\$(date +%Y_%m_%k_%M_%S)'
 		if($_POST["timer_mode_0"]=="single_freq"){
 			$cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." 2> ".$file_path." | ".cmd_matched_filters($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
@@ -214,7 +214,7 @@
 	if (isset($_POST["change_logger_settings_1"])){
 		$file_name = $config['logger']['antenna_id_1'] . '\$(date +%Y_%m_%k_%M_%S)';
 		$file_path = "/tmp/record/" . $file_name;
-		$run_id = write_run_to_db($config, 1, $file_name);
+		$run_id = write_run_to_db($config, 1, $config['logger']['antenna_id_1']."_".$config['logger']['timer_start_time_1']);
 		if($_POST["timer_mode_1"]=="single_freq"){
 			$cmd = cmd_docker(1)." '".cmd_rtl_sdr($config, 1)." 2> ".$file_path." | ".cmd_matched_filters($config, 1).cmd_sql($config, 1, $run_id)." >> ". $file_path." 2>&1'";
 		}
@@ -452,7 +452,7 @@
 	
 	function write_run_to_db($config, $device, $file_name) {
 		if ($config['logger']['use_sql_'.$device] != "Yes")
-			return -1;
+			return "Wirting to database is switched off - see settings";
 		$con = mysqli_connect($config['database']['db_host'].":".$config['database']['db_port'], $config['database']['db_user'], $config['database']['db_pass']);
 			if (mysqli_connect_errno()) {
 				return "Connection to ".$config['database']['db_host'].":".$config['database']['db_port']." failed: " . mysqli_connect_error();	
