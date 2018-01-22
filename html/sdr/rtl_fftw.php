@@ -37,7 +37,6 @@ function setVisibility(menu, label, element) {
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_range')">Frequency Range</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_single')">Single Frequency</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_settings')">Settings</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data_ana')">Raw Data Analyzer</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('device_info')">Device Information</button>
 </div>
 
@@ -346,31 +345,7 @@ function setVisibility(menu, label, element) {
 		</form>
 	</div>
 </div>
-
-<!---->
-<div id="tab_raw_data_ana" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>" >
-			<br>
-			Select one file:<br>
-			<select name="analyzer_file">
-				<option value="" selected="selected">-----</option>
-				<?php 
-					foreach(glob(dirname(__FILE__) . '/record/*') as $filename){
-					$filename = basename($filename);
-					echo "<option value='" . $filename . "'>".$filename."</option>";
-				}
-				?>
-			</select> 
-			<br><br>
-
-			<input type="submit" class="w3-btn w3-brown" value="Start" name="start_analyze"/>
-			<input type="submit" class="w3-btn w3-brown" value="Stop" name="stop_analyze"/>
-		</form>
-		<br>
-	</div>
-</div>
-
+<!-------------------------------------- Device Information ----------------------------------------->
 <div id="device_info" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<br>
