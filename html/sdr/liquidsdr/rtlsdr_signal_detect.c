@@ -36,7 +36,6 @@ int                 tmp_transforms = 0;
 struct              timespec now;
 int                 keepalive = 300;
 
-//char            *   device_name="none";
 int					run_id=0;
 
 int                 write_to_db = 0;
@@ -63,7 +62,6 @@ void usage()
     printf("  -t <threshold>    : detection threshold above psd, default: 10 dB\n");
     printf("  -s                : use STDIN as input\n");
     printf("  -r <rate>         : sampling rate in Hz, default 250000Hz\n");
-    //printf("  -d <name>         : device name\n");
     printf("  -b <number>       : number of bins used for fft, default is 400\n");
     printf("  -n <number>       : number of samples per fft, default is 50\n");
     printf("  -k <seconds>      : prints a keep-alive statement every <sec> seconds, default is 300\n");
@@ -118,7 +116,6 @@ int main(int argc, char*argv[])
         case 'r': sampling_rate = atoi(optarg);         break;
 		case 'b': nfft = atoi(optarg);         			break;
         case 'n': timestep = atoi(optarg);         		break;
-//        case 'd': device_name = optarg;                 break;
         case 'k': keepalive = atoi(optarg);             break;
         case 900: db_host = optarg;                     break;
 		case 901: db_port = atoi(optarg);               break;
@@ -478,15 +475,15 @@ int step(float _threshold, unsigned int _sampling_rate)
             // signal started & stopped
             format_timestamp(get_group_start_time(i), timestamp, 30);
             float duration    = tmp_transforms*get_group_time(i)*timestep/_sampling_rate; // duration [samples]
-			float signal_freq = get_group_freq(i)*_sampling_rate;          // center frequency estimate (normalized)
-            float signal_bw   = get_group_bw(i)*_sampling_rate;            // bandwidth estimate (normalized)
+			float signal_freq = get_group_freq(i)*_sampling_rate;          	// center frequency estimate (normalized)
+            float signal_bw   = get_group_bw(i)*_sampling_rate;            	// bandwidth estimate (normalized)
 			float max_signal  = get_group_max_sig(i);						// maximum signal strength per group
-//            float start_time  = num_transforms*timestep - duration; // approximate starting time
+			float samples = num_transforms; 								//number of transformations for coded tags
             printf("%s;%-10.6f;%9.6f;%9.6f;%f;%lu\n",
                     timestamp, duration, signal_freq, signal_bw,max_signal, num_transforms);
 			fflush(stdout);
 			if (write_to_db!=0) {
-				snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s (timestamp,duration,signal_freq,signal_bw, max_signal, run) VALUE(\"%s\",%-10.6f,%9.6f,%9.6f,%f,%i)", DB_TABLE, timestamp, duration, signal_freq, signal_bw, max_signal, run_id);
+				snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, run) VALUE(\"%s\",%-10.6f,%9.6f,%9.6f,%f,%i)", DB_TABLE, timestamp, duration, signal_freq, signal_bw, max_signal, run_id);
 				mysql_query(con, sql_statement);
 			}
 
