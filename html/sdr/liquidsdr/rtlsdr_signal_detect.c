@@ -478,12 +478,11 @@ int step(float _threshold, unsigned int _sampling_rate)
 			float signal_freq = get_group_freq(i)*_sampling_rate;          	// center frequency estimate (normalized)
             float signal_bw   = get_group_bw(i)*_sampling_rate;            	// bandwidth estimate (normalized)
 			float max_signal  = get_group_max_sig(i);						// maximum signal strength per group
-			float samples = num_transforms; 								//number of transformations for coded tags
             printf("%s;%-10.6f;%9.6f;%9.6f;%f;%lu\n",
                     timestamp, duration, signal_freq, signal_bw,max_signal, num_transforms);
 			fflush(stdout);
 			if (write_to_db!=0) {
-				snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, run) VALUE(\"%s\",%lu,%-10.6f,%9.6f,%9.6f,%f,%i)", DB_TABLE, timestamp, duration, signal_freq, signal_bw, max_signal, run_id);
+				snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, run) VALUE(\"%s\",%lu,%-10.6f,%9.6f,%9.6f,%f,%i)", DB_TABLE, timestamp, num_transforms, duration, signal_freq, signal_bw, max_signal, run_id);
 				mysql_query(con, sql_statement);
 			}
 
