@@ -39,12 +39,13 @@ int                 keepalive = 300;
 //char            *   device_name="none";
 int					run_id=0;
 
-int                 write_to_db = 0;
 MYSQL           *   con;
-char            *   db_host = NULL, *db_user = NULL, *db_pass = NULL;
-unsigned int 		db_port=0;
+
+FILE 			*	err_file;
+FILE			*	out_file;
 
 struct option longopts[] = {
+	{"append",    no_argument, &append_output, 1},
     {"sql",       no_argument, &write_to_db, 1},
     {"db_host",   required_argument, NULL, 900},
 	{"db_port",   required_argument, NULL, 901},
@@ -57,22 +58,24 @@ struct option longopts[] = {
 // print usage/help message
 void usage()
 {
-    printf("%s [-b num] [-d name] [-h] [-i file] [-k sec] [-n num] [-r rate] [-s] [--sql [--db_host host] --db_user user --db_pass pass] [-t thre]\n", __FILE__);
-    printf("  -h                : print this help\n");
-    printf("  -i <file>         : input data filename\n");
-    printf("  -t <threshold>    : detection threshold above psd, default: 10 dB\n");
-    printf("  -s                : use STDIN as input\n");
-    printf("  -r <rate>         : sampling rate in Hz, default 250000Hz\n");
-    //printf("  -d <name>         : device name\n");
-    printf("  -b <number>       : number of bins used for fft, default is 400\n");
-    printf("  -n <number>       : number of samples per fft, default is 50\n");
-    printf("  -k <seconds>      : prints a keep-alive statement every <sec> seconds, default is 300\n");
-    printf(" --sql              : write to database, requires --db_user, --db_pass\n");
-    printf(" --db_host <host>   : address of SQL server to use, default is localhost\n");
-    printf(" --db_port <pass>   : port on which to connect, use 0 if unsure\n");
-    printf(" --db_user <user>   : username for SQL server \n");
-	printf(" --db_pass <pass>   : matching password\n");
-	printf(" --db_run_id <id>	: numeric id of this recording run. Used to link it to its metadata in the SQL database");
+    printf("%s [-b num] [-e file] [-h] [-i file] [-k sec] [-n num] [-o file [--append]] [-r rate] [-s] [--sql [--db_host host] --db_user user --db_pass pass --db_run_id id] [-t thre]\n", __FILE__);
+    printf("  -b <number>            : number of bins used for fft, default is 400\n");
+	printf("  -e <file>              : write errors to given file. If omitted, errors are written to command line.")
+    printf("  -h                     : print this help\n");
+    printf("  -i <file>              : input data filename\n");
+    printf("  -k <seconds>           : prints a keep-alive statement every <sec> seconds, default is 300\n");
+    printf("  -n <number>            : number of samples per fft, default is 50\n");
+	printf("  -o <file>              : file to print output to. If omitted, output goes to command line.")
+	printf("     [--append]          : append output to given file rather than starting fresh.")
+    printf("  -r <rate>              : sampling rate in Hz, default 250000Hz\n");
+    printf("  -s                     : use STDIN as input\n");
+    printf(" --sql                   : write to database, requires --db_user, --db_pass\n");
+    printf("      [--db_host <host>] : address of SQL server to use, default is localhost\n");
+    printf("      [--db_port <port>] : port on which to connect, default is 3306\n");
+    printf("      --db_user <user>   : username for SQL server \n");
+	printf("      --db_pass <pass>   : matching password\n");
+	printf("      --db_run_id <id>	 : numeric id of this recording run. Used to link it to its metadata in the SQL database");
+    printf("  -t <threshold>       : detection threshold above psd, default: 10 dB\n");
 }
 
 // read samples from file and store into buffer
@@ -100,26 +103,32 @@ void  free_memory();
 // main program
 int main(int argc, char*argv[])
 {
-    char            filename_input[256] = "data/zeidler-2017-08-06/g10_1e_120kHz.dat";
-    float           threshold           = 10.0f; //-60.0f;
+    char            filename_input[256];
+	char			filename_output[256];
     char            read_from_stdin     = 0;
+	char			append_output		= 0;
+    float           threshold           = 10.0f; //-60.0f;
     unsigned long   sampling_rate       = 250000;
                     nfft                = 400;
                     timestep            = 50;
+	char            write_to_db 		= 0;
+	char            *db_host = NULL, *db_user = NULL, *db_pass = NULL;
+	unsigned int 	db_port				=3306;
 
     // read command-line options
     int dopt;
-    while ((dopt = getopt_long(argc,argv,"hi:t:sr:b:n:d:k:", longopts, NULL)) != -1) {
+    while ((dopt = getopt_long(argc,argv,"b:hi:k:n:o:r:st:", longopts, NULL)) != -1) {
         switch (dopt) {
+		case 'b': nfft = atoi(optarg);         			break;
+//        case 'd': device_name = optarg;                 break;
         case 'h': usage();                              return 0;
         case 'i': strncpy(filename_input,optarg,256);   break;
-        case 't': threshold = atof(optarg);             break;
-        case 's': read_from_stdin = 1;                  break;
-        case 'r': sampling_rate = atoi(optarg);         break;
-		case 'b': nfft = atoi(optarg);         			break;
-        case 'n': timestep = atoi(optarg);         		break;
-//        case 'd': device_name = optarg;                 break;
         case 'k': keepalive = atoi(optarg);             break;
+        case 'n': timestep = atoi(optarg);         		break;
+		case 'o': strncpy(filename_output,optarg,256);  break;
+        case 'r': sampling_rate = atoi(optarg);         break;
+        case 's': read_from_stdin = 1;                  break;
+        case 't': threshold = atof(optarg);             break;
         case 900: db_host = optarg;                     break;
 		case 901: db_port = atoi(optarg);               break;
         case 902: db_user = optarg;                     break;
@@ -145,6 +154,29 @@ int main(int argc, char*argv[])
 
     // create spectrogram
     spgramcf periodogram = spgramcf_create(nfft, LIQUID_WINDOW_HAMMING, nfft/2, timestep);
+	
+	//open error file
+	
+	err_file = fopen(ERR_FILE, "a");
+	if (err_file==NULL) {
+		fprintf(stderr, "Could not open %s for writing. Writing errors to stderr instead.")
+		err_file = stderr;
+	} else {
+		char buffer[30];
+		const time_t tm = (time_t) _time.tv_sec;
+		strftime(buffer, 30, "%F %T",gmtime(&tm));
+		fprintf("------------------------- %s ------------------------", buffer)
+	}
+	
+	if (append_output != 0)
+		out_fiie = fopen(filenmane_output, "a");
+	else
+		out_file = fopen(filename_output, "w");
+	if (out_file==NULL) {
+		fprintf(stderr, "Could not open %s for writing. Writing to stdout instead.")
+		out_file = stdout;
+	}
+	
 
     // buffer
     unsigned int  buf_len = 64;
@@ -153,17 +185,17 @@ int main(int argc, char*argv[])
     // DC-blocking filter 1e-3f
     iirfilt_crcf dcblock = iirfilt_crcf_create_dc_blocker(1e-3f);
 
-    printf("write_to_db=%i\n", write_to_db);
+    fprintf(outfile, "write_to_db=%i\n", write_to_db);
     // open SQL database
     if (write_to_db!=0)
     {
         if (db_user==NULL || db_pass==NULL) {
-            fprintf(stderr, "Incomplete credentials supplied. Not writing to database.\n");
+            fprintf(err_file, "Incomplete credentials supplied. Not writing to database.\n");
             write_to_db = 0;
         } else {
             if (db_host == NULL){
                 db_host = "127.0.0.1";
-                fprintf(stderr, "No hostname given, trying 127.0.0.1.\n");
+                fprintf(err_file, "No hostname given, trying 127.0.0.1.\n");
             }
 
             con =mysql_init(NULL);
@@ -171,12 +203,12 @@ int main(int argc, char*argv[])
                 if (mysql_real_connect(con, db_host, db_user, db_pass,
                       DB_BASE, db_port, NULL, 0) == NULL)
                 {
-                  fprintf(stderr, "%s\n", mysql_error(con));
+                  fprintf(err_file, "%s\n", mysql_error(con));
                   mysql_close(con);
                   write_to_db = 0;
                 }
             } else {
-                fprintf(stderr, "ERROR: %s\n", mysql_error(con));
+                fprintf(err_file, "ERROR: %s\n", mysql_error(con));
                 write_to_db = 0;
             }
         }
@@ -187,24 +219,24 @@ int main(int argc, char*argv[])
     // open input file
     FILE * fid;
     if (read_from_stdin){
-        fprintf(stderr,"reading from stdin.\n");
+        fprintf(err_file,"reading from stdin.\n");
         fid = stdin;
     } else {
         fid = fopen(filename_input,"r");
         if (fid == NULL) {
-	        fprintf(stderr,"error: could not open %s for reading\n", filename_input);
+	        fprintf(err_file,"error: could not open %s for reading\n", filename_input);
         	exit(-1);
 	}
     }
     if (write_to_db!=0)
-	    printf("Also sending data to SQL Server at %s.\n", db_host);
+	    fprintf(outfile, "Also sending data to SQL Server at %s.\n", db_host);
 	clock_gettime(CLOCK_REALTIME,&now);
 	char tbuf[30];
 	format_timestamp(now,tbuf,30);
-	printf("Will print timestamp every %i transforms\n", keepalive);
-	printf("%s\n",tbuf);
+	fprintf(outfile, "Will print timestamp every %i transforms\n", keepalive);
+	fprintf(outfile, "%s\n",tbuf);
 	//print row names
-	printf("time;duration;freq;bw;strength;sample\n");
+	fprintf(outfile, "time;duration;freq;bw;strength;sample\n");
 
     // continue processing as long as there are samples in the file
     unsigned long int total_samples  = 0;
@@ -253,7 +285,7 @@ int main(int argc, char*argv[])
                 clock_gettime(CLOCK_REALTIME,&now);
                 char tbuf[30];
                 format_timestamp(now,tbuf,30);
-                printf("%s;;;;;\n",tbuf);
+                fprintf(outfile, "%s;;;;;\n",tbuf);
 				fflush(stdout);
             }
 
@@ -274,8 +306,8 @@ int main(int argc, char*argv[])
     spgramcf_destroy(periodogram);
     iirfilt_crcf_destroy(dcblock);
 
-    printf("total samples in : %lu\n", total_samples);
-    printf("total transforms : %lu\n", num_transforms);
+    fprintf(outfile, "total samples in : %lu\n", total_samples);
+    fprintf(outfile, "total transforms : %lu\n", num_transforms);
 
     free_memory();
 
@@ -482,10 +514,10 @@ int step(float _threshold, unsigned int _sampling_rate)
             float signal_bw   = get_group_bw(i)*_sampling_rate;            // bandwidth estimate (normalized)
 			float max_signal  = get_group_max_sig(i);						// maximum signal strength per group
 //            float start_time  = num_transforms*timestep - duration; // approximate starting time
-            printf("%s;%-10.6f;%9.6f;%9.6f;%f;%lu\n",
+            fprintf(outfile, "%s;%-10.6f;%9.6f;%9.6f;%f;%lu\n",
                     timestamp, duration, signal_freq, signal_bw,max_signal, num_transforms);
 			fflush(stdout);
-			if (write_to_db!=0) {
+			if (con != NULL) {
 				snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s (timestamp,duration,signal_freq,signal_bw, max_signal, run) VALUE(\"%s\",%-10.6f,%9.6f,%9.6f,%f,%i)", DB_TABLE, timestamp, duration, signal_freq, signal_bw, max_signal, run_id);
 				mysql_query(con, sql_statement);
 			}
