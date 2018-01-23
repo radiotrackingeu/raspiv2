@@ -39,9 +39,9 @@
 
 			Please enter the following information in SDR# - except if you pressed the Start with Port 81 Button, then it is 81.
 			<br><br>
-			Host:<?php echo $_SERVER['SERVER_NAME']; ?>
+			Host:<?php echo $_SERVER['SERVER_NAME'];?>
 			<br>
-			Port:<?php echo ($_SERVER['SERVER_PORT']+1); ?>
+			Port:<?php echo ($_SERVER['SERVER_PORT']+1);?>
 			<br><br>
 		</div>
 	</div>
