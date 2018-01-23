@@ -7,73 +7,78 @@
 <link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
 
 <body>
-
 <?php
 	//load config
 	require_once '../cfg/baseConfig.php';
 	//load top menu
 	require_once RESOURCES_PATH.'/header.php';
- ?>
- 
-<!-- Enter text here-->
-<div id="UMTS" class="w3-container">
-<br>
-Start or stop the SDR# Server. Remember that only one service can run on each device. 
-<br><br>
-<form method='POST'> 
-<input type="submit" class="w3-btn" value="Start" name="rtl_tcp_start" />
-<input type="submit" class="w3-btn" value="Start with Port 81" name="rtl_tcp_start_81" />
-<input type="submit" class="w3-btn" value="Stop" name="rtl_tcp_stop" />
-</form> 
-<br>
-
-Please enter the following information in SDR#
-<br><br>
-Host:<?php echo $_SERVER['SERVER_NAME']; ?>
-<br>
-Port:<?php echo ($_SERVER['SERVER_PORT']+1); ?>
-<br><br>
-
-</div>
-<?php
-	if (isset($_POST["rtl_tcp_start"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234' 2>&1";
-		$result = system($cmd);
-	}
-	if (isset($_POST["rtl_tcp_start_81"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -p 81:1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234' 2>&1";
-		$result = system($cmd);
-	}
-	if (isset($_POST["rtl_tcp_stop"])){
-		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtlsdr) 2>&1";
-		echo '<pre>';
-		$result = system($cmd);
-		echo '</pre>';
-	}
+	//load functions
+	require_once RESOURCES_PATH.'/helpers.php';
 ?>
+ 
+<!---------------- Tab Menu -------------------------->
+<div class="w3-bar w3-brown">
+	<button class="w3-bar-item w3-button" onclick="openCity('sdr_server')">SDR#-Server</button>
+</div>
 
 <!-- Enter text here-->
 
-<script>
-function openCity(cityName) {
-    var i;
-    var x = document.getElementsByClassName("city");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(cityName).style.display = "block";  
-}
-function w3_switch(name) {
-	var x = document.getElementById(name);
-    if (x.style.display == "none") {
-        x.style.display = "block";
-    } else { 
-        x.style.display = "none";
-    }
-}
-</script>
+<div id="sdr_server" class="w3-container city w3-row-padding w3-mobile" style="display:none">
+	<div class="w3-half">
+		<div class="w3-panel w3-green w3-round">
+			<h3>Receiver 0</h3>
+			<br>
+			Start or stop the SDR# Server.
+			<br><br>
+			<form method='POST'> 
+				<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_tcp_start_d0" />
+				<input type="submit" class="w3-btn w3-brown" value="Start with Port 81" name="rtl_tcp_start_81_d0" />
+				<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_tcp_stop_d0" />
+			</form> 
+			<br>
 
+			Please enter the following information in SDR# - except if you pressed the Start with Port 81 Button, then it is 81.
+			<br><br>
+			Host:<?php echo $_SERVER['SERVER_NAME']; ?>
+			<br>
+			Port:<?php echo ($_SERVER['SERVER_PORT']+1); ?>
+			<br><br>
+		</div>
+	</div>
+	<div class="w3-half">
+		<div class="w3-panel w3-green w3-round">
+			<h3>Receiver 1</h3>
+			<br>
+			Start or stop the SDR# Server.
+			<br><br>
+			<form method='POST'> 
+				<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_tcp_start_d1" />
+				<input type="submit" class="w3-btn w3-brown" value="Start with Port 82" name="rtl_tcp_start_82_d1" />
+				<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_tcp_stop_d1" />
+			</form> 
+			<br>
+
+			Please enter the following information in SDR# - except if you pressed the Start with Port 82 Button, then it is 82.
+			<br><br>
+			Host:<?php echo $_SERVER['SERVER_NAME']; ?>
+			<br>
+			Port:<?php echo ($_SERVER['SERVER_PORT']+2); ?>
+			<br><br>
+		</div>
+	</div>
+</div>
+	
+
+<!-- Enter text here-->
+
+<?php
+	//load footer
+	require_once RESOURCES_PATH.'/footer.php';
+	//load javascripts
+	require_once RESOURCES_PATH.'/javascript.php';
+	//load php_scripts
+	require_once RESOURCES_PATH.'/php_scripts.php';
+ ?>
 
 </body>
-
 </html>

@@ -405,6 +405,35 @@
 		start_docker($cmd,'settings_webrx_tab');
 	}
 	
+	//SDR# - Server
+	
+	if (isset($_POST["rtl_tcp_start_d0"])){
+		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d0 -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234' 2>&1";
+		start_docker_quite($cmd,'sdr_server');
+	}
+	if (isset($_POST["rtl_tcp_start_81_d0"])){
+		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d0 -t --device=/dev/bus/usb -p 81:1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234' 2>&1";
+		start_docker_quite($cmd,'sdr_server');
+	}
+	if (isset($_POST["rtl_tcp_stop_d0"])){
+		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter name=sharp_server_sdr_d0) 2>&1";
+		start_docker($cmd,'sdr_server');
+	}
+	
+	if (isset($_POST["rtl_tcp_start_d1"])){
+		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d1 -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+2).":1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234' 2>&1";
+		start_docker_quite($cmd,'sdr_server');
+	}
+	if (isset($_POST["rtl_tcp_start_82_d1"])){
+		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d1 -t --device=/dev/bus/usb -p 82:1234 rtlsdr rtl_tcp -a  '0.0.0.0' -p '1234' 2>&1";
+		start_docker_quite($cmd,'sdr_server');
+	}
+	if (isset($_POST["rtl_tcp_stop_d1"])){
+		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter name=sharp_server_sdr_d1) 2>&1";
+		start_docker($cmd,'sdr_server');
+	}
+	
+	
 	//General Functions
 	function start_docker($docker_cmd,$block_to_jump){
 		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";

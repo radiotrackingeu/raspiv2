@@ -44,10 +44,12 @@ function setVisibility(menu, label, element) {
 <div id="tab_logger_range" class="w3-container city w3-row-padding w3-mobile" style="display:none">
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
-			<h3>Range-Receiver 0</h3><br>
-			Gain: <?php echo $config['logger']['log_gain_0']?>
+			<h3>Receiver 0</h3><br>
+			Range: <?php echo ($config['logger']['center_freq_0']-$config['logger']['freq_range_0']/2)/1000000?> MHz till <?php echo ($config['logger']['center_freq_0']+$config['logger']['freq_range_0']/2)/1000000?> MHz
 			<br>
-			Threshold: <?php echo $config['logger']['threshold_0']?>
+			Gain: <?php echo $config['logger']['log_gain_0']?> dB
+			<br>
+			Threshold: <?php echo $config['logger']['threshold_0']?> dB above Noise
 			<br>
 			<form class="w3-right-align" method="POST" enctype="multipart/form-data" action="">
 				<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start_0" />
@@ -58,10 +60,12 @@ function setVisibility(menu, label, element) {
 	</div>
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
-			<h3>Range-Receiver 1</h3><br>
-			Gain: <?php echo $config['logger']['log_gain_1']?>
+			<h3>Receiver 1</h3><br>
+			Range: <?php echo ($config['logger']['center_freq_1']-$config['logger']['freq_range_1']/2)/1000000?> MHz till <?php echo ($config['logger']['center_freq_1']+$config['logger']['freq_range_1']/2)/1000000?> MHz
 			<br>
-			Threshold: <?php echo $config['logger']['threshold_1']?>
+			Gain: <?php echo $config['logger']['log_gain_1']?> dB
+			<br>
+			Threshold: <?php echo $config['logger']['threshold_1']?> dB above Noise
 			<br>
 			<form class="w3-right-align" method="POST" enctype="multipart/form-data" action="">
 				<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start_1" />
@@ -90,7 +94,7 @@ function setVisibility(menu, label, element) {
 		}
 		?><br><br>
 		<form method="post" enctype="multipart/form-data">
-			<input type='submit' class='w3-btn w3-brown' value='Update Receiver Status' name='update_device_info'/>
+			<input type='submit' class='w3-btn w3-brown' value='Update Receiver Status' name='update_device_info_fr'/>
 			<br><br>
 		</form>
 	</div>
