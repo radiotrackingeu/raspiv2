@@ -34,11 +34,11 @@ function setVisibility(menu, label, element) {
 
 <!-- Enter text here-->
 <div class="w3-bar w3-brown w3-mobile">
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_range')">Frequency Range</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_single')">Single Frequency</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_settings')">Settings</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_raw_data_ana')">Raw Data Analyzer</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('device_info')">Device Information</button>
+	<button class="w3-bar-item w3-button tablink w3-mobile" onclick="openCity(event,'tab_logger_range')">Frequency Range</button>
+	<button class="w3-bar-item w3-button tablink w3-mobile " onclick="openCity(event,'tab_logger_single')">Single Frequency</button>
+	<button class="w3-bar-item w3-button tablink w3-mobile " onclick="openCity(event,'tab_logger_settings')">Settings</button>
+	<button class="w3-bar-item w3-button tablink w3-mobile " onclick="openCity(event,'tab_raw_data_ana')">Raw Data Analyzer</button>
+	<button class="w3-bar-item w3-button tablink w3-mobile" onclick="openCity(event,'device_info')">Device Information</button>
 </div>
 
 <!-------------------------------- Range Logger -------------------------------------------------------------------->
@@ -64,16 +64,18 @@ function setVisibility(menu, label, element) {
 			<br>
 		</div>
 	</div>
-	<div class="w3-rest w3-panel w3-green w3-round">
-		<br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
+	<div class="w3-row">
+		<div class="w3-container w3-green w3-round" style="margin-right:8px;margin-left:8px">
+			<br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
+		</div>
 	</div>
 </div>
 
 <!-------------------------------- Single Frequency Logger -------------------------------------------------------------------->
 
-<div id="tab_logger_single" class="w3-container city w3-row-padding w3-mobile" style="display:none">
-	<div class="w3-half">
-		<div class="w3-panel w3-green w3-round">
+<div id="tab_logger_single" class="w3-container city w3-row-padding" style="display:none">
+	<div class=" w3-half">
+		<div class="w3-panel w3-round w3-green">
 			<h3>Receiver 0</h3><br>
 			<form method="POST" enctype="multipart/form-data" action="">
 				<input type="submit" class="w3-btn w3-brown" value="Start" name="log_single_start_0" />
@@ -82,8 +84,9 @@ function setVisibility(menu, label, element) {
 			<br>
 		</div>
 	</div>
+
 	<div class="w3-half">
-		<div class="w3-panel w3-green w3-round">
+		<div class="w3-panel w3-round w3-green">
 			<h3>Receiver 1</h3><br>
 			<form method="POST" enctype="multipart/form-data" action="">
 				<input type="submit" class="w3-btn w3-brown" value="Start" name="log_single_start_1" />
@@ -92,21 +95,28 @@ function setVisibility(menu, label, element) {
 			<br>
 		</div>
 	</div>
-	<div class="w3-rest w3-panel w3-green w3-round">
-		<br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
+	<div class="w3-row">
+		<div class="w3-container w3-green w3-round" style="margin-right:8px;margin-left:8px">
+			<br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
+		</div>
 	</div>
+
+		<!--
+		<div class=" w3-container" atyle="margin-top:100px">
+		</div>-->
+	
 </div>
 
 <!------------------------------------------------- Tab Logger Settings ------------------------------------------------->
 
 <div id="tab_logger_settings" class="w3-container city w3-row-padding" style="display:none">
-	<div class="w3-half">
-		<div class="w3-container w3-panel w3-green w3-round">
+		<div class=" w3-half">
+	<div class="w3-container w3-panel w3-round w3-green">
 			<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<h3>Receiver 0</h3><br>
 			<button type=button onclick="myAccordion('rec0_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Receiver Settings</h4></button>
 			
-			<div id="rec0_settings" class="w3-container w3-hide">
+			<div id="rec0_settings" class="w3-container w3-hide w3-bottombar w3-border-grey">
 				<p>
 				Gain in dB (default 20):<br>
 				<input class="w3-input w3-mobile" style="width:30%" type="number" name="log_gain_0" value="<?php echo isset($config['logger']['log_gain_0']) ? $config['logger']['log_gain_0'] : 20 ?>">
@@ -337,7 +347,7 @@ function setVisibility(menu, label, element) {
 			</form>
 		</div>
 	</div>
-	<div class="w3-rest w3-center w3-panel w3-green w3-round">
+	<div class="w3-rest w3-center w3-panel w3-green w3-round" style="margin-right:8px; margin-left:8px">
 		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<br>
 			<input type="submit" class="w3-btn w3-brown" value="Compile Raspi 3" name="compile"/>

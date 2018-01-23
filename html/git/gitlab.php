@@ -28,11 +28,11 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('GIT')">User Interface</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('install')">Applications</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('running_docker')">Applications Status</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('git_setup')">Setup Update</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('create_id')">Create Key</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'GIT')">User Interface</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'install')">Applications</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'running_docker')">Applications Status</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'git_setup')">Setup Update</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'create_id')">Create Key</button>
 </div>
 
 <div id="GIT" class="w3-container city" style="display:none">

@@ -28,11 +28,11 @@
 
 
 <div class="w3-bar w3-brown">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('Both')">Connect</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('UMTS')">Mobile</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('VPN')">Tunnel</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('VPN_Setup')">Tunnel Setup</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('UMTS_Setup')">Mobile Setup</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'Both')">Connect</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'UMTS')">Mobile</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'VPN')">Tunnel</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'VPN_Setup')">Tunnel Setup</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'UMTS_Setup')">Mobile Setup</button>
 </div>
 
 

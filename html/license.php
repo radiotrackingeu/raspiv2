@@ -17,8 +17,8 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('license')">License</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('further_notes')">Further Notes</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'license')">License</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'further_notes')">Further Notes</button>
 </div>
 
 <div id="license" class="w3-container city" style="display:block">

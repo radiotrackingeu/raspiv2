@@ -18,11 +18,11 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('schedule')">Schedule</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('date')">Time/Date</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('hostname')">Hostname</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('expand_disc')">Expand Disc</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('infos')">System Information</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'schedule')">Schedule</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'date')">Time/Date</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'hostname')">Hostname</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'expand_disc')">Expand Disc</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'infos')">System Information</button>
 </div>
 
 <div id="schedule" class="w3-container city" style="display:none">

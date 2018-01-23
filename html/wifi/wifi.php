@@ -17,9 +17,9 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('hotspot')">Hotspot</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('wifi_con')">WiFi Connection</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('lan')">Lan Connection</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'hotspot')">Hotspot</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'wifi_con')">WiFi Connection</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'lan')">Lan Connection</button>
 </div>
 
 <div id="hotspot" class="w3-container city">

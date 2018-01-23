@@ -26,9 +26,9 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('camera_data')">Camera</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('radio_data')">Radio</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('mysql')">Database</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'camera_data')">Camera</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'radio_data')">Radio</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'mysql')">Database</button>
 </div>
 
 <div id="camera_data" class="w3-container city" style="display:none">

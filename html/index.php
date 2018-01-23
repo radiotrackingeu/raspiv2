@@ -16,9 +16,9 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('welcome')">Welcome</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('introduction')">Introduction</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('instructions')">Setup Instructions</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'welcome')">Welcome</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'introduction')">Introduction</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'instructions')">Setup Instructions</button>
 </div>
 
 <div id="welcome" class="w3-container city">
