@@ -408,7 +408,7 @@
 	//SDR# - Server
 	
 	if (isset($_POST["rtl_tcp_start_d0"])){
-		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d0 -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr rtl_tcp -d 0-a  '0.0.0.0' -p '1234' 2>&1";
+		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d0 -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr rtl_tcp -d 0 -a  '0.0.0.0' -p '1234' 2>&1";
 		start_docker_quite($cmd,'sdr_server');
 	}
 	if (isset($_POST["rtl_tcp_start_81_d0"])){
