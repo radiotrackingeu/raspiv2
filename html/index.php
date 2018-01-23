@@ -16,104 +16,52 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('welcome')">Welcome</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('introduction')">Introduction</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('instructions')">Setup Instructions</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('features')">Features</button>
+	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('pdf_manuals')">PDF Manuals</button>
 </div>
 
-<div id="welcome" class="w3-container city">
-
-<div class="w3-panel w3-green w3-round">
-
-<h4>HTML Version 2.4 aka plecotus</h4>
-
-<p>
-List of features:
-<br><br>
-- Signal logging within 250 kHz Frequency Range (detection range is still limited)<br>
-- Single Frequency Radio for VHF tags using the browser and local audio output<br>
-- wav or mp3 recording on several frequencies<br>
-- SDR# support to monitor a frequency range of 2MHz<br>
-- WebRX to monitor live a specturm using the browser <br>
-- Remote Access using 2G/3G/4G (certificate required)<br>
-- Camera with motion detection fully supported<br>
-- Automated Microphone Recordings<br>
-- GPS Logging<br>
-- Data Management<br>
-- WiFi Hotspot or login to specific WiFi<br>
-- Time triggered job management<br>
-- Global Setup-File to easily duplicate settings<br>
-
-</p>
-</div>
-</div>
-<div id="introduction" class="w3-container city" style="display:none">
-
-<div class="w3-panel w3-green w3-round">
-<p>
-If you managed to get this page running on a Rasberry-Pi: congratulations!
-<br><br>
-The aim of the whole project is to locate the transmitters and show them on a map. The software is still in development.
-In the following boxes you will find an overview of the supported featuers. For more details please visit the pages.<br>
-</p>
+<div id="features" class="w3-container city">
+	<div class="w3-panel w3-green w3-round">
+		<h2>Version 3.0 aka Nyctalus</h2>
+		<p>
+		<h4>Radio signal logging</h4>
+		->   on a 250 kHz/1 MHz frequency range or on single frequency (higher detection range)<br>
+		->   Output is saved as .csv file or in a MySQL Database<br>
+		->   Up to two receivers are supported<br>
+		<h4>Browser-Spectrum-Viewer</h4>
+		->   Visual feedback of the spectrum<br>
+		->   Demodulation<br>
+		->   To check for noise sources<br>
+		<h4>SDR# support</h4>
+		->   Monitor a Frequency Range of up to 2MHz<br>
+		->   Handy
+		<h4>Remote Access</h4>
+		->   Using 2G/3G/4G Hotspots<br>
+		->   VPN-Certificate is required (paid feature)<br>
+		<h4>WiFi</h4>
+		->   Can create own hotspot for access<br>
+		->   Login to an external Hotspot<br>
+		<h4>Camera</h4>
+		->   With motion detection and IR-Lights switch<br>
+		<h4>Software Handling</h4>
+		->   Global Setup-File to easily duplicate settings<br>
+		->   Update via WiFi or LAN - stable and development version<br>
+		<br><br>
+		List of features still in development:<br><br>
+		- Automated Microphone Recordings<br>
+		- GPS Logging<br>
+		-> get GPS from Cell Phone<br>
+		</p>
+	</div>
 </div>
 
-<div class="w3-panel w3-green w3-round">
-
-<h3>Radio</h3>
-To receive the signal of the transmitters, you got the following options.<br>
-
-<b>WebRadio:</b> Listen to a single, preset frequency<br>
-<b>Recorder:</b> Records the frequency-time-signal spectrum<br>
-<b>SDR#-Server:</b> Sets up a server which can be used with SDR# to monitor live the frequency-time-signal spectrum<br>
-<b>WebRX:</b> To monitor live the frequency-time-signal spectrum within a browser application<br>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-<h3>Camera</h3>
-Use it to setup and run a camera.<br>
-
-<b>Start:</b> Activate and start the camera<br>
-<b>Setup:</b> No setup options yet<br>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-<h3>Microphone</h3>
-Will be supported soon.<br>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-<h3>GPS</h3>
-Will be supported soon.<br>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-<h3>Data</h3>
-Use it to manage the storage of the data.<br>
-<b>Start:</b> Just a bunch of links right now<br>
-<b>Setup:</b> No setup options yet<br>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-<h3>Wifi</h3>
-Will be supported soon.<br>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-<h3>Remote</h3>
-Use it to connect the system to a mobile network, so you can access it via the world wide web.<br>
-
-<b>Start:</b> Read the introdution on the page<br>
-<b>UMTS-Setup:</b> Mobile Network Modifications <br>
-<b>VPN-Setup:</b> VPN-Tunnel Modifications<br>
-</div>
-
-<div class="w3-panel w3-green w3-round">
-<h3>System</h3>
-<b>Software:</b> Update and Debug options<br>
-<b>System:</b> Nothing here yet<br>
-<b>Documentation:</b> Nope<br>
-</div>
+<div id="pdf_manuals" class="w3-container city">
+	<div class="w3-panel w3-green w3-round">
+	
+	<br><a target="_blank" href="/instructions/radiotrackingeu_basic_setup.pdf"><h4>Basic Setup Instructions</h4></a><br>
+	
+	to be continued...  <br><br>
+	</div>
 </div>
 <!-- Enter text here-->
 

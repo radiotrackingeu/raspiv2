@@ -268,28 +268,7 @@
 		$cmd = "sudo docker run -t --rm -v /var/www/html/sdr/liquidsdr/:/tmp/ liquidsdr ".$gcc;
 		start_docker($cmd,'tab_logger_settings');
 	}
-
-	//change_logger_settings_1
 	
-	//Logger Cronjob Functions
-	if (isset($_POST["change_logger_cron"])){
-		$cmd = "sudo docker run --rm --name logger-sdr-d1 -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["time_center_freq"]." -s ".$_POST["time_freq_range"]." -t -q -A -l ".$_POST["time_log_level"]." -g " . $_POST["time_log_gain"]. " 2> /home/".$_POST["time_pre_log_name"]."\$(date +%Y_%m_%k_%M_%S)'";
-		$stop_cmd="sudo docker stop \\$(sudo docker ps -a -q --filter ancestor=rtl_433_mod)";
-		if($_POST["time_stop_timer"]=="stop_no"){
-			$change= "#".$stop_cmd;
-			$search = $stop_cmd;
-			$file_to_replace="/tmp/crontab";
-			echo "System will not stop logger";
-			start_docker("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"",'tab_logger_timer');
-		}
-		if($_POST["time_stop_timer"]=="stop_on_time"){
-			$change= $_POST["time_stop_min"]. " ".$_POST["time_stop_hour"]." * * * root " .$stop_cmd;
-			$search = $stop_cmd;
-			$file_to_replace="/tmp/crontab";
-			echo "System will now stop logger at specific time";
-			start_docker("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"",'tab_logger_timer');
-		}
-	}	
 	//Remote Connections
 	if (isset($_POST["stop_vpn"])){
 		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter name=vpn_tunnel) 2>&1"; 
@@ -392,9 +371,12 @@
 		start_docker($cmd, 'tab_logger');
 	}
 	
-	//Check wether Receivers are running update_device_info
-	if (isset($_POST["update_device_info"])){
-		echo "<script type='text/javascript'>document.getElementById('device_info').style.display = 'block';</script>";
+	//Check whether Receivers are running update_device_info
+	if (isset($_POST["update_device_info_fr"])){
+		echo "<script type='text/javascript'>document.getElementById('tab_logger_range').style.display = 'block';</script>";
+	}
+	if (isset($_POST["update_device_info_sf"])){
+		echo "<script type='text/javascript'>document.getElementById('tab_logger_single').style.display = 'block';</script>";
 	}
 	
 	//WebRX

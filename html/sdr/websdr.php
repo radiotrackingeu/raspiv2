@@ -85,7 +85,7 @@
 				<input type="number" name="center_freq_0" value="<?php echo isset($config['WebRX']['center_freq_0']) ? $config['WebRX']['center_freq_0'] : 150100000 ?>"><br><br>
 				Gain: <br>
 				<input type="number" name="rf_gain_0" value="<?php echo isset($config['WebRX']['rf_gain_0']) ? $config['WebRX']['rf_gain_0'] : 20 ?>"><br><br>
-				<input type="submit" class="w3-btn w3-brown" value="Change settings" name="change_config_websdr_d0">
+				<input type="submit" class="w3-btn w3-brown w3-right" value="Change settings" name="change_config_websdr_d0"><br><br>
 			</form>
 		</div>
 	</div>
@@ -112,7 +112,7 @@
 				<input type="number" name="center_freq_1" value="<?php echo isset($config['WebRX']['center_freq_1']) ? $config['WebRX']['center_freq_1'] : 150100000 ?>"><br><br>
 				Gain: <br>
 				<input type="number" name="rf_gain_1" value="<?php echo isset($config['WebRX']['rf_gain_1']) ? $config['WebRX']['rf_gain_1'] : 20 ?>"><br><br>
-				<input type="submit" class="w3-input w3-mobile w3-brown w3-btn w3-brown" value="Change settings" name="change_config_websdr_d1">
+				<input type="submit" class="w3-right w3-brown w3-btn" value="Change settings" name="change_config_websdr_d1"><br><br>
 			</form>
 		</div>
 	</div>

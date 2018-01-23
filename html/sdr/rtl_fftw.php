@@ -37,7 +37,6 @@ function setVisibility(menu, label, element) {
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_range')">Frequency Range</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_single')">Single Frequency</button>
 	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_settings')">Settings</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('device_info')">Device Information</button>
 </div>
 
 <!-------------------------------- Range Logger -------------------------------------------------------------------->
@@ -45,8 +44,12 @@ function setVisibility(menu, label, element) {
 <div id="tab_logger_range" class="w3-container city w3-row-padding w3-mobile" style="display:none">
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
-			<h3>Receiver 0</h3><br>
-			<form method="POST" enctype="multipart/form-data" action="">
+			<h3>Range-Receiver 0</h3><br>
+			Gain: <?php echo $config['logger']['log_gain_0']?>
+			<br>
+			Threshold: <?php echo $config['logger']['threshold_0']?>
+			<br>
+			<form class="w3-right-align" method="POST" enctype="multipart/form-data" action="">
 				<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start_0" />
 				<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop_0" />
 			</form>
@@ -55,16 +58,41 @@ function setVisibility(menu, label, element) {
 	</div>
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
-			<h3>Receiver 1</h3><br>
-			<form method="POST" enctype="multipart/form-data" action="">
+			<h3>Range-Receiver 1</h3><br>
+			Gain: <?php echo $config['logger']['log_gain_1']?>
+			<br>
+			Threshold: <?php echo $config['logger']['threshold_1']?>
+			<br>
+			<form class="w3-right-align" method="POST" enctype="multipart/form-data" action="">
 				<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start_1" />
 				<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop_1" />
 			</form>
 			<br>
 		</div>
 	</div>
-	<div class="w3-rest w3-panel w3-green w3-round">
+	<div class="w3-rest w3-center w3-panel w3-green w3-round">
 		<br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
+		<?php 
+		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d0)")){
+			echo "<span class='w3-tag w3-red w3-large'>Radio 1 running</span> \n \n";
+		}
+		else{
+			echo "<span class='w3-tag w3-green w3-large'>Radio 1 not running</span> \n \n";
+		}
+		?>
+		<br><br>
+		<?php 
+		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
+			echo "<span class='w3-tag w3-red w3-large'>Radio 2 running</span> \n \n";
+		}
+		else{
+			echo "<span class='w3-tag w3-green w3-large'>Radio 2 not running</span> \n \n";
+		}
+		?><br><br>
+		<form method="post" enctype="multipart/form-data">
+			<input type='submit' class='w3-btn w3-brown' value='Update Receiver Status' name='update_device_info'/>
+			<br><br>
+		</form>
 	</div>
 </div>
 
@@ -343,34 +371,6 @@ function setVisibility(menu, label, element) {
 			<input type="submit" class="w3-btn w3-brown" value="Compile Raspi Zero" name="compile_raspi_zero"/>
 			<br><br>
 		</form>
-	</div>
-</div>
-<!-------------------------------------- Device Information ----------------------------------------->
-<div id="device_info" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<br>
-		<form method="post" enctype="multipart/form-data">
-			<input type='submit' class='w3-btn w3-brown' value='Update' name='update_device_info'/>
-			<br><br>
-		</form>
-		<?php 
-		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d0)")){
-			echo "<span class='w3-tag w3-red w3-xlarge'>Radio 1 running</span> \n \n";
-		}
-		else{
-			echo "<span class='w3-tag w3-green w3-xlarge'>Radio 1 not running</span> \n \n";
-		}
-		?>
-		<br><br>
-		<?php 
-		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
-			echo "<span class='w3-tag w3-red w3-xlarge'>Radio 2 running</span> \n \n";
-		}
-		else{
-			echo "<span class='w3-tag w3-green w3-xlarge'>Radio 2 not running</span> \n \n";
-		}
-		?>
-		<br><br>
 	</div>
 </div>
 

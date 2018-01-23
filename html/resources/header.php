@@ -34,27 +34,15 @@
 
 	<!-- Camera -->
 	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('camera')">
-			<i class="fa fa-camera"></i> Camera <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="camera" class="w3-dropdown-content w3-card-4">
-			<a href="/picam/picam.php">Start</a>
-			<a href="/picam/setup_picam.php">Setup</a>
-		</div>
+		<a class="w3-bar-item w3-button w3-mobile" href="/picam/picam.php"><i class="fa fa-camera"></i> Camera</a>
 	</div>
 
 	<!-- Microphone -->
 	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('mic')">
-			<i class="fa fa-microphone"></i> Microphone <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="mic" class="w3-dropdown-content w3-card-4">
-			<a href="/micro/micro.php">Start</a>
-			<a href="/micro/micro_setup.php">Setup</a>
-		</div>
+		<a class="w3-bar-item w3-button w3-mobile" href="/micro/micro.php"><i class="fa fa-microphone"></i> Microphone</a>
 	</div>
 	
-	<!-- GPS -->
+	<!-- GPS 
 	<div class="w3-dropdown-hover w3-mobile">
 		<button class="w3-button" onclick="dropd('gps')">
 			<i class="fa fa-compass"></i> GPS <i class="fa fa-caret-down"></i>
@@ -64,40 +52,21 @@
 			<a href="/gps/gps_setup.php">Setup</a>
 		</div>
 	</div>
-		
+		-->
 	
 	<!-- Data storage -->
 	<div class="w3-dropdown-hover w3-mobile">
-		<a class="w3-bar-item w3-button w3-mobile" href="/data/data.php">Data</a>
-		<!--
-		<button class="w3-button" onclick="dropd('data')">
-			<i class="fa fa-database "></i> Data <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="data" class="w3-dropdown-content w3-card-4">
-			<a href="/data/data.php">Start</a>
-			<a href="/data/data_setup.php">Setup</a>
-		</div>
-		-->
+		<a class="w3-bar-item w3-button w3-mobile" href="/data/data.php"><i class="fa fa-database "></i> Data</a>
 	</div>
 	
 	<!-- WiFi -->
 	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('wifi')">
-			<i class="fa fa-wifi"></i> WiFi <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="wifi" class="w3-dropdown-content w3-card-4">
-			<a href="/wifi/wifi.php">Start</a>
-		</div>
+		<a class="w3-bar-item w3-button w3-mobile" href="/wifi/wifi.php"><i class="fa fa-wifi"></i> WiFi</a>
 	</div>
 		
 	<!-- Remote controll -->
 	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('remote')">
-			<i class="fa fa-exchange"></i> Remote <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="remote" class="w3-dropdown-content w3-card-4">
-			<a href="/connect/connect.php">Start</a>
-		</div>
+		<a class="w3-bar-item w3-button w3-mobile" href="/connect/connect.php"><i class="fa fa-exchange"></i> Remote</a>
 	</div>
 	
 	<!-- System settings -->
@@ -108,7 +77,6 @@
 		<div id="system" class="w3-dropdown-content w3-card-4">
 			<a href="/git/gitlab.php">Software</a>
 			<a href="/git/system.php">System</a>
-			<a href="/git/git_setup.php">Documentation</a>
 		</div>
 	</div>
 	
