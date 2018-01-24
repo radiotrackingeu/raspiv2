@@ -64,8 +64,6 @@
 			<input type="submit" class="w3-btn w3-brown" value="Start Browser playback" name="rtl_fm_start_s"/>
 			<input type="submit" class="w3-btn w3-brown" value="Start Local playback" name="rtl_fm_start_l"/>
 			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_stop"/>
-			<br><br>
-			<?php echo start_playback(); ?>
 			<br>
 		</form>
 	</div>
