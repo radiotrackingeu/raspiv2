@@ -5,11 +5,6 @@
 					
 
 <?php
-	//Data Management Functions
-	if (isset($_POST["zip_camera"])){
-		$cmd="sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip__camera_name"]." /tmp/record/ 2>&1";
-		start_docker($cmd,'camera_data');
-	}
 	//System - Software Functions
 	if (isset($_POST["update_rep"])){
 		$cmd='sudo docker run --rm -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh '.$_POST["git_checkout"].' '.$_POST["git_keepcfg"].' 2>&1';
@@ -433,6 +428,49 @@
 		start_docker($cmd,'sdr_server');
 	}
 	
+	//Data-Database Settings
+	if (isset($_POST["zip_camera"])){
+		$cmd="sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip__camera_name"]." /tmp/record/ 2>&1";
+		start_docker($cmd,'camera_data');
+	}
+	if (isset($_POST["rm_cam_zip_folder"])){
+		$cmd = "rm -rf /var/www/html/picam/zipped/* 2>&1";
+		start_docker($cmd,'camera_data');
+	}
+	if (isset($_POST["rm_cam_record_folder"])){
+		$cmd = "rm -rf /var/www/html/picam/record/* 2>&1";
+		start_docker($cmd,'camera_data');
+	}
+	if (isset($_POST["zip_logger"])){
+		$cmd = "sudo docker run -t --rm --privileged -v /var/www/html/sdr/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip_logger_name"]." /tmp/record/ 2>&1";
+		start_docker($cmd,'radio_data');
+	}
+	if (isset($_POST["rm_logger_zip_folder"])){
+		$cmd = "rm -rf /var/www/html/sdr/zipped/* 2>&1";
+		start_docker($cmd,'radio_data');
+	}
+	if (isset($_POST["rm_logger_record_folder"])){
+		$cmd = "rm -rf /var/www/html/sdr/record/* 2>&1";
+		start_docker($cmd,'radio_data');
+	}
+	if (isset($_POST["start_mysql"])){
+		$autostart=isset($config['database']['db_start']) && $config['database']['db_start']=="Yes" ? "--restart=always " : "";
+		$cmd = "sudo docker run -t ".$autostart."--name=mysql --rm -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql mysql 2>&1";
+		start_docker_quite($cmd,'mysql');
+	}
+	if (isset($_POST["stop_mysql"])){
+		$cmd = "sudo docker stop mysql";
+		start_docker($cmd,'mysql');
+	}
+	if (isset($_POST["start_phpmyadmin"])){
+		$cmd = "sudo docker run -t --name=phpmyadmin --rm --net=host -v /var/www/html/data/:/cfiles/ phpmyadmin 2>&1";
+		start_docker_quite($cmd,'mysql');
+	}
+	if (isset($_POST["stop_phpmyadmin"])){
+		$cmd = "sudo docker stop phpmyadmin";
+		start_docker($cmd,'mysql');
+	}
+	
 	
 	//General Functions
 	function start_docker($docker_cmd,$block_to_jump){
@@ -463,7 +501,7 @@
 		}
 	}
 	
-	// SQL Functions
+	//SQL Functions
 	
 	function write_run_to_db($config, $device, $file_name) {
 		if ($config['logger']['use_sql_'.$device] != "Yes")

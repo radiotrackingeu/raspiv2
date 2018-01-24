@@ -101,7 +101,7 @@
 							For this to take effect, you need to stop and restart the database with buttons above.
 						</span>
 					</span><br>
-					<input class="w3-radio w3-mobile" id="db_start_yes" type="radio" name="db_start" value="Yes" disabled <?php echo isset($config['database']['db_start']) && $config['database']['db_start'] == "Yes" ? 'checked="checked"' : ''?>>
+					<input class="w3-radio w3-mobile" id="db_start_yes" type="radio" name="db_start" value="Yes" <?php echo isset($config['database']['db_start']) && $config['database']['db_start'] == "Yes" ? 'checked="checked"' : ''?>>
 					<label class="w3-margin-right" for="db_start_yes">Yes</label>
 					<input class="w3-radio w3-mobile" id="db_start_no" type="radio" name="db_start" value="No" <?php echo isset($config['database']['db_start']) && $config['database']['db_start'] == "No" ? 'checked="checked"' : ''?>>
 					<label class="w3-margin-right" for="db_start_no">No</label>		
@@ -115,58 +115,6 @@
 
 
 <!-- Enter text here-->
-
-
-<?php
-	if (isset($_POST["rm_cam_zip_folder"])){
-		echo '<pre>';
-		$test = system("rm -rf /var/www/html/picam/zipped/* 2>&1", $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["rm_cam_record_folder"])){
-		echo '<pre>';
-		$test = system("rm -rf /var/www/html/picam/record/* 2>&1", $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["zip_logger"])){
-		echo '<pre>';
-		$test = system("sudo docker run -t --rm --privileged -v /var/www/html/sdr/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip_logger_name"]." /tmp/record/ 2>&1", $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["rm_logger_zip_folder"])){
-		echo '<pre>';
-		$test = system("rm -rf /var/www/html/sdr/zipped/* 2>&1", $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["rm_logger_record_folder"])){
-		echo '<pre>';
-		$test = system("rm -rf /var/www/html/sdr/record/* 2>&1", $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["start_mysql"])){
-		$autostart=isset($config['database']['db_start']) && $config['database']['db_start']=="Yes" ? "--restart=always " : "";
-		echo '<pre>';
-		$test = system("sudo docker run -t ".$autostart."--name=mysql --rm -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql mysql 2>&1", $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["stop_mysql"])){
-		echo '<pre>';
-		$test = system("sudo docker stop mysql", $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["start_phpmyadmin"])){
-		echo '<pre>';
-		$test = system("sudo docker run -t --name=phpmyadmin --rm --net=host -v /var/www/html/data/:/cfiles/ phpmyadmin 2>&1", $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["stop_phpmyadmin"])){
-		echo '<pre>';
-		$test = system("sudo docker stop phpmyadmin", $ret);
-		echo '</pre>';
-	}
-?>
-
-
 
 <?php
 	//load footer
