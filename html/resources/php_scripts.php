@@ -455,7 +455,8 @@
 	}
 	if (isset($_POST["start_mysql"])){
 		$autostart=isset($config['database']['db_start']) && $config['database']['db_start']=="Yes" ? "--restart=always " : "";
-		$cmd = "sudo docker run -t ".$autostart."--name=mysql --rm -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql mysql 2>&1";
+		$rm_container=isset($config['database']['db_start']) && $config['database']['db_start']!="Yes" ? "--rm " : "";
+		$cmd = "sudo docker run -t ".$autostart."--name=mysql ".$rm_container." -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql mysql 2>&1";
 		echo $cmd;
 		start_docker($cmd,'mysql');
 	}
