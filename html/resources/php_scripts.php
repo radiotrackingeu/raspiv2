@@ -75,7 +75,7 @@
 	
 	//Logger Range Functions
 	 if (isset($_POST["log_start_0"])){
-		$file_name = $config['logger']['antenna_id_0'] . date('Y_m_d_H_i');
+		$file_name = $config['logger']['antenna_id_0'] ."_". date('Y_m_d_H_i');
 		$file_path = "/tmp/record/" . $file_name;
 		$run_id = write_run_to_db($config, 0, $file_name);
 		$cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." 2> ".$file_path." | ".cmd_liquidsdr($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
@@ -87,7 +87,7 @@
 	}
 	
 	if (isset($_POST["log_start_1"])){
-		$file_name = $config['logger']['antenna_id_1'] . date('Y_m_d_H_i');
+		$file_name = $config['logger']['antenna_id_1'] ."_". date('Y_m_d_H_i');
 		$file_path = "/tmp/record/" . $file_name;
 		$run_id = write_run_to_db($config, 1, $file_name);
 		$cmd = cmd_docker(1)." '".cmd_rtl_sdr($config, 1)." 2> ".$file_path." | ".cmd_liquidsdr($config, 1).cmd_sql($config, 1, $run_id)." >> ". $file_path." 2>&1'";
@@ -151,7 +151,7 @@
 	
 	//Logger Settings Functions
 	if (isset($_POST["change_logger_settings_0"])){
-		$file_name = $config['logger']['antenna_id_0'] . '\$(date +%Y_%m_%k_%M_%S)';
+		$file_name = $config['logger']['antenna_id_0'] ."_". '\$(date +%Y_%m_%k_%M_%S)';
 		$file_path = "/tmp/record/" . $file_name;
 		if($_POST["timer_start_0"]=="start_boot"||$_POST["timer_start_0"]=="start_time"){
 			$run_id = write_run_to_db($config, 0, $config['logger']['antenna_id_0']."_".$config['logger']['timer_start_time_0']);
@@ -178,7 +178,7 @@
 			$search = "logger-sdr-d0";
 			$file_to_replace="/tmp/crontab";
 			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"";
-			start_docker_echo($cmd_change,"tab_logger_settings","System will not start logger upon start");
+			start_docker($cmd_change,"tab_logger_settings");
 		}
 		if($_POST["timer_start_0"]=="start_time"){
 			$change= substr($config['logger']['timer_start_time_0'],3, 2) . " ".substr($config['logger']['timer_start_time_0'], 0, 2)." * * * root " .$cmd;
@@ -194,8 +194,7 @@
 			$search = $stop_cmd;
 			$file_to_replace="/tmp/crontab";
 			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
-			echo $cmd_change;
-			start_docker_echo($cmd_change,"tab_logger_settings","System will stop stopping the logger");			
+			start_docker($cmd_change,"tab_logger_settings");			
 		}
 		if($_POST["timer_stop_0"]=="stop_time"){
 			$stop_cmd="sudo docker stop \\$(sudo docker ps -a -q --filter name=logger-sdr-d0)";
@@ -203,13 +202,12 @@
 			$search = $stop_cmd;
 			$file_to_replace="/tmp/crontab";
 			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
-			echo $cmd_change;
-			start_docker_echo($cmd_change,"tab_logger_settings","System will now start logger upon stated time");			
+			start_docker_echo($cmd_change,"tab_logger_settings","System will now stop logger upon stated time");			
 		}
 	}
 	
 	if (isset($_POST["change_logger_settings_1"])){
-		$file_name = $config['logger']['antenna_id_1'] . '\$(date +%Y_%m_%k_%M_%S)';
+		$file_name = $config['logger']['antenna_id_1'] ."_". '\$(date +%Y_%m_%k_%M_%S)';
 		$file_path = "/tmp/record/" . $file_name;
 		if($_POST["timer_start_1"]=="start_boot"||$_POST["timer_start_1"]=="start_time"){
 			$run_id = write_run_to_db($config, 1, $config['logger']['antenna_id_1']."_".$config['logger']['timer_start_time_1']);
@@ -240,7 +238,6 @@
 			$search = "logger-sdr-d1";
 			$file_to_replace="/tmp/crontab";
 			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
-			echo $cmd_change;
 			start_docker_echo($cmd_change,"tab_logger_settings","System will now start logger upon stated time");			
 		}
 	}
@@ -345,27 +342,6 @@
 		}
 	}	
 	
-	//Raw Data Recorder Functions
-	if (isset($_POST["sdr_start"])){
-		$cmd = "sudo docker run --rm --name=raw-sdr-d1 -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/tmp/ rtlsdr bash -c 'rtl_sdr -f ".$_POST["raw_center_freq"]." -s ".$_POST["raw_freq_range"]." -g ".$_POST["raw_log_log_gain"]." /tmp/".$_POST["raw_pre_log_name"].$_POST["log_name"]."'";
-		start_docker_quite($cmd,'tab_raw_data');
-	}
-	if (isset($_POST["sdr_stop"])){
-		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=raw-sdr-d1) 2>&1";
-		start_docker($cmd, 'tab_logger');
-	}
-	
-	//Raw Data Analzer sudo docker run -it --rm -v /var/www/html/sdr/liquidsdr/:/tmp/ liquidsdr
-	if (isset($_POST["start_analyze"])){
-		$cmd = "sudo docker run -t --rm --name liquidsdr -v /var/www/html/sdr/:/tmp/ liquidsdr bash -c '/tmp/liquidsdr/rtlsdr_signal_detect -s > /tmp/test'";
-		start_docker($cmd,'tab_raw_data_ana');
-	}
-	
-	if (isset($_POST["stop_analyze"])){
-		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=liquidsdr) 2>&1";
-		start_docker($cmd, 'tab_logger');
-	}
-	
 	//Check whether Receivers are running update_device_info
 	if (isset($_POST["update_device_info_fr"])){
 		echo "<script type='text/javascript'>document.getElementById('tab_logger_range').style.display = 'block';</script>";
@@ -411,7 +387,7 @@
 		start_docker_quite($cmd,'sdr_server');
 	}
 	if (isset($_POST["rtl_tcp_stop_d0"])){
-		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter name=sharp_server_sdr_d0) 2>&1";
+		$cmd = "sudo docker stop sharp_server_sdr_d0 2>&1";
 		start_docker($cmd,'sdr_server');
 	}
 	
@@ -424,7 +400,7 @@
 		start_docker_quite($cmd,'sdr_server');
 	}
 	if (isset($_POST["rtl_tcp_stop_d1"])){
-		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter name=sharp_server_sdr_d1) 2>&1";
+		$cmd = "sudo docker stop sharp_server_sdr_d1) 2>&1";
 		start_docker($cmd,'sdr_server');
 	}
 	
