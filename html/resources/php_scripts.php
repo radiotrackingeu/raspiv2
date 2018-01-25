@@ -20,7 +20,7 @@
 		start_docker_quite($cmd,'single_freq');
 	}
 	if (isset($_POST["rtl_fm_start_l"])){
-		$cmd = "sudo docker run --rm -t --name webradi_d".$config['SDR_Radio']['device']." --privileged rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Single_Freq"]. " -g " . $_POST["Radio_Gain"]. " -d ".$config['SDR_Radio']['device']." | play -r 32k -t raw -v 5 -e s -b 16 -c 1 -V1 -'";
+		$cmd = "sudo docker run --rm -t --name webradio_d".$config['SDR_Radio']['device']." --privileged rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Single_Freq"]. " -g " . $_POST["Radio_Gain"]. " -d ".$config['SDR_Radio']['device']." | play -r 24k -t raw -v 9 -e s -b 16 -c 1 -V1 -'";
 		start_docker_quite($cmd,'single_freq');
 	}
 	if (isset($_POST["rtl_fm_start_f1"])){
