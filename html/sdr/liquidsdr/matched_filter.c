@@ -52,7 +52,7 @@ struct detect sig_detect;
 //float psd_template[nfft];
 //float psd         [nfft];
 //float psd_max     [nfft];
-struct timespec psd_time[nfft];
+//struct timespec psd_time[nfft];
 //int   detect      [nfft];
 //int   count       [nfft];
 //int   groups      [nfft];
@@ -167,7 +167,7 @@ int main(int argc, char*argv[])
     memset(template, 	0x0, tmpl_length*sizeof(float));
     memset(correlation, 0x0, corr_length*sizeof(float));
 
-    init_time();
+    //init_time();
 	keepalive *= sampling_rate / timestep;
 	keepalive += keepalive%16;
 
@@ -309,7 +309,7 @@ int main(int argc, char*argv[])
         }
 
         // update nco object
-	    nco_crcf_step(nco);
+	    // nco_crcf_step(nco);
 
         // update total sample count
         group_samples += buf_len;
@@ -477,13 +477,13 @@ char before(const struct timespec _a, const struct timespec _b)
 }
 
 // initialize psd_time
-void init_time() {
+/*void init_time() {
     int i;
     for (i=0; i<nfft; i++) {
         psd_time[i].tv_sec = INT_MAX;
 		psd_time[i].tv_nsec = 999999999;
 	}
-}
+}*/
 
 
 
