@@ -62,7 +62,7 @@
 			<br>
 			<input type="submit" class="w3-btn w3-brown" value="Update" name="update_docker_git"/> <br> <br>
 			Avaible: <?php $image_version_git="1.0"; echo $image_version_git;?>
-			Equivalent with Installed version: <?php system("if sudo docker images --filter reference=git | grep -q 1.0; yes; else echo no; fi 2>1", $ret) ?>
+			Equivalent with Installed version: <?php echo system("if sudo docker images --filter reference=git | grep -q 1.0; yes; else echo no; fi 2>1", $ret) ?>
 			<hr>
 			<input type="submit" class="w3-btn w3-brown" value="Remote" name="update_docker_umts"/> <br> <br>
 			<?php $image_version_umts="1.0"?>
