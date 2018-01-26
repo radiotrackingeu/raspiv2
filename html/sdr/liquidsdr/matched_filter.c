@@ -87,14 +87,14 @@ struct option longopts[] = {
 void usage()
 {
     printf("%s [options]\n", __FILE__);
-    printf("  -h        	: print help\n");
-    printf("  -i <file> 	: input data filename\n");
-    printf("  -t <thsh> 	: detection threshold above psd, default: 10 dB\n");
-    printf("  -s        	: use STDIN as input\n");
-    printf("  -r        	: sampling rate in Hz, default 1024kHz\n");
-	printf("  -f        	: signal frequency offset, +- 1000kHz\n");
-	printf("  -k <seconds>  : prints a keep-alive statement every <sec> seconds, default is 300\n");
-	printf("  -p        	: pulse length in microseconds, default 22ms\n");
+    printf("  -h        		: print help\n");
+    printf("  -i <file> 		: input data filename\n");
+    printf("  -t <thsh> 		: detection threshold above psd, default: 10 dB\n");
+    printf("  -s        		: use STDIN as input\n");
+    printf("  -r        		: sampling rate in Hz, default 1024kHz\n");
+	printf("  -f        		: signal frequency offset, +- 1000kHz\n");
+	printf("  -k <seconds>  	: prints a keep-alive statement every <sec> seconds, default is 300\n");
+	printf("  -p        		: pulse length in microseconds, default 22ms\n");
     printf(" --sql              : write to database, requires --db_user, --db_pass\n");
     printf(" --db_host <host>   : address of SQL server to use, default is localhost\n");
     printf(" --db_port <pass>   : port on which to connect, use 0 if unsure\n");
@@ -136,7 +136,7 @@ int main(int argc, char*argv[])
 
     // read command-line options
     int dopt;
-    while ((dopt = getopt(argc,argv,"hi:t:sr:")) != EOF) {
+    while ((dopt = getopt(argc,argv,"hi:t:sr:k:p:")) != EOF) {
         switch (dopt) {
         case 'h': usage();                              return 0;
         case 'i': strncpy(filename_input,optarg,256);   break;
@@ -475,15 +475,6 @@ char before(const struct timespec _a, const struct timespec _b)
     else
         return _a.tv_sec < _b.tv_sec;
 }
-
-// initialize psd_time
-/*void init_time() {
-    int i;
-    for (i=0; i<nfft; i++) {
-        psd_time[i].tv_sec = INT_MAX;
-		psd_time[i].tv_nsec = 999999999;
-	}
-}*/
 
 
 
