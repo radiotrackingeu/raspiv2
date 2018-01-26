@@ -6,6 +6,8 @@
 // threshold. Observe time, duration, and bandwidth of signal.
 //
 
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,9 +17,7 @@
 #include <time.h>
 #include <limits.h>
 #include <complex.h>
-
-// Matlab debug output
-#define DEBUG 1
+#include <mysql.h>
 
 // resampler
 #define stages			(5)
@@ -25,15 +25,15 @@
 #define Fs				(1024000) 	// 1024kHz
 #define Fs2				(Fs/ratio)	//   32kHz
 
+// database
+#define DB_BASE "rteu"
+#define DB_TABLE "rteu.signals"
+
 #define tmpl_length ((25*Fs2)/1000)	// max. length 25ms
 #define sig_length  (tmpl_length*2)
 #define corr_length (sig_length-tmpl_length+1)
 
-#define nfft 		(400)
-#define KEEPALIVE 	(300) // keepalive interval in seconds
 #define BILLION 	1000000000L
-
-#define OUTPUT_FILENAME "matched_filter_test.m"
 
 struct detect
 {
@@ -49,31 +49,58 @@ float  	      correlation[corr_length];
 float average = 0;
 struct detect sig_detect;
 
-float psd_template[nfft];
-float psd         [nfft];
-float psd_max     [nfft];
+//float psd_template[nfft];
+//float psd         [nfft];
+//float psd_max     [nfft];
 struct timespec psd_time[nfft];
-int   detect      [nfft];
-int   count       [nfft];
-int   groups      [nfft];
-int   timestep    =tmpl_length; // time between convolution [samples]
-unsigned long int num_convolutions = 0;
-int tmp_transforms = 0;
-struct timespec start_time;
-unsigned int keepalive;
+//int   detect      [nfft];
+//int   count       [nfft];
+//int   groups      [nfft];
+
+struct              timespec now;
+int                 keepalive = 300;
+
+int					run_id=0;
+
+int   				timestep=tmpl_length; // time between convolution [samples]
+unsigned long int 	num_convolutions = 0;
+int 				tmp_transforms = 0;
+struct 				timespec start_time;
+
+int                 write_to_db = 0;
+MYSQL           *   con;
+char            *   db_host = NULL, *db_user = NULL, *db_pass = NULL;
+unsigned int 		db_port=0;
+
+struct option longopts[] = {
+    {"sql",       no_argument, &write_to_db, 1},
+    {"db_host",   required_argument, NULL, 900},
+	{"db_port",   required_argument, NULL, 901},
+    {"db_user",   required_argument, NULL, 902},
+    {"db_pass",   required_argument, NULL, 903},
+	{"db_run_id", required_argument, NULL, 904},
+    {0,0,0,0}
+};
 
 
 // print usage/help message
 void usage()
 {
     printf("%s [options]\n", __FILE__);
-    printf("  -h        : print help\n");
-    printf("  -i <file> : input data filename\n");
-    printf("  -t <thsh> : detection threshold above psd, default: 10 dB\n");
-    printf("  -s        : use STDIN as input\n");
-    printf("  -r        : sampling rate in Hz, default 1024kHz\n");
-	printf("  -f        : signal frequency offset, +- 1000kHz\n");
-	printf("  -p        : pulse length in microseconds, default 22ms\n");
+    printf("  -h        	: print help\n");
+    printf("  -i <file> 	: input data filename\n");
+    printf("  -t <thsh> 	: detection threshold above psd, default: 10 dB\n");
+    printf("  -s        	: use STDIN as input\n");
+    printf("  -r        	: sampling rate in Hz, default 1024kHz\n");
+	printf("  -f        	: signal frequency offset, +- 1000kHz\n");
+	printf("  -k <seconds>  : prints a keep-alive statement every <sec> seconds, default is 300\n");
+	printf("  -p        	: pulse length in microseconds, default 22ms\n");
+    printf(" --sql              : write to database, requires --db_user, --db_pass\n");
+    printf(" --db_host <host>   : address of SQL server to use, default is localhost\n");
+    printf(" --db_port <pass>   : port on which to connect, use 0 if unsure\n");
+    printf(" --db_user <user>   : username for SQL server \n");
+	printf(" --db_pass <pass>   : matching password\n");
+	printf(" --db_run_id <id>	: numeric id of this recording run. Used to link it to its metadata in the SQL database");
 }
 
 // read samples from file and store into buffer
@@ -94,6 +121,7 @@ void  format_timestamp(const struct timespec _time, char * _buf, const unsigned 
 struct timespec timeAdd(const struct timespec _t1, const struct timespec _t2);
 char  before(const struct timespec _a, const struct timespec _b);
 void  init_time();
+void  free_memory();
 
 
 // main program
@@ -117,7 +145,14 @@ int main(int argc, char*argv[])
         case 'r': sampling_rate = atoi(optarg);         break;
 		case 'f': frequency_offset = atof(optarg);   	break;
 		case 'p': pulse_length = atoi(optarg);   		break;
-        default:  exit(1);
+		case 'k': keepalive = atoi(optarg);             break;
+		case 900: db_host = optarg;                     break;
+		case 901: db_port = atoi(optarg);               break;
+        case 902: db_user = optarg;                     break;
+        case 903: db_pass = optarg;                     break;
+        case 904: run_id = atoi(optarg);                break;
+        case 0  :                                       break; // return value of getopt_long() when setting a flag
+        default : exit(1);
         }
     }
 
@@ -133,18 +168,18 @@ int main(int argc, char*argv[])
     memset(correlation, 0x0, corr_length*sizeof(float));
 
     init_time();
-	keepalive = KEEPALIVE * sampling_rate / timestep;
+	keepalive *= sampling_rate / timestep;
 	keepalive += keepalive%16;
 
 	// create agc object
 	agc_crcf agc = agc_crcf_create();
 
 	// create the NCO object
-	nco_crcf nco = nco_crcf_create(LIQUID_NCO);
-	nco_crcf_set_phase(nco, 0.0f);
-	nco_crcf_set_frequency(nco, 0.102539063f);
+	//nco_crcf nco = nco_crcf_create(LIQUID_NCO);
+	//nco_crcf_set_phase(nco, 0.0f);
+	//nco_crcf_set_frequency(nco, 0.102539063f);
 
-	// create multi-stage arbitrary resampler object
+	//create multi-stage arbitrary resampler object
 	msresamp2_crcf resamp = msresamp2_crcf_create(type, num_stages, fc, f0, As);
 
     // create window buffer with n elements
@@ -162,6 +197,36 @@ int main(int argc, char*argv[])
     uint8_t agc_locked = 0x00;
 
     unsigned int i;
+	
+	printf("write_to_db=%i\n", write_to_db);
+    // open SQL database
+	if (write_to_db!=0)
+    {
+        if (db_user==NULL || db_pass==NULL) {
+            fprintf(stderr, "Incomplete credentials supplied. Not writing to database.\n");
+            write_to_db = 0;
+        } else {
+            if (db_host == NULL){
+                db_host = "127.0.0.1";
+                fprintf(stderr, "No hostname given, trying 127.0.0.1.\n");
+            }
+
+            con =mysql_init(NULL);
+            if (con!=NULL) {
+                if (mysql_real_connect(con, db_host, db_user, db_pass,
+                      DB_BASE, db_port, NULL, 0) == NULL)
+                {
+                  fprintf(stderr, "%s\n", mysql_error(con));
+                  mysql_close(con);
+                  write_to_db = 0;
+                }
+            } else {
+                fprintf(stderr, "ERROR: %s\n", mysql_error(con));
+                write_to_db = 0;
+            }
+        }
+
+    }
 
     // open input file
     FILE * fid;
@@ -175,28 +240,17 @@ int main(int argc, char*argv[])
         	exit(-1);
         }
     }
-
-#if(DEBUG)
-    //debug output to mathlab .m file
-	FILE * fout = fopen(OUTPUT_FILENAME,"w");
-	long unsigned int fi_res = 0;
-	fprintf(fout,"%% %s : auto-generated file\n\n", OUTPUT_FILENAME);
-	fprintf(fout,"%% %s : test output\n\n", OUTPUT_FILENAME);
-	fprintf(fout,"clear all;\n");
-	fprintf(fout,"close all;\n");
-#endif
-
-	// save start time
-	clock_gettime(CLOCK_REALTIME,&start_time);
+	if (write_to_db!=0)
+	    printf("Also sending data to SQL Server at %s.\n", db_host);
+	clock_gettime(CLOCK_REALTIME,&now);
 	char tbuf[30];
-	format_timestamp(start_time,tbuf,30);
-	printf("Will print timestamp every %d seconds / %u transforms\n", KEEPALIVE, keepalive);
+	format_timestamp(now,tbuf,30);
+	printf("Will print timestamp every %i transforms\n", keepalive);
 	printf("%s\n",tbuf);
 	//print row names
-//	printf("time;sample;duration;freq;bw;strength\n");
-	printf("time;sample;freq;strength\n");
+	printf("time;duration;freq;bw;strength;sample\n");
 
-    // generate template
+	// generate template
     unsigned int n = (Fs2 / 1000) * pulse_length;
 
     for (i=0; i<n; i++)
@@ -248,13 +302,7 @@ int main(int argc, char*argv[])
         	calc_convolution(signal, sig_length, template, tmpl_length, correlation, corr_length);
 
 			// find peaks in correlation
-			update_detect(threshold*10, frequency_offset, corr_length);
-
-#if(DEBUG)
-			// debug print correlation result into mathlab file
-			for (i=0; i<corr_length;  i++) fprintf(fout,"res(%3lu) = %f;\n", i+fi_res+1, creal(correlation[i]));
-			fi_res += corr_length;
-#endif
+			update_detect(threshold*10, frequency_offset, corr_length); //why times 10 - cor results are between 0 and 1?
 
 			num_convolutions++;
 			group_samples = 0;
@@ -272,17 +320,6 @@ int main(int argc, char*argv[])
     // close input files
     fclose(fid);
 
-    // close debug output file
-#if(DEBUG)
-	fprintf(fout,"figure;\n");
-	fprintf(fout,"plot(signal);\n");
-	fprintf(fout,"figure;\n");
-	fprintf(fout,"plot(res);\n");
-	fprintf(fout,"grid on;\n");
-	fclose(fout);
-#endif
-
-
     // clean up allocated objects
     msresamp2_crcf_destroy(resamp);
     agc_crcf_destroy(agc);
@@ -291,10 +328,6 @@ int main(int argc, char*argv[])
 
 
     printf("total samples in : %lu\n", total_samples);
-#if(DEBUG)
-    printf("total out : %lu\n", fi_res);
-#endif
-
     return 0;
 }
 
@@ -401,7 +434,6 @@ int update_detect(float _threshold, float _freq_offset, unsigned int _nPts)
 			tm.tv_sec = (long)ftime;
 			tm = timeAdd(start_time, tm);
 			format_timestamp(tm, timestamp, 30);
-//			printf("time;sample;freq;strength\n");
             printf("%s;%10ld;%9.6f;%6.2f\n",timestamp, sample, _freq_offset, sig_detect.maxVal);
 			fflush(stdout);
 

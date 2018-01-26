@@ -191,7 +191,7 @@ int main(int argc, char*argv[])
         if (fid == NULL) {
 	        fprintf(stderr,"error: could not open %s for reading\n", filename_input);
         	exit(-1);
-	}
+		}
     }
     if (write_to_db!=0)
 	    printf("Also sending data to SQL Server at %s.\n", db_host);
