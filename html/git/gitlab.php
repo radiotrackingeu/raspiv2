@@ -28,11 +28,9 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('GIT')">User Interface</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('install')">Applications</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('running_docker')">Applications Status</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('git_setup')">Setup Update</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('create_id')">Create Key</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('GIT')">System Update</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('install')">Install/Update Applications</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('running_docker')">Application Status</button>
 </div>
 
 <div id="GIT" class="w3-container city" style="display:none">
@@ -47,6 +45,11 @@
 					<option value="updatecfg" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "updatecfg" ? "selected" : ""; ?>>Update config file</option>
 					<option value="keepcfg" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "keepcfg" ?  "selected" : ""; ?>>Keep old config file</option>
 				</select>
+				<select name="git_switch_system">
+					<option value="build_none" SELECTED>No change in system</option>
+					<option value="build_raspi3">Update for Raspberry Pi 3</option>
+					<option value="build_raspi_zerow">Update for Raspberry Pi Zero W</option>
+				</select>
 			<input class="w3-btn w3-brown" type="submit" value="Update User Interface" name="update_rep" onclick="openCity('GIT')"/>
 		</form>
 		<br>
@@ -54,67 +57,59 @@
 </div>
 	
 <div id="install" class="w3-container city" style="display:none">
-	<form method="POST" onsubmit="document.getElementById('install').style.display = 'block');">
-		<br>
-		<input type="submit" class="w3-btn" value="Downloader" name="update_docker_git"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="Remote" name="update_docker_umts"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="WiFi" name="install_wifi"/> <br> <br> 
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="Radio" name="install_rtlsdr"/> <br> <br> 
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="WebRX" name="install_webrx"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="Picam" name="install_picam"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="I2C" name="install_i2c"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="SoX" name="install_sox"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="RTL_433" name="install_rtl_433"/> <br> <br>
-		<hr>
-		<input type="submit" class="w3-btn" value="Logger" name="install_rtl_433_mod"/> <br> <br>
-		
-		<hr>	
-		<input type="submit" class="w3-btn" value="GammaRF" name="install_gammrf"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="LiquidSDR" name="install_liquidsdr"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="MySQL" name="install_mysql"/> <br> <br>
-				
-		<hr>
-		<input type="submit" class="w3-btn" value="phpMyAdmin" name="install_phpmyadmin"/> <br> <br>
-		
-		<hr>
+	<div class="w3-panel w3-green w3-round">
+		<form method="POST" onsubmit="document.getElementById('install').style.display = 'block');">
+			<br>
+			<input type="submit" class="w3-btn w3-brown" value="Update" name="update_docker_git"/> <br> <br>
+			Avaible: <?php $image_version_git="1.0"; echo $image_version_git;?>
+			Equivalent with Installed version: <?php system("if sudo docker images --filter reference=git | grep -q 1.0; yes; else echo no; fi") ?>
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="Remote" name="update_docker_umts"/> <br> <br>
+			<?php $image_version_umts="1.0"?>
+			
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="WiFi" name="install_wifi"/> <br> <br> 
+			<?php $image_version_umts="1.0"?>
+			
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="WebRadio" name="install_rtlsdr"/> <br> <br> 
+			
+			<hr>
+			OpenWebRX<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Spectrogram" name="install_webrx"/> <br> <br>
+			
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="Camera" name="install_picam"/> <br> <br>
+			
+			
+			<hr>
+			I2C<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Light Controls" name="install_i2c"/> <br> <br>
+			
+			
+			<hr>
+			SoX<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Microphone" name="install_sox"/> <br> <br>
+			Avaible: <?php $image_version_microphone="1.0"; echo $image_version_microphone;?>
+			Equivalent with Installed version: <?php system("if sudo docker images --filter reference=mircophone | grep -q 1.0; yes; else echo no; fi") ?>
+			<hr>
+			RTL_433<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Sensor Readings" name="install_rtl_433"/> <br> <br>
+			
+			<hr>
+			LiquidSDR<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Logger" name="install_liquidsdr"/> <br> <br>
+			
+			<hr>
+			MySQL<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Database" name="install_mysql"/> <br> <br>
+					
+			<hr>
+			PhpMyAdmin<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Database-Management" name="install_phpmyadmin"/> <br> <br>
 
-	</form>
-</div>
-
-<div id="git_setup" class="w3-container city" style="display:none">
-	<form method="post" enctype="multipart/form-data">
-		<br>
-		Select private key to upload (the one without an ending): 
-		<br><br>
-		<input type="file" name="fileToUpload_id" id="fileToUpload_id">
-		<br><br><br>
-		Select public key to upload (the one with a .pub ending):
-		<br><br>
-		<input type="file" name="fileToUpload_pub" id="fileToUpload_pub">
-		<br><br><br><br>
-		<input type="submit" class="w3-btn" value="Upload keys" name="upload_files">
-		<input type="submit" class="w3-btn" value="Remove Files" name="rm_files">
-	</form>
+		</form>
+	</div>
 </div>
 
 <div id="running_docker" class="w3-container city" style="display:none">
@@ -138,22 +133,6 @@
 		</form>
 	</div>
 </div>
-		
-		<div id="create_id" class="w3-container city" style="display:none">
-		<br>
-		<form method="POST">
-			<input type="submit" class="w3-btn" value="Create new Keys" name="create_keys">
-			<input type="submit" class="w3-btn" value="Show installed key" name="show_keys"> <br>
-			<label class="w3-label w3-validate">Email</label>
-			<input class="w3-input" type="email">
-			
-		</form>
-		<a target="_blank" href="/git/id_rsa">Open Key in new tab</a>
-			
-			<?php
-
-			?>
-		</div>
 		<?php
 			if (isset($_POST["reboot"])){
 				echo '<pre>';
@@ -162,72 +141,62 @@
 			}
 			if (isset($_POST["update_docker_git"])){
 				echo '<pre>';
-				$test = system('sudo docker build  -t git /home/pi/gitrep/raspiv2/Docker/gitlab/. 2>&1', $ret);
+				$test = system('sudo docker build  -t git:1.0 /home/pi/gitrep/raspiv2/Docker/gitlab/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["update_docker_umts"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t umts /home/pi/gitrep/raspiv2/Docker/umts/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t umts:1.0 /home/pi/gitrep/raspiv2/Docker/umts/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_wifi"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t wifi /home/pi/gitrep/raspiv2/Docker/wifi/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t wifi:1.0 /home/pi/gitrep/raspiv2/Docker/wifi/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_rtlsdr"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t rtlsdr /home/pi/gitrep/raspiv2/Docker/rtlsdr/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t rtlsdr:1.0 /home/pi/gitrep/raspiv2/Docker/rtlsdr/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_webrx"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t webrx /home/pi/gitrep/raspiv2/Docker/webrx/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t webrx:1.0 /home/pi/gitrep/raspiv2/Docker/webrx/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_picam"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t picam /home/pi/gitrep/raspiv2/Docker/picam/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t picam:1.0 /home/pi/gitrep/raspiv2/Docker/picam/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_rtl_433"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t rtl_433 /home/pi/gitrep/raspiv2/Docker/rtl_433/. 2>&1', $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["install_rtl_433_mod"])){
-				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t rtl_433_mod /home/pi/gitrep/raspiv2/Docker/rtl_433_mod/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t rtl_433:1.0 /home/pi/gitrep/raspiv2/Docker/rtl_433/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_i2c"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t i2c /home/pi/gitrep/raspiv2/Docker/i2c/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t i2c:1.0 /home/pi/gitrep/raspiv2/Docker/i2c/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_sox"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t mircophone /home/pi/gitrep/raspiv2/Docker/microphone/. 2>&1', $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["install_gammrf"])){
-				echo '<pre>';
-				$test = system('sudo docker build -t gammrf /home/pi/gitrep/raspiv2/Docker/gammrf/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t microphone:1.0 /home/pi/gitrep/raspiv2/Docker/microphone/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_liquidsdr"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t liquidsdr /home/pi/gitrep/raspiv2/Docker/liquidsdr/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t liquidsdr:1.0 /home/pi/gitrep/raspiv2/Docker/liquidsdr/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_mysql"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t mysql /home/pi/gitrep/raspiv2/Docker/mysql/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t mysql:1.0 /home/pi/gitrep/raspiv2/Docker/mysql/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_phpmyadmin"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t phpmyadmin /home/pi/gitrep/raspiv2/Docker/phpmyadmin/. 2>&1', $ret);
+				$test = system('sudo docker build -t phpmyadmin:1.0 /home/pi/gitrep/raspiv2/Docker/phpmyadmin/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			error_reporting(E_ALL);
