@@ -29,7 +29,7 @@ RUN apt-get update && apt-get install -y \
         libssl-dev #\
 #motion \
 
-RUN		wget https://github.com/Motion-Project/motion/releases/download/release-4.1/pi_stretch_motion_4.1-1_armhf.deb
+RUN		wget https://github.com/Motion-Project/motion/releases/download/release-4.1/pi_stretch_motion_4.1-1_armhf.deb \
 		dpkg -i pi_stretch_motion_4.1-1_armhf.deb
 
 RUN apt-get update && apt-get install -y \
