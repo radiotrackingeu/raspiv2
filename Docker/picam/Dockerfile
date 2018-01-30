@@ -26,11 +26,19 @@ RUN apt-get update && apt-get install -y \
         libavformat56 \
         libcurl4-openssl-dev \
         libjpeg-dev \
-        libssl-dev \
-        motion \
+        libssl-dev #\
+#motion \
+
+RUN		wget https://github.com/Motion-Project/motion/releases/download/release-4.1/pi_stretch_motion_4.1-1_armhf.deb
+RUN		dpkg -i pi_stretch_motion_4.1-1_armhf.deb
+
+RUN apt-get update && apt-get install -y \
         python-dev \
         python-pip \
+		ffmpeg \
         v4l-utils \
+		libmariadbclient18 \
+		libpq5  \
         --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
