@@ -35,7 +35,7 @@ RUN		wget https://github.com/Motion-Project/motion/releases/download/release-4.1
 RUN apt-get update && apt-get install -y \
         python-dev \
         python-pip \
-		ffmpeg \
+		#ffmpeg \
         v4l-utils \
 		libmariadbclient18 \
 		libpq5  \
