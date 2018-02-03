@@ -166,6 +166,8 @@ function setVisibility(menu, label, element) {
 				</p>
 				<div class="w3-half" style = "margin-bottom: 16px">
 					<label>Antenna Position in decimal degrees N</label>
+					<button type="button" onclick="getLocation()">Try It</button>
+					<p id="demo"></p>
 					<input class="w3-input w3-mobile" style="width:30%" type="text" name="antenna_position_N_0" value="<?php echo isset($config['logger']['antenna_position_N_0']) ? $config['logger']['antenna_position_N_0'] : 1.234?>">
 				</div>
 				<div class="w3-half" style = "margin-bottom: 16px">
@@ -388,6 +390,23 @@ function setVisibility(menu, label, element) {
 	//load php_scripts
 	require_once RESOURCES_PATH.'/php_scripts.php';
  ?>
+ 
+ <script>
+var xy = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        xy.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    xy.innerHTML = "Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude;
+}
+</script>
 
 </body>
 </html>
