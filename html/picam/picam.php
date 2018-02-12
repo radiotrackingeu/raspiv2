@@ -31,8 +31,8 @@
 	<br><br>
 
 	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-			<input type="submit" class="w3-btn w3-brown" value="Start PiCam" name="run_motion">
-			<input type="submit" class="w3-btn w3-brown" value="Stop PiCam" name="stop_motion">
+			<input type="submit" class="w3-btn w3-brown" value="Start PiCam" name="run_motion_detection">
+			<input type="submit" class="w3-btn w3-brown" value="Stop PiCam" name="stop_motion_detection">
 
 			<br><br>
 	</form>
@@ -141,6 +141,15 @@
 				$test = system('sudo reboot', $ret);
 				echo '</pre>';
 			}
+			
+			if (isset($_POST["run_motion_detection"])){
+				$test = system("sudo docker run --name=motion_detection  -t -p ".($_SERVER['SERVER_PORT']+3).":8080 -p ".($_SERVER['SERVER_PORT']+4).":8081 -v /var/www/html/picam/record/:/var/lib/motion/ --privileged motion_detection", $ret);
+			}
+			if (isset($_POST["stop_motion_detection"])){
+				echo '<pre>';
+				$test = system('sudo docker stop motion_detection 2>&1', $ret);
+				echo '</pre>';
+			}			
 			
 			if (isset($_POST["run_motion"])){
 				$test = system("sudo docker run --rm  --name camera -t -p ".($_SERVER['SERVER_PORT']+2).":8765 -v /var/www/html/picam/record/:/var/lib/motioneye/ -v /var/www/html/picam/config/:/etc/motioneye/ --privileged picam", $ret);
