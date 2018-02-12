@@ -82,8 +82,13 @@
 <div id="output" class="w3-container city" style="display:block">
 	<div class="w3-panel w3-green w3-round">
 	<br>
-	If you are using the raspberry pi cam, please first activate it. This will reserve more memory for the GPU. If the server has been already started, just click on the link: <br><br>
-	<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+2)?>"> Link to Camera Server</a><br><br>
+	<!--If you are using the raspberry pi cam, please first activate it. This will reserve more memory for the GPU. If the server has been already started, just click on the link: <br><br>
+	<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+2)?>"> Link to Camera Server</a><br><br>-->
+	The camera is configured to start recording if motion is detected and stop as soon as there is no more motion.<br>
+	It also offers a simple configuration menu, where one can configure noise level and detection threshold among other things.<br>
+	The required credentials are the same as for this site.<br><br>
+	<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+4)?>"> Link to Camera Stream</a> <br><br>
+	<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+3)?>"> Link to Camera Configuration</a> <br><br>
 	To download the images of video files either use the software or the following directory:<br><br>
 	<a target="_blank" href="/picam/record/"> Images/Videos</a><br>
 	
