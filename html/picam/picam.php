@@ -143,7 +143,7 @@
 			}
 			
 			if (isset($_POST["run_motion_detection"])){
-				$test = system("sudo docker run --name=motion_detection  -t -p ".($_SERVER['SERVER_PORT']+3).":8080 -p ".($_SERVER['SERVER_PORT']+4).":8081 -v /var/www/html/picam/record/:/var/lib/motion/ --privileged motion_detection", $ret);
+				$test = system("sudo docker run --name=motion_detection  -t -p ".($_SERVER['SERVER_PORT']+3).":8080 -p ".($_SERVER['SERVER_PORT']+4).":8081 -v /var/www/html/picam/record/:/var/lib/motion/ --privileged motion_detection:1.0", $ret);
 			}
 			if (isset($_POST["stop_motion_detection"])){
 				echo '<pre>';
