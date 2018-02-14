@@ -41,10 +41,12 @@ int                 run_id=0;
 
 MYSQL           *   con;
 
+char				err_to_file = 0;
 FILE            *   err_file;
+char				write_to_file = 0;
+int					append_output = 0;
 FILE            *   out_file;
-int		    append_output = 0;
-int		    write_to_db  = 0;
+int				    write_to_db  = 0;
 
 struct option longopts[] = {
     {"append",    no_argument, &append_output, 1},
@@ -60,9 +62,9 @@ struct option longopts[] = {
 // print usage/help message
 void usage()
 {
-    printf("%s [-b num] [-e file] [-h] [-i file] [-k sec] [-n num] [-o file [--append]] [-r rate] [-s] [--sql [--db_host host] --db_user user --db_pass pass --db_run_id id] [-t thre]\n", __FILE__);
+    printf("%s [-b num] [-e[file]] [-h] [-i file] [-k sec] [-n num] [-o file [--append]] [-r rate] [-s] [--sql [--db_host host] --db_user user --db_pass pass --db_run_id id] [-t thre]\n", __FILE__);
     printf("  -b <number>            : number of bins used for fft, default is 400\n");
-    printf("  -e <file>              : write errors to given file. If omitted, errors are written to command line.");
+    printf("  -e[<file>]             : write errors to given file, if no filename is given \"error_<timestamp>\" will be used. If omitted completely, errors are written to command line.");
     printf("  -h                     : print this help\n");
     printf("  -i <file>              : input data filename\n");
     printf("  -k <seconds>           : prints a keep-alive statement every <sec> seconds, default is 300\n");
@@ -108,48 +110,45 @@ int main(int argc, char*argv[])
     char            filename_input[256];
     char            filename_output[256];
     char            filename_error[256];
-    char            read_from_stdin = 0;
-    float           threshold       = 10.0f; //-60.0f;
-    unsigned long   sampling_rate   = 250000;
-                    nfft            = 400;
-                    timestep        = 50;
-    char        *   db_host         = NULL,
-                *   db_user         = NULL,
-                *   db_pass         = NULL;
-    unsigned int    db_port         = 3306;
+    char            read_from_stdin     = 0;
+    float           threshold           = 10.0f; //-60.0f;
+    unsigned long   sampling_rate       = 250000;
+                    nfft                = 400;
+                    timestep            = 50;
+    char            *db_host		= NULL,
+		    *db_user		= NULL,
+		    *db_pass		= NULL;
+    unsigned int    db_port             =3306;
 
     // read command-line options
     int dopt;
-    while ((dopt = getopt_long(argc,argv,"b:e:hi:k:n:o:r:st:", longopts, NULL)) != -1) {
+    while ((dopt = getopt_long(argc,argv,":b:e::hi:k:n:o:r:st:", longopts, NULL)) != -1) {
         switch (dopt) {
-        case 'b': nfft = atoi(optarg);                  break;
-//        case 'd': device_name = optarg;                 break;
-        case 'e': if (optarg!=NULL)
-			strncpy(filename_error,optarg,256);
-		  else {
-			clock_gettime(CLOCK_REALTIME, &now);
-			const time_t time = (time_t) now.tv_sec;
-			const struct tm * tm  = gmtime(&time);
-			char tbuf[30];
-			strftime(tbuf,30,"%F %T",tm);
-			sprintf(filename_error,"error %s.log", tbuf);
-		  }
-		  break;
-        case 'h': usage();                              return 0;
-        case 'i': strncpy(filename_input,optarg,256);   break;
-        case 'k': keepalive = atoi(optarg);             break;
-        case 'n': timestep = atoi(optarg);              break;
-        case 'o': strncpy(filename_output,optarg,256);  break;
-        case 'r': sampling_rate = atoi(optarg);         break;
-        case 's': read_from_stdin = 1;                  break;
-        case 't': threshold = atof(optarg);             break;
-        case 900: db_host = optarg;                     break;
-        case 901: db_port = atoi(optarg);               break;
-        case 902: db_user = optarg;                     break;
-        case 903: db_pass = optarg;                     break;
-        case 904: run_id = atoi(optarg);                break;
-        case 0  :                                       break; // return value of getopt_long() when setting a flag
-        default : exit(1);
+        case 'b': 	nfft = atoi(optarg);                  break;
+//        case 'd':   device_name = optarg;                 break;
+        case 'e': 	err_to_file = 1;
+				  	if (optarg != NULL)
+						strncpy(filename_error,optarg,256);
+					else {
+						strncpy(filename_error,"timestamp",256);
+					}
+					break;
+        case 'h': 	usage();                              return 0;
+        case 'i': 	strncpy(filename_input,optarg,256);   break;
+        case 'k': 	keepalive = atoi(optarg);             break;
+        case 'n': 	timestep = atoi(optarg);              break;
+        case 'o': 	write_to_file = 1;
+					strncpy(filename_output,optarg,256);  break;
+        case 'r': 	sampling_rate = atoi(optarg);         break;
+        case 's': 	read_from_stdin = 1;                  break;
+        case 't': 	threshold = atof(optarg);             break;
+        case 900: 	db_host = optarg;                     break;
+        case 901: 	db_port = atoi(optarg);               break;
+        case 902: 	db_user = optarg;                     break;
+        case 903: 	db_pass = optarg;                     break;
+        case 904: 	run_id = atoi(optarg);                break;
+        case 0  : 	                                      break; // return value of getopt_long() when setting a flag
+        default : 	exit(1);
         }
     }
 
@@ -168,25 +167,38 @@ int main(int argc, char*argv[])
 
     // create spectrogram
     spgramcf periodogram = spgramcf_create(nfft, LIQUID_WINDOW_HAMMING, nfft/2, timestep);
-
+        
         //open error file
-
-        err_file = fopen(filename_error, "w");
-        if (err_file==NULL) {
+        if (err_to_file) {
+			if (!strncmp("timestamp", filename_error, 9)) {
+				clock_gettime(CLOCK_REALTIME, &now);
+				const time_t time = (time_t) now.tv_sec;
+				const struct tm * tm  = gmtime(&time);
+				char tbuf[30];
+				strftime(tbuf,30,"%F_%T",tm);
+				sprintf(filename_error,"error_%s.log", tbuf);
+			}
+	        err_file = fopen(filename_error, "w");
+	        if (err_file==NULL) {
                 fprintf(stderr, "Could not open %s for writing. Writing errors to stderr instead.", filename_error);
                 err_file = stderr;
-        }
-
-        if (append_output != 0)
+    	    }
+		} else
+			err_file = stderr;
+        
+		if (write_to_file) {
+		
+        	if (append_output != 0)
                 out_file = fopen(filename_output, "a");
-        else
+        	else
                 out_file = fopen(filename_output, "w");
-        if (out_file==NULL) {
+        	if (out_file==NULL) {
                 fprintf(err_file, "Could not open %s for writing. Writing to stdout instead.",filename_output);
                 out_file = stdout;
-        }
-
-
+        	}
+		} else
+			out_file = stdout;
+        
     // buffer
     unsigned int  buf_len = 64;
     float complex buf[buf_len];
@@ -194,7 +206,6 @@ int main(int argc, char*argv[])
     // DC-blocking filter 1e-3f
     iirfilt_crcf dcblock = iirfilt_crcf_create_dc_blocker(1e-3f);
 
-    fprintf(out_file, "write_to_db=%i\n", write_to_db);
     // open SQL database
     if (write_to_db!=0)
     {
@@ -225,6 +236,9 @@ int main(int argc, char*argv[])
     }
 
 
+	fprintf(out_file,"\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	fflush(out_file);
+
     // open input file
     FILE * fid;
     if (read_from_stdin){
@@ -233,20 +247,21 @@ int main(int argc, char*argv[])
     } else {
         fid = fopen(filename_input,"r");
         if (fid == NULL) {
-                fprintf(err_file,"error: could not open %s for reading\n", filename_input);
-                exit(-1);
+			fprintf(err_file,"error: could not open %s for reading\n", filename_input);
+			exit(-1);
         }
     }
     if (write_to_db!=0)
-            fprintf(out_file, "Also sending data to SQL Server at %s.\n", db_host);
-        clock_gettime(CLOCK_REALTIME, &now);
-        char tbuf[30];
-        format_timestamp(now,tbuf,30);
-        fprintf(out_file, "Will print timestamp every %i transforms\n", keepalive);
-        fprintf(out_file, "%s\n",tbuf);
-        //print row names
-        fprintf(out_file, "time;duration;freq;bw;strength;sample\n");
+		fprintf(out_file, "Also sending data to SQL Server at %s.\n", db_host);
+	clock_gettime(CLOCK_REALTIME,&now);
+	char tbuf[30];
+	format_timestamp(now,tbuf,30);
+	fprintf(out_file, "Will print timestamp every %i transforms\n", keepalive);
+	fprintf(out_file, "%s\n",tbuf);
+	//print row names
+	fprintf(out_file, "time;duration;freq;bw;strength;sample\n");
 
+	fflush(err_file);
     // continue processing as long as there are samples in the file
     unsigned long int total_samples  = 0;
     num_transforms = 0;
@@ -295,7 +310,6 @@ int main(int argc, char*argv[])
                 char tbuf[30];
                 format_timestamp(now,tbuf,30);
                 fprintf(out_file, "%s;;;;;\n",tbuf);
-                                fflush(stdout);
             }
 
         }
@@ -303,6 +317,8 @@ int main(int argc, char*argv[])
         // update total sample count
         total_samples += buf_len;
 
+		fflush(out_file);
+		fflush(err_file);
     } while (!feof(fid));
 
     // close input files
@@ -319,6 +335,9 @@ int main(int argc, char*argv[])
     fprintf(out_file, "total transforms : %lu\n", num_transforms);
 
     free_memory();
+
+	fclose(out_file);
+	fclose(err_file);
 
     return 0;
 }
