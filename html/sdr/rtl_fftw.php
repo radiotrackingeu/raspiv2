@@ -378,7 +378,7 @@ function setVisibility(menu, label, element) {
 	</div>
 	<div class="w3-row">
 		<div class="w3-container w3-green w3-round" style="margin-right:8px;margin-left:8px">
-			<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
+			<form method='POST' enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 				<br>
 				<input type="submit" class="w3-btn w3-brown" value="Compile Raspi 3" name="compile"/>
 				<input type="submit" class="w3-btn w3-brown" value="Compile Raspi Zero" name="compile_raspi_zero"/>

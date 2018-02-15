@@ -11,22 +11,22 @@ Logger_Gain = 20
 
 [SDR_Radio]
 device = 2
-Radio_Gain[1] = 20
-Radio_Gain[2] = 21
+Radio_Gain_0 = 20
+Radio_Gain_1 = 21
 Single_Freq[1] = "150.052M"
 Single_Freq[2] = "151.052M"
-Freq1[1] = "150.04M"
-Freq1[2] = "151.04M"
-Freq2[1] = "150.06M"
-Freq2[2] = "151.06M"
-Freq3[1] = "150.08M"
-Freq3[2] = "151.08M"
-Freq4[1] = "150.10M"
-Freq4[2] = "151.10M"
-Freq5[1] = "150.12M"
-Freq5[2] = "151.12M"
-Freq6[1] = "150.14M"
-Freq6[2] = "151.14M"
+Freq1_0 = "150.04M"
+Freq1_1 = "151.04M"
+Freq2_0 = "150.06M"
+Freq2_1 = "151.06M"
+Freq3_0 = "150.08M"
+Freq3_1 = "151.08M"
+Freq4_0 = "150.10M"
+Freq4_1 = "151.10M"
+Freq5_0 = "150.12M"
+Freq5_1 = "151.12M"
+Freq6_0 = "150.14M"
+Freq6_1 = "151.14M"
 
 [gitlab_updates]
 online_repository = "github"
@@ -39,7 +39,7 @@ antenna_position_N_0 = 1.234
 antenna_position_E_0 = 5.678
 antenna_orientation_0 = 42
 antenna_beam_width_0 = 45
-log_gain_0 = 20000
+log_gain_0 = 20
 center_freq_0 = 150100000
 freq_range_0 = 250000
 threshold_0 = 10
