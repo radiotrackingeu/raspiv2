@@ -61,7 +61,7 @@
 		<form method="POST" onsubmit="document.getElementById('install').style.display = 'block');">
 			<br>
 			<input type="submit" class="w3-btn w3-brown" value="Update" name="update_docker_git"/> <br> <br>
-			Avaible: <?php $image_version_git="1.0"; echo $image_version_git;?>
+			Available: <?php $image_version_git="1.0"; echo $image_version_git;?>
 			Equivalent with Installed version: <?php $test=system("if sudo docker images --filter reference=git | grep -q 1.0; then echo yes; else echo no; fi 2>&1", $ret); ?>
 			<hr>
 			<input type="submit" class="w3-btn w3-brown" value="Remote" name="update_docker_umts"/> <br> <br>
@@ -92,7 +92,7 @@
 			<hr>
 			SoX<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Microphone" name="install_sox"/> <br> <br>
-			Avaible: <?php $image_version_microphone="1.0"; echo $image_version_microphone;?>
+			Available: <?php $image_version_microphone="1.0"; echo $image_version_microphone;?>
 			Equivalent with Installed version: <?php system("if sudo docker images --filter reference=mircophone | grep -q 1.0; then echo yes; else echo no; fi") ?>
 			<hr>
 			RTL_433<br><br>
