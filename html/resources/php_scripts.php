@@ -439,7 +439,7 @@
 		start_docker($cmd,'mysql');
 	}
 	if (isset($_POST["start_phpmyadmin"])){
-		$cmd = "sudo docker run -t --name=phpmyadmin --rm --net=host -v /var/www/html/data/:/cfiles/ phpmyadmin 2>&1";
+		$cmd = "sudo docker run -t --name=phpmyadmin --rm --net=host -v /var/www/html/data/:/cfiles/ phpmyadmin:1.0 2>&1";
 		start_docker_quite($cmd,'mysql');
 	}
 	if (isset($_POST["stop_phpmyadmin"])){
