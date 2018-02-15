@@ -17,8 +17,8 @@
 	//WebRadio Functions
 	
 	function cmd_webradio($dev, $freq) {
-		$cmd_docker = "sudo docker run --rm -t --name webradio".$dev." --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c"
-		$cmd_rtl_fm = "rtl_fm -M usb -f " .$config['SDR_Radio']['Freq'.$freq.'_'.$dev]." -g ".$config['SDR_Radio']['Radio_Gain_'.$dev]." -d ".$dev." | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240";
+		$cmd_docker = "sudo docker run --rm -t --name webradio".$dev." --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c";
+		$cmd_rtl_fm = "rtl_fm -M usb -f ".$config['SDR_Radio']['Freq'.$freq.'_'.$dev]." -g ".$config['SDR_Radio']['Radio_Gain_'.$dev]." -d ".$dev." | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240";
 		return $cmd_docker." '".$cmd_rtl_fm."'";
 	}
 	if (isset($_POST["rtl_fm_start_s"])){
