@@ -16,6 +16,7 @@
  ?>
  
 <!-- Enter text here-->
+<div class="w3-container">
 <div class="w3-panel w3-green w3-round">
 	<br>
 	Start the software, if it isn't already running (just try by clicking on the link).
@@ -26,6 +27,7 @@
 
 			<br><br>
 	</form>
+</div>
 </div>
 	
 	<p>
