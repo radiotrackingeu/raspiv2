@@ -31,6 +31,7 @@
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('GIT')">System Update</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('install')">Install/Update Applications</button>
   <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('running_docker')">Application Status</button>
+  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('config_file')">Configuration File</button>
 </div>
 
 <div id="GIT" class="w3-container city" style="display:none">
@@ -124,7 +125,7 @@
 			<input type="submit" class="w3-btn w3-brown" value="List installed Applications" name="installed_images">
 			<hr>
 			<input type="submit" class="w3-btn w3-brown" value="Stop all running Applications" name="stop_all">
-			This means, that also the Hotspot won't work any more.
+			Careful, this will also disable the Hotspot!
 			<hr>
 			<input type="submit" class="w3-btn w3-brown" value="Delete all stopped containers" name="rm_all">
 			<hr>
@@ -135,6 +136,34 @@
 		</form>
 	</div>
 </div>
+		
+<div id="config_file" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+	Here you can down- and upload configuration files.<br>
+	When you upload a new file, a copy of the old one will be made. This copy of the last configuration file can be restored by clicking the corresponding button.<br>
+	Restoring the default configuration will load the configuration file that came with the last software update.
+	<hr>
+		<div class="w3-bar">
+		<a class="w3-btn w3-brown" href="../cfg/globalconfig" download>Download current config</a>
+		</div>
+		<br>
+		<form method="POST" enctype="multipart/form-data">
+		<div class="w3-bar">
+			<input type="submit" class="w3-btn w3-brown" value="Upload new config" name="ul_config">
+			<input type="file" class="w3-btn w3-green" name="file_config" style="hover:none">
+		</div>
+		<br>
+		<div class="w3-bar">
+			<input type="submit" class="w3-btn w3-brown" value="Restore last config" name="restore_config">
+			<input type="submit" class="w3-btn w3-brown" value="Restore default config" name="restore_default">
+		</div>
+		<br>
+		</form>
+	</div>
+</div>		
+		
+		
+		
 		<?php
 			if (isset($_POST["reboot"])){
 				echo '<pre>';
@@ -264,6 +293,55 @@
 				$content = system('cat /var/www/html/git/id_rsa', $ret);
 				echo '</pre>';
 			}
+			
+			if (isset($_POST["ul_config"]))
+				if ($_FILES["file_config"]["size"]!=0 ) {
+					$finfo = finfo_open(FILEINFO_MIME_TYPE);
+					$mtype = finfo_file($finfo,$_FILES["file_config"]["tmp_name"]);
+					if ($mtype == "text/plain")
+					{
+						rename(CONFIGFILES_PATH."/globalconfig", CONFIGFILES_PATH."/globalconfig.bak");
+						if (move_uploaded_file($_FILES["file_config"]["tmp_name"], CONFIGFILES_PATH."/globalconfig")){
+							echo "Successfully uploaded new config file.";
+							$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
+						} else {
+							rename(CONFIGFILES_PATH."/globalconfig.bak", CONFIGFILES_PATH."/globalconfig");
+							echo "An error occured. Restored old config file.";
+						}
+					}
+					else 
+						echo "That was not a valid config file.";
+				}
+				else
+					echo "No file given.";
+			
+			if (isset($_POST["restore_config"])) {
+				if (!file_exists(CONFIGFILES_PATH."/globalconfig.bak"))
+					echo "No backup found.";
+				else {
+					if (copy(CONFIGFILES_PATH."/globalconfig.bak", CONFIGFILES_PATH."/globalconfig")) {
+						echo "Configuration file restored.";
+						$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
+					} else
+						echo "Error: Could not copy config file.";
+					
+				}
+			}
+			
+			if (isset($_POST["restore_default"])) {
+				$git_file = GITREPO_PATH."/html/cfg/globalconfig";
+				if(!file_exists($git_file))
+					echo "No backup found.";
+				else {
+					if (copy($git_file, CONFIGFILES_PATH."/globalconfig")) {
+						echo "Configuration file restored.";
+						$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
+					} else
+						echo "Error: Could not copy config file.";
+					
+				}
+			}
+			
 		?>
 
 <!-- Enter text here-->
