@@ -13,4 +13,6 @@ defined("CONFIGLITE_PATH")
 	
 defined("SHELLSCRIPT_PATH")
 	or define ("SHELLSCRIPT_PATH", realpath(RESOURCES_PATH."/../sh_script"));
+defined("GITREPO_PATH")
+	or define ("GITREPO_PATH", "/home/pi/gitrep/raspiv2");
 ?>

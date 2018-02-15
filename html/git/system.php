@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/resources/weblib/w3.css">
 <link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/additional.css">
 
 <body>
 
@@ -18,11 +19,11 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('schedule')">Schedule</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('date')">Time/Date</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('hostname')">Hostname</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('expand_disc')">Expand Disc</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('infos')">System Information</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'schedule')">Schedule</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'date')">Time/Date</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'hostname')">Hostname</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'expand_disc')">Expand Disc</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'infos')">System Information</button>
 </div>
 
 <div id="schedule" class="w3-container city" style="display:none">
@@ -38,7 +39,6 @@
 		</form>
 	</div>
 </div>	
-
 
 <div id="date" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
@@ -87,119 +87,17 @@
 	<div class="w3-panel w3-green w3-round">
 		<br> The Temperature of the CPU is:  <?php echo shell_exec("cat /sys/class/thermal/thermal_zone0/temp") ?>
 	</div>
-</div>	
-	
-
-<div id="output" class="w3-container city" style="display:block">
-	<br> Please choose one of the option shown above - the result will be displayed here:
-		<?php
-			error_reporting(E_ALL);
-			ini_set('display_errors', 1);
-			if (isset($_POST["update_date"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged git date --set \"".$_POST["new_date"]."\" 2>&1", $ret);
-				echo '</pre>';
-			}
-			
-			if (isset($_POST["change_hostname"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/change_hostname.sh ".$_POST["new_hostname"]." 2>&1", $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["cron_light_on"])){
-				echo '<pre>';
-				$cmd = $_POST["cron_lights"]."root       sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ i2c sh /tmp/start_all_lights.sh 2>&1";
-				$file = "/etc/crontab";
-				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/git/:/tmp/ git sh /tmp/add_cronjob.sh ".$cmd." ".$file , $ret);
-				echo '</pre>';
-			}
-			
-			if (isset($_POST["exp_disc"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/expand_disk.sh 2>&1", $ret);
-				echo '</pre>';
-			}
-			
-			if (isset($_POST["stop_exp_disc"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/stop_expand.sh 2>&1", $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["disc_usage"])){
-				echo '<pre>';
-				$test = system('df -h', $ret);
-				echo '</pre>';
-			}
-			
-			if (isset($_POST["reboot"])){
-				echo '<pre>';
-				$test = system('sudo reboot', $ret);
-				echo '</pre>';
-			}
-		?>
 </div>
 
-
-
-<script>
-function openCity(cityName) {
-    var i;
-    var x = document.getElementsByClassName("city");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(cityName).style.display = "block";  
-}
-function w3_switch(name) {
-	var x = document.getElementById(name);
-    if (x.style.display == "none") {
-        x.style.display = "block";
-    } else { 
-        x.style.display = "none";
-    }
-}
-</script>
-
 <!-- Enter text here-->
-
+<?php
+	//load footer
+	require_once RESOURCES_PATH.'/footer.php';
+	//load javascripts
+	require_once RESOURCES_PATH.'/javascript.php';
+	//load php_scripts
+	require_once RESOURCES_PATH.'/php_scripts.php';
+ ?>
 </body>
 
 </html>
-
-<?php 
-function liveExecuteCommand($cmd)
-{
-
-    while (@ ob_end_flush()); // end all output buffers if any
-
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-
-    $live_output     = "";
-    $complete_output = "";
-
-    while (!feof($proc))
-    {
-        $live_output     = fread($proc, 4096);
-        $complete_output = $complete_output . $live_output;
-        echo "$live_output";
-        @ flush();
-    }
-
-    pclose($proc);
-
-    // get exit status
-    preg_match('/[0-9]+$/', $complete_output, $matches);
-
-    // return exit status and intended output
-    return array (
-                    'exit_status'  => intval($matches[0]),
-                    'output'       => str_replace("Exit status : " . $matches[0], '', $complete_output)
-                 );
-}
-function unliveExecuteCommand($cmd)
-{
-    while (@ ob_end_flush()); // end all output buffers if any
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-    pclose($proc);
-}
-?>

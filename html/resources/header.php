@@ -21,7 +21,7 @@
 	
 	<!-- Radio -->
 	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('radio')">
+		<button class="w3-button">
 			<i class="fa fa-podcast"></i> Radio <i class="fa fa-caret-down"></i>
 		</button>
 		<div id="radio" class="w3-dropdown-content w3-card-4">
@@ -44,7 +44,7 @@
 	
 	<!-- GPS 
 	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('gps')">
+		<button class="w3-button">
 			<i class="fa fa-compass"></i> GPS <i class="fa fa-caret-down"></i>
 		</button>
 		<div id="gps" class="w3-dropdown-content w3-card-4">
@@ -64,14 +64,14 @@
 		<a class="w3-bar-item w3-button w3-mobile" href="/wifi/wifi.php"><i class="fa fa-wifi"></i> WiFi</a>
 	</div>
 		
-	<!-- Remote controll -->
+	<!-- Remote control -->
 	<div class="w3-dropdown-hover w3-mobile">
 		<a class="w3-bar-item w3-button w3-mobile" href="/connect/connect.php"><i class="fa fa-exchange"></i> Remote</a>
 	</div>
 	
 	<!-- System settings -->
 	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('system')">
+		<button class="w3-button">
 			<i class="fa fa-wrench"></i> System <i class="fa fa-caret-down"></i>
 		</button>
 		<div id="system" class="w3-dropdown-content w3-card-4">

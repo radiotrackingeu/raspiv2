@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="/resources/weblib/w3.css">
 <link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
 
+<link rel="stylesheet" href="/resources/additional.css">
+
 <script>
 function setVisibility(menu, label, element) {
 	var vis = menu.value==label ? "visible" : "hidden";
@@ -34,9 +36,9 @@ function setVisibility(menu, label, element) {
 
 <!-- Enter text here-->
 <div class="w3-bar w3-brown w3-mobile">
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_range')">Frequency Range</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_single')">Single Frequency</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_settings')">Settings</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_range')">Frequency Range</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_single')">Single Frequency</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_settings')">Settings</button>
 </div>
 
 <!-------------------------------- Range Logger -------------------------------------------------------------------->
@@ -45,7 +47,7 @@ function setVisibility(menu, label, element) {
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 0</h3><br>
-			Range: <?php echo ($config['logger']['center_freq_0']-$config['logger']['freq_range_0']/2)/1000000?> MHz till <?php echo ($config['logger']['center_freq_0']+$config['logger']['freq_range_0']/2)/1000000?> MHz
+			Range: <?php echo ($config['logger']['center_freq_0']-$config['logger']['freq_range_0']/2)/1000000?> MHz to <?php echo ($config['logger']['center_freq_0']+$config['logger']['freq_range_0']/2)/1000000?> MHz
 			<br>
 			Gain: <?php echo $config['logger']['log_gain_0']?> dB
 			<br>
@@ -61,7 +63,7 @@ function setVisibility(menu, label, element) {
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 1</h3><br>
-			Range: <?php echo ($config['logger']['center_freq_1']-$config['logger']['freq_range_1']/2)/1000000?> MHz till <?php echo ($config['logger']['center_freq_1']+$config['logger']['freq_range_1']/2)/1000000?> MHz
+			Range: <?php echo ($config['logger']['center_freq_1']-$config['logger']['freq_range_1']/2)/1000000?> MHz to <?php echo ($config['logger']['center_freq_1']+$config['logger']['freq_range_1']/2)/1000000?> MHz
 			<br>
 			Gain: <?php echo $config['logger']['log_gain_1']?> dB
 			<br>
@@ -74,7 +76,8 @@ function setVisibility(menu, label, element) {
 			<br>
 		</div>
 	</div>
-	<div class="w3-rest w3-center w3-panel w3-green w3-round">
+	<div class="w3-row">
+		<div class="w3-container w3-green w3-round" style="margin-right:8px;margin-left:8px">
 		<br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
 		<?php 
 		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d0)")){
@@ -97,6 +100,7 @@ function setVisibility(menu, label, element) {
 			<input type='submit' class='w3-btn w3-brown' value='Update Receiver Status' name='update_device_info_fr'/>
 			<br><br>
 		</form>
+		</div>
 	</div>
 </div>
 
@@ -123,8 +127,10 @@ function setVisibility(menu, label, element) {
 			<br>
 		</div>
 	</div>
-	<div class="w3-rest w3-panel w3-green w3-round">
+	<div class="w3-row">
+		<div class="w3-container w3-green w3-round" style="margin-right:8px;margin-left:8px">
 		<br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
+		</div>
 	</div>
 </div>
 
@@ -370,13 +376,15 @@ function setVisibility(menu, label, element) {
 			</form>
 		</div>
 	</div>
-	<div class="w3-rest w3-center w3-panel w3-green w3-round">
-		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
-			<br>
-			<input type="submit" class="w3-btn w3-brown" value="Compile Raspi 3" name="compile"/>
-			<input type="submit" class="w3-btn w3-brown" value="Compile Raspi Zero" name="compile_raspi_zero"/>
-			<br><br>
-		</form>
+	<div class="w3-row">
+		<div class="w3-container w3-green w3-round" style="margin-right:8px;margin-left:8px">
+			<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
+				<br>
+				<input type="submit" class="w3-btn w3-brown" value="Compile Raspi 3" name="compile"/>
+				<input type="submit" class="w3-btn w3-brown" value="Compile Raspi Zero" name="compile_raspi_zero"/>
+				<br><br>
+			</form>
+		</div>
 	</div>
 </div>
 
