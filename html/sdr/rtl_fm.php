@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/resources/weblib/w3.css">
 <link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/additional.css">
 
 <body>
 <?php
@@ -26,10 +27,9 @@
 
 <!---------------- Tab Menu -------------------------->
 <div class="w3-bar w3-brown">
-	<button class="w3-bar-item w3-button" onclick="openCity('single_freq')">Single Frequency</button>
-	<button class="w3-bar-item w3-button" onclick="openCity('multiple_freq')">Multiple Frequencies</button>
-	<button class="w3-bar-item w3-button" onclick="openCity('freq_settings')">Frequencies Settings</button>
-	<button class="w3-bar-item w3-button" onclick="openCity('single_freq_rec')">Single Frequency Recorder</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event,'single_freq')">Single Frequency</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event,'multiple_freq')">Multiple Frequencies</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event,'freq_settings')">Frequencies Settings</button>
 </div>
 
 <!---------------- Single Frequency -------------------------->
@@ -131,80 +131,6 @@
 			<input type="text" name="Radio_Gain" value="<?php echo isset($config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]) ? $config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']] : 20 ?>" /><br>
 			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Save Settings" name="save_settings"/>
-		</form>
-	</div>
-</div>
-
-<!---------------- Single Frequency Recorder-------------------------->
-
-<div id="single_freq_rec" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
-			<br>
-			<select name="device">
-				<option value=1 >Receiver 1</option>
-				<option value=2 >Receiver 2</option>
-			</select> 
-			<input type='submit' class='w3-btn w3-brown' value='Switch receiver' name='change_device_single_freq_rec'/>
-			<br><br>
-		</form>
-		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
-			<br>
-			<strong>Frequencies:</strong><br>
-			<input type="text" name="Single_Freq" value="<?php echo isset($config['SDR_Radio']['Single_Freq'][$config['device']]) ? $config['SDR_Radio']['Single_Freq'][$config['device']] : "150.1M" ?>" /><br>
-			Set the frequency you want to listen to. You can use multipliers like M and k. Turn slightly below the frequency for better results.<br>
-			Together with a treshold bigger then 0 you can scan multiple frequencies if you add a -f (i.e. 150.1M -f 150.120M)
-			<br><br>
-			<strong>Gain in DB:</strong><br>
-			<input type="text" name="Radio_Gain" value="<?php echo isset($config['SDR_Radio']['Radio_Gain'][$config['device']]) ? $config['SDR_Radio']['Radio_Gain'][$config['device']] : 20 ?>" /><br>
-			Set a gain value. Remember higher gains result in higher noise levels.
-			<br>
-			<br>
-			Start and Stop receiver - to set a new frequency/gain, first stop and restart: 
-			<br>
-			<br>
-			<input type="submit" class="w3-btn w3-brown" value="Start Browser playback" name="rtl_fm_start_s"/>
-			<input type="submit" class="w3-btn w3-brown" value="Start Local playback" name="rtl_fm_start_l"/>
-			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_stop"/>
-			<br>
-			<br>
-		</form>
-	</div>
-</div>
-
-<!---------------- Multiple Frequencies Recorder -------------------------->
-
-<div id="multiple_freq_rec" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
-			<br>
-			<select name="device">
-				<option value=1 >Receiver 1</option>
-				<option value=2 >Receiver 2</option>
-			</select> 
-			<input type='submit' class='w3-btn w3-brown' value='Switch receiver' name='change_device_multiple_freq_rec'/>
-			<br><br>
-		</form>
-		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
-			<br>
-			<strong>Frequencies:</strong><br>
-			<input type="text" name="Single_Freq" value="<?php echo isset($config['SDR_Radio']['Single_Freq'][$config['SDR_Radio']['device']]) ? $config['SDR_Radio']['Single_Freq'][$config['SDR_Radio']['device']] : "150.1M" ?>" /><br>
-			Set the frequency you want to listen to. You can use multipliers like M and k. Turn slightly below the frequency for better results.<br>
-			Together with a treshold bigger then 0 you can scan multiple frequencies if you add a -f (i.e. 150.1M -f 150.120M)
-			<br><br>
-			<strong>Gain in DB:</strong><br>
-			<input type="text" name="Radio_Gain" value="<?php echo isset($config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']]) ? $config['SDR_Radio']['Radio_Gain'][$config['SDR_Radio']['device']] : 20 ?>" /><br>
-			Set a gain value. Remember higher gains result in higher noise levels.
-			<br>
-			<br>
-			Start and Stop receiver - to set a new frequency/gain, first stop and restart: 
-			<br>
-			<br>
-			<input type="submit" class="w3-btn w3-brown" value="Start Browser playback" name="rtl_fm_start_s"/>
-			<input type="submit" class="w3-btn w3-brown" value="Start Local playback" name="rtl_fm_start_l"/>
-			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_stop"/>
-			<br>
-			<br>
 		</form>
 	</div>
 </div>

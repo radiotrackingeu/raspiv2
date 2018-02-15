@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/resources/weblib/w3.css">
 <link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/additional.css">
 
 <body>
 
@@ -28,15 +29,15 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('GIT')">System Update</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('install')">Install/Update Applications</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('running_docker')">Application Status</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('config_file')">Configuration File</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'GIT')">System Update</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'install')">Install/Update Applications</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'running_docker')">Application Status</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'config_file')">Configuration File</button>
 </div>
 
 <div id="GIT" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
-		<br>Update the User Interface - if a single Application has been updated - please go afterwards to Applications. Please also choose to keep your old config file or update it with standard settings.<br><br>
+		Update the User Interface - if a single Application has been updated - please go afterwards to Applications. Please also choose to keep your old config file or update it with standard settings.<br><br>
 		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
 				<select name="git_checkout">
 					<option value="master" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "master" ?  "selected" : ""; ?>>Stable Version</option>

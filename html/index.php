@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/resources/weblib/w3.css">
 <link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/additional.css">
 
 <body>
 <?php
@@ -16,8 +17,8 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('features')">Features</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('pdf_manuals')">PDF Manuals</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'features')">Features</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'pdf_manuals')">PDF Manuals</button>
 </div>
 
 <div id="features" class="w3-container city">

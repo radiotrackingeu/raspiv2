@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/resources/weblib/w3.css">
 <link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/additional.css">
 
 <body>
 
@@ -17,9 +18,9 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('hotspot')">Hotspot</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('wifi_con')">WiFi Connection</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('lan')">Lan Connection</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'hotspot')">Hotspot</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'wifi_con')">WiFi Connection</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'lan')">Lan Connection</button>
 </div>
 
 <div id="hotspot" class="w3-container city">
@@ -121,27 +122,14 @@
 			}
 	?>
 
-
-<script>
-function openCity(cityName) {
-    var i;
-    var x = document.getElementsByClassName("city");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(cityName).style.display = "block";  
-}
-function w3_switch(name) {
-	var x = document.getElementById(name);
-    if (x.style.display == "none") {
-        x.style.display = "block";
-    } else { 
-        x.style.display = "none";
-    }
-}
-</script>
-
-
+<?php
+	//load footer
+	require_once RESOURCES_PATH.'/footer.php';
+	//load javascripts
+	require_once RESOURCES_PATH.'/javascript.php';
+	//load php_scripts
+	require_once RESOURCES_PATH.'/php_scripts.php';
+ ?>
 </body>
 
 </html>

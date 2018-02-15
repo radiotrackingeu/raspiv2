@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="/resources/weblib/w3.css">
 <link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
 
+<link rel="stylesheet" href="/resources/additional.css">
+
 <script>
 function setVisibility(menu, label, element) {
 	var vis = menu.value==label ? "visible" : "hidden";
@@ -34,9 +36,9 @@ function setVisibility(menu, label, element) {
 
 <!-- Enter text here-->
 <div class="w3-bar w3-brown w3-mobile">
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_range')">Frequency Range</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_single')">Single Frequency</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('tab_logger_settings')">Settings</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_range')">Frequency Range</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_single')">Single Frequency</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_settings')">Settings</button>
 </div>
 
 <!-------------------------------- Range Logger -------------------------------------------------------------------->

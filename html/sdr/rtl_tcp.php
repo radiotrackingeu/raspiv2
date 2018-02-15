@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/resources/weblib/w3.css">
 <link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/additional.css">
 
 <body>
 <?php
@@ -18,7 +19,7 @@
  
 <!---------------- Tab Menu -------------------------->
 <div class="w3-bar w3-brown">
-	<button class="w3-bar-item w3-button" onclick="openCity('sdr_server')">SDR#-Server</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event,'sdr_server')">SDR#-Server</button>
 </div>
 
 <!-- Enter text here-->
