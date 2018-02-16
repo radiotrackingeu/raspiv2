@@ -16,80 +16,56 @@
 	}
 	//WebRadio Functions
 	
-	function cmd_webradio($dev, $freq) {
-		$cmd_docker = "sudo docker run --rm -t --name webradio".$dev." --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c";
+	function cmd_webradio($config, $dev, $freq) {
+		$cmd_docker = "sudo docker run --rm -t --name webradio_".$dev." --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c";
 		$cmd_rtl_fm = "rtl_fm -M usb -f ".$config['SDR_Radio']['Freq'.$freq.'_'.$dev]." -g ".$config['SDR_Radio']['Radio_Gain_'.$dev]." -d ".$dev." | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240";
 		return $cmd_docker." '".$cmd_rtl_fm."'";
 	}
-	if (isset($_POST["rtl_fm_start_s"])){
-		$cmd = "sudo docker run --rm -t --name webradio --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Single_Freq"]. " -g " . $_POST["Radio_Gain"]. " -d ".$config['SDR_Radio']['device']." | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240'";
-		start_docker_quite($cmd,'single_freq');
-	}
-	if (isset($_POST["rtl_fm_start_l"])){
-		$cmd = "sudo docker run --rm -t --name webradio_d".$config['SDR_Radio']['device']." --privileged rtlsdr sh -c 'rtl_fm -M usb -f " . $_POST["Single_Freq"]. " -g " . $_POST["Radio_Gain"]. " -d ".$config['SDR_Radio']['device']." | play -r 24k -t raw -v 9 -e s -b 16 -c 1 -V1 -'";
-		start_docker_quite($cmd,'single_freq');
+	function webradio_stop($dev) {
+		$cmd = "sudo docker stop webradio_".$dev;
+		system($cmd." >/dev/null 2>/dev/null &");
 	}
 	if (isset($_POST["rtl_fm_start_0_f1"])){
-		start_docker_quite(cmd_webradio(0,1),'multiple_freq');
+		system(cmd_webradio($config,0,1)." >/dev/null 2>/dev/null &");
 	}
 	if (isset($_POST["rtl_fm_start_1_f1"])){
-		start_docker_quite(cmd_webradio(1,1),'multiple_freq');
+		system(cmd_webradio($config,1,1)." >/dev/null 2>/dev/null &");
 	}
-		if (isset($_POST["rtl_fm_start_0_f2"])){
-		start_docker_quite(cmd_webradio(0,2),'multiple_freq');
+	if (isset($_POST["rtl_fm_start_0_f2"])){
+		system(cmd_webradio($config,0,2)." >/dev/null 2>/dev/null &");
 	}
 	if (isset($_POST["rtl_fm_start_1_f2"])){
-		start_docker_quite(cmd_webradio(1,2),'multiple_freq');
+		system(cmd_webradio($config,1,2)." >/dev/null 2>/dev/null &");
 	}
-		if (isset($_POST["rtl_fm_start_0_f3"])){
-		start_docker_quite(cmd_webradio(0,3),'multiple_freq');
+	if (isset($_POST["rtl_fm_start_0_f3"])){
+		system(cmd_webradio($config,0,3)." >/dev/null 2>/dev/null &");
 	}
 	if (isset($_POST["rtl_fm_start_1_f3"])){
-		start_docker_quite(cmd_webradio(1,3),'multiple_freq');
+		system(cmd_webradio($config,1,3)." >/dev/null 2>/dev/null &");
 	}
-		if (isset($_POST["rtl_fm_start_0_f4"])){
-		start_docker_quite(cmd_webradio(0,4),'multiple_freq');
+	if (isset($_POST["rtl_fm_start_0_f4"])){
+		system(cmd_webradio($config,0,4)." >/dev/null 2>/dev/null &");
 	}
 	if (isset($_POST["rtl_fm_start_1_f4"])){
-		start_docker_quite(cmd_webradio(1,4),'multiple_freq');
+		system(cmd_webradio($config,1,4)." >/dev/null 2>/dev/null &");
 	}
-		if (isset($_POST["rtl_fm_start_0_f5"])){
-		start_docker_quite(cmd_webradio(0,5),'multiple_freq');
+	if (isset($_POST["rtl_fm_start_0_f5"])){
+		system(cmd_webradio($config,0,5)." >/dev/null 2>/dev/null &");
 	}
 	if (isset($_POST["rtl_fm_start_1_f5"])){
-		start_docker_quite(cmd_webradio(1,5),'multiple_freq');
+		system(cmd_webradio($config,1,5)." >/dev/null 2>/dev/null &");
 	}
-		if (isset($_POST["rtl_fm_start_0_f6"])){
-		start_docker_quite(cmd_webradio(0,6),'multiple_freq');
+	if (isset($_POST["rtl_fm_start_0_f6"])){
+		system(cmd_webradio($config,0,6)." >/dev/null 2>/dev/null &");
 	}
 	if (isset($_POST["rtl_fm_start_1_f6"])){
-		start_docker_quite(cmd_webradio(1,6),'multiple_freq');
+		system(cmd_webradio($config,1,6)." >/dev/null 2>/dev/null &");
 	}
-	
-	if (isset($_POST["rtl_stop"])){
-		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter name=webradio) 2>&1";
-		start_docker($cmd,'single_freq');
+	if (isset($_POST["rtl_stop_0"])){
+		webradio_stop(0);
 	}
-	if (isset($_POST["change_device_single_freq"])){
-		echo "<script type='text/javascript'>document.getElementById('single_freq').style.display = 'block';</script>";	
-	}
-	if (isset($_POST["change_device_multiple_freq"])){
-		echo "<script type='text/javascript'>document.getElementById('multiple_freq').style.display = 'block';</script>";	
-	}
-	if (isset($_POST["change_device_freq_settings"])){
-		echo "<script type='text/javascript'>document.getElementById('freq_settings').style.display = 'block';</script>";	
-	}
-	if (isset($_POST["change_device_single_freq_recs"])){
-		echo "<script type='text/javascript'>document.getElementById('single_freq_recs').style.display = 'block';</script>";	
-	}	
-	if (isset($_POST["change_device_multiple_freq_rec"])){
-		echo "<script type='text/javascript'>document.getElementById('multiple_freq_rec').style.display = 'block';</script>";	
-	}
-	if (isset($_POST["change_device_tab_logger"])){
-		echo "<script type='text/javascript'>document.getElementById('tab_logger').style.display = 'block';</script>";	
-	}
-	if (isset($_POST["change_device_tab_logger_timer"])){
-		echo "<script type='text/javascript'>document.getElementById('tab_logger_timer').style.display = 'block';</script>";	
+	if (isset($_POST["rtl_stop_1"])){
+		webradio_stop(1);
 	}
 	
 	//Logger Range Functions
@@ -459,11 +435,11 @@
 	}
 	if (isset($_POST["start_phpmyadmin"])){
 		$cmd = "sudo docker run -t --name=phpmyadmin --rm --net=host -v /var/www/html/data/:/cfiles/ phpmyadmin:1.0 2>&1";
-		start_docker_quite($cmd,'mysql');
+		start_docker_quite($cmd,'phpmyadmin');
 	}
 	if (isset($_POST["stop_phpmyadmin"])){
 		$cmd = "sudo docker stop phpmyadmin";
-		start_docker($cmd,'mysql');
+		start_docker($cmd,'phpmyadmin');
 	}
 	
 	if (isset($_POST["change_db_settings"])){
@@ -529,7 +505,7 @@
 </div>
 
 <script>
-// Script to close the window upon click outside the box - special request of Philipp - otherwise he quits
+// Script to close the window upon click outside the box
 // Get the modal
 var modal = document.getElementById('output_php');
 
