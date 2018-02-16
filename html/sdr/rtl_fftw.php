@@ -139,7 +139,7 @@ function setVisibility(menu, label, element) {
 <div id="tab_logger_settings" class="w3-container city w3-row-padding" style="display:none">
 	<div class="w3-half">
 		<div class="w3-container w3-panel w3-green w3-round">
-			<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
+			<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config);?>">
 			<h3>Receiver 0</h3><br>
 			<button type=button onclick="myAccordion('rec0_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Receiver Settings</h4></button>
 			
@@ -261,7 +261,7 @@ function setVisibility(menu, label, element) {
 		<div class="w3-container w3-panel w3-green w3-round">
 			<h3>Receiver 1</h3><br>
 
-			<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
+			<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config);?>">
 				
 				<button type=button onclick="myAccordion('rec1_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Receiver Settings</h4></button>
 				<div id="rec1_settings" class="w3-container w3-hide">
