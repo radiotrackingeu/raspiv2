@@ -30,7 +30,7 @@ int             *   groups;
 int                 timestep;
 int                 nfft;
 
-unsigned long int   num_transforms = 0;
+unsigned long long  num_transforms = 0;
 int                 tmp_transforms = 0;
 
 struct              timespec now;
@@ -150,7 +150,7 @@ int main(int argc, char*argv[])
     // DC-blocking filter 1e-3f
     iirfilt_crcf dcblock = iirfilt_crcf_create_dc_blocker(1e-3f);
 
-    printf("write_to_db=%i\n", write_to_db);
+//    printf("write_to_db=%i\n", write_to_db);
     // open SQL database
     if (write_to_db!=0)
     {
@@ -272,7 +272,7 @@ int main(int argc, char*argv[])
     iirfilt_crcf_destroy(dcblock);
 
     printf("total samples in : %lu\n", total_samples);
-    printf("total transforms : %lu\n", num_transforms);
+    printf("total transforms : %llu\n", num_transforms);
 
     free_memory();
 
@@ -478,14 +478,18 @@ int step(float _threshold, unsigned int _sampling_rate)
 			float signal_freq = get_group_freq(i)*_sampling_rate;          	// center frequency estimate (normalized)
             float signal_bw   = get_group_bw(i)*_sampling_rate;            	// bandwidth estimate (normalized)
 			float max_signal  = get_group_max_sig(i);						// maximum signal strength per group
-            printf("%s;%-10.6f;%9.6f;%9.6f;%f;%lu\n",
+            printf("%s;%-10.6f;%9.6f;%9.6f;%f;%llu\n",
                     timestamp, duration, signal_freq, signal_bw,max_signal, num_transforms);
 			fflush(stdout);
 			if (write_to_db!=0) {
-				snprintf(sql_statement, sizeof(sql_statement), "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, run) VALUE(\"%s\",%lu,%-10.6f,%9.6f,%9.6f,%f,%i)", DB_TABLE, timestamp, num_transforms, duration, signal_freq, signal_bw, max_signal, run_id);
+				snprintf(sql_statement, sizeof(sql_statement),
+                    "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, run) VALUE(\"%s\",%llu,%-10.6f,%9.6f,%9.6f,%f,%i)",
+                    DB_TABLE, timestamp, num_transforms, duration, signal_freq, signal_bw, max_signal, run_id
+                );
 				mysql_query(con, sql_statement);
+				if (*mysql_error(con))
+                    fprintf(stderr, "Error while writing to db: %s", mysql_error(con));
 			}
-
             // reset counters for group
             clear_group_count(i);
         }
@@ -500,7 +504,7 @@ void format_timestamp(const struct timespec _time, char * _buf, const unsigned l
     char buffer[11];
     const time_t tm = (time_t) _time.tv_sec;
     strftime(_buf, _buf_len, "%F %T",gmtime(&tm));
-    sprintf(buffer, ".%-9ld", _time.tv_nsec);
+    sprintf(buffer, ".%09ld", _time.tv_nsec);
     strncat(_buf, buffer, 10);
 }
 
