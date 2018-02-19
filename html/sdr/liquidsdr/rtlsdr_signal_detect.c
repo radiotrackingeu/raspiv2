@@ -19,13 +19,19 @@
 #define DB_BASE "rteu"
 #define DB_TABLE "rteu.signals"
 
-float           *   psd_template;
-float           *   psd;
-float           *   psd_max;
-struct timespec *   psd_time;
-int             *   detect;
-int             *   count;
-int             *   groups;
+#define BILLION 	1000000000L
+
+#define MIN_LENGTH 0
+#define MAX_LENGTH 1
+
+float               *   psd_template;
+float               *   psd;
+float               *   psd_max;
+struct timespec     *   psd_time;
+unsigned long long  *   psd_sample;
+int                 *   detect;
+int                 *   count;
+int                 *   groups;
 
 int                 timestep;
 int                 nfft;
@@ -33,7 +39,7 @@ int                 nfft;
 unsigned long long  num_transforms = 0;
 int                 tmp_transforms = 0;
 
-struct              timespec now;
+struct timespec     t_start;
 int                 keepalive = 300;
 
 int					run_id=0;
@@ -87,10 +93,12 @@ float get_group_freq   	(int _group_id);
 float get_group_bw     	(int _group_id);
 float get_group_time   	(int _group_id);
 float get_group_max_sig (int _group_id);
+unsigned long long get_group_start_time(int _group_id);
 int   clear_group_count	(int _group_id);
 int   step(float _threshold, unsigned int _sampling_rate);
 void  format_timestamp(const struct timespec _time, char * _buf, const unsigned long _buf_len);
-char  before(const struct timespec _a, const struct timespec _b);
+struct timespec timeAdd(const struct timespec _t1, const struct timespec _t2);
+//char  before(const struct timespec _a, const struct timespec _b);
 void  init_time();
 void  free_memory();
 
@@ -134,8 +142,7 @@ int main(int argc, char*argv[])
     detect =        (int*)   calloc(nfft, sizeof(int));
     count =         (int*)   calloc(nfft, sizeof(int));
     groups =        (int*)   calloc(nfft, sizeof(int));
-    psd_time =      (struct timespec*) calloc(nfft, sizeof(struct timespec));
-    init_time();
+    psd_sample =    (unsigned long long*) calloc(nfft, sizeof(unsigned long long));
 	keepalive *= sampling_rate / timestep;
 	keepalive += keepalive%16;
 
@@ -150,7 +157,6 @@ int main(int argc, char*argv[])
     // DC-blocking filter 1e-3f
     iirfilt_crcf dcblock = iirfilt_crcf_create_dc_blocker(1e-3f);
 
-//    printf("write_to_db=%i\n", write_to_db);
     // open SQL database
     if (write_to_db!=0)
     {
@@ -195,9 +201,9 @@ int main(int argc, char*argv[])
     }
     if (write_to_db!=0)
 	    printf("Also sending data to SQL Server at %s.\n", db_host);
-	clock_gettime(CLOCK_REALTIME,&now);
+	clock_gettime(CLOCK_REALTIME,&t_start);
 	char tbuf[30];
-	format_timestamp(now,tbuf,30);
+	format_timestamp(t_start,tbuf,30);
 	printf("Will print timestamp every %i transforms\n", keepalive);
 	printf("%s\n",tbuf);
 	//print row names
@@ -230,7 +236,7 @@ int main(int argc, char*argv[])
             // compute average template
             if (num_transforms<= sampling_rate / timestep) {
                 // set template PSD for relative signal detection
-				// Add up all singal strength to derive minimum value
+				// Add up all signal strength to derive minimum value
 				int i;
 				for (i=0;i<nfft;i++) {
 					if ( psd[i] < psd_template[i] ) {
@@ -247,11 +253,22 @@ int main(int argc, char*argv[])
             num_transforms += spgramcf_get_num_transforms(periodogram);
             spgramcf_reset(periodogram);
             if (num_transforms%keepalive == 0) {
+                struct timespec now;
                 clock_gettime(CLOCK_REALTIME,&now);
                 char tbuf[30];
+                char sql_statement[256];
                 format_timestamp(now,tbuf,30);
                 printf("%s;;;;;\n",tbuf);
 				fflush(stdout);
+                if (write_to_db!=0) {
+                    snprintf(sql_statement, sizeof(sql_statement),
+                        "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw,max_signal, run) VALUE(\"%s\",0,0.0,0.0,0.0,0.0,%i)",
+                        DB_TABLE, tbuf, run_id
+                    );
+                    mysql_query(con, sql_statement);
+                    if (*mysql_error(con))
+                        fprintf(stderr, "Error while writing to db: %s", mysql_error(con));
+                }
             }
 
         }
@@ -310,8 +327,9 @@ int update_detect(float _threshold)
         // relative
         // detect[i] = ((psd[i] - psd_template[i]) > _threshold) ? 1 : 0;
 		if((psd[i] - psd_template[i]) > _threshold){
-            clock_gettime(CLOCK_REALTIME,&now);
-            if (psd_time[i].tv_sec==INT_MAX) psd_time[i]=now;
+            //clock_gettime(CLOCK_REALTIME,&now);
+            //if (psd_time[i].tv_sec==INT_MAX) psd_time[i]=now;
+            if (psd_sample[i]==0) psd_sample[i]=num_transforms;
 			detect[i]=1; //write matrix for detection
 			psd_max[i] = (psd_max[i]>psd[i]) ? psd_max[i] : psd[i]; //save highest values
 		}
@@ -433,13 +451,15 @@ float get_group_max_sig(int _group_id)
 }
 
 //get earliest timestamp for given group
-struct timespec get_group_start_time(int _group_id)
+unsigned long long get_group_start_time(int _group_id)
 {
     int i;
-    struct timespec starttime = {INT_MAX, 999999999}; //will break on 2038-01-19T03:14:08Z
+    unsigned long long starttime = ULLONG_MAX;
+    //struct timespec starttime = {INT_MAX, 999999999}; //will break on 2038-01-19T03:14:08Z
     for (i=0; i<nfft; i++) {
-        if (groups[i] == _group_id && before(psd_time[i],starttime)) {
-            starttime=psd_time[i];
+//        if (groups[i] == _group_id && before(psd_time[i],starttime)) {
+        if (groups[i] == _group_id && psd_sample[i] < starttime) {
+            starttime=psd_sample[i];//psd_time[i];
 		}
     }
     return starttime;
@@ -470,26 +490,35 @@ int step(float _threshold, unsigned int _sampling_rate)
     char sql_statement[256];
     // determine if signal has stopped based on group and detection
     int i;
+    float ratio = (float)timestep / (float)_sampling_rate;
     for (i=1; i<=num_groups; i++) {
         if (signal_complete(i)) {
             // signal started & stopped
-            format_timestamp(get_group_start_time(i), timestamp, 30);
-            float duration    = tmp_transforms*get_group_time(i)*timestep/_sampling_rate; // duration [samples]
-			float signal_freq = get_group_freq(i)*_sampling_rate;          	// center frequency estimate (normalized)
-            float signal_bw   = get_group_bw(i)*_sampling_rate;            	// bandwidth estimate (normalized)
-			float max_signal  = get_group_max_sig(i);						// maximum signal strength per group
-            printf("%s;%-10.6f;%9.6f;%9.6f;%f;%llu\n",
-                    timestamp, duration, signal_freq, signal_bw,max_signal, num_transforms);
-			fflush(stdout);
-			if (write_to_db!=0) {
-				snprintf(sql_statement, sizeof(sql_statement),
-                    "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, run) VALUE(\"%s\",%llu,%-10.6f,%9.6f,%9.6f,%f,%i)",
-                    DB_TABLE, timestamp, num_transforms, duration, signal_freq, signal_bw, max_signal, run_id
-                );
-				mysql_query(con, sql_statement);
-				if (*mysql_error(con))
-                    fprintf(stderr, "Error while writing to db: %s", mysql_error(con));
-			}
+            float duration = tmp_transforms*get_group_time(i)*timestep/_sampling_rate; // duration [samples]
+            if (duration > MIN_LENGTH && duration < MAX_LENGTH )
+            {
+                float ftime = (float)get_group_start_time(i) * ratio;
+                struct timespec tm;
+                tm.tv_nsec = (long)(fmodf(ftime,1)*BILLION);
+                tm.tv_sec = (long)ftime;
+                tm = timeAdd(t_start, tm);
+                format_timestamp(tm, timestamp, 30);
+                float signal_freq = get_group_freq(i)*_sampling_rate;          	// center frequency estimate (normalized)
+                float signal_bw   = get_group_bw(i)*_sampling_rate;            	// bandwidth estimate (normalized)
+                float max_signal  = get_group_max_sig(i);						// maximum signal strength per group
+                printf("%s;%-10.6f;%9.6f;%9.6f;%f;%llu\n",
+                        timestamp, duration, signal_freq, signal_bw,max_signal, num_transforms);
+                fflush(stdout);
+                if (write_to_db!=0) {
+                    snprintf(sql_statement, sizeof(sql_statement),
+                        "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, run) VALUE(\"%s\",%llu,%-10.6f,%9.6f,%9.6f,%f,%i)",
+                        DB_TABLE, timestamp, num_transforms, duration, signal_freq, signal_bw, max_signal, run_id
+                    );
+                    mysql_query(con, sql_statement);
+                    if (*mysql_error(con))
+                        fprintf(stderr, "Error while writing to db: %s", mysql_error(con));
+                }
+            }
             // reset counters for group
             clear_group_count(i);
         }
@@ -508,28 +537,41 @@ void format_timestamp(const struct timespec _time, char * _buf, const unsigned l
     strncat(_buf, buffer, 10);
 }
 
-// returns true iff a is smaller than b
-char before(const struct timespec _a, const struct timespec _b)
+// add 2 timestamps
+struct timespec timeAdd(const struct timespec _t1, const struct timespec _t2)
 {
-    if (_a.tv_sec==_b.tv_sec)
-        return _a.tv_nsec < _b.tv_nsec;
-    else
-        return _a.tv_sec < _b.tv_sec;
+    long sec = _t2.tv_sec + _t1.tv_sec;
+    long nsec = _t2.tv_nsec + _t1.tv_nsec;
+    if (nsec >= BILLION) {
+        nsec -= BILLION;
+        sec++;
+    }
+    return (struct timespec){ .tv_sec = sec, .tv_nsec = nsec };
 }
 
-// initialize psd_time
-void init_time() {
-    int i;
-    for (i=0; i<nfft; i++) {
-        psd_time[i].tv_sec = INT_MAX;
-		psd_time[i].tv_nsec = 999999999;
-	}
-}
+//// returns true iff a is smaller than b
+//char before(const struct timespec _a, const struct timespec _b)
+//{
+//    if (_a.tv_sec==_b.tv_sec)
+//        return _a.tv_nsec < _b.tv_nsec;
+//    else
+//        return _a.tv_sec < _b.tv_sec;
+//}
+
+//// initialize psd_time
+//void init_time() {
+//    int i;
+//    for (i=0; i<nfft; i++) {
+//        psd_time[i].tv_sec = INT_MAX;
+//		psd_time[i].tv_nsec = 999999999;
+//	}
+//}
 
 void free_memory() {
     free(psd_template);
     free(psd);
     free(psd_max);
+    free(psd_sample);
     free(detect);
     free(count);
     free(groups);
