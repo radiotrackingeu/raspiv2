@@ -49,7 +49,7 @@ if [ "$1" = 'mysqld' ]; then
 				CREATE USER 'rteu'@'%' IDENTIFIED BY 'rteuv2!' ;
 				CREATE DATABASE rteu ;
 				CREATE TABLE rteu.runs (\`id\` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, \`device\` VARCHAR(60), \`pos_x\` FLOAT, \`pos_y\` FLOAT, \`orientation\` SMALLINT UNSIGNED, \`beam_width\` SMALLINT UNSIGNED, \`gain\` TINYINT UNSIGNED, \`center_freq\` INT UNSIGNED, \`freq_range\` INT UNSIGNED, \`threshold\` TINYINT UNSIGNED, \`fft_bins\` SMALLINT UNSIGNED, \`fft_samples\` TINYINT UNSIGNED);
-				CREATE TABLE rteu.signals (\`timestamp\` CHAR(30), \`samples\` BIGINT, \`duration\` FLOAT, \`signal_freq\` FLOAT, \`signal_bw\` FLOAT, \`max_signal\` FLOAT, \`run\` INT UNSIGNED NOT NULL, FOREIGN KEY(\`run\`) REFERENCES rteu.runs(\`id\`) ON DELETE CASCADE, PRIMARY KEY (timestamp, run));
+				CREATE TABLE rteu.signals (\`id\` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\`timestamp\` CHAR(30), \`samples\` BIGINT, \`duration\` FLOAT, \`signal_freq\` FLOAT, \`signal_bw\` FLOAT, \`max_signal\` FLOAT, \`run\` INT UNSIGNED NOT NULL, FOREIGN KEY(\`run\`) REFERENCES rteu.runs(\`id\`) ON DELETE CASCADE);
 				GRANT ALL ON rteu.* TO 'rteu'@'%';
 		EOSQL
 		
