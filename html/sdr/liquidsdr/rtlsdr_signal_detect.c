@@ -449,7 +449,7 @@ float get_group_max_sig(int _group_id)
             max = psd_max[i];
 			noise = psd_template[i];
     }
-    return 1e9*max / 1e9*noise;
+    return 10*log10(1e10*(max/10) / 1e10*(noise/10));
 }
 
 //get earliest timestamp for given group
