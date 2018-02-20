@@ -6,6 +6,8 @@
 // threshold. Observe time, duration, and bandwidth of signal.
 //
 
+//#define MYSQL_ERRORS
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -264,9 +266,11 @@ int main(int argc, char*argv[])
                         DB_TABLE, tbuf, run_id
                     );
                     mysql_query(con, sql_statement);
+#ifdef MYSQL_ERRORS
                     if (*mysql_error(con))
                         fprintf(stderr, "Error while writing to db: %s", mysql_error(con));
                 }
+#endif
             }
 
         }
@@ -509,9 +513,11 @@ int step(float _threshold, unsigned int _sampling_rate)
                         DB_TABLE, timestamp, num_transforms, duration, signal_freq, signal_bw, max_signal, run_id
                     );
                     mysql_query(con, sql_statement);
-                    if (*mysql_error(con))
+#ifdef MYSQL_ERRORS
+                if (*mysql_error(con))
                         fprintf(stderr, "Error while writing to db: %s", mysql_error(con));
                 }
+#endif
             }
             // reset counters for group
             clear_group_count(i);
