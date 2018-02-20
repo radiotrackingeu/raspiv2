@@ -386,12 +386,12 @@
 		start_docker($cmd,'mysql');
 	}
 	if (isset($_POST["start_phpmyadmin"])){
-		$cmd = "sudo docker run -t --name=phpmyadmin--rm --net=host -v /var/www/html/data/:/cfiles/ phpmyadmin:1.0 2>&1";
-		start_docker_quite($cmd,'phpmyadmin');
+		$cmd = "sudo docker run -t --name=phpmyadmin --rm --net=host -v /var/www/html/data/:/cfiles/ phpmyadmin:1.0 2>&1";
+		start_docker_quite($cmd,'mysql');
 	}
 	if (isset($_POST["stop_phpmyadmin"])){
 		$cmd = "sudo docker stop phpmyadmin";
-		start_docker($cmd,'phpmyadmin');
+		start_docker($cmd,'mysql');
 	}
 	
 	if (isset($_POST["change_db_settings"])){
