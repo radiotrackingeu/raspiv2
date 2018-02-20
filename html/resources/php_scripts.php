@@ -103,7 +103,7 @@
 		start_docker_echo($cmd,'tab_logger_single','Started Receiver 0.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
 	}
 	if (isset($_POST["log_single_stop_0"])){
-		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d0) 2>&1";
+		$cmd="sudo docker stop logger-sdr-d0 2>&1";
 		start_docker($cmd, 'tab_logger_single');
 	}
 	
@@ -116,7 +116,7 @@
 	}
 	 
 	if (isset($_POST["log_single_stop_1"])){
-		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d1) 2>&1";
+		$cmd="sudo docker stop logger-sdr-d1 2>&1";
 		start_docker($cmd, 'tab_logger_single');
 	}
 	
