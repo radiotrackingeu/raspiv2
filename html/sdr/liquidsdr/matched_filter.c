@@ -130,12 +130,12 @@ int main(int argc, char*argv[])
   char          filename_input[256] = "SDR_2018_01_10_00_29.cu8"; // "SDR_record_pi.cu8";
   float         threshold           = 15.0f; //-60.0f;
   char          read_from_stdin     = 0;
-  unsigned long sampling_rate       = 250000;
+  unsigned long sampling_rate       = 1024000;
   float			frequency_offset	= 0;
 
   // read command-line options
   int dopt;
-  while ((dopt = getopt(argc,argv,"hi:t:sr:k:p:f:")) != EOF) {
+  while ((dopt = getopt_long(argc,argv,"hi:t:sr:k:p:f:", long_opts, NULL)) != -1) {
       switch (dopt) {
       case 'h': usage();                              return 0;
       case 'i': strncpy(filename_input,optarg,256);   break;
