@@ -19,7 +19,7 @@
 	require_once CONFIGLITE_PATH.'/Lite.php';	
 	//define config section and items.
 	define ('confSection', 'SDR_Radio');
-	define ('confKeys', array('device','Single_Freq','Freq1_0','Freq1_1','Freq2_0','Freq2_1','Freq3_0','Freq3_1','Freq4_0','Freq4_1','Freq5_0','Freq5_1','Freq6_0','Freq6_1','Radio_Gain_0','Radio_Gain_1'));
+	define ('confKeys', array('Freq1_0','Freq1_1','Freq2_0','Freq2_1','Freq3_0','Freq3_1','Freq4_0','Freq4_1','Freq5_0','Freq5_1','Freq6_0','Freq6_1','Radio_Gain_0','Radio_Gain_1'));
 	
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');

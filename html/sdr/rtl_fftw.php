@@ -151,7 +151,7 @@ function setVisibility(menu, label, element) {
 				echo "<span class='w3-tag w3-green w3-large'>Radio 1 not running</span> \n \n";
 			}
 		?>
-		<br>
+		<br><br>
 		<?php 
 		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
 			echo "<span class='w3-tag w3-red w3-large'>Radio 2 running</span> \n \n";
@@ -160,6 +160,7 @@ function setVisibility(menu, label, element) {
 			echo "<span class='w3-tag w3-green w3-large'>Radio 2 not running</span> \n \n";
 		}
 		?>
+		<br><br>
 		<form method="post" enctype="multipart/form-data">
 			<input type='submit' class='w3-btn w3-brown' value='Update Receiver Status' name='update_device_info_fr'/>
 			<br><br>
@@ -414,6 +415,8 @@ function setVisibility(menu, label, element) {
 		<div class="w3-container w3-green w3-round" style="margin-right:8px;margin-left:8px">
 			<form method='POST' enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 				<br>
+				After an update a compilation of the code might be necessary. 
+				<br><br>
 				<input type="submit" class="w3-btn w3-brown" value="Compile Raspi 3" name="compile"/>
 				<input type="submit" class="w3-btn w3-brown" value="Compile Raspi Zero" name="compile_raspi_zero"/>
 				<br><br>

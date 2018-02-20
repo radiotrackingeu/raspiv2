@@ -96,7 +96,7 @@
 	
 	//Logger Single Frequency Functions
 	 if (isset($_POST["log_single_start_0"])){
-		$file_name = $config['logger']['antenna_id_0'] . date('Y_m_d_H_i');
+		$file_name = $config['logger']['antenna_id_0'] ."_". date('Y_m_d_H_i');
 		$file_path = "/tmp/record/" . $file_name;
 		$run_id = write_run_to_db($config, 0, $file_name);
 		$cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." 2> ".$file_path." | ".cmd_matched_filters($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
@@ -108,7 +108,7 @@
 	}
 	
 	if (isset($_POST["log_single_start_1"])){
-		$file_name = $config['logger']['antenna_id_1'] . date('Y_m_d_H_i');
+		$file_name = $config['logger']['antenna_id_1'] ."_". date('Y_m_d_H_i');
 		$file_path = "/tmp/record/" . $file_name;
 		$run_id = write_run_to_db($config, 1, $file_name);
 		$cmd = cmd_docker(1)." '".cmd_rtl_sdr($config, 1)." 2> ".$file_path." | ".cmd_matched_filters($config, 1).cmd_sql($config, 1, $run_id)." >> ". $file_path." 2>&1'";

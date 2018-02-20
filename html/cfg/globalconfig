@@ -1,4 +1,4 @@
-Hostname = "plecotus"
+Hostname = "nyctalus"
 HOTSPOT = 1
 SSID = ""
 WIFI-PW = ""
@@ -10,11 +10,8 @@ Center_Freq = "150.100MHz"
 Logger_Gain = 20
 
 [SDR_Radio]
-device = 2
 Radio_Gain_0 = 20
 Radio_Gain_1 = 21
-Single_Freq[1] = "150.052M"
-Single_Freq[2] = "151.052M"
 Freq1_0 = "150.04M"
 Freq1_1 = "151.04M"
 Freq2_0 = "150.06M"
@@ -34,7 +31,7 @@ lokal_branch = "live"
 git_keepcfg = "updatecfg"
 
 [logger]
-antenna_id_0 = "rteu_r0_"
+antenna_id_0 = "rteu_r0"
 antenna_position_N_0 = 1.234
 antenna_position_E_0 = 5.678
 antenna_orientation_0 = 42
@@ -46,7 +43,7 @@ threshold_0 = 10
 nfft_0 = 400
 timestep_0 = 50
 use_sql_0 = "No"
-antenna_id_1 = "rteu_r1_"
+antenna_id_1 = "rteu_r1"
 antenna_position_N_1 = 1.234
 antenna_position_E_1 = 5.678
 antenna_orientation_1 = 42
