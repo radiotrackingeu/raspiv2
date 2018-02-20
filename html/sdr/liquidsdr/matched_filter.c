@@ -135,7 +135,7 @@ int main(int argc, char*argv[])
 
   // read command-line options
   int dopt;
-  while ((dopt = getopt_long(argc,argv,"hi:t:sr:k:p:f:", long_opts, NULL)) != -1) {
+  while ((dopt = getopt_long(argc,argv,"hi:t:sr:k:p:f:", longopts, NULL)) != -1) {
       switch (dopt) {
       case 'h': usage();                              return 0;
       case 'i': strncpy(filename_input,optarg,256);   break;
