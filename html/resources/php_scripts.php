@@ -446,6 +446,46 @@
 		echo "<script type='text/javascript'>document.getElementById('mysql').style.display = 'block';</script>";
 	}
 	
+	//System functions
+	
+	if (isset($_POST["update_date"])){
+		echo '<pre>';
+		$test = system("sudo docker run -t --rm --privileged git date --set \"".$_POST["new_date"]."\" 2>&1", $ret);
+		echo '</pre>';
+	}
+	if (isset($_POST["change_hostname"])){
+		echo '<pre>';
+		$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/change_hostname.sh ".$_POST["new_hostname"]." 2>&1", $ret);
+		echo '</pre>';
+	}
+	if (isset($_POST["cron_light_on"])){
+		echo '<pre>';
+		$cmd = $_POST["cron_lights"]."root       sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ i2c sh /tmp/start_all_lights.sh 2>&1";
+		$file = "/etc/crontab";
+		$test = system("sudo docker run -t --rm --privileged -v /var/www/html/git/:/tmp/ git sh /tmp/add_cronjob.sh ".$cmd." ".$file , $ret);
+		echo '</pre>';
+	}	
+	if (isset($_POST["exp_disc"])){
+		echo '<pre>';
+		$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/expand_disk.sh 2>&1", $ret);
+		echo '</pre>';
+	}
+	if (isset($_POST["stop_exp_disc"])){
+		echo '<pre>';
+		$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/stop_expand.sh 2>&1", $ret);
+		echo '</pre>';
+	}
+	if (isset($_POST["disc_usage"])){
+		echo '<pre>';
+		$test = system('df -h', $ret);
+		echo '</pre>';
+	}	
+	if (isset($_POST["reboot"])){
+		echo '<pre>';
+		$test = system('sudo reboot', $ret);
+		echo '</pre>';
+	}
+
 	//General Functions
 	function start_docker($docker_cmd,$block_to_jump){
 		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
