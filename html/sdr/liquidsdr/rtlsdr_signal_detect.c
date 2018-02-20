@@ -269,8 +269,8 @@ int main(int argc, char*argv[])
 #ifdef MYSQL_ERRORS
                     if (*mysql_error(con))
                         fprintf(stderr, "Error while writing to db: %s", mysql_error(con));
-                }
 #endif
+                }
             }
 
         }
@@ -516,8 +516,8 @@ int step(float _threshold, unsigned int _sampling_rate)
 #ifdef MYSQL_ERRORS
                 if (*mysql_error(con))
                         fprintf(stderr, "Error while writing to db: %s", mysql_error(con));
-                }
 #endif
+                }
             }
             // reset counters for group
             clear_group_count(i);
