@@ -27,7 +27,6 @@
 float               *   psd_template;
 float               *   psd;
 float               *   psd_max;
-struct timespec     *   psd_time;
 unsigned long long  *   psd_sample;
 int                 *   detect;
 int                 *   count;
@@ -99,7 +98,6 @@ int   step(float _threshold, unsigned int _sampling_rate);
 void  format_timestamp(const struct timespec _time, char * _buf, const unsigned long _buf_len);
 struct timespec timeAdd(const struct timespec _t1, const struct timespec _t2);
 //char  before(const struct timespec _a, const struct timespec _b);
-void  init_time();
 void  free_memory();
 
 
@@ -207,7 +205,7 @@ int main(int argc, char*argv[])
 	printf("Will print timestamp every %i transforms\n", keepalive);
 	printf("%s\n",tbuf);
 	//print row names
-	printf("time;duration;freq;bw;strength;sample\n");
+	printf("timestamp;samples;duration;signal_freq;signal_bw;max_signal\n");
 
     // continue processing as long as there are samples in the file
     unsigned long int total_samples  = 0;
@@ -262,7 +260,7 @@ int main(int argc, char*argv[])
 				fflush(stdout);
                 if (write_to_db!=0) {
                     snprintf(sql_statement, sizeof(sql_statement),
-                        "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw,max_signal, run) VALUE(\"%s\",0,0.0,0.0,0.0,0.0,%i)",
+                        "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw,max_signal,run) VALUE(\"%s\",0,0.0,0.0,0.0,0.0,%i)",
                         DB_TABLE, tbuf, run_id
                     );
                     mysql_query(con, sql_statement);
@@ -327,8 +325,6 @@ int update_detect(float _threshold)
         // relative
         // detect[i] = ((psd[i] - psd_template[i]) > _threshold) ? 1 : 0;
 		if((psd[i] - psd_template[i]) > _threshold){
-            //clock_gettime(CLOCK_REALTIME,&now);
-            //if (psd_time[i].tv_sec==INT_MAX) psd_time[i]=now;
             if (psd_sample[i]==0) psd_sample[i]=num_transforms;
 			detect[i]=1; //write matrix for detection
 			psd_max[i] = (psd_max[i]>psd[i]) ? psd_max[i] : psd[i]; //save highest values
@@ -455,11 +451,9 @@ unsigned long long get_group_start_time(int _group_id)
 {
     int i;
     unsigned long long starttime = ULLONG_MAX;
-    //struct timespec starttime = {INT_MAX, 999999999}; //will break on 2038-01-19T03:14:08Z
     for (i=0; i<nfft; i++) {
-//        if (groups[i] == _group_id && before(psd_time[i],starttime)) {
         if (groups[i] == _group_id && psd_sample[i] < starttime) {
-            starttime=psd_sample[i];//psd_time[i];
+            starttime=psd_sample[i];
 		}
     }
     return starttime;
@@ -474,7 +468,7 @@ int clear_group_count(int _group_id)
         {
             count[i] = 0;
 			psd_max[i] = -1000;
-			psd_time[i] = (struct timespec) {INT_MAX, 999999999}; //will break on 2038-01-19T03:14:08Z
+			psd_sample[i] = 0;
         }
     }
     return 0;
@@ -506,8 +500,8 @@ int step(float _threshold, unsigned int _sampling_rate)
                 float signal_freq = get_group_freq(i)*_sampling_rate;          	// center frequency estimate (normalized)
                 float signal_bw   = get_group_bw(i)*_sampling_rate;            	// bandwidth estimate (normalized)
                 float max_signal  = get_group_max_sig(i);						// maximum signal strength per group
-                printf("%s;%-10.6f;%9.6f;%9.6f;%f;%llu\n",
-                        timestamp, duration, signal_freq, signal_bw,max_signal, num_transforms);
+                printf("%s;%llu;%-10.6f;%9.6f;%9.6f;%f\n",
+                        timestamp, num_transforms, duration, signal_freq, signal_bw,max_signal);
                 fflush(stdout);
                 if (write_to_db!=0) {
                     snprintf(sql_statement, sizeof(sql_statement),
@@ -548,24 +542,6 @@ struct timespec timeAdd(const struct timespec _t1, const struct timespec _t2)
     }
     return (struct timespec){ .tv_sec = sec, .tv_nsec = nsec };
 }
-
-//// returns true iff a is smaller than b
-//char before(const struct timespec _a, const struct timespec _b)
-//{
-//    if (_a.tv_sec==_b.tv_sec)
-//        return _a.tv_nsec < _b.tv_nsec;
-//    else
-//        return _a.tv_sec < _b.tv_sec;
-//}
-
-//// initialize psd_time
-//void init_time() {
-//    int i;
-//    for (i=0; i<nfft; i++) {
-//        psd_time[i].tv_sec = INT_MAX;
-//		psd_time[i].tv_nsec = 999999999;
-//	}
-//}
 
 void free_memory() {
     free(psd_template);
