@@ -25,6 +25,13 @@
 	
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');	
+	
+	//Image versions
+	$image_version_git="1.0";
+	$image_version_umts="1.0";
+	$image_version_wifi="1.0";
+	$image_version_microphone="1.0";
+	
  ?>
 <!-- Enter text here-->
 
@@ -63,16 +70,16 @@
 		<form method="POST" onsubmit="document.getElementById('install').style.display = 'block');">
 			<br>
 			<input type="submit" class="w3-btn w3-brown" value="Update" name="update_docker_git"/> <br> <br>
-			Available: <?php $image_version_git="1.0"; echo $image_version_git;?>
+			Available: <?php echo $image_version_git;?>
 			Equivalent with Installed version: <?php $test=system("if sudo docker images --filter reference=git | grep -q 1.0; then echo yes; else echo no; fi 2>&1", $ret); ?>
 			<hr>
 			<input type="submit" class="w3-btn w3-brown" value="Remote" name="update_docker_umts"/> <br> <br>
-			Available: <?php $image_version_umts="1.0"; echo $image_version_umts;?>
+			Available: <?php echo $image_version_umts;?>
 			Equivalent with Installed version: <?php $test=system("if sudo docker images --filter reference=umts | grep -q 1.0; then echo yes; else echo no; fi 2>&1", $ret); ?>
 			
 			<hr>
 			<input type="submit" class="w3-btn w3-brown" value="WiFi" name="install_wifi"/> <br> <br> 
-			Available: <?php $image_version_wifi="1.0"; echo $image_version_wifi;?>
+			Available: <?php echo $image_version_wifi;?>
 			Equivalent with Installed version: <?php $test=system("if sudo docker images --filter reference=wifi | grep -q 1.0; then echo yes; else echo no; fi 2>&1", $ret); ?>
 			
 			<hr>
@@ -96,7 +103,7 @@
 			<hr>
 			SoX<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Microphone" name="install_sox"/> <br> <br>
-			Available: <?php $image_version_microphone="1.0"; echo $image_version_microphone;?>
+			Available: <?php echo $image_version_microphone;?>
 			Equivalent with Installed version: <?php system("if sudo docker images --filter reference=mircophone | grep -q 1.0; then echo yes; else echo no; fi") ?>
 			<hr>
 			RTL_433<br><br>
