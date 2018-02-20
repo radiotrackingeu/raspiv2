@@ -80,24 +80,20 @@ function setVisibility(menu, label, element) {
 		<div class="w3-container w3-green w3-round" style="margin-right:8px;margin-left:8px">
 		<br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
 		<?php 
-		if(isset($update_device_info_fr)){
-			if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d0)")){
-				echo "<span class='w3-tag w3-red w3-large'>Radio 1 running</span> \n \n";
-			}
-			else{
-				echo "<span class='w3-tag w3-green w3-large'>Radio 1 not running</span> \n \n";
-			}
+		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d0)")){
+			echo "<span class='w3-tag w3-red w3-large'>Radio 1 running</span> \n \n";
+		}
+		else{
+			echo "<span class='w3-tag w3-green w3-large'>Radio 1 not running</span> \n \n";
 		}
 		?>
 		<br>
 		<?php 
-		if(isset($update_device_info_fr)){
-			if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
-				echo "<span class='w3-tag w3-red w3-large'>Radio 2 running</span> \n \n";
-			}
-			else{
-				echo "<span class='w3-tag w3-green w3-large'>Radio 2 not running</span> \n \n";
-			}
+		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
+			echo "<span class='w3-tag w3-red w3-large'>Radio 2 running</span> \n \n";
+		}
+		else{
+			echo "<span class='w3-tag w3-green w3-large'>Radio 2 not running</span> \n \n";
 		}
 		?>
 		<form method="post" enctype="multipart/form-data">
@@ -147,24 +143,20 @@ function setVisibility(menu, label, element) {
 		<div class="w3-container w3-green w3-round" style="margin-right:8px;margin-left:8px">
 		<br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
 		<?php 
-		if(isset($update_device_info_fr)){
-			if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d0)")){
+		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d0)")){
 				echo "<span class='w3-tag w3-red w3-large'>Radio 1 running</span> \n \n";
 			}
 			else{
 				echo "<span class='w3-tag w3-green w3-large'>Radio 1 not running</span> \n \n";
 			}
-		}
 		?>
 		<br>
 		<?php 
-		if(isset($update_device_info_fr)){
-			if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
-				echo "<span class='w3-tag w3-red w3-large'>Radio 2 running</span> \n \n";
-			}
-			else{
-				echo "<span class='w3-tag w3-green w3-large'>Radio 2 not running</span> \n \n";
-			}
+		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
+			echo "<span class='w3-tag w3-red w3-large'>Radio 2 running</span> \n \n";
+		}
+		else{
+			echo "<span class='w3-tag w3-green w3-large'>Radio 2 not running</span> \n \n";
 		}
 		?>
 		<form method="post" enctype="multipart/form-data">
