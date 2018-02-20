@@ -233,7 +233,7 @@ int main(int argc, char*argv[])
             // compute power spectral density output
             spgramcf_get_psd(periodogram, psd);
 
-            // compute average template
+            // compute average template for one second
             if (num_transforms<= sampling_rate / timestep) {
                 // set template PSD for relative signal detection
 				// Add up all signal strength to derive minimum value
@@ -442,12 +442,14 @@ float get_group_time(int _group_id)
 float get_group_max_sig(int _group_id)
 {
     int i;
+	float noise = 1;
     float max = -1000;
     for (i=0; i<nfft; i++) {
         if (groups[i] == _group_id && psd_max[i] > max)
             max = psd_max[i];
+			noise = psd_template[i];
     }
-    return max;
+    return e10(max/10)/e10(noise/10);
 }
 
 //get earliest timestamp for given group
