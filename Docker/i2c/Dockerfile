@@ -1,4 +1,4 @@
-FROM git
+FROM git:1.0
 
 MAINTAINER ralf.zeidler@radio-tracking.eu
 

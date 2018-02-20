@@ -1,4 +1,4 @@
-FROM rtlsdr
+FROM rtlsdr:1.0
 
 MAINTAINER ralf.zeidler@radio-tracking.eu
 
