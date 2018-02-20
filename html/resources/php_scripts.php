@@ -18,7 +18,7 @@
 	
 	function cmd_webradio($config, $dev, $freq) {
 		$cmd_docker = "sudo docker run --rm -t --name webradio_".$dev." --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr:1.0 sh -c";
-		$cmd_rtl_fm = "rtl_fm -M usb -f ".$config['SDR_Radio']['Freq'.$freq.'_'.$dev]." -g ".$config['SDR_Radio']['Radio_Gain_'.$dev]." -d ".$dev." | sox -traw -v 5 -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240";
+		$cmd_rtl_fm = "rtl_fm -M usb -f ".$config['SDR_Radio']['Freq'.$freq.'_'.$dev]." -g ".$config['SDR_Radio']['Radio_Gain_'.$dev]." -d ".$dev." | sox -traw -v 10 -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240";
 		return $cmd_docker." '".$cmd_rtl_fm."'";
 	}
 	function webradio_stop($dev) {
@@ -77,7 +77,7 @@
 		start_docker_echo($cmd,'tab_logger_range','Started Receiver 0.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
 	}
 	if (isset($_POST["log_stop_0"])){
-		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d0) 2>&1";
+		$cmd="sudo docker stop logger-sdr-d0 2>&1";
 		start_docker($cmd, 'tab_logger_range');
 	}
 	
@@ -90,7 +90,7 @@
 	}
 	 
 	if (isset($_POST["log_stop_1"])){
-		$cmd="sudo docker stop $(sudo docker ps -a -q --filter name=logger-sdr-d1) 2>&1";
+		$cmd="sudo docker stop logger-sdr-d1 2>&1";
 		start_docker($cmd, 'tab_logger_range');
 	}
 	
@@ -256,12 +256,12 @@
 	
 	//Remote Connections
 	if (isset($_POST["stop_vpn"])){
-		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter name=vpn_tunnel) 2>&1"; 
-		$result = system($cmd);
+		$cmd = "sudo docker stop vpn_tunnel 2>&1"; 
+		start_docker($cmd,'VPN');
 	}
 	if (isset($_POST["start_vpn"])){ 
 		$cmd = "sudo docker run --rm --name vpn_tunnel -v /var/www/html/connect/:/config/ --privileged --net=host -t umts:1.0 openvpn /config/client.conf 2>&1";
-		$result = system($cmd);
+		start_docker_quite($cmd,'VPN');
 	}
 	if (isset($_POST["upload_cfg"])){
 		$target_dir = "/connect/";
@@ -275,8 +275,7 @@
 	}				
 	if (isset($_POST["rm_config"])){
 		$cmd = "rm /var/www/html/connect/client.conf";
-		$result = system($cmd);
-		echo "Config has been removed";
+		start_docker_echo($cmd,'VPN_Setup','Config has been removed');
 	}
 	
 	//Connect Cornjob Functions
@@ -296,14 +295,6 @@
 			start_docker("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"", 'tab_logger_timer');
 		}
 	}	
-	
-	//Check whether Receivers are running update_device_info
-	if (isset($_POST["update_device_info_fr"])){
-		echo "<script type='text/javascript'>document.getElementById('tab_logger_range').style.display = 'block';</script>";
-	}
-	if (isset($_POST["update_device_info_sf"])){
-		echo "<script type='text/javascript'>document.getElementById('tab_logger_single').style.display = 'block';</script>";
-	}
 	
 	//WebRX
 	if (isset($_POST["rtl_websdr_d0"])){
@@ -388,8 +379,7 @@
 		$autostart=isset($config['database']['db_start']) && $config['database']['db_start']=="Yes" ? "--restart=always " : "";
 		$rm_container=isset($config['database']['db_start']) && $config['database']['db_start']!="Yes" ? "--rm " : "";
 		$cmd = "sudo docker run -t ".$autostart."--name=mysql ".$rm_container." -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql mysql:1.0 2>&1";
-		echo $cmd;
-		start_docker($cmd,'mysql');
+		start_docker_quite($cmd,'mysql');
 	}
 	if (isset($_POST["stop_mysql"])){
 		$cmd = "sudo docker stop mysql";
@@ -411,14 +401,12 @@
 	//System functions
 	
 	if (isset($_POST["update_date"])){
-		echo '<pre>';
-		$test = system("sudo docker run -t --rm --privileged git:1.0 date --set \"".$_POST["new_date"]."\" 2>&1", $ret);
-		echo '</pre>';
+		$cmd = "sudo docker run -t --rm --privileged git:1.0 date --set \"".$_POST["new_date"]."\" 2>&1";
+		start_docker($cmd,'date');
 	}
 	if (isset($_POST["change_hostname"])){
-		echo '<pre>';
-		$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git:1.0 bash /tmp1/change_hostname.sh ".$_POST["new_hostname"]." 2>&1", $ret);
-		echo '</pre>';
+		$cmd = "sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git:1.0 bash /tmp1/change_hostname.sh ".$_POST["new_hostname"]." 2>&1";
+		start_docker($cmd,'hostname');
 	}
 	if (isset($_POST["cron_light_on"])){
 		echo '<pre>';

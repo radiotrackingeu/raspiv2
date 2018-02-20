@@ -87,7 +87,7 @@ function setVisibility(menu, label, element) {
 			echo "<span class='w3-tag w3-green w3-large'>Radio 1 not running</span> \n \n";
 		}
 		?>
-		<br>
+		<br><br>
 		<?php 
 		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
 			echo "<span class='w3-tag w3-red w3-large'>Radio 2 running</span> \n \n";
@@ -96,6 +96,7 @@ function setVisibility(menu, label, element) {
 			echo "<span class='w3-tag w3-green w3-large'>Radio 2 not running</span> \n \n";
 		}
 		?>
+		<br><br>
 		<form method="post" enctype="multipart/form-data">
 			<input type='submit' class='w3-btn w3-brown' value='Update Receiver Status' name='update_device_info_fr'/>
 			<br><br>

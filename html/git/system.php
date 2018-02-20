@@ -19,25 +19,10 @@
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'schedule')">Schedule</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'date')">Time/Date</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'hostname')">Hostname</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'expand_disc')">Expand Disc</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'infos')">System Information</button>
-</div>
-
-<div id="schedule" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<form method="POST">
-			<br>
-			You can leave out the weekday <br><br>
-			<input type="text" name="new_date" value="* * * * *"> <br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Light on" name="cron_light_on"><br>
-			<input type="text" name="new_date" value="* * * * *"> <br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Light off" name="cron_light_off"><br>
-			<br>
-		</form>
-	</div>
 </div>	
 
 <div id="date" class="w3-container city" style="display:none">
