@@ -7,7 +7,7 @@
 <?php
 	//System - Software Functions
 	if (isset($_POST["update_rep"])){
-		$cmd='sudo docker run --rm -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh '.$_POST["git_checkout"].' '.$_POST["git_keepcfg"].' 2>&1';
+		$cmd='sudo docker run --rm -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git:1.0 sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh '.$_POST["git_checkout"].' '.$_POST["git_keepcfg"].' 2>&1';
 		start_docker($cmd,'GIT');
 	}
 	if (isset($_POST["running_containers"])){
@@ -17,7 +17,7 @@
 	//WebRadio Functions
 	
 	function cmd_webradio($config, $dev, $freq) {
-		$cmd_docker = "sudo docker run --rm -t --name webradio_".$dev." --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr sh -c";
+		$cmd_docker = "sudo docker run --rm -t --name webradio_".$dev." --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr:1.0 sh -c";
 		$cmd_rtl_fm = "rtl_fm -M usb -f ".$config['SDR_Radio']['Freq'.$freq.'_'.$dev]." -g ".$config['SDR_Radio']['Radio_Gain_'.$dev]." -d ".$dev." | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240";
 		return $cmd_docker." '".$cmd_rtl_fm."'";
 	}
@@ -162,7 +162,7 @@
 			$change= "@reboot root " .$cmd;
 			$search = "logger-sdr-d0";
 			$file_to_replace="/tmp/crontab";
-			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"";
 			
 			start_docker_echo($cmd_change,"tab_logger_settings","Logger will now start upon boot with the given settings");
 		}
@@ -170,14 +170,14 @@
 			$change= "#logger-sdr-d0";
 			$search = "logger-sdr-d0";
 			$file_to_replace="/tmp/crontab";
-			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"";
 			start_docker($cmd_change,"tab_logger_settings");
 		}
 		if($_POST["timer_start_0"]=="start_time"){
 			$change= substr($config['logger']['timer_start_time_0'],3, 2) . " ".substr($config['logger']['timer_start_time_0'], 0, 2)." * * * root " .$cmd;
 			$search = "logger-sdr-d0";
 			$file_to_replace="/tmp/crontab";
-			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
 			echo $cmd_change;
 			start_docker_echo($cmd_change,"tab_logger_settings","System will now start logger upon stated time");			
 		}
@@ -186,7 +186,7 @@
 			$change= "#".$stop_cmd;
 			$search = $stop_cmd;
 			$file_to_replace="/tmp/crontab";
-			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
 			start_docker($cmd_change,"tab_logger_settings");			
 		}
 		if($_POST["timer_stop_0"]=="stop_time"){
@@ -194,7 +194,7 @@
 			$change=substr($config['logger']['timer_stop_time_1'],3, 2) . " ".substr($config['logger']['timer_stop_time_1'], 0, 2)." * * * root " .$stop_cmd;
 			$search = $stop_cmd;
 			$file_to_replace="/tmp/crontab";
-			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
 			start_docker_echo($cmd_change,"tab_logger_settings","System will now stop logger upon stated time");			
 		}
 	}
@@ -215,7 +215,7 @@
 			$change= "@reboot root " .$cmd;
 			$search = "logger-sdr-d1";
 			$file_to_replace="/tmp/crontab";
-			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"";
 			
 			start_docker_echo($cmd_change,"tab_logger_settings","Logger will now start upon boot with the given settings");
 		}
@@ -223,14 +223,14 @@
 			$change= "#logger-sdr-d1";
 			$search = "logger-sdr-d1";
 			$file_to_replace="/tmp/crontab";
-			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"";
 			start_docker_echo($cmd_change,"tab_logger_settings","System will not start logger upon start");
 		}
 		if($_POST["timer_start_1"]=="start_time"){
 			$change= substr($config['logger']['timer_start_time_1'],3, 2) . " ".substr($config['logger']['timer_start_time_1'], 0, 2)." * * * root " .$cmd;
 			$search = "logger-sdr-d1";
 			$file_to_replace="/tmp/crontab";
-			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
 			start_docker_echo($cmd_change,"tab_logger_settings","System will now start logger upon stated time");			
 		}
 	}
@@ -325,13 +325,13 @@
 			$change= "@reboot root " .$cmd;
 			$file_to_replace="/tmp/crontab";
 			echo "System will now start logger upon start with the following settings: \n \n Frequency: ".$_POST["time_center_freq"]."\n Frequency-Range: ".$_POST["time_freq_range"]."\n Log-Level: ".$_POST["time_log_level"]."\n Gain: " . $_POST["time_log_gain"]. "\n File-Name: ". $_POST["time_pre_log_name"];
-			start_docker("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"", 'tab_logger_timer');
+			start_docker("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"", 'tab_logger_timer');
 		}
 		if($_POST["time_start_vpn"]=="start_no"){
 			$change= "#@reboot root " .$cmd;
 			$file_to_replace="/tmp/crontab";
 			echo "System will not start logger upon start";
-			start_docker("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"", 'tab_logger_timer');
+			start_docker("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"", 'tab_logger_timer');
 		}
 	}	
 	
@@ -372,11 +372,11 @@
 	//SDR# - Server
 	
 	if (isset($_POST["rtl_tcp_start_d0"])){
-		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d0 -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr rtl_tcp -d 0 -a  '0.0.0.0' -p '1234' 2>&1";
+		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d0 -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr:1.0 rtl_tcp -d 0 -a  '0.0.0.0' -p '1234' 2>&1";
 		start_docker_quite($cmd,'sdr_server');
 	}
 	if (isset($_POST["rtl_tcp_start_81_d0"])){
-		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d0 -t --device=/dev/bus/usb -p 81:1234 rtlsdr rtl_tcp -d 0 -a  '0.0.0.0' -p '1234' 2>&1";
+		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d0 -t --device=/dev/bus/usb -p 81:1234 rtlsdr:1.0 rtl_tcp -d 0 -a  '0.0.0.0' -p '1234' 2>&1";
 		start_docker_quite($cmd,'sdr_server');
 	}
 	if (isset($_POST["rtl_tcp_stop_d0"])){
@@ -385,11 +385,11 @@
 	}
 	
 	if (isset($_POST["rtl_tcp_start_d1"])){
-		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d1 -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+2).":1234 rtlsdr rtl_tcp -d 1 -a  '0.0.0.0' -p '1234' 2>&1";
+		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d1 -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+2).":1234 rtlsdr:1.0 rtl_tcp -d 1 -a  '0.0.0.0' -p '1234' 2>&1";
 		start_docker_quite($cmd,'sdr_server');
 	}
 	if (isset($_POST["rtl_tcp_start_82_d1"])){
-		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d1 -t --device=/dev/bus/usb -p 82:1234 rtlsdr rtl_tcp -d 1 -a  '0.0.0.0' -p '1234' 2>&1";
+		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d1 -t --device=/dev/bus/usb -p 82:1234 rtlsdr:1.0 rtl_tcp -d 1 -a  '0.0.0.0' -p '1234' 2>&1";
 		start_docker_quite($cmd,'sdr_server');
 	}
 	if (isset($_POST["rtl_tcp_stop_d1"])){
@@ -399,7 +399,7 @@
 	
 	//Data-Database Settings
 	if (isset($_POST["zip_camera"])){
-		$cmd="sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip__camera_name"]." /tmp/record/ 2>&1";
+		$cmd="sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git:1.0 zip -r /tmp/zipped/".$_POST["zip__camera_name"]." /tmp/record/ 2>&1";
 		start_docker($cmd,'camera_data');
 	}
 	if (isset($_POST["rm_cam_zip_folder"])){
@@ -411,7 +411,7 @@
 		start_docker($cmd,'camera_data');
 	}
 	if (isset($_POST["zip_logger"])){
-		$cmd = "sudo docker run -t --rm --privileged -v /var/www/html/sdr/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip_logger_name"]." /tmp/record/ 2>&1";
+		$cmd = "sudo docker run -t --rm --privileged -v /var/www/html/sdr/:/tmp/ git:1.0 zip -r /tmp/zipped/".$_POST["zip_logger_name"]." /tmp/record/ 2>&1";
 		start_docker($cmd,'radio_data');
 	}
 	if (isset($_POST["rm_logger_zip_folder"])){
@@ -434,7 +434,7 @@
 		start_docker($cmd,'mysql');
 	}
 	if (isset($_POST["start_phpmyadmin"])){
-		$cmd = "sudo docker run -t --name=phpmyadmin --rm --net=host -v /var/www/html/data/:/cfiles/ phpmyadmin:1.0 2>&1";
+		$cmd = "sudo docker run -t --name=phpmyadmin--rm --net=host -v /var/www/html/data/:/cfiles/ phpmyadmin:1.0 2>&1";
 		start_docker_quite($cmd,'phpmyadmin');
 	}
 	if (isset($_POST["stop_phpmyadmin"])){
@@ -450,29 +450,29 @@
 	
 	if (isset($_POST["update_date"])){
 		echo '<pre>';
-		$test = system("sudo docker run -t --rm --privileged git date --set \"".$_POST["new_date"]."\" 2>&1", $ret);
+		$test = system("sudo docker run -t --rm --privileged git:1.0 date --set \"".$_POST["new_date"]."\" 2>&1", $ret);
 		echo '</pre>';
 	}
 	if (isset($_POST["change_hostname"])){
 		echo '<pre>';
-		$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/change_hostname.sh ".$_POST["new_hostname"]." 2>&1", $ret);
+		$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git:1.0 bash /tmp1/change_hostname.sh ".$_POST["new_hostname"]." 2>&1", $ret);
 		echo '</pre>';
 	}
 	if (isset($_POST["cron_light_on"])){
 		echo '<pre>';
 		$cmd = $_POST["cron_lights"]."root       sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ i2c sh /tmp/start_all_lights.sh 2>&1";
 		$file = "/etc/crontab";
-		$test = system("sudo docker run -t --rm --privileged -v /var/www/html/git/:/tmp/ git sh /tmp/add_cronjob.sh ".$cmd." ".$file , $ret);
+		$test = system("sudo docker run -t --rm --privileged -v /var/www/html/git/:/tmp/ git:1.0 sh /tmp/add_cronjob.sh ".$cmd." ".$file , $ret);
 		echo '</pre>';
 	}	
 	if (isset($_POST["exp_disc"])){
 		echo '<pre>';
-		$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/expand_disk.sh 2>&1", $ret);
+		$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git:1.0 bash /tmp1/expand_disk.sh 2>&1", $ret);
 		echo '</pre>';
 	}
 	if (isset($_POST["stop_exp_disc"])){
 		echo '<pre>';
-		$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/stop_expand.sh 2>&1", $ret);
+		$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git:1.0 bash /tmp1/stop_expand.sh 2>&1", $ret);
 		echo '</pre>';
 	}
 	if (isset($_POST["disc_usage"])){

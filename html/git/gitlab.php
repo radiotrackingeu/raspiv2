@@ -67,11 +67,13 @@
 			Equivalent with Installed version: <?php $test=system("if sudo docker images --filter reference=git | grep -q 1.0; then echo yes; else echo no; fi 2>&1", $ret); ?>
 			<hr>
 			<input type="submit" class="w3-btn w3-brown" value="Remote" name="update_docker_umts"/> <br> <br>
-			<?php $image_version_umts="1.0"?>
+			Available: <?php $image_version_umts="1.0"; echo $image_version_umts;?>
+			Equivalent with Installed version: <?php $test=system("if sudo docker images --filter reference=umts | grep -q 1.0; then echo yes; else echo no; fi 2>&1", $ret); ?>
 			
 			<hr>
 			<input type="submit" class="w3-btn w3-brown" value="WiFi" name="install_wifi"/> <br> <br> 
-			<?php $image_version_umts="1.0"?>
+			Available: <?php $image_version_wifi="1.0"; echo $image_version_wifi;?>
+			Equivalent with Installed version: <?php $test=system("if sudo docker images --filter reference=wifi | grep -q 1.0; then echo yes; else echo no; fi 2>&1", $ret); ?>
 			
 			<hr>
 			<input type="submit" class="w3-btn w3-brown" value="WebRadio" name="install_rtlsdr"/> <br> <br> 
