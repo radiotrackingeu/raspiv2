@@ -260,7 +260,7 @@
 		$result = system($cmd);
 	}
 	if (isset($_POST["start_vpn"])){ 
-		$cmd = "sudo docker run --rm --name vpn_tunnel -v /var/www/html/connect/:/config/ --privileged --net=host -t umts openvpn /config/client.conf 2>&1";
+		$cmd = "sudo docker run --rm --name vpn_tunnel -v /var/www/html/connect/:/config/ --privileged --net=host -t umts:1.0 openvpn /config/client.conf 2>&1";
 		$result = system($cmd);
 	}
 	if (isset($_POST["upload_cfg"])){
@@ -278,59 +278,21 @@
 		$result = system($cmd);
 		echo "Config has been removed";
 	}
-	if (isset($_POST["change_wvdial"])){ 
-		$cmd1 = "cp /var/www/html/connect/edeka.conf /var/www/html/connect/wvdial.conf";
-		$cmd2 = "sed -i 's/Init3 = AT+CGDCONT=1,\"IP\",.*$/Init3 = AT+CGDCONT=1,\"IP\",".$_POST["apn"]."/' /var/www/html/connect/wvdial.conf"; 
-		$cmd3 = "sed -i 's/Phone = .*$/Phone = ".$_POST["dial"]."/' /var/www/html/connect/wvdial.conf"; 
-		$result = system($cmd1);
-		$result = system($cmd2);
-		$result = system($cmd3);
-	}
-	if (isset($_POST["switch_mode"])){ 
-		$cmd = "sudo docker run --privileged --net=host -t -v /lib/modules/4.4.38-v7+/:/lib/modules/4.4.38-v7+/ umts usb_modeswitch -v 12d1 -p 1f01 -M '55534243123456780000000000000011062000000100000000000000000000' && sudo modprobe option";
-		$result = system($cmd);
-	}
-	if (isset($_POST["start_umts_vpn"])){ 
-		$cmd1 = "sudo docker run --rm --privileged --net=host -t -v /lib/modules/4.4.38-v7+/:/lib/modules/4.4.38-v7+/ umts usb_modeswitch -v 12d1 -p 1f01 -M '55534243123456780000000000000011062000000100000000000000000000' && sudo modprobe option";
-		$cmd2 = "sudo docker run --rm --privileged --net=host -t -v /lib/modules/4.4.38-v7+/:/lib/modules/4.4.38-v7+/ umts usb_modeswitch -v 12d1 -p 15ca -M '55534243123456780000000000000011062000000100000000000000000000' && sudo modprobe option";
-		$cmd3 = "sudo docker run --rm -v /var/www/html/connect/:/config/ --privileged --net=host -t umts sh /config/start_umts.sh 2>&1";
-		$result1 = system($cmd1);
-		$result2 = system($cmd2);
-		sleep(2);
-		$result3 = system($cmd3);
-	}
-	if (isset($_POST["stop_umts_vpn"])){
-		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=umts) 2>&1"; 
-		$result = system($cmd);
-	}
-	if (isset($_POST["stop_umts"])){
-		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=umts) 2>&1"; 
-		$result = system($cmd);
-	}
-	if (isset($_POST["start_umts"])){
-		$cmd1 = "sudo docker run --privileged --net=host -t -v /lib/modules/4.4.38-v7+/:/lib/modules/4.4.38-v7+/ umts usb_modeswitch -v 12d1 -p 1f01 -M '55534243123456780000000000000011062000000100000000000000000000' && sudo modprobe option";
-		$cmd2 = "sudo docker run --privileged --net=host -t -v /lib/modules/4.4.38-v7+/:/lib/modules/4.4.38-v7+/ umts usb_modeswitch -v 12d1 -p 15ca -M '55534243123456780000000000000011062000000100000000000000000000' && sudo modprobe option";				
-		$cmd3 = "sudo docker run --privileged --net=host -t umts wvdial 2>&1";
-		$result = system($cmd1);
-		$result = system($cmd2);
-		sleep(2);
-		$result = system($cmd3);
-	}
 	
 	//Connect Cornjob Functions
 	if (isset($_POST["change_VPN_cron"])){
-		$cmd = "sudo docker run --rm --name vpn_tunnel -v /var/www/html/connect/:/config/ --privileged --net=host -t umts openvpn /config/client.conf";
+		$cmd = "sudo docker run --rm --name vpn_tunnel -v /var/www/html/connect/:/config/ --privileged --net=host -t umts:1.0 openvpn /config/client.conf";
 		$search = "sudo docker run --rm --name vpn_tunnel";
 		if($_POST["time_start_vpn"]=="reboot"){
 			$change= "@reboot root " .$cmd;
 			$file_to_replace="/tmp/crontab";
-			echo "System will now start logger upon start with the following settings: \n \n Frequency: ".$_POST["time_center_freq"]."\n Frequency-Range: ".$_POST["time_freq_range"]."\n Log-Level: ".$_POST["time_log_level"]."\n Gain: " . $_POST["time_log_gain"]. "\n File-Name: ". $_POST["time_pre_log_name"];
+			echo "System will now start VPN tunnel upon boot.";
 			start_docker("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"", 'tab_logger_timer');
 		}
 		if($_POST["time_start_vpn"]=="start_no"){
 			$change= "#@reboot root " .$cmd;
 			$file_to_replace="/tmp/crontab";
-			echo "System will not start logger upon start";
+			echo "System will not start VPN tunnel upon start.";
 			start_docker("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"", 'tab_logger_timer');
 		}
 	}	
@@ -460,7 +422,7 @@
 	}
 	if (isset($_POST["cron_light_on"])){
 		echo '<pre>';
-		$cmd = $_POST["cron_lights"]."root       sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ i2c sh /tmp/start_all_lights.sh 2>&1";
+		$cmd = $_POST["cron_lights"]."root       sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ i2c:1.0 sh /tmp/start_all_lights.sh 2>&1";
 		$file = "/etc/crontab";
 		$test = system("sudo docker run -t --rm --privileged -v /var/www/html/git/:/tmp/ git:1.0 sh /tmp/add_cronjob.sh ".$cmd." ".$file , $ret);
 		echo '</pre>';
