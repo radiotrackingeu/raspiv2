@@ -80,22 +80,26 @@ function setVisibility(menu, label, element) {
 		<div class="w3-container w3-green w3-round" style="margin-right:8px;margin-left:8px">
 		<br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
 		<?php 
-		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d0)")){
-			echo "<span class='w3-tag w3-red w3-large'>Radio 1 running</span> \n \n";
-		}
-		else{
-			echo "<span class='w3-tag w3-green w3-large'>Radio 1 not running</span> \n \n";
+		if(isset($update_device_info_fr)){
+			if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d0)")){
+				echo "<span class='w3-tag w3-red w3-large'>Radio 1 running</span> \n \n";
+			}
+			else{
+				echo "<span class='w3-tag w3-green w3-large'>Radio 1 not running</span> \n \n";
+			}
 		}
 		?>
-		<br><br>
+		<br>
 		<?php 
-		if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
-			echo "<span class='w3-tag w3-red w3-large'>Radio 2 running</span> \n \n";
+		if(isset($update_device_info_fr)){
+			if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
+				echo "<span class='w3-tag w3-red w3-large'>Radio 2 running</span> \n \n";
+			}
+			else{
+				echo "<span class='w3-tag w3-green w3-large'>Radio 2 not running</span> \n \n";
+			}
 		}
-		else{
-			echo "<span class='w3-tag w3-green w3-large'>Radio 2 not running</span> \n \n";
-		}
-		?><br><br>
+		?>
 		<form method="post" enctype="multipart/form-data">
 			<input type='submit' class='w3-btn w3-brown' value='Update Receiver Status' name='update_device_info_fr'/>
 			<br><br>
@@ -110,7 +114,13 @@ function setVisibility(menu, label, element) {
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 0</h3><br>
-			<form method="POST" enctype="multipart/form-data" action="">
+			Frequency: <?php echo ($config['logger']['center_freq_0']/1000000)?> MHz
+			<br>
+			Gain: <?php echo $config['logger']['log_gain_0']?> dB
+			<br>
+			Threshold: <?php echo $config['logger']['threshold_0']?> dB above Noise
+			<br>
+			<form class="w3-right-align" method="POST" enctype="multipart/form-data" action="">
 				<input type="submit" class="w3-btn w3-brown" value="Start" name="log_single_start_0" />
 				<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_single_stop_0" />
 			</form>
@@ -120,7 +130,13 @@ function setVisibility(menu, label, element) {
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<h3>Receiver 1</h3><br>
-			<form method="POST" enctype="multipart/form-data" action="">
+			Frequency: <?php echo ($config['logger']['center_freq_1']/1000000)?> MHz
+			<br>
+			Gain: <?php echo $config['logger']['log_gain_1']?> dB
+			<br>
+			Threshold: <?php echo $config['logger']['threshold_1']?> dB above Noise
+			<br>
+			<form class="w3-right-align" method="POST" enctype="multipart/form-data" action="">
 				<input type="submit" class="w3-btn w3-brown" value="Start" name="log_single_start_1" />
 				<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_single_stop_1" />
 			</form>
@@ -130,6 +146,31 @@ function setVisibility(menu, label, element) {
 	<div class="w3-row">
 		<div class="w3-container w3-green w3-round" style="margin-right:8px;margin-left:8px">
 		<br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
+		<?php 
+		if(isset($update_device_info_fr)){
+			if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d0)")){
+				echo "<span class='w3-tag w3-red w3-large'>Radio 1 running</span> \n \n";
+			}
+			else{
+				echo "<span class='w3-tag w3-green w3-large'>Radio 1 not running</span> \n \n";
+			}
+		}
+		?>
+		<br>
+		<?php 
+		if(isset($update_device_info_fr)){
+			if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d1)")){
+				echo "<span class='w3-tag w3-red w3-large'>Radio 2 running</span> \n \n";
+			}
+			else{
+				echo "<span class='w3-tag w3-green w3-large'>Radio 2 not running</span> \n \n";
+			}
+		}
+		?>
+		<form method="post" enctype="multipart/form-data">
+			<input type='submit' class='w3-btn w3-brown' value='Update Receiver Status' name='update_device_info_fr'/>
+			<br><br>
+		</form>
 		</div>
 	</div>
 </div>

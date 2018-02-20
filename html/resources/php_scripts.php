@@ -18,7 +18,7 @@
 	
 	function cmd_webradio($config, $dev, $freq) {
 		$cmd_docker = "sudo docker run --rm -t --name webradio_".$dev." --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1240 rtlsdr:1.0 sh -c";
-		$cmd_rtl_fm = "rtl_fm -M usb -f ".$config['SDR_Radio']['Freq'.$freq.'_'.$dev]." -g ".$config['SDR_Radio']['Radio_Gain_'.$dev]." -d ".$dev." | sox -traw -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240";
+		$cmd_rtl_fm = "rtl_fm -M usb -f ".$config['SDR_Radio']['Freq'.$freq.'_'.$dev]." -g ".$config['SDR_Radio']['Radio_Gain_'.$dev]." -d ".$dev." | sox -traw -v 5 -r24k -es -b16 -c1 -V1 - -tmp3 - | socat -u - TCP-LISTEN:1240";
 		return $cmd_docker." '".$cmd_rtl_fm."'";
 	}
 	function webradio_stop($dev) {
@@ -307,7 +307,7 @@
 	
 	//WebRX
 	if (isset($_POST["rtl_websdr_d0"])){
-		$cmd = "sudo docker run --rm -t --name webrx-sdr-d0 --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($_SERVER['SERVER_PORT']+1).":8073 webrx sh /cfiles/start_openwebrx.sh";
+		$cmd = "sudo docker run --rm -t --name webrx-sdr-d0 --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($_SERVER['SERVER_PORT']+1).":8073 webrx:1.0 sh /cfiles/start_openwebrx.sh";
 		start_docker_quite($cmd,'webrx_tab');
 	}
 	if (isset($_POST["rtl_websdr_stop_d0"])){
@@ -319,7 +319,7 @@
 		start_docker($cmd,'settings_webrx_tab');
 	}
 	if (isset($_POST["rtl_websdr_d1"])){
-		$cmd = "sudo docker run --rm -t --name webrx-sdr-d1 --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($_SERVER['SERVER_PORT']+2).":8073 webrx sh /cfiles/start_openwebrx_d1.sh";
+		$cmd = "sudo docker run --rm -t --name webrx-sdr-d1 --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($_SERVER['SERVER_PORT']+2).":8073 webrx:1.0 sh /cfiles/start_openwebrx_d1.sh";
 		start_docker_quite($cmd,'webrx_tab');
 	}
 	if (isset($_POST["rtl_websdr_stop_d1"])){

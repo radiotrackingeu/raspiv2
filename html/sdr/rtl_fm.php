@@ -36,8 +36,7 @@
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<form method="post" enctype="multipart/form-data" action="rtl_fm_player.php" target="_blank">
-				<br>
-				<strong>Frequencies:</strong><br>
+				<h3>Receiver 0</h3><br>
 				<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq1_0'] ?>" name="rtl_fm_start_0_f1"/>
 				<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq2_0'] ?>" name="rtl_fm_start_0_f2"/><br><br>
 				<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq3_0'] ?>" name="rtl_fm_start_0_f3"/>
@@ -46,14 +45,13 @@
 				<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq6_0'] ?>" name="rtl_fm_start_0_f6"/>
 				<input type="hidden" value="0" name="dev">
 			</form>
-			Press button to start playback at the specified frequency.
+			Press button to start playback at the specified frequency.<br><br>
 		</div>
 	</div>
 		<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
 			<form method="post" enctype="multipart/form-data" action="rtl_fm_player.php" target="_blank">
-				<br>
-				<strong>Frequencies:</strong><br>
+				<h3>Receiver 1</h3><br>
 				<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq1_1'] ?>" name="rtl_fm_start_1_f1"/>
 				<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq2_1'] ?>" name="rtl_fm_start_1_f2"/><br><br>
 				<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq3_1'] ?>" name="rtl_fm_start_1_f3"/>
@@ -62,7 +60,7 @@
 				<input type="submit" class="w3-btn w3-brown" value="<?php echo $config['SDR_Radio']['Freq6_1'] ?>" name="rtl_fm_start_1_f6"/>
 				<input type="hidden" value="1" name="dev">
 			</form>
-			Press button to start playback at the specified frequency.
+			Press button to start playback at the specified frequency.<br><br>
 		</div>
 	</div>
 </div>
