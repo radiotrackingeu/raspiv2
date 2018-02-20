@@ -34,7 +34,9 @@
 	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="submit" class="w3-btn w3-brown" value="Start PiCam" name="run_motion_detection">
 			<input type="submit" class="w3-btn w3-brown" value="Stop PiCam" name="stop_motion_detection">
-
+			<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Start PiCam" name="run_motioneye">
+			<input type="submit" class="w3-btn w3-brown" value="Stop PiCam" name="stop_motioneye">
 			<br><br>
 	</form>
 	</div>
@@ -147,11 +149,11 @@
 				echo '</pre>';
 			}			
 			
-			if (isset($_POST["run_motion"])){
-				$test = system("sudo docker run --rm  --name camera -t -p ".($_SERVER['SERVER_PORT']+2).":8765 -v /var/www/html/picam/record/:/var/lib/motioneye/ -v /var/www/html/picam/config/:/etc/motioneye/ --privileged picam", $ret);
+			if (isset($_POST["run_motioneye"])){
+				$test = system("sudo docker run --rm  --name camera -t -p ".($_SERVER['SERVER_PORT']+2).":8765 -v /var/www/html/picam/record/:/var/lib/motioneye/ -v /var/www/html/picam/config/:/etc/motioneye/ --privileged ccrisan/motioneye:dev-armhf", $ret);
 			}
 			
-			if (isset($_POST["stop_motion"])){
+			if (isset($_POST["stop_motioneye"])){
 				echo '<pre>';
 				$test = system('sudo docker stop camera 2>&1', $ret);
 				echo '</pre>';

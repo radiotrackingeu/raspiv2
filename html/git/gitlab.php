@@ -196,11 +196,17 @@
 				$test = system('sudo docker build --no-cache -t webrx:1.0 /home/pi/gitrep/raspiv2/Docker/webrx/. 2>&1', $ret);
 				echo '</pre>';
 			}
+			// if (isset($_POST["install_motioneye"])){
+				// echo '<pre>';
+				// $test = system('sudo docker build --no-cache -t motioneye:1.0 /home/pi/gitrep/raspiv2/Docker/motioneye/. 2>&1', $ret);
+				// echo '</pre>';
+			// }
 			if (isset($_POST["install_motioneye"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t motioneye:1.0 /home/pi/gitrep/raspiv2/Docker/motioneye/. 2>&1', $ret);
+				$test = system('sudo docker pull ccrisan/motioneye:dev-armhf 2>&1', $ret);
 				echo '</pre>';
 			}
+			ccrisan/motioneye:dev-armhf
 			if (isset($_POST["install_motion_detection"])){
 				echo '<pre>';
 				$test = system('sudo docker build --no-cache -t motion_detection:1.0 /home/pi/gitrep/raspiv2/Docker/motion_detection/. 2>&1', $ret);
