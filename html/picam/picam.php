@@ -35,8 +35,8 @@
 			<input type="submit" class="w3-btn w3-brown" value="Start PiCam" name="run_motion_detection">
 			<input type="submit" class="w3-btn w3-brown" value="Stop PiCam" name="stop_motion_detection">
 			<br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Start PiCam" name="run_motioneye">
-			<input type="submit" class="w3-btn w3-brown" value="Stop PiCam" name="stop_motioneye">
+			<input type="submit" class="w3-btn w3-brown" value="Start MotionEye" name="run_motioneye">
+			<input type="submit" class="w3-btn w3-brown" value="Stop MotionEye" name="stop_motioneye">
 			<br><br>
 	</form>
 	</div>
@@ -83,6 +83,7 @@
 	The required credentials are the same as for this site.<br><br>
 	<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+4)?>"> Link to Camera Stream</a> <br><br>
 	<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+3)?>"> Link to Camera Configuration</a> <br><br>
+	<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+5)?>"> Link to MotionEye</a> <br><br>
 	To download the images of video files either use the software or the following directory:<br><br>
 	<a target="_blank" href="/picam/record/"> Images/Videos</a><br>
 	<br>
@@ -150,7 +151,7 @@
 			}			
 			
 			if (isset($_POST["run_motioneye"])){
-				$test = system("sudo docker run --rm  --name camera -t -p ".($_SERVER['SERVER_PORT']+2).":8765 -v /var/www/html/picam/record/:/var/lib/motioneye/ -v /var/www/html/picam/config/:/etc/motioneye/ --privileged ccrisan/motioneye:dev-armhf", $ret);
+				$test = system("sudo docker run --rm  --name camera -t -p ".($_SERVER['SERVER_PORT']+5).":8765 -v /var/www/html/picam/record/:/var/lib/motioneye/ -v /var/www/html/picam/config/:/etc/motioneye/ --privileged ccrisan/motioneye:dev-armhf", $ret);
 			}
 			
 			if (isset($_POST["stop_motioneye"])){
