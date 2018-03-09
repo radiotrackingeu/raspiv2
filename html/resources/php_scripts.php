@@ -469,7 +469,7 @@
 	
 	function write_run_to_db($config, $device, $file_name) {
 		if ($config['logger']['use_sql_'.$device] != "Yes")
-			return "Wirting to database is switched off - see settings";
+			return "Writing to database is switched off - see settings";
 		$con = mysqli_connect($config['database']['db_host'].":".$config['database']['db_port'], $config['database']['db_user'], $config['database']['db_pass']);
 			if (mysqli_connect_errno()) {
 				return "Connection to ".$config['database']['db_host'].":".$config['database']['db_port']." failed: " . mysqli_connect_error();	
