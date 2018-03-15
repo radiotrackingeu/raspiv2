@@ -436,6 +436,16 @@
 		echo '</pre>';
 	}
 
+	// USB Power on/off
+	$cmd_usbpower = "sudo docker run --rm -d --privileged hubctrl ./hub-ctrl -h 0 -P 2 -p ";
+	if (isset($_POST['usb_power_on'])) {
+			start_docker_echo($cmd_usbpower.'1 2>&1', 'usbpower', 'USB ports on.');
+	}
+
+	if (isset($_POST['usb_power_off'])) {
+			start_docker_echo($cmd_usbpower.'0 2>&1', 'usbpower', 'USB port off.');
+	}
+	
 	//General Functions
 	function start_docker($docker_cmd,$block_to_jump){
 		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";

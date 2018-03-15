@@ -120,6 +120,11 @@
 			<hr>
 			PhpMyAdmin<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Database-Management" name="install_phpmyadmin"/> <br> <br>
+						
+			<hr>
+			USB Power On/Off<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="USB Power On/Off" name="install_hubctrl"/> <br> <br>
+
 
 		</form>
 	</div>
@@ -248,6 +253,11 @@
 			if (isset($_POST["install_phpmyadmin"])){
 				echo '<pre>';
 				$test = system('sudo docker build -t phpmyadmin:1.0 /home/pi/gitrep/raspiv2/Docker/phpmyadmin/. 2>&1', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["install_hubctrl"])){
+				echo '<pre>';
+				$test = system('sudo docker build -t hubctrl:1.0 /home/pi/gitrep/raspiv2/Docker/hubctrl/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			error_reporting(E_ALL);
