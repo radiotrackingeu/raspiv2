@@ -14,6 +14,16 @@
 	require_once '../cfg/baseConfig.php';
 	//load top menu
 	require_once RESOURCES_PATH.'/header.php';
+	//load functions
+	require_once RESOURCES_PATH.'/helpers.php';
+	//load ConfigLite
+	require_once CONFIGLITE_PATH.'/Lite.php';
+	
+	//define config section and items.
+	define ('confSection', 'system');
+	define ('confKeys', array('usb_timer_start_time', 'usb_timer_stop_time'));
+	//load values from config
+	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
  ?>
  
 <!-- Enter text here-->
@@ -71,9 +81,22 @@
 
 <div id="usbpower" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round w3-padding">
+		Turn Power to all USB ports on or off:
 		<form method="POST" enctype="multipart/form-data" action="">
-			<input type="submit" class="w3-btn w3-brown" value="USB Power ON" name="usb_power_on"><br><br>
+			<input type="submit" class="w3-btn w3-brown" value="USB Power ON" name="usb_power_on">
 			<input type="submit" class="w3-btn w3-brown" value="USB Power OFF" name="usb_power_off">
+		</form>
+
+	</div>
+	<div class="w3-panel w3-green w3-round w3-padding">
+		Set a timer to power all USB ports on and off automatically:
+		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config);?>"> 
+			<label for="usb_timer_start_time"> Power on at:</label><br>
+			<input class="w3-mobile" type="time" name="usb_timer_start_time" id="usb_timer_start_time" value="<?php echo isset($config['system']['usb_timer_start_time']) ? $config['system']['usb_timer_start_time'] : ""?>"><br>
+			<label for="usb_timer_stop_time"> Power off at:</label><br>
+			<input class="w3-mobile"  type="time" name="usb_timer_stop_time" id="usb_timer_stop_time" value="<?php echo isset($config['system']['usb_timer_stop_time']) ? $config['system']['usb_timer_stop_time'] : ""?>"><br><br>
+			<input class="w3-mobile w3-btn w3-brown"  type="submit" value="Set Timer" name="set_usb_timer">
+			<input class="w3-mobile w3-btn w3-brown"  type="submit" value="Disable Timer" name="disable_usb_timer"><br>
 		</form>
 	</div>
 </div>

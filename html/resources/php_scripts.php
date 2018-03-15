@@ -174,7 +174,9 @@
 			start_docker($cmd_change,"tab_logger_settings");
 		}
 		if($_POST["timer_start_0"]=="start_time"){
+			#new input
 			$change= substr($config['logger']['timer_start_time_0'],3, 2) . " ".substr($config['logger']['timer_start_time_0'], 0, 2)." * * * root " .$cmd;
+			#where to write
 			$search = "logger-sdr-d0";
 			$file_to_replace="/tmp/crontab";
 			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
@@ -232,6 +234,22 @@
 			$file_to_replace="/tmp/crontab";
 			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
 			start_docker_echo($cmd_change,"tab_logger_settings","System will now start logger upon stated time");			
+		}
+		if($_POST["timer_stop_1"]=="stop_no"){
+			$stop_cmd="sudo docker stop \\$(sudo docker ps -a -q --filter name=logger-sdr-d1)";
+			$change= "#".$stop_cmd;
+			$search = $stop_cmd;
+			$file_to_replace="/tmp/crontab";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+			start_docker($cmd_change,"tab_logger_settings");			
+		}
+		if($_POST["timer_stop_1"]=="stop_time"){
+			$stop_cmd="sudo docker stop \\$(sudo docker ps -a -q --filter name=logger-sdr-d1)";
+			$change=substr($config['logger']['timer_stop_time_1'],3, 2) . " ".substr($config['logger']['timer_stop_time_1'], 0, 2)." * * * root " .$stop_cmd;
+			$search = $stop_cmd;
+			$file_to_replace="/tmp/crontab";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+			start_docker_echo($cmd_change,"tab_logger_settings","System will now stop logger upon stated time");			
 		}
 	}
 	
@@ -444,6 +462,32 @@
 
 	if (isset($_POST['usb_power_off'])) {
 			start_docker_echo($cmd_usbpower.'0 2>&1', 'usbpower', 'USB port off.');
+	}
+	
+	if(isset($_POST["disable_usb_timer"])){
+		$change= "#".$cmd_usbpower.'1';
+		$search = $cmd_usbpower.'1';
+		$file_to_replace="/tmp/crontab";
+		$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+		
+		$change= "#".$cmd_usbpower.'0';
+		$search = $cmd_usbpower.'0';
+		$file_to_replace="/tmp/crontab";
+		$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+		start_docker_echo($cmd_change,"usbpower","USB power timer set.");			
+	}
+	
+	if(isset($_POST["set_usb_timer"])){
+		$change= substr($config['system']['usb_timer_start_time'],3, 2) . " ".substr($config['system']['usb_timer_start_time'], 0, 2)." * * * root " .$cmd_usbpower.'1';
+		$search = $cmd_usbpower.'1';
+		$file_to_replace="/tmp/crontab";
+		$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+		
+		$change= substr($config['system']['usb_timer_stop_time'],3, 2) . " ".substr($config['system']['usb_timer_stop_time'], 0, 2)." * * * root " .$cmd_usbpower.'0';
+		$search = $cmd_usbpower.'0';
+		$file_to_replace="/tmp/crontab";
+		$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+		start_docker_echo($cmd_change,"usbpower","USB power timer set.");			
 	}
 	
 	//General Functions
