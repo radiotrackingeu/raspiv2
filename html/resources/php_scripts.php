@@ -482,12 +482,13 @@
 		$search = $cmd_usbpower.'1';
 		$file_to_replace="/tmp/crontab";
 		$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+		start_docker_echo($cmd_change,"usbpower","USB power on timer set.");			
 		
 		$change= substr($config['system']['usb_timer_stop_time'],3, 2) . " ".substr($config['system']['usb_timer_stop_time'], 0, 2)." * * * root " .$cmd_usbpower.'0';
 		$search = $cmd_usbpower.'0';
 		$file_to_replace="/tmp/crontab";
 		$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
-		start_docker_echo($cmd_change,"usbpower","USB power timer set.");			
+		start_docker_echo($cmd_change,"usbpower","USB power off timer set.");			
 	}
 	
 	//General Functions
