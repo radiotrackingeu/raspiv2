@@ -120,6 +120,11 @@
 			<hr>
 			PhpMyAdmin<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Database-Management" name="install_phpmyadmin"/> <br> <br>
+						
+			<hr>
+			USB Power On/Off<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="USB Power On/Off" name="install_hubctrl"/> <br> <br>
+
 
 		</form>
 	</div>
@@ -139,31 +144,31 @@
 			<hr>
 			<input type="submit" class="w3-btn w3-brown" value="Delete all stopped containers" name="rm_all">
 			<hr>
-			<input type="submit" class="w3-btn w3-brown" value="Delte all unsed Images" name="rmi_unused">
+			<input type="submit" class="w3-btn w3-brown" value="Delete all unsed Images" name="rmi_unused">
 			<hr>
-			<input type="submit" class="w3-btn w3-brown" value="Delte all Images" name="rmi_all">
+			<input type="submit" class="w3-btn w3-brown" value="Delete all Images" name="rmi_all">
 			<br><br>
 		</form>
 	</div>
 </div>
 		
 <div id="config_file" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
+	<div class="w3-panel w3-green w3-round w3-padding">
 	Here you can down- and upload configuration files.<br>
 	When you upload a new file, a copy of the old one will be made. This copy of the last configuration file can be restored by clicking the corresponding button.<br>
 	Restoring the default configuration will load the configuration file that came with the last software update.
 	<hr>
-		<div class="w3-bar">
+		<div class="w3-bar w3-padding">
 		<a class="w3-btn w3-brown" href="../cfg/globalconfig" download>Download current config</a>
 		</div>
 		<br>
 		<form method="POST" enctype="multipart/form-data">
-		<div class="w3-bar">
+		<div class="w3-bar w3-padding">
 			<input type="submit" class="w3-btn w3-brown" value="Upload new config" name="ul_config">
 			<input type="file" class="w3-btn w3-green" name="file_config" style="hover:none">
 		</div>
 		<br>
-		<div class="w3-bar">
+		<div class="w3-bar w3-padding">
 			<input type="submit" class="w3-btn w3-brown" value="Restore last config" name="restore_config">
 			<input type="submit" class="w3-btn w3-brown" value="Restore default config" name="restore_default">
 		</div>
@@ -248,6 +253,11 @@
 			if (isset($_POST["install_phpmyadmin"])){
 				echo '<pre>';
 				$test = system('sudo docker build -t phpmyadmin:1.0 /home/pi/gitrep/raspiv2/Docker/phpmyadmin/. 2>&1', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["install_hubctrl"])){
+				echo '<pre>';
+				$test = system('sudo docker build -t hubctrl:1.0 /home/pi/gitrep/raspiv2/Docker/hubctrl/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			error_reporting(E_ALL);

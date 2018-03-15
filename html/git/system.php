@@ -22,6 +22,7 @@
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'date')">Time/Date</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'hostname')">Hostname</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'expand_disc')">Expand Disc</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'usbpower')">USB Power</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'infos')">System Information</button>
 </div>	
 
@@ -67,6 +68,15 @@
 		</form>
 	</div>
 </div>	
+
+<div id="usbpower" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round w3-padding">
+		<form method="POST" enctype="multipart/form-data" action="">
+			<input type="submit" class="w3-btn w3-brown" value="USB Power ON" name="usb_power_on"><br><br>
+			<input type="submit" class="w3-btn w3-brown" value="USB Power OFF" name="usb_power_off">
+		</form>
+	</div>
+</div>
 
 <div id="infos" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
