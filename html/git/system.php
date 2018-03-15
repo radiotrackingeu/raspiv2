@@ -74,6 +74,7 @@
 		<form method="POST" enctype="multipart/form-data" action="">
 			<input type="submit" class="w3-btn w3-brown" value="USB Power ON" name="usb_power_on"><br><br>
 			<input type="submit" class="w3-btn w3-brown" value="USB Power OFF" name="usb_power_off">
+		</form>
 	</div>
 </div>
 
