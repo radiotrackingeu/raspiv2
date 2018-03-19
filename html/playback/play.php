@@ -53,7 +53,7 @@
 			
 			if (isset($_POST["stop_playback"])){
 				echo '<pre>';
-				system("sudo docker stop \\$(sudo docker ps -a -q --filter name=logger-sdr-d0) 2>&1 > /dev/null", $ret);
+				system("sudo docker stop \\$(sudo docker ps -a -q --filter name=playback) 2>&1 > /dev/null", $ret);
 				echo '</pre>';
 			}
 			
