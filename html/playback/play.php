@@ -39,35 +39,35 @@
 	</form>
 </div>
 </div>
+<div id="container">
 	
 	<p>
 	<?php
-			error_reporting(E_ALL);
-			ini_set('display_errors', 1);
-			
-			if (isset($_POST["start_playback"])){
+		error_reporting(E_ALL);
+		ini_set('display_errors', 1);
+		if (isset($_POST["start_playback"])){
 				echo '<pre>';
-				system("sudo docker run -td --restart=always --name=playback --privileged -v /var/www/html/playback/files/:/tmp/ -e \"file=/tmp/".$_POST['playback_file']."\" playback:1.0 2>&1 > /dev/null", $ret);
+				system("sudo docker run -td --restart=unless-stopped --privileged -v /var/www/html/playback/files/:/tmp/ -e \"file=/tmp/".$_POST['playback_file']."\" playback:1.0 2>&1 > /dev/null", $ret);
 				echo '</pre>';
-			}
-			
-			if (isset($_POST["stop_playback"])){
+		}
+
+		if (isset($_POST["stop_playback"])){
 				echo '<pre>';
-				system("sudo docker stop \\$(sudo docker ps -a -q --filter name=playback) 2>&1 > /dev/null", $ret);
+				system("sudo docker stop \$(sudo docker ps -a -q --filter ancestor=playback:1.0 --filter status=running) 2>&1 > /dev/null", $ret);
 				echo '</pre>';
-			}
-			
-			if (isset($_POST["install_playback"])){
-				echo '<pre>';
-				$test = system('sudo docker build -t playback:1.0 /home/pi/gitrep/raspiv2/Docker/playback/. 2>&1', $ret);
-				echo '</pre>';
-			}
+		}
+		
+		if (isset($_POST["install_playback"])){
+			echo '<pre>';
+			system('sudo docker build -t playback:1.0 /home/pi/gitrep/raspiv2/Docker/playback/. 2>&1', $ret);
+			echo '</pre>';
+		}
 
 	?>
 	</p>
 <!-- Enter text here-->
 
-<div id="container"></div>
+</div>
 
 <div class="w3-container w3-center w3-brown">
   Online-Website: <a href="https://radio-tracking.eu/">radio-tracking.eu</a>
