@@ -19,11 +19,11 @@
 <!-- Enter text here-->
 <div class="w3-container">
 <div class="w3-panel w3-green w3-round w3-padding">
-	If you haven't done so yet, install the app:
+	If you haven't done so yet, install the app. This only needs to be done once!
 	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="submit" class="w3-btn w3-brown" value="Install Player" name="install_playback"/>
-	</form>
-
+	</form><br>
+	The system will automatically reboot after installing. 
 </div>
 <div class="w3-panel w3-green w3-round w3-padding">
 	Select file to play:<br>
@@ -45,11 +45,12 @@
 			<input type="submit" class="w3-btn w3-brown" value="Upload" name="ul_wav">
 			<input type="file" class="w3-btn w3-green" name="file_wav[]" style="hover:none" multiple>
 		</div>
-	</form>
+	</form><br>
+	Please refresh the page after uploading.
 </div>
 <div class="w3-panel w3-green w3-round w3-padding">
 	Select files to delete:<br>
-	<form method="post" enctype="multipart/form-data" action="">
+	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<select class="w3-mobile"  name="files_delete[]" multiple>
 		<?php foreach(glob("files/*.wav") as $filename) {
 			echo "<option value='".basename($filename)."'>".basename($filename)."</option>";
@@ -57,7 +58,8 @@
 		</select>
 		<br><br>
 		<input type="submit" class="w3-btn w3-brown" value="Delete Files" name="delete_files">
-	</form>
+	</form><br>
+	Please refresh the page after deleting.
 </div>
 </div>
 <div id="container">
@@ -91,6 +93,7 @@
 			$file_to_replace="/tmp/config.txt";
 			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /boot/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";			
 			system($cmd_change);
+			system("sudo reboot now");
 			echo '</pre>';
 		}
 		
