@@ -18,13 +18,16 @@
  
 <!-- Enter text here-->
 <div class="w3-container">
-<div class="w3-panel w3-green w3-round">
-	<br>
+<div class="w3-panel w3-green w3-round w3-padding">
 	If you haven't done so yet, install the app:
 	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="submit" class="w3-btn w3-brown" value="Install Player" name="install_playback"/>
 	</form>
 
+</div>
+<div class="w3-panel w3-green w3-round w3-padding">
+	Select file to play:<br>
+	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<select class="w3-mobile"  name="playback_file">
 	<?php foreach(glob("files/*.wav") as $filename) {
 		echo "<option value='".basename($filename)."'>".basename($filename)."</option>";
@@ -32,7 +35,6 @@
 	</select>
 	<br><br>
 		
-	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="submit" class="w3-btn w3-brown" value="Start Playback" name="start_playback">
 	</form>
 </div>
