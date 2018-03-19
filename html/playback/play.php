@@ -38,6 +38,27 @@
 			<input type="submit" class="w3-btn w3-brown" value="Stop Playback" name="stop_playback">
 	</form>
 </div>
+<div class="w3-panel w3-green w3-round w3-padding">
+	<form method="POST" enctype="multipart/form-data">
+	Upload Files:
+		<div class="w3-bar w3-padding">
+			<input type="submit" class="w3-btn w3-brown" value="Upload" name="ul_wav">
+			<input type="file" class="w3-btn w3-green" name="file_wav[]" style="hover:none" multiple>
+		</div>
+	</form>
+</div>
+<div class="w3-panel w3-green w3-round w3-padding">
+	Select files to delete:<br>
+	<form method="post" enctype="multipart/form-data" action="">
+		<select class="w3-mobile"  name="files_delete[]" multiple>
+		<?php foreach(glob("files/*.wav") as $filename) {
+			echo "<option value='".basename($filename)."'>".basename($filename)."</option>";
+		}?>
+		</select>
+		<br><br>
+		<input type="submit" class="w3-btn w3-brown" value="Delete Files" name="delete_files">
+	</form>
+</div>
 </div>
 <div id="container">
 	
@@ -72,7 +93,38 @@
 			system($cmd_change);
 			echo '</pre>';
 		}
-
+		
+		if (isset($_POST["ul_wav"])) {
+			$total = count($_FILES["file_wav"]["name"]);
+			if ($total==0)
+				echo "No files given!<br>";
+			else
+				for ($i=0; $i<$total; $i++) {
+					if ($_FILES["file_wav"]["name"] == "") continue;
+					if ($_FILES["file_wav"]["size"] == 0 ) continue;
+					$finfo = finfo_open(FILEINFO_MIME_TYPE);
+					$mtype = finfo_file($finfo,$_FILES["file_wav"]["tmp_name"][$i]);
+					if ($mtype != "audio/x-wav") {
+						echo $_FILES["file_wav"]["name"][$i]." is not a .wav file and was skipped.<br>";
+						continue;
+					}
+					if (move_uploaded_file($_FILES["file_wav"]["tmp_name"][$i], "files/".$_FILES["file_wav"]["name"][$i])){
+								echo "Successfully uploaded ".$_FILES["file_wav"]["name"][$i].".<br>";
+							} else {
+								echo "Could not upload ".$_FILES["file_wav"]["name"][$i]."!<br>";
+							}
+				}
+		}
+		
+		if (isset($_POST["delete_files"])){
+			for ($i=0; $i< count($_POST['files_delete']); $i++) {
+				if (unlink("files/".$_POST['files_delete'][$i])) 
+					echo "Successfully deleted ".$_POST['files_delete'][$i]."<br>";
+				else 
+					echo "Could not delete ".$_POST['files_delete'][$i]."<br>";
+			}
+		}
+	
 	?>
 	</p>
 <!-- Enter text here-->
