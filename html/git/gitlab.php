@@ -104,7 +104,7 @@
 			SoX<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Microphone" name="install_sox"/> <br> <br>
 			Available: <?php echo $image_version_microphone;?>
-			Equivalent with Installed version: <?php system("if sudo docker images --filter reference=mircophone | grep -q 1.0; then echo yes; else echo no; fi") ?>
+			Equivalent with Installed version: <?php system("if sudo docker images --filter reference=microphone | grep -q 1.0; then echo yes; else echo no; fi") ?>
 			<hr>
 			RTL_433<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Sensor Readings" name="install_rtl_433"/> <br> <br>
