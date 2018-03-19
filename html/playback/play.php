@@ -34,8 +34,8 @@
 	}?>
 	</select>
 	<br><br>
-		
 			<input type="submit" class="w3-btn w3-brown" value="Start Playback" name="start_playback">
+			<input type="submit" class="w3-btn w3-brown" value="Stop Playback" name="stop_playback">
 	</form>
 </div>
 </div>
@@ -47,13 +47,19 @@
 			
 			if (isset($_POST["start_playback"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/playback/files/:/tmp/ -e \"file=/tmp/".$_POST['playback_file']."playback:1.0 2>&1", $ret);
+				system("sudo docker run -td --restart=always --name=playback --privileged -v /var/www/html/playback/files/:/tmp/ -e \"file=/tmp/".$_POST['playback_file']."\" playback:1.0 2>&1 > /dev/null", $ret);
+				echo '</pre>';
+			}
+			
+			if (isset($_POST["stop_playback"])){
+				echo '<pre>';
+				system("sudo docker stop playback 2>&1 > /dev/null", $ret);
 				echo '</pre>';
 			}
 			
 			if (isset($_POST["install_playback"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t hplayback:1.0 /home/pi/gitrep/raspiv2/Docker/playback/. 2>&1', $ret);
+				$test = system('sudo docker build -t playback:1.0 /home/pi/gitrep/raspiv2/Docker/playback/. 2>&1', $ret);
 				echo '</pre>';
 			}
 
