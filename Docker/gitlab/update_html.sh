@@ -25,7 +25,7 @@ fi
 
 cp -R /home/pi/gitrep/raspiv2/html/ /var/www/
 echo 'Refresh porperty rights. <br>'
-chown -R www-data:www-data /var/www/ ! (mysql)
+sudo find /var/www -not -path "*/mysql*" -exec chown www-data:www-data {} \;
 
 if [ $2 = 'keepcfg' ]
 then 
