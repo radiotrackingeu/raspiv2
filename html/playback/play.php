@@ -19,11 +19,11 @@
 <!-- Enter text here-->
 <div class="w3-container">
 <div class="w3-panel w3-green w3-round w3-padding">
-	If you haven't done so yet, install the app. This only needs to be done once!
+	If you haven't done so yet, install the app. This only needs to be done once!<br>
+	The system will automatically reboot after installing.<br> <br>
 	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="submit" class="w3-btn w3-brown" value="Install Player" name="install_playback"/>
 	</form><br>
-	The system will automatically reboot after installing. 
 </div>
 <div class="w3-panel w3-green w3-round w3-padding">
 	Select file to play:<br>
@@ -45,7 +45,7 @@
 			<input type="submit" class="w3-btn w3-brown" value="Upload" name="ul_wav">
 			<input type="file" class="w3-btn w3-green" name="file_wav[]" style="hover:none" multiple>
 		</div>
-	</form><br>
+	</form>
 	Please refresh the page after uploading.
 </div>
 <div class="w3-panel w3-green w3-round w3-padding">
