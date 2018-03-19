@@ -60,6 +60,16 @@
 		if (isset($_POST["install_playback"])){
 			echo '<pre>';
 			system('sudo docker build -t playback:1.0 /home/pi/gitrep/raspiv2/Docker/playback/. 2>&1', $ret);
+			$search = 'dtparam=audio=on';
+			$change= "#".$search;
+			$file_to_replace="/boot/config.txt";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
+			system($cmd_change);
+			$search = 'dtoverlay=hifiberry-dac';
+			$change= $search;
+			$file_to_replace="/boot/config.txt";
+			$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";			
+			system($cmd_change);
 			echo '</pre>';
 		}
 
