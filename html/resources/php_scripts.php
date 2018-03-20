@@ -93,7 +93,32 @@
 		$cmd="sudo docker stop logger-sdr-d1 2>&1";
 		start_docker($cmd, 'tab_logger_range');
 	}
-	
+		
+	if (isset($_POST["log_start_2"])){
+		$file_name = $config['logger']['antenna_id_2'] ."_". date('Y_m_d_H_i');
+		$file_path = "/tmp/record/" . $file_name;
+		$run_id = write_run_to_db($config, 2, $file_name);
+		$cmd = cmd_docker(2)." '".cmd_rtl_sdr($config, 2)." 2> ".$file_path." | ".cmd_liquidsdr($config, 2).cmd_sql($config, 2, $run_id)." >> ". $file_path." 2>&1'";
+		start_docker_echo($cmd,'tab_logger_range','Started Receiver 2.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+	}
+	 
+	if (isset($_POST["log_stop_2"])){
+		$cmd="sudo docker stop logger-sdr-d2 2>&1";
+		start_docker($cmd, 'tab_logger_range');
+	}
+			
+	if (isset($_POST["log_start_3"])){
+		$file_name = $config['logger']['antenna_id_3'] ."_". date('Y_m_d_H_i');
+		$file_path = "/tmp/record/" . $file_name;
+		$run_id = write_run_to_db($config, 3, $file_name);
+		$cmd = cmd_docker(3)." '".cmd_rtl_sdr($config, 3)." 2> ".$file_path." | ".cmd_liquidsdr($config, 3).cmd_sql($config, 3, $run_id)." >> ". $file_path." 2>&1'";
+		start_docker_echo($cmd,'tab_logger_range','Started Receiver 3.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+	}
+	 
+	if (isset($_POST["log_stop_3"])){
+		$cmd="sudo docker stop logger-sdr-d3 2>&1";
+		start_docker($cmd, 'tab_logger_range');
+	}
 	//Logger Single Frequency Functions
 	 if (isset($_POST["log_single_start_0"])){
 		$file_name = $config['logger']['antenna_id_0'] ."_". date('Y_m_d_H_i');
@@ -117,6 +142,32 @@
 	 
 	if (isset($_POST["log_single_stop_1"])){
 		$cmd="sudo docker stop logger-sdr-d1 2>&1";
+		start_docker($cmd, 'tab_logger_single');
+	}
+		
+	if (isset($_POST["log_single_start_2"])){
+		$file_name = $config['logger']['antenna_id_2'] ."_". date('Y_m_d_H_i');
+		$file_path = "/tmp/record/" . $file_name;
+		$run_id = write_run_to_db($config, 2, $file_name);
+		$cmd = cmd_docker(2)." '".cmd_rtl_sdr($config, 2)." 2> ".$file_path." | ".cmd_matched_filters($config, 2).cmd_sql($config, 2, $run_id)." >> ". $file_path." 2>&1'";
+		start_docker_echo($cmd,'tab_logger_single','Started Receiver 2.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+	}
+	 
+	if (isset($_POST["log_single_stop_2"])){
+		$cmd="sudo docker stop logger-sdr-d2 2>&1";
+		start_docker($cmd, 'tab_logger_single');
+	}
+		
+	if (isset($_POST["log_single_start_3"])){
+		$file_name = $config['logger']['antenna_id_3'] ."_". date('Y_m_d_H_i');
+		$file_path = "/tmp/record/" . $file_name;
+		$run_id = write_run_to_db($config, 3, $file_name);
+		$cmd = cmd_docker(3)." '".cmd_rtl_sdr($config, 3)." 2> ".$file_path." | ".cmd_matched_filters($config, 3).cmd_sql($config, 3, $run_id)." >> ". $file_path." 2>&1'";
+		start_docker_echo($cmd,'tab_logger_single','Started Receiver 3.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+	}
+	 
+	if (isset($_POST["log_single_stop_3"])){
+		$cmd="sudo docker stop logger-sdr-d3 2>&1";
 		start_docker($cmd, 'tab_logger_single');
 	}
 	
