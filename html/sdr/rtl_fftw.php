@@ -27,7 +27,6 @@ function setVisibility(menu, label, element) {
 	require_once CONFIGLITE_PATH.'/Lite.php';
 	
 	$GLOBALS["num_rec"] = exec("lsusb | grep -c -e '0bda:2838'");
-	$GLOBALS["num_rec"] = 4;
 	$tmparr=array();
 	$valuearr=array('antenna_id_','antenna_position_N_','antenna_position_E_','antenna_orientation_','antenna_beam_width_','log_gain_','center_freq_','freq_range_','threshold_','nfft_','timestep_','use_sql_','db_host_','db_user_','db_pass_');
 	for ($i=0; $i<4; $i++) {
@@ -52,6 +51,14 @@ function setVisibility(menu, label, element) {
 <!-------------------------------- Range Logger -------------------------------------------------------------------->
 
 <div id="tab_logger_range" class="city w3-mobile" style="display:none">
+	<div class= "w3-row-padding">
+		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+			<form method="POST" enctype="multipart/form-data" action="">
+				<input type="submit" class="w3-btn w3-brown" value="Start all" name="log_start_all" />
+				<input type="submit" class="w3-btn w3-brown" value="Stop all" name="log_stop_all" />
+			</form>
+		</div>
+	</div>
 	<div class= "w3-row-padding">
 		<?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
 			<div class="w3-half">
@@ -99,6 +106,14 @@ function setVisibility(menu, label, element) {
 <!-------------------------------- Single Frequency Logger -------------------------------------------------------------------->
 
 <div id="tab_logger_single" class="city w3-mobile" style="display:none">
+	<div class= "w3-row-padding">
+		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+			<form method="POST" enctype="multipart/form-data" action="">
+				<input type="submit" class="w3-btn w3-brown" value="Start all" name="log_single_start_all" />
+				<input type="submit" class="w3-btn w3-brown" value="Stop all" name="log_single_stop_all" />
+			</form>
+		</div>
+	</div>
 <div class="w3-row-padding">
 	<?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
 	<div class="w3-half">
@@ -150,23 +165,23 @@ function setVisibility(menu, label, element) {
 	<?php for ($i=0; $i<4; $i++): ?>
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
-			<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config);?>">
+			<form method='POST' id="rec<?=$i?>_form" enctype="multipart/form-data" action="<?php update_Config($config);?>">
 			<h3>Receiver <?=$i?></h3><br>
 			<button type=button onclick="myAccordion('rec<?=$i?>_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Receiver Settings</h4></button>
 			
 			<div id="rec<?=$i?>_settings" class="w3-container w3-hide">
 				<p>
 				Gain in dB (default 20):<br>
-				<input class="w3-input w3-mobile" style="width:30%" type="number" name="log_gain_<?=$i?>" value="<?php echo isset($config['logger']['log_gain_'.$i]) ? $config['logger']['log_gain_'.$i] : 20 ?>">
+				<input class="w3-input w3-mobile" style="width:30%" type="number" id="log_gain_<?=$i?>" name="log_gain_<?=$i?>" value="<?php echo isset($config['logger']['log_gain_'.$i]) ? $config['logger']['log_gain_'.$i] : 20 ?>">
 				<small>Gain of the recording device. Higher gain results in more noise. max 49DB</small>
 				</p>
 				<p>
 				Center Frequency in Hz:<br>
-				<input class="w3-input w3-mobile" style="width:30%" type="number" name="center_freq_<?=$i?>" value="<?php echo isset($config['logger']['center_freq_'.$i]) ? $config['logger']['center_freq_'.$i] : 150100000 ?>">
+				<input class="w3-input w3-mobile" style="width:30%" type="number" id="center_freq_<?=$i?>" name="center_freq_<?=$i?>" value="<?php echo isset($config['logger']['center_freq_'.$i]) ? $config['logger']['center_freq_'.$i] : 150100000 ?>">
 				</p>
 				<p>
 				Frequency Range to monitor:<br>
-				<select class="w3-select w3-mobile"  style="width:30%" name="freq_range_<?=$i?>">
+				<select class="w3-select w3-mobile"  style="width:30%" id="freq_range_<?=$i?>" name="freq_range_<?=$i?>">
 					<option value="250000" <?php echo isset($config['logger']['freq_range_'.$i]) && $config['logger']['freq_range_'.$i] == "250000" ? "selected" : "" ?>>250kHz</option>
 					<option value="1024000" <?php echo isset($config['logger']['freq_range_'.$i]) && $config['logger']['freq_range_'.$i] == "1024000" ? "selected" : "" ?>>1024kHz</option>
 				</select> 
@@ -178,7 +193,7 @@ function setVisibility(menu, label, element) {
 			<div id="ant<?=$i?>_settings" class="w3-container w3-hide">
 				<p>
 					Unique name for this Antenna:<br>
-					<input class="w3-input w3-mobile" style="width:70%" type="text" name="antenna_id_<?=$i?>" value="<?php echo isset($config['logger']['antenna_id_'.$i]) ? $config['logger']['antenna_id_'.$i] : "rteu_r".$i."_"?>">
+					<input class="w3-input w3-mobile" style="width:70%" type="text" id="antenna_id_<?=$i?>" name="antenna_id_<?=$i?>" value="<?php echo isset($config['logger']['antenna_id_'.$i]) ? $config['logger']['antenna_id_'.$i] : "rteu_r".$i."_"?>">
 					<small>This - together with a timestamp - will be used as filename and antenna id in the database.</small>
 				</p>
 					Antenna Position:
@@ -186,19 +201,19 @@ function setVisibility(menu, label, element) {
 					<p id="demo"></p>
 				<div class="w3-half" style = "margin-bottom: 16px">
 					<label>Latitude</label>
-					<input class="w3-input w3-mobile" style="width:30%" type="text" name="antenna_position_N_<?=$i?>" value="<?php echo isset($config['logger']['antenna_position_N_'.$i]) ? $config['logger']['antenna_position_N_'.$i] : 1.234?>">
+					<input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_position_N_<?=$i?>" name="antenna_position_N_<?=$i?>" value="<?php echo isset($config['logger']['antenna_position_N_'.$i]) ? $config['logger']['antenna_position_N_'.$i] : 1.234?>">
 				</div>
 				<div class="w3-half" style = "margin-bottom: 16px">
 					<label>Longitude</label>
-					<input class="w3-input w3-mobile" style="width:30%" type="text" name="antenna_position_E_<?=$i?>" value="<?php echo isset($config['logger']['antenna_position_E_'.$i]) ? $config['logger']['antenna_position_E_'.$i] : 5.678?>">
+					<input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_position_E_<?=$i?>" name="antenna_position_E_<?=$i?>" value="<?php echo isset($config['logger']['antenna_position_E_'.$i]) ? $config['logger']['antenna_position_E_'.$i] : 5.678?>">
 				</div>
 				<p>
 					Antenna Orientation in degrees (i.e. N=0, E=90, S=180):<br>
-					<input class="w3-input w3-mobile" style="width:30%" type="text" name="antenna_orientation_<?=$i?>" value="<?php echo isset($config['logger']['antenna_orientation_'.$i]) ? $config['logger']['antenna_orientation_'.$i] : 42?>">
+					<input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_orientation_<?=$i?>" name="antenna_orientation_<?=$i?>" value="<?php echo isset($config['logger']['antenna_orientation_'.$i]) ? $config['logger']['antenna_orientation_'.$i] : 42?>">
 				</p>
 				<p>
 					Antenna beam width in degrees:<br>
-					<input class="w3-input w3-mobile" style="width:30%" type="text" name="antenna_beam_width_<?=$i?>" value="<?php echo isset($config['logger']['antenna_beam_width_'.$i]) ? $config['logger']['antenna_beam_width_'.$i] : 42?>">
+					<input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_beam_width_<?=$i?>" name="antenna_beam_width_<?=$i?>" value="<?php echo isset($config['logger']['antenna_beam_width_'.$i]) ? $config['logger']['antenna_beam_width_'.$i] : 42?>">
 				</p>
 				<br>
 			</div>
@@ -212,11 +227,11 @@ function setVisibility(menu, label, element) {
 				</p>
 				<p>
 					Number of bins in FFT (default: 400):<br>
-					<input class="w3-input w3-mobile" style="width:30%" type="text" name="nfft_<?=$i?>" value="<?php echo isset($config['logger']['nfft_'.$i]) ? $config['logger']['nfft_'.$i] : 400 ?>">
+					<input class="w3-input w3-mobile" style="width:30%" type="text" id="nfft_<?=$i?>" name="nfft_<?=$i?>" value="<?php echo isset($config['logger']['nfft_'.$i]) ? $config['logger']['nfft_'.$i] : 400 ?>">
 				</p>
 				<p>
 					Number of samples per FFT (default: 50):<br>
-					<input class="w3-input w3-mobile" style="width:30%" type="text" name="timestep_<?=$i?>" value="<?php echo isset($config['logger']['timestep_'.$i]) ? $config['logger']['timestep_'.$i] : 50 ?>">
+					<input class="w3-input w3-mobile" style="width:30%" type="text" id="timestep_<?=$i?>" name="timestep_<?=$i?>" value="<?php echo isset($config['logger']['timestep_'.$i]) ? $config['logger']['timestep_'.$i] : 50 ?>">
 				</p>
 				<br>
 			</div>
@@ -265,7 +280,7 @@ function setVisibility(menu, label, element) {
 					<label class="w3-margin-right" for="use_sql_<?=$i?>_n">No</label>	
 				</p>
 			</div>
-			<input class="w3-input w3-mobile w3-btn w3-brown" style="width:30%; margin-left:auto; margin-right:10%;" type="submit" value="Change Settings" name="change_logger_settings_<?=$i?>"><br>
+			<input class="w3-input w3-mobile w3-btn w3-brown" style="width:30%; margin-left:auto; margin-right:10%;" type="submit" value="Change Settings" id="change_logger_settings_<?=$i?>" name="change_logger_settings_<?=$i?>"><br>
 			</form>
 		</div>
 	</div>

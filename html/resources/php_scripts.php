@@ -76,6 +76,7 @@
 		$cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." 2> ".$file_path." | ".cmd_liquidsdr($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
 		start_docker_echo($cmd,'tab_logger_range','Started Receiver 0.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
 	}
+	
 	if (isset($_POST["log_stop_0"])){
 		$cmd="sudo docker stop logger-sdr-d0 2>&1";
 		start_docker($cmd, 'tab_logger_range');
@@ -119,6 +120,30 @@
 		$cmd="sudo docker stop logger-sdr-d3 2>&1";
 		start_docker($cmd, 'tab_logger_range');
 	}
+	
+	if (isset($_POST["log_start_all"])){
+		$num = exec("lsusb | grep -c -e '0bda:2838'");
+		$cmd=":";
+		$msg="";
+		for ($i=0; $i<$num; $i++) {
+			$file_name = $config['logger']['antenna_id_'.$i] ."_". date('Y_m_d_H_i');
+			$file_path = "/tmp/record/" . $file_name;
+			$run_id = write_run_to_db($config, $i, $file_name);
+			$cmd .= " && ".cmd_docker($i)." '".cmd_rtl_sdr($config, $i)." 2> ".$file_path." | ".cmd_liquidsdr($config, $i).cmd_sql($config, $i, $run_id)." >> ". $file_path." 2>&1'";
+			$msg .= 'Started Receiver '.$i.'.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id.'<br>';
+		}
+		start_docker_echo($cmd,'tab_logger_range',$msg);
+	}
+	
+	if (isset($_POST["log_stop_all"])){
+		$num = exec("lsusb | grep -c -e '0bda:2838'");
+		$cmd = ":";
+		for ($i=0; $i<$num; $i++) {
+			$cmd .=" && sudo docker stop logger-sdr-d".$i." 2>&1";
+		}
+		start_docker($cmd, 'tab_logger_range');
+	}
+	
 	//Logger Single Frequency Functions
 	 if (isset($_POST["log_single_start_0"])){
 		$file_name = $config['logger']['antenna_id_0'] ."_". date('Y_m_d_H_i');
@@ -171,6 +196,28 @@
 		start_docker($cmd, 'tab_logger_single');
 	}
 	
+	if (isset($_POST["log_single_start_all"])){
+		$num = exec("lsusb | grep -c -e '0bda:2838'");
+		$cmd=":";
+		$msg="";
+		for ($i=0; $i<$num; $i++) {
+			$file_name = $config['logger']['antenna_id_'.$i] ."_". date('Y_m_d_H_i');
+			$file_path = "/tmp/record/" . $file_name;
+			$run_id = write_run_to_db($config, $i, $file_name);
+			$cmd = " && ".cmd_docker($i)." '".cmd_rtl_sdr($config, $i)." 2> ".$file_path." | ".cmd_matched_filters($config, $i).cmd_sql($config, $i, $run_id)." >> ". $file_path." 2>&1'";
+			$msg .= 'Started Receiver '.$i.'.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id.'<br>';
+		}
+		start_docker_echo($cmd,'tab_logger_single',$msg);
+	}
+	
+	if (isset($_POST["log_single_stop_all"])){
+		$num = exec("lsusb | grep -c -e '0bda:2838'");
+		$cmd = ":";
+		for ($i=0; $i<$num; $i++) {
+			$cmd .=" && sudo docker stop logger-sdr-d".$i." 2>&1";
+		}
+		start_docker($cmd, 'tab_logger_single');
+	}
 	
 	//General Looger Function
 	function cmd_docker($dev) {
@@ -179,7 +226,6 @@
 	
 	function cmd_sql($config, $dev, $run_id) {
 		if (!is_int($run_id)) {
-			echo $run_id;  // on error write_run_to_db returns error message rather than run id.
 			return "";
 		}
 		return " --sql --db_host ".$config['database']['db_host']." --db_port ".$config['database']['db_port']." --db_user ".$config['database']['db_user']." --db_pass ".$config['database']['db_pass']." --db_run_id ".$run_id;
