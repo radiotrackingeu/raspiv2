@@ -254,28 +254,27 @@
 			}
 			if($run_id>=0 && $_POST["timer_start_".$i]=="start_boot"){
 				$change= "@reboot root " .$cmd;
-				$search = $cmd_docker($i);
+				$search = cmd_docker($i);
 				$file_to_replace="/tmp/crontab";
 				$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"";
-				
-				start_docker_echo($cmd_change,"tab_logger_settings","Receiver ".$i." will now start and log upon boot with the given settings");
+				start_docker_echo($cmd_change,"tab_logger_settings","Receiver ".$i." will now start and log upon boot with the given settings.");
 			}
 			if($_POST["timer_start_".$i]=="start_no"){
-				$change= "#".$cmd_docker($i);
-				$search = $cmd_docker($i);
+				$change= "#".cmd_docker($i);
+				$search = cmd_docker($i);
 				$file_to_replace="/tmp/crontab";
 				$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"";
-				start_docker($cmd_change,"tab_logger_settings");
+				start_docker_echo($cmd_change,"tab_logger_settings", "Receiver ".$i." will not start automatically.");
 			}
 			if($run_id>=0 && $_POST["timer_start_".$i]=="start_time"){
 				#new input
 				$change= substr($config['logger']['timer_start_time_'.$i],3, 2) . " ".substr($config['logger']['timer_start_time_'.$i], 0, 2)." * * * root " .$cmd;
 				#where to write
-				$search = $cmd_docker($i);
+				$search = cmd_docker($i);
 				$file_to_replace="/tmp/crontab";
 				$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
 				//echo $cmd_change;
-				start_docker_echo($cmd_change,"tab_logger_settings","Receiver ".$i." will now start and log at given time");			
+				start_docker_echo($cmd_change,"tab_logger_settings","Receiver ".$i." will now start and log every day at ".$config['logger']['timer_start_time_'.$i].".");			
 			}
 			if($_POST["timer_stop_".$i]=="stop_no"){
 				$stop_cmd="sudo docker stop \\$(sudo docker ps -a -q --filter name=logger-sdr-d".$i.")";
@@ -283,7 +282,7 @@
 				$search = $stop_cmd;
 				$file_to_replace="/tmp/crontab";
 				$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
-				start_docker($cmd_change,"tab_logger_settings");			
+				start_docker_echo($cmd_change,"tab_logger_settings","Receiver ".$i." will not be stopped automatically.");			
 			}
 			if($_POST["timer_stop_".$i]=="stop_time"){
 				$stop_cmd="sudo docker stop \\$(sudo docker ps -a -q --filter name=logger-sdr-d".$i.")";
@@ -291,7 +290,7 @@
 				$search = $stop_cmd;
 				$file_to_replace="/tmp/crontab";
 				$cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
-				start_docker_echo($cmd_change,"tab_logger_settings","System will now stop logger upon stated time");			
+				start_docker_echo($cmd_change,"tab_logger_settings","Receiver ".$i." will be stopped every day at ".$config['logger']['timer_stop_time_'.$i].".");			
 			}
 			
 		}
