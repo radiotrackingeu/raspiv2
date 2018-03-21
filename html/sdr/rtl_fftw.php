@@ -28,7 +28,7 @@ function setVisibility(menu, label, element) {
 	
 	$GLOBALS["num_rec"] = exec("lsusb | grep -c -e '0bda:2838'");
 	$tmparr=array();
-	$valuearr=array('antenna_id_','antenna_position_N_','antenna_position_E_','antenna_orientation_','antenna_beam_width_','log_gain_','center_freq_','freq_range_','threshold_','nfft_','timestep_','use_sql_','db_host_','db_user_','db_pass_');
+	$valuearr=array('antenna_id_','antenna_position_N_','antenna_position_E_','antenna_orientation_','antenna_beam_width_','log_gain_','center_freq_','freq_range_','threshold_','nfft_','timestep_','use_sql_','timer_start_','timer_start_time_','timer_stop_','timer_stop_time_','timer_mode_');
 	for ($i=0; $i<4; $i++) {
 			foreach($valuearr as $var) {
 				$tmparr[]=$var.$i;
