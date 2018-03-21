@@ -51,6 +51,13 @@ function setVisibility(menu, label, element) {
 <!-------------------------------- Range Logger -------------------------------------------------------------------->
 
 <div id="tab_logger_range" class="city w3-mobile" style="display:none">
+<?php if ($GLOBALS["num_rec"] == 0): ?>
+	<div class= "w3-row-padding">
+		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+		No Receivers detected! Please connect at least one Receiver and reload the page.
+		</div>
+	</div>
+<?php else: ?>
 	<div class= "w3-row-padding">
 		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
 			<form method="POST" enctype="multipart/form-data" action="">
@@ -102,10 +109,18 @@ function setVisibility(menu, label, element) {
 			</div>
 		</div>
 	</div>
+	<?php endif;?>
 </div>
 <!-------------------------------- Single Frequency Logger -------------------------------------------------------------------->
 
 <div id="tab_logger_single" class="city w3-mobile" style="display:none">
+<?php if ($GLOBALS["num_rec"] == 0): ?>
+	<div class= "w3-row-padding">
+		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+		No Receivers detected! Please connect at least one Receiver and reload the page.
+		</div>
+	</div>
+<?php else: ?>
 	<div class= "w3-row-padding">
 		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
 			<form method="POST" enctype="multipart/form-data" action="">
@@ -156,6 +171,7 @@ function setVisibility(menu, label, element) {
 			</div>
 		</div>
 	</div>
+	<?php endif;?>
 </div>
 
 <!------------------------------------------------- Tab Logger Settings ------------------------------------------------->
