@@ -247,10 +247,10 @@
 			}
 			///home/".$_POST["time_pre_log_name"]."\$(date +%Y_%m_%k_%M_%S)'
 			if($run_id>=0 && $_POST["timer_mode_".$i]=="single_freq"){
-				$cmd = cmd_docker($i)." '".cmd_rtl_sdr($config, $i)." 2> ".$file_path." | ".cmd_matched_filters($config, $i).cmd_sql($config, $i, $run_id)." >> ". $file_path." 2>&1'";
+				$cmd = cmd_docker($i)." '".cmd_rtl_sdr($config, $i)." 2> ".$file_path." | ".cmd_matched_filters($config, $i).cmd_sql($config, $i, $run_id)." >> ". $file_path." 2>\&1'";
 			}
 			if($run_id>=0 && $_POST["timer_mode_".$i]=="freq_range"){
-				$cmd = cmd_docker($i)." '".cmd_rtl_sdr($config, $i)." 2> ".$file_path." | ".cmd_liquidsdr($config, $i).cmd_sql($config, $i, $run_id)." >> ". $file_path." 2>&1'";
+				$cmd = cmd_docker($i)." '".cmd_rtl_sdr($config, $i)." 2> ".$file_path." | ".cmd_liquidsdr($config, $i).cmd_sql($config, $i, $run_id)." >> ". $file_path." 2>\&1'";
 			}
 			if($run_id>=0 && $_POST["timer_start_".$i]=="start_boot"){
 				$change= "@reboot root " .$cmd;
