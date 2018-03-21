@@ -331,7 +331,7 @@ function setVisibility(menu, label, element) {
 			<label for="signal_freq">Signal freq in Hz:</label>
 			<div id="signal_freq" class="w3-bar">
 				<input class="w3-mobile" type="number" value="150100000" pattern='[0-9]+' name="signal_freq_from"> - 
-				<input class="w3-mobile" type="number" value="150110000" pattern='[0-9]+' name="signal_freq_to">
+				<input class="w3-mobile" type="number" value="150130000" pattern='[0-9]+' name="signal_freq_to">
 			</div><br>
 			<label for="signal_strength">Minimum signal strength:<br></label>
 			<input class="w3-mobile" type="number" value="30" pattern='[0-9]+' name="signal_strength" id="signal_strength"><br><br>
@@ -344,6 +344,9 @@ function setVisibility(menu, label, element) {
 
 	<?php if (isset($_POST['get_signals'])) : ?>
 	<div class= "w3-row-padding">
+		<style>
+			.w3-hoverable tbody tr:hover{background-color:#795548}
+		</style>
 		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
 			<?php
 				$con = @mysqli_connect($config['database']['db_host'].":".$config['database']['db_port'], $config['database']['db_user'], $config['database']['db_pass'],"rteu");
