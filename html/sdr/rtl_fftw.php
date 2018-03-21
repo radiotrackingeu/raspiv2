@@ -46,6 +46,7 @@ function setVisibility(menu, label, element) {
 	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_range')">Frequency Range</button>
 	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_single')">Single Frequency</button>
 	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_settings')">Settings</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_signals')">Latest Signals</button>
 </div>
 
 <!-------------------------------- Range Logger -------------------------------------------------------------------->
@@ -54,7 +55,7 @@ function setVisibility(menu, label, element) {
 <?php if ($GLOBALS["num_rec"] == 0): ?>
 	<div class= "w3-row-padding">
 		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
-		No Receivers detected! Please connect at least one Receiver and reload the page.
+		No receivers detected! Please connect at least one receiver and reload the page.
 		</div>
 	</div>
 <?php else: ?>
@@ -117,7 +118,7 @@ function setVisibility(menu, label, element) {
 <?php if ($GLOBALS["num_rec"] == 0): ?>
 	<div class= "w3-row-padding">
 		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
-		No Receivers detected! Please connect at least one Receiver and reload the page.
+		No receivers detected! Please connect at least one receiver and reload the page.
 		</div>
 	</div>
 <?php else: ?>
@@ -239,15 +240,15 @@ function setVisibility(menu, label, element) {
 			<div id="det<?=$i?>_settings" class="w3-container w3-hide">
 				<p>				
 					<label for="threshold_<?=$i?>"> Log Level </label>
-					<input class="w3-input w3-mobile" style="width:30%" type="text" id="threshold_<?=$i?>" name="threshold_<?=$i?>" value="<?php echo isset($config['logger']['threshold_'.$i]) ? $config['logger']['threshold_'.$i] : 10 ?>">
+					<input class="w3-input w3-mobile" style="width:30%" type="number" id="threshold_<?=$i?>" name="threshold_<?=$i?>" value="<?php echo isset($config['logger']['threshold_'.$i]) ? $config['logger']['threshold_'.$i] : 10 ?>">
 				</p>
 				<p>
 					Number of bins in FFT (default: 400):<br>
-					<input class="w3-input w3-mobile" style="width:30%" type="text" id="nfft_<?=$i?>" name="nfft_<?=$i?>" value="<?php echo isset($config['logger']['nfft_'.$i]) ? $config['logger']['nfft_'.$i] : 400 ?>">
+					<input class="w3-input w3-mobile" style="width:30%" type="number" id="nfft_<?=$i?>" name="nfft_<?=$i?>" value="<?php echo isset($config['logger']['nfft_'.$i]) ? $config['logger']['nfft_'.$i] : 400 ?>">
 				</p>
 				<p>
 					Number of samples per FFT (default: 50):<br>
-					<input class="w3-input w3-mobile" style="width:30%" type="text" id="timestep_<?=$i?>" name="timestep_<?=$i?>" value="<?php echo isset($config['logger']['timestep_'.$i]) ? $config['logger']['timestep_'.$i] : 50 ?>">
+					<input class="w3-input w3-mobile" style="width:30%" type="number" id="timestep_<?=$i?>" name="timestep_<?=$i?>" value="<?php echo isset($config['logger']['timestep_'.$i]) ? $config['logger']['timestep_'.$i] : 50 ?>">
 				</p>
 				<br>
 			</div>
@@ -316,7 +317,60 @@ function setVisibility(menu, label, element) {
 	</div>
 </div>
 
+<!------------------------------------------------- Tab Latest Signals ------------------------------------------------->
+
+<div id="tab_logger_signals" class="city w3-mobile" style="display:<?php echo (isset($_POST['get_signals']) ? 'block' : 'none')?>">
+	<div class= "w3-row-padding">
+		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+		<form method='POST' enctype="multipart/form-data" action="" onsubmit="openCity(event, 'tab_logger_signals')">
+			<label for="signal_length">Signal length in s:</label>
+			<div id="signal_length" class="w3-bar">
+				<input class="w3-mobile" type="number" value="0.02" pattern='[0-9\.]+' title="Use . as decimal separator" name="signal_length_from"> - 
+				<input class="w3-mobile" type="number" value="0.03" pattern='[0-9\.]+' title="Use . as decimal separator" name="signal_length_to">
+			</div><br>
+			<label for="signal_freq">Signal freq in Hz:</label>
+			<div id="signal_freq" class="w3-bar">
+				<input class="w3-mobile" type="number" value="150100000" pattern='[0-9]+' name="signal_freq_from"> - 
+				<input class="w3-mobile" type="number" value="150110000" pattern='[0-9]+' name="signal_freq_to">
+			</div><br>
+			<label for="signal_strength">Minimum signal strength:<br></label>
+			<input class="w3-mobile" type="number" value="30" pattern='[0-9]+' name="signal_strength" id="signal_strength">
+			<input type="submit" class="w3-btn w3-brown" value="Get Signals" name="get_signals"/>
+		</form>
+		</div>
+	</div>
+
+	<div class= "w3-row-padding">
+		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+		<?php
+			if (isset($_POST['get_signals'])) {
+			$con = @mysqli_connect($config['database']['db_host'].":".$config['database']['db_port'], $config['database']['db_user'], $config['database']['db_pass']);
+			if (mysqli_connect_errno()) {
+				echo "Connection to ".$config['database']['db_host'].":".$config['database']['db_port']." failed: " . mysqli_connect_error();	
+			//} else {
+				echo "<table>";
+				$select = "SELECT signals.*, runs.center_freq FROM signals LEFT JOIN runs ON signals.run=runs.id";
+				$sig_length = "`duration` >= ".$_POST['signal_length_from']." AND `duration` <= ".$_POST['signal_length_to'];
+				$sig_freq = "`signal_freq` >= ".$_POST['signal_freq_from']." - `center_freq` AND `signal_freq` <= ".$_POST['signal_freq_to']." - `center_freq`";
+				$sig_strength = "`max_signal`>= ".$_POST['signal_strength'];
+				$query = $select." WHERE ".$sig_length." AND ".$sig_freq." AND ".$sig_strength." LIMIT 20";
+				echo $query;
+				$result = mysqli_query($con, $query);
+				while ($row = mysqli_fetch_array($result)) {
+					echo "<tr><td> ".$row['timestamp']."</td><td>".$row['duration']."</td><td>".$row['signal_freq']+$row['center_freq']."</td><td>".$row['signal_bw']."</td><td>".$row['max_signal']."</td></tr>";
+				}
+				echo "</table>";
+				mysqli_close($con);
+			}
+			}
+			
+		?>
+		</div>
+	</div>
+</div>
+
 <!-- Enter text here-->
+
 
 <?php
 	//load footer
