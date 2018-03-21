@@ -178,11 +178,11 @@ function setVisibility(menu, label, element) {
 <!------------------------------------------------- Tab Logger Settings ------------------------------------------------->
 
 <div id="tab_logger_settings" class="city w3-mobile" style="display:none">
+			<form method='POST' id="rec_settings" enctype="multipart/form-data" action="<?php update_Config($config);?>">
 <div class="w3-row-padding">
 	<?php for ($i=0; $i<4; $i++): ?>
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
-			<form method='POST' id="rec<?=$i?>_form" enctype="multipart/form-data" action="<?php update_Config($config);?>">
 			<h3>Receiver <?=$i?></h3><br>
 			<button type=button onclick="myAccordion('rec<?=$i?>_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Receiver Settings</h4></button>
 			
@@ -297,12 +297,12 @@ function setVisibility(menu, label, element) {
 					<label class="w3-margin-right" for="use_sql_<?=$i?>_n">No</label>	
 				</p>
 			</div>
-			<input class="w3-input w3-mobile w3-btn w3-brown" style="width:30%; margin-left:auto; margin-right:10%;" type="submit" value="Change Settings" id="change_logger_settings_<?=$i?>" name="change_logger_settings_<?=$i?>"><br>
-			</form>
 		</div>
 	</div>
 	<?php endfor;?>
 	</div>
+			</form>
+			<input form="rec_settings" class="w3-mobile w3-btn w3-brown" style="position:fixed;right:140px;bottom:70px;" type="submit" value="Change Settings" id="change_logger_settings" name="change_logger_settings"><br>
 	<div class="w3-row-padding">
 		<div class="w3-container w3-green w3-round" style="margin-right:8px;margin-left:8px">
 			<form method='POST' enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
