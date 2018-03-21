@@ -334,39 +334,53 @@ function setVisibility(menu, label, element) {
 				<input class="w3-mobile" type="number" value="150110000" pattern='[0-9]+' name="signal_freq_to">
 			</div><br>
 			<label for="signal_strength">Minimum signal strength:<br></label>
-			<input class="w3-mobile" type="number" value="30" pattern='[0-9]+' name="signal_strength" id="signal_strength">
+			<input class="w3-mobile" type="number" value="30" pattern='[0-9]+' name="signal_strength" id="signal_strength"><br><br>
+			<label for="num_results">Number of signals to get:<br></label>
+			<input class="w3-mobile" type="number" value="30" pattern='[0-9]+' name="num_results" id="num_results"><br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Get Signals" name="get_signals"/>
 		</form>
 		</div>
 	</div>
 
+	<?php if (isset($_POST['get_signals'])) : ?>
 	<div class= "w3-row-padding">
 		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
-		<?php
-			if (isset($_POST['get_signals'])) {
-			$con = @mysqli_connect($config['database']['db_host'].":".$config['database']['db_port'], $config['database']['db_user'], $config['database']['db_pass']);
-			if (mysqli_connect_errno()) {
-				echo "Connection to ".$config['database']['db_host'].":".$config['database']['db_port']." failed: " . mysqli_connect_error();	
-			//} else {
-				echo "<table>";
-				$select = "SELECT signals.*, runs.center_freq FROM signals LEFT JOIN runs ON signals.run=runs.id";
-				$sig_length = "`duration` >= ".$_POST['signal_length_from']." AND `duration` <= ".$_POST['signal_length_to'];
-				$sig_freq = "`signal_freq` >= ".$_POST['signal_freq_from']." - `center_freq` AND `signal_freq` <= ".$_POST['signal_freq_to']." - `center_freq`";
-				$sig_strength = "`max_signal`>= ".$_POST['signal_strength'];
-				$query = $select." WHERE ".$sig_length." AND ".$sig_freq." AND ".$sig_strength." LIMIT 20";
-				echo $query;
-				$result = mysqli_query($con, $query);
-				while ($row = mysqli_fetch_array($result)) {
-					echo "<tr><td> ".$row['timestamp']."</td><td>".$row['duration']."</td><td>".$row['signal_freq']+$row['center_freq']."</td><td>".$row['signal_bw']."</td><td>".$row['max_signal']."</td></tr>";
+			<?php
+				$con = @mysqli_connect($config['database']['db_host'].":".$config['database']['db_port'], $config['database']['db_user'], $config['database']['db_pass'],"rteu");
+				if (mysqli_connect_errno()) {
+					echo "Connection to ".$config['database']['db_host'].":".$config['database']['db_port']." failed: " . mysqli_connect_error();
+				} else {
+					$select = "SELECT signals.*, runs.center_freq FROM signals LEFT JOIN runs ON signals.run=runs.id";
+					$sig_length = "duration >= ".$_POST['signal_length_from']." AND duration <= ".$_POST['signal_length_to'];
+					$sig_freq = "signal_freq >= ".$_POST['signal_freq_from'].".0 - center_freq AND signal_freq <= ".$_POST['signal_freq_to'].".0 - center_freq";
+					$sig_strength = "max_signal>= ".$_POST['signal_strength'];
+					$query = $select." WHERE ".$sig_length." AND ".$sig_freq." AND ".$sig_strength." LIMIT ".$_POST['num_results'];
+					//echo $query."<br>";
+					$result = mysqli_query($con, $query);
+					//echo mysqli_error($con);
+					if (!$result)
+							echo mysqli_info($con);
+					elseif (mysqli_num_rows($result) == 0)
+							echo "<br><b>No entries matched the given parameters!</b><br>";
+					else {
+							echo "<div class='w3-responsive'>\n";
+							echo "<table class='w3-table w3-hoverable w3-bordered'>\n";
+							echo "<tr class='w3-brown'><th>Timestamp</th><th>Duration</th><th>Frequency</th><th>Bandwidth</th><th>Strength</th></tr>\n";
+							while ($row = mysqli_fetch_array($result)) {
+									$sig_freq=(float)$row['signal_freq'];
+									$center_freq=(float)$row['center_freq'];
+									echo "<tr><td> ".$row['timestamp']." </td><td> ".$row['duration']." </td><td> ".($sig_freq+$center_freq)." </td><td> ".$row['signal_bw']." </td><td> ".$row['max_signal']." </td></tr>\n";
+							}
+							mysqli_free_result($result);
+							echo "</table>\n";
+							echo "</div>\n";
+					}
+					mysqli_close($con);
 				}
-				echo "</table>";
-				mysqli_close($con);
-			}
-			}
-			
-		?>
+			?>
 		</div>
 	</div>
+	<?php endif;?>
 </div>
 
 <!-- Enter text here-->
