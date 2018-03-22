@@ -14,8 +14,8 @@ function refresh_time(){
  
 function get_Time() {
 	var t = new Date();
-	document.getElementById("client_time").innerHTML = t.getTime();
-	document.getElementById("client_time_input").innerHTML = t.getTime();
+	document.getElementById("client_time").innerHTML = t.toUTCString();
+	document.getElementById("client_time_input").value = t.toUTCString();
 	rf=refresh_time();
 }
 </script>
@@ -61,7 +61,7 @@ function get_Time() {
 			Current date and time on your device:  <b id="client_time"></b><br><br>
 		<form method="POST" id="set_time_from_client" enctype="multipart/form-data" action="">
 			<input type="submit" class="w3-btn w3-brown" value="Update date and time" name="update_date_from_client">
-			<input type="hidden" name="client_time_input" id="client_time_input">
+			<input type="hidden" name="client_time_input" id="client_time_input" value="">
 		</form>
 	</div>
 </div>	
