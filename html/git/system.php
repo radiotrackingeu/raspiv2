@@ -14,8 +14,8 @@ function refresh_time(){
  
 function get_Time() {
 	var t = new Date();
-	document.getElementById("client_time").innerHTML = t.toUTCString();
-	document.getElementById("client_time_input").innerHTML = t.toUTCString();
+	document.getElementById("client_time").innerHTML = t.getTime();
+	document.getElementById("client_time_input").innerHTML = t.getTime();
 	rf=refresh_time();
 }
 </script>
