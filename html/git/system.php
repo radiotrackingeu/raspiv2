@@ -6,8 +6,20 @@
 <link rel="stylesheet" href="/resources/weblib/w3.css">
 <link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
 <link rel="stylesheet" href="/resources/additional.css">
+<script type="text/javascript">
+function refresh_time(){
+	var timeout=1000;
+	t=setTimeout("get_Time()", timeout);
+ }
+ 
+function get_Time() {
+	var t = new Date();
+	document.getElementById("client_time").innerHTML = t.toUTCString();
+	rf=refresh_time();
+}
+</script>
 
-<body>
+<body onload="get_Time()">
 
 <?php
 	//load config
@@ -37,13 +49,17 @@
 </div>	
 
 <div id="date" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
+	<div class="w3-panel w3-green w3-round w3-padding">
 		<form method="POST">
-			<br>
 			You can leave out the weekday <br><br>
 			<input type="text" name="new_date" value="<?php echo shell_exec("date")?>"> <br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Update date and time" name="update_date"><br>
-			<br>
+		</form>
+	</div>
+	<div class="w3-panel w3-green w3-round w3-padding">
+			Current date and time on your device:  <b id="client_time"></b><br><br>
+		<form method="POST" id="set_time_from_client" enctype="multipart/form-data" action="">
+			<input type="submit" class="w3-btn w3-brown" value="Update date and time" name="update_date_from_client">
 		</form>
 	</div>
 </div>	
@@ -106,6 +122,7 @@
 		<br> The Temperature of the CPU is:  <?php echo shell_exec("cat /sys/class/thermal/thermal_zone0/temp") ?>
 	</div>
 </div>
+
 
 <!-- Enter text here-->
 <?php

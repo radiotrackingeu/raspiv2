@@ -465,6 +465,10 @@
 		$cmd = "sudo docker run -t --rm --privileged git:1.0 date --set \"".$_POST["new_date"]."\" 2>&1";
 		start_docker($cmd,'date');
 	}
+	if (isset($_POST["update_date"])){
+		$cmd = "sudo docker run -t --rm --privileged git:1.0 date --set \"".$_POST["client_time"]."\" 2>&1";
+		start_docker($cmd,'date');
+	}
 	if (isset($_POST["change_hostname"])){
 		$cmd = "sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git:1.0 bash /tmp1/change_hostname.sh ".$_POST["new_hostname"]." 2>&1";
 		start_docker($cmd,'hostname');
