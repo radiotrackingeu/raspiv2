@@ -29,4 +29,53 @@ function myAccordion(id) {
         x.className = x.className.replace(" w3-show", "");
     }
 }
+
+	
+	function createAjaxRequestObject() {
+            var xmlhttp;
+
+            if(window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else { // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            // Create the object
+            return xmlhttp;
+        }
+
+        function AjaxPost(ajaxURL, parameters, onComplete) {
+            var http3 = createAjaxRequestObject();
+
+            http3.onreadystatechange = function() {
+                if(http3.readyState == 4) {
+                    if(http3.status == 200) {
+                        if(onComplete) {
+                            onComplete(http3.responseText);
+                        }
+                    }
+                }
+            };
+
+            // Create parameter string
+            var parameterString = "";
+            var isFirst = true;
+            for(var index in parameters) {
+                if(!isFirst) {
+                    parameterString += "&";
+                } 
+                parameterString += encodeURIComponent(index) + "=" + encodeURIComponent(parameters[index]);
+                isFirst = false;
+            }
+
+            // Make request
+            http3.open("POST", ajaxURL, true);
+            http3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            http3.send(parameterString);
+        }
+
+        function completedAJAX(response) {
+            alert(response);
+        }
+	
 </script>

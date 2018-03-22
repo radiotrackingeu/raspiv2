@@ -4,7 +4,7 @@
 <title>radio-tracking.eu</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/resources/weblib/w3.css">
-<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/weblib/css/fontawesome-all.css">
 
 <link rel="stylesheet" href="/resources/additional.css">
 
@@ -183,7 +183,12 @@ function setVisibility(menu, label, element) {
 	<?php for ($i=0; $i<4; $i++): ?>
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
-			<h3>Receiver <?=$i?></h3><br>
+			<h3>Receiver <?=$i?>
+				<?php if ($i==0) :?> <span class="w3-tooltip" style="float:right">
+					<span class="w3-text w3-small w3-round w3-brown w3-tag">Copy settings (except name and orientation) to all receivers.</span>
+					<i class="fas fa-clone" onclick="copyInput()" style="cursor:pointer;float:right"></i>
+				</span><?php endif;?>
+			</h3><br>
 			<button type=button onclick="myAccordion('rec<?=$i?>_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Receiver Settings</h4></button>
 			
 			<div id="rec<?=$i?>_settings" class="w3-container w3-hide">
@@ -213,10 +218,10 @@ function setVisibility(menu, label, element) {
 					<input class="w3-input w3-mobile" style="width:70%" type="text" id="antenna_id_<?=$i?>" name="antenna_id_<?=$i?>" value="<?php echo isset($config['logger']['antenna_id_'.$i]) ? $config['logger']['antenna_id_'.$i] : "rteu_r".$i."_"?>">
 					<small>This - together with a timestamp - will be used as filename and antenna id in the database.</small>
 				</p>
-					Antenna Position:
-					<button type="button" onclick="getLocation()">Try It</button>
-					<p id="demo"></p>
-				<div class="w3-half" style = "margin-bottom: 16px">
+				Antenna Position:&emsp;<span class="w3-tooltip"><i class="fas fa-map-marker-alt" onclick="getLocation(<?=$i?>,1)" style="cursor:pointer"></i><span class="w3-text w3-small w3-round w3-brown w3-tag">
+							Get Position from Browser.
+						</span></span><br>
+				<div id="input_position_<?=i?>" class="w3-half" style = "margin-bottom: 16px">
 					<label>Latitude</label>
 					<input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_position_N_<?=$i?>" name="antenna_position_N_<?=$i?>" value="<?php echo isset($config['logger']['antenna_position_N_'.$i]) ? $config['logger']['antenna_position_N_'.$i] : 1.234?>">
 				</div>
@@ -224,8 +229,11 @@ function setVisibility(menu, label, element) {
 					<label>Longitude</label>
 					<input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_position_E_<?=$i?>" name="antenna_position_E_<?=$i?>" value="<?php echo isset($config['logger']['antenna_position_E_'.$i]) ? $config['logger']['antenna_position_E_'.$i] : 5.678?>">
 				</div>
+				
 				<p>
-					Antenna Orientation in degrees (i.e. N=0, E=90, S=180):<br>
+					Antenna Orientation in degrees (i.e. N=0, E=90, S=180):&emsp;<span class="w3-tooltip"><i class="fas fa-location-arrow" onclick="getLocation(<?=$i?>,0)" style="cursor:pointer"></i><span class="w3-text w3-small w3-round w3-brown w3-tag">
+							Get Position from Browser.
+						</span></span><br><br>
 					<input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_orientation_<?=$i?>" name="antenna_orientation_<?=$i?>" value="<?php echo isset($config['logger']['antenna_orientation_'.$i]) ? $config['logger']['antenna_orientation_'.$i] : 42?>">
 				</p>
 				<p>
@@ -291,9 +299,9 @@ function setVisibility(menu, label, element) {
 							Go to Data <i class="fa fa-caret-right" aria-hidden="true"></i> Start <i class="fa fa-caret-right" aria-hidden="true"></i> Database to setup connection details.
 						</span>
 					</span><br>
-					<input class="w3-radio w3-mobile" id="use_sql_<?=$i?>_y" type="radio" name="use_sql_<?=$i?>" value="Yes" <?php echo isset($config['logger']['use_sql_'.$i]) && $config['logger']['use_sql_'.$i] == "Yes" ? 'checked="checked"' : ''?>>
+					<input class="w3-radio w3-mobile" id="use_sql_<?=$i?>_y" type="radio" name="use_sql_<?=$i?>" value="Yes" <?php echo isset($config['logger']['use_sql_'.$i]) && $config['logger']['use_sql_'.$i] == "Yes" ? 'checked="true"' : ''?>>
 					<label class="w3-margin-right" for="use_sql_<?=$i?>_y">Yes</label>
-					<input class="w3-radio w3-mobile" id="use_sql_<?=$i?>_n" type="radio" name="use_sql_<?=$i?>" value="No" <?php echo isset($config['logger']['use_sql_'.$i]) && $config['logger']['use_sql_'.$i] == "No" ? 'checked="checked"' : ''?>>
+					<input class="w3-radio w3-mobile" id="use_sql_<?=$i?>_n" type="radio" name="use_sql_<?=$i?>" value="No" <?php echo isset($config['logger']['use_sql_'.$i]) && $config['logger']['use_sql_'.$i] == "No" ? 'checked="false"' : ''?>>
 					<label class="w3-margin-right" for="use_sql_<?=$i?>_n">No</label>	
 				</p>
 			</div>
@@ -386,7 +394,16 @@ function setVisibility(menu, label, element) {
 	<?php endif;?>
 </div>
 
-<!-- Enter text here-->
+
+<div id="geoModal" class="w3-modal">
+  <div class="w3-modal-content">
+    <div class="w3-container">
+      <span onclick="document.getElementById('geoModal').style.display='none'" 
+      class="w3-button w3-display-topright">&times;</span>
+      <p id="modalText"></p>
+    </div>
+  </div>
+</div>
 
 
 <?php
@@ -399,20 +416,55 @@ function setVisibility(menu, label, element) {
  ?>
  
  <script>
-var xy = document.getElementById("demo");
 
-function getLocation() {
+function getLocation(i,loc) {
+
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
+		if (loc) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				showPosition(i,position);
+			});
+		} else {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				showHeading(i,position);
+			});
+		}
     } else { 
-        xy.innerHTML = "Geolocation is not supported by this browser.";
+        document.getElementById("modalText").innerText = "<b> Geolocation is not supported by this browser.</b>";
+		document.getElementById('geoModal').style.display='block';
     }
 }
 
-function showPosition(position) {
-    xy.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;
+function showPosition(i, position) {
+	document.getElementById("antenna_position_N_"+i).value = position.coords.latitude;
+	document.getElementById("antenna_position_E_"+i).value = position.coords.longitude;
 }
+
+function showHeading(i, position) {
+
+	document.getElementById("antenna_orientation_"+i).value = position.heading;
+}
+
+function copyInput() {
+	var exclude= ["antenna_id_", "antenna_orientation_", "change_logger_setting"];
+	var elements = document.getElementById("rec_settings").elements;
+	for (var i=0, element; element = elements[i++];) {
+		<!-- console.log(element.id); -->
+		<!-- console.log(element.id.charAt(element.id.length-1)); -->
+		var name=element.getAttribute("name");
+		if (name==null)
+			continue;
+		var nonum=name.substr(0,name.length-1);
+		if (exclude.indexOf(nonum)==-1 && name.charAt(name.length-1)!="0") {
+			var ref=elements[nonum.concat("0")];
+			element.value = ref.value;
+
+		}
+
+	}
+	return 0;
+}
+
 </script>
 
 </body>
