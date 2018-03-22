@@ -465,7 +465,7 @@
 		$cmd = "sudo docker run -t --rm --privileged git:1.0 date --set \"".$_POST["new_date"]."\" 2>&1";
 		start_docker($cmd,'date');
 	}
-	if (isset($_POST["update_date"])){
+	if (isset($_POST["update_date_from_client"])){
 		$cmd = "sudo docker run -t --rm --privileged git:1.0 date --set \"".$_POST["client_time"]."\" 2>&1";
 		start_docker($cmd,'date');
 	}
