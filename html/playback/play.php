@@ -103,7 +103,7 @@
 			if ($total==0)
 				echo "No files given!<br>";
 			else
-				$uploads_dir = '/files';
+				$uploads_dir = '/var/www/html/playback/files';
 				foreach ($_FILES["file_wav"]["error"] as $key => $error) {
 					if ($error == UPLOAD_ERR_OK) {
 						$tmp_name = $_FILES["file_wav"]["tmp_name"][$key];
