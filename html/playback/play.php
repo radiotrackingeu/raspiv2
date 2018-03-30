@@ -68,7 +68,7 @@
 	<?php
 		if (isset($_POST["start_playback"])){
 				echo '<pre>';
-				system("sudo docker run -td --restart=unless-stopped --privileged -v /var/www/html/playback/files/:/tmp/ playback:1.0 bash -c 'AUDIODEV=hw:0 play /tmp/".$_POST['playback_file']." repeat 10000' #2>&1 > /dev/null", $ret);
+				system("sudo docker run -t --restart=always --privileged -v /var/www/html/playback/files/:/tmp/ playback:1.0 bash -c 'AUDIODEV=hw:0 play /tmp/".$_POST['playback_file']." repeat 10000' 2>&1 > /dev/null", $ret);
 				echo '</pre>';
 		}
 
