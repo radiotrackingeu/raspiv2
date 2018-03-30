@@ -113,7 +113,7 @@
 					#	continue;
 					#}
 					echo $i;
-					if (move_uploaded_file($_FILES["file_wav"]["tmp_name"][$i], "files/".$_FILES["file_wav"]["name"][$i])){
+					if (move_uploaded_file($_FILES["file_wav"]["tmp_name"][$i], "/var/www/html/playback/files/".$_FILES["file_wav"]["name"][$i])){
 								echo "Successfully uploaded ".$_FILES["file_wav"]["name"][$i].".<br>";
 							} else {
 								echo "Could not upload ".$_FILES["file_wav"]["name"][$i]."!<br>";
