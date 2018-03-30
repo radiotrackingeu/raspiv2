@@ -98,23 +98,23 @@
 		}
 		
 		if (isset($_POST["ul_wav"])) {
-			$total = count($_FILES["file_wav"]["name"]);
+			$total = count($_FILES["file_wav"]["tmp_name"]);
 			if ($total==0)
 				echo "No files given!<br>";
 			else
 				for ($i=0; $i<$total; $i++) {
-					if ($_FILES["file_wav"]["name"] == "") continue;
+					if ($_FILES["file_wav"]["tmp_name"] == "") continue;
 					if ($_FILES["file_wav"]["size"] == 0 ) continue;
 					$finfo = finfo_open(FILEINFO_MIME_TYPE);
-					$mtype = finfo_file($finfo,$_FILES["file_wav"]["name"][$i]);
+					$mtype = finfo_file($finfo,$_FILES["file_wav"]["tmp_name"][$i]);
 					if ($mtype != "audio/x-wav") {
-						echo $_FILES["file_wav"]["name"][$i]." is not a .wav file and was skipped.<br>";
+						echo $_FILES["file_wav"]["tmp_name"][$i]." is not a .wav file and was skipped.<br>";
 						continue;
 					}
-					if (move_uploaded_file($_FILES["file_wav"]["name"][$i], "files/".$_FILES["file_wav"]["name"][$i])){
-								echo "Successfully uploaded ".$_FILES["file_wav"]["name"][$i].".<br>";
+					if (move_uploaded_file($_FILES["file_wav"]["tmp_name"][$i], "files/".$_FILES["file_wav"]["tmp_name"][$i])){
+								echo "Successfully uploaded ".$_FILES["file_wav"]["tmp_name"][$i].".<br>";
 							} else {
-								echo "Could not upload ".$_FILES["file_wav"]["name"][$i]."!<br>";
+								echo "Could not upload ".$_FILES["file_wav"]["tmp_name"][$i]."!<br>";
 							}
 				}
 		}
