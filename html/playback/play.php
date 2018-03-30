@@ -29,7 +29,7 @@
 	Select file to play:<br>
 	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<select class="w3-mobile"  name="playback_file">
-	<?php foreach(glob("files/*.wav") as $filename) {
+	<?php foreach(glob("files/*") as $filename) {
 		echo "<option value='".basename($filename)."'>".basename($filename)."</option>";
 	}?>
 	</select>
@@ -52,7 +52,7 @@
 	Select files to delete:<br>
 	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<select class="w3-mobile"  name="files_delete[]" multiple>
-		<?php foreach(glob("files/*.wav") as $filename) {
+		<?php foreach(glob("files/*") as $filename) {
 			echo "<option value='".basename($filename)."'>".basename($filename)."</option>";
 		}?>
 		</select>
