@@ -327,7 +327,7 @@
 	if (isset($_POST["upload_cfg"])){
 		$target_dir = "/connect/";
 		$target_file = "/var/www/html/connect/client.conf";
-		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+		#$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 			echo "The file has been uploaded.";
 		} else {
