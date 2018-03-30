@@ -109,6 +109,7 @@
 					$mtype = finfo_file($finfo,$_FILES["file_wav"]["tmp_name"][$i]);
 					if ($mtype != "audio/x-wav") {
 						echo $_FILES["file_wav"]["name"][$i]." is not a .wav file and was skipped.<br>";
+						echo $i;
 						continue;
 					}
 					if (move_uploaded_file($_FILES["file_wav"]["tmp_name"][$i], "files/".$_FILES["file_wav"]["name"][$i])){
