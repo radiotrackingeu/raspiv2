@@ -69,7 +69,6 @@
 		ini_set('display_errors', 1);
 		ini_set('display_startup_errors', 1);
 		error_reporting(E_ALL);
-		ini_set('display_errors', 1);
 		if (isset($_POST["start_playback"])){
 				echo '<pre>';
 				system("sudo docker run -td --restart=unless-stopped --privileged -v /var/www/html/playback/files/:/tmp/ playback:1.0 play /tmp/".$_POST['playback_file']." repeat 10000 2>&1 > /dev/null", $ret);
