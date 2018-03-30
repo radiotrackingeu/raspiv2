@@ -105,12 +105,12 @@
 				for ($i=0; $i<$total; $i++) {
 					if ($_FILES["file_wav"]["name"] == "") continue;
 					if ($_FILES["file_wav"]["size"] == 0 ) continue;
-					$finfo = finfo_open(FILEINFO_MIME_TYPE);
-					$mtype = finfo_file($finfo,$_FILES["file_wav"]["tmp_name"][$i]);
-					if ($mtype != "audio/x-wav") {
-						echo $_FILES["file_wav"]["name"][$i]." is not a .wav file and was skipped.<br>";
-						continue;
-					}
+					#$finfo = finfo_open(FILEINFO_MIME_TYPE);
+					#$mtype = finfo_file($finfo,$_FILES["file_wav"]["tmp_name"][$i]);
+					#if ($mtype != "audio/x-wav") {
+					#	echo $_FILES["file_wav"]["name"][$i]." is not a .wav file and was skipped.<br>";
+					#	continue;
+					#}
 					if (move_uploaded_file($_FILES["file_wav"]["tmp_name"][$i], "files/".$_FILES["file_wav"]["name"][$i])){
 								echo "Successfully uploaded ".$_FILES["file_wav"]["name"][$i].".<br>";
 							} else {
