@@ -66,6 +66,8 @@
 	
 	<p>
 	<?php
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 		if (isset($_POST["start_playback"])){
@@ -103,12 +105,12 @@
 			if ($total==0)
 				echo "No files given!<br>";
 			else
-				$uploads_dir = '/var/www/html/playback/files';
+				$uploads_dir = '/var/www/html/playback/files/';
 				foreach ($_FILES["file_wav"]["error"] as $key => $error) {
 					if ($error == UPLOAD_ERR_OK) {
 						$tmp_name = $_FILES["file_wav"]["tmp_name"][$key];
 						$name = basename($_FILES["file_wav"]["name"][$key]);
-						move_uploaded_file($tmp_name, "$uploads_dir/$name");
+						move_uploaded_file($tmp_name, $uploads_dir..$name);
 					}
 				}
 				#for ($i=0; $i<$total; $i++) {
