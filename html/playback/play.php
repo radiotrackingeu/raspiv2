@@ -99,6 +99,7 @@
 		
 		if (isset($_POST["ul_wav"])) {
 			$total = count($_FILES["file_wav"]["name"]);
+			echo $total;
 			if ($total==0)
 				echo "No files given!<br>";
 			else
@@ -109,9 +110,9 @@
 					$mtype = finfo_file($finfo,$_FILES["file_wav"]["tmp_name"][$i]);
 					if ($mtype != "audio/x-wav") {
 						echo $_FILES["file_wav"]["name"][$i]." is not a .wav file and was skipped.<br>";
-						echo $i;
 						continue;
 					}
+					echo $i;
 					if (move_uploaded_file($_FILES["file_wav"]["tmp_name"][$i], "files/".$_FILES["file_wav"]["name"][$i])){
 								echo "Successfully uploaded ".$_FILES["file_wav"]["name"][$i].".<br>";
 							} else {
