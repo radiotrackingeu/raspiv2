@@ -117,7 +117,7 @@
 							} else {
 								echo "Could not upload ".$_FILES["file_wav"]["name"][$i]."!<br>";
 							}
-							echo "/var/www/html/playback/files/".$_FILES["file_wav"]["name"][$i];
+							echo $_FILES["file_wav"]["tmp_name"][$i];
 				}
 		}
 		
