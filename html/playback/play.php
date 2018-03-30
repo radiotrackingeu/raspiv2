@@ -103,22 +103,30 @@
 			if ($total==0)
 				echo "No files given!<br>";
 			else
-				for ($i=0; $i<$total; $i++) {
-					if ($_FILES["file_wav"]["name"] == "") continue;
-					if ($_FILES["file_wav"]["size"] == 0 ) continue;
+				$uploads_dir = '/files';
+				foreach ($_FILES["file_wav"]["error"] as $key => $error) {
+					if ($error == UPLOAD_ERR_OK) {
+						$tmp_name = $_FILES["file_wav"]["tmp_name"][$key];
+						$name = basename($_FILES["file_wav"]["name"][$key]);
+						move_uploaded_file($tmp_name, "$uploads_dir/$name");
+					}
+				}
+				#for ($i=0; $i<$total; $i++) {
+					#if ($_FILES["file_wav"]["name"] == "") continue;
+					#if ($_FILES["file_wav"]["size"] == 0 ) continue;
 					#$finfo = finfo_open(FILEINFO_MIME_TYPE);
 					#$mtype = finfo_file($finfo,$_FILES["file_wav"]["tmp_name"][$i]);
 					#if ($mtype != "audio/x-wav") {
 					#	echo $_FILES["file_wav"]["name"][$i]." is not a .wav file and was skipped.<br>";
 					#	continue;
 					#}
-					echo $i;
-					if (move_uploaded_file($_FILES["file_wav"]["tmp_name"][$i], "/var/www/html/playback/files/".$_FILES["file_wav"]["name"][$i])){
-								echo "Successfully uploaded ".$_FILES["file_wav"]["name"][$i].".<br>";
-							} else {
-								echo "Could not upload ".$_FILES["file_wav"]["name"][$i]."!<br>";
-							}
-				}
+					#echo $i;
+					#if (move_uploaded_file($_FILES["file_wav"]["tmp_name"][$i], "/var/www/html/playback/files/".$_FILES["file_wav"]["name"][$i])){
+					#			echo "Successfully uploaded ".$_FILES["file_wav"]["name"][$i].".<br>";
+					#		} else {
+					#			echo "Could not upload ".$_FILES["file_wav"]["name"][$i]."!<br>";
+					#		}
+				#}
 		}
 		
 		if (isset($_POST["delete_files"])){
