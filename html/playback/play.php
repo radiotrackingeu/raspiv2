@@ -114,7 +114,7 @@
 					#	echo $_FILES["file_wav"]["name"][$i]." is not a .wav file and was skipped.<br>";
 					#	continue;
 					#}
-					echo $_FILES['userfile']['error'][$i];
+					echo $_FILES['file_wav']['error'][$i];
 					if(move_uploaded_file($_FILES["file_wav"]["tmp_name"][$i], "/var/www/html/playback/files/".$_FILES["file_wav"]["name"][$i])){
 								echo "Successfully uploaded ".$_FILES["file_wav"]["name"][$i].".<br>";
 							} else {
