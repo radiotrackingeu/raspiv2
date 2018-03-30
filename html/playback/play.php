@@ -43,7 +43,7 @@
 	Upload Files:
 		<div class="w3-bar w3-padding">
 			<input type="submit" class="w3-btn w3-brown" value="Upload" name="ul_wav">
-			<input type="file" class="w3-btn w3-green" name="file_wav[]" style="hover:none" multiple>
+			<input type="file" class="w3-btn w3-green" name="file_wav[]" style="hover:none" multiple="multiple">
 		</div>
 	</form>
 	Please refresh the page after uploading.
