@@ -66,14 +66,9 @@
 	
 	<p>
 	<?php
-		ini_set('display_errors', 1);
-		ini_set('display_startup_errors', 1);
-		ini_set('upload_max_filesize', '500M');
-		ini_set('post_max_size', '500M');
-		error_reporting(E_ALL);
 		if (isset($_POST["start_playback"])){
 				echo '<pre>';
-				system("sudo docker run -td --restart=unless-stopped --privileged -v /var/www/html/playback/files/:/tmp/ playback:1.0 play /tmp/".$_POST['playback_file']." repeat 10000 2>&1 > /dev/null", $ret);
+				system("sudo docker run -td --restart=unless-stopped --privileged -v /var/www/html/playback/files/:/tmp/ playback:1.0 play /tmp/".$_POST['playback_file']." repeat 10000 ", $ret); #2>&1 > /dev/null
 				echo '</pre>';
 		}
 
@@ -114,13 +109,11 @@
 					#	echo $_FILES["file_wav"]["name"][$i]." is not a .wav file and was skipped.<br>";
 					#	continue;
 					#}
-					echo $_FILES['file_wav']['error'][$i];
 					if(move_uploaded_file($_FILES["file_wav"]["tmp_name"][$i], "/var/www/html/playback/files/".$_FILES["file_wav"]["name"][$i])){
 								echo "Successfully uploaded ".$_FILES["file_wav"]["name"][$i].".<br>";
 							} else {
 								echo "Could not upload ".$_FILES["file_wav"]["name"][$i]."!<br>";
 							}
-							echo $_FILES["file_wav"]["tmp_name"][$i];
 				}
 		}
 		
