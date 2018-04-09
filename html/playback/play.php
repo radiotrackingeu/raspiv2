@@ -29,7 +29,7 @@
 	Select file to play:<br>
 	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<select class="w3-mobile"  name="playback_file">
-	<?php foreach(glob("files/*.wav") as $filename) {
+	<?php foreach(glob("files/*") as $filename) {
 		echo "<option value='".basename($filename)."'>".basename($filename)."</option>";
 	}?>
 	</select>
@@ -43,7 +43,7 @@
 	Upload Files:
 		<div class="w3-bar w3-padding">
 			<input type="submit" class="w3-btn w3-brown" value="Upload" name="ul_wav">
-			<input type="file" class="w3-btn w3-green" name="file_wav[]" style="hover:none" multiple>
+			<input type="file" class="w3-btn w3-green" name="file_wav[]" style="hover:none" multiple="multiple">
 		</div>
 	</form>
 	Please refresh the page after uploading.
@@ -52,7 +52,7 @@
 	Select files to delete:<br>
 	<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<select class="w3-mobile"  name="files_delete[]" multiple>
-		<?php foreach(glob("files/*.wav") as $filename) {
+		<?php foreach(glob("files/*") as $filename) {
 			echo "<option value='".basename($filename)."'>".basename($filename)."</option>";
 		}?>
 		</select>
@@ -66,11 +66,9 @@
 	
 	<p>
 	<?php
-		error_reporting(E_ALL);
-		ini_set('display_errors', 1);
 		if (isset($_POST["start_playback"])){
 				echo '<pre>';
-				system("sudo docker run -td --restart=unless-stopped --privileged -v /var/www/html/playback/files/:/tmp/ playback:1.0 play /tmp/".$_POST['playback_file']." repeat 10000 2>&1 > /dev/null", $ret);
+				system("sudo docker run -t --restart=always --privileged -v /var/www/html/playback/files/:/tmp/ playback:1.0 bash -c 'AUDIODEV=hw:0 play /tmp/".$_POST['playback_file']." repeat 10000' 2>&1 > /dev/null", $ret);
 				echo '</pre>';
 		}
 
@@ -105,13 +103,13 @@
 				for ($i=0; $i<$total; $i++) {
 					if ($_FILES["file_wav"]["name"] == "") continue;
 					if ($_FILES["file_wav"]["size"] == 0 ) continue;
-					$finfo = finfo_open(FILEINFO_MIME_TYPE);
-					$mtype = finfo_file($finfo,$_FILES["file_wav"]["tmp_name"][$i]);
-					if ($mtype != "audio/x-wav") {
-						echo $_FILES["file_wav"]["name"][$i]." is not a .wav file and was skipped.<br>";
-						continue;
-					}
-					if (move_uploaded_file($_FILES["file_wav"]["tmp_name"][$i], "files/".$_FILES["file_wav"]["name"][$i])){
+					#$finfo = finfo_open(FILEINFO_MIME_TYPE);
+					#$mtype = finfo_file($finfo,$_FILES["file_wav"]["tmp_name"][$i]);
+					#if ($mtype != "audio/x-wav") {
+					#	echo $_FILES["file_wav"]["name"][$i]." is not a .wav file and was skipped.<br>";
+					#	continue;
+					#}
+					if(move_uploaded_file($_FILES["file_wav"]["tmp_name"][$i], "/var/www/html/playback/files/".$_FILES["file_wav"]["name"][$i])){
 								echo "Successfully uploaded ".$_FILES["file_wav"]["name"][$i].".<br>";
 							} else {
 								echo "Could not upload ".$_FILES["file_wav"]["name"][$i]."!<br>";
