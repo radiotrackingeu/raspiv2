@@ -81,8 +81,8 @@
 	The camera is configured to start recording if motion is detected and stop as soon as there is no more motion.<br>
 	It also offers a simple configuration menu, where one can configure noise level and detection threshold among other things.<br>
 	The required credentials are the same as for this site.<br><br>
-	<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+4)?>"> Link to Camera Stream</a> <br><br>
-	<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+3)?>"> Link to Camera Configuration</a> <br><br>
+	<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+6)?>"> Link to Camera Stream</a> <br><br>
+	<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+7)?>"> Link to Camera Configuration</a> <br><br>
 	<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+5)?>"> Link to MotionEye</a> <br><br>
 	To download the images of video files either use the software or the following directory:<br><br>
 	<a target="_blank" href="/picam/record/"> Images/Videos</a><br>
@@ -141,7 +141,7 @@
 			}
 			
 			if (isset($_POST["run_motion_detection"])){
-				$test = system("sudo docker run --rm --privileged --name=motion_detection  -t -p ".($_SERVER['SERVER_PORT']+3).":8080 -p ".($_SERVER['SERVER_PORT']+4).":8081 -v /var/www/html/picam/record/:/var/lib/motion/ motion_detection:1.0", $ret);
+				$test = system("sudo docker run --rm --privileged --name=motion_detection  -t -p ".($_SERVER['SERVER_PORT']+7).":8080 -p ".($_SERVER['SERVER_PORT']+6).":8081 -v /var/www/html/picam/record/:/var/lib/motion/ motion_detection:1.0", $ret);
 			}
 			
 			if (isset($_POST["stop_motion_detection"])){
