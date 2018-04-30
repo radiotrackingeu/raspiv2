@@ -252,9 +252,13 @@ int main(int argc, char*argv[])
             // update counters and reset spectrogram object
             num_transforms += spgramcf_get_num_transforms(periodogram);
             spgramcf_reset(periodogram);
+			
+			// print keepalive
             if (num_transforms%keepalive == 0) {
                 struct timespec now;
                 clock_gettime(CLOCK_REALTIME,&now);
+				num_transforms = 0;
+                t_start = now;
                 char tbuf[30];
                 char sql_statement[256];
                 format_timestamp(now,tbuf,30);
