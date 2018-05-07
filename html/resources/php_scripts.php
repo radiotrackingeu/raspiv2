@@ -239,13 +239,12 @@
 	//Logger Settings Functions
 	if (isset($_POST["change_logger_settings"])){
 		for ($i=0; $i<4; $i++) {
-			$file_name = $config['logger']['antenna_id_'.$i] ."_". '\$(date +%Y_%m_%k_%M_%S)';
+			$file_name = $config['logger']['antenna_id_'.$i] ."_". "\\$(date +\\\\\%Y_\\\\\%m_\\\\\%d_\\\\\%H_\\\\\%M_\\\\\%S)";
 			$file_path = "/tmp/record/" . $file_name;
 			$run_id = -1;
 			if($_POST["timer_start_".$i]=="start_boot"||$_POST["timer_start_".$i]=="start_time"){
 				$run_id = write_run_to_db($config, $i, $config['logger']['antenna_id_'.$i]."_".$config['logger']['timer_start_time_'.$i]);
 			}
-			///home/".$_POST["time_pre_log_name"]."\$(date +%Y_%m_%k_%M_%S)'
 			if($run_id>=0 && $_POST["timer_mode_".$i]=="single_freq"){
 				$cmd = cmd_docker($i)." '".cmd_rtl_sdr($config, $i)." 2> ".$file_path." | ".cmd_matched_filters($config, $i).cmd_sql($config, $i, $run_id)." >> ". $file_path." 2>\&1'";
 			}
