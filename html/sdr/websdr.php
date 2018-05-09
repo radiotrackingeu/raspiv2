@@ -59,6 +59,30 @@
 			</form>
 		</div>
 	</div>
+	<div class="w3-half">
+		<div class="w3-panel w3-green w3-round">
+			<h3>Receiver 2</h3>
+			<form method="POST" enctype="multipart/form-data">
+				<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr_d2">
+				<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop_d2">
+				<br><br>
+				<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+3)?>"> Link to Device 2 </a>
+				<br><br>
+			</form>
+		</div>
+	</div>
+	<div class="w3-half">
+		<div class="w3-panel w3-green w3-round">
+			<h3>Receiver 3</h3>
+			<form method="POST" enctype="multipart/form-data">
+				<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr_d3">
+				<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop_d3">
+				<br><br>
+				<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+4)?>"> Link to Device 3 </a>
+				<br><br>
+			</form>
+		</div>
+	</div>
 </div>
 
 <div id="settings_webrx_tab" class="w3-container city w3-row-padding w3-mobile" style="display:none">
