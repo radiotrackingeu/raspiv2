@@ -263,7 +263,7 @@
 				$test = system('sudo docker build -t hubctrl:1.0 /home/pi/gitrep/raspiv2/Docker/hubctrl/. 2>&1', $ret);
 				echo '</pre>';
 			}
-			if (isset($_POST["install_pwchange")) {
+			if (isset($_POST["install_pwchange"])) {
 				echo '<pre>';
 				$test = system('sudo docker build -t pwchange:1.0 /home/pi/gitrep/raspiv2/Docker/pwchange/. 2>&1', $ret);
 				echo '</pre>';
