@@ -122,7 +122,8 @@ function get_Time() {
 
 <div id="passwords" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round w3-padding">
-		<b>This page allows you to change the passwords of user "pi".</b>
+		<b>This page allows you to change the passwords of user "pi".</b><br>
+		Never use quotation marks " or ' in passwords!
 	</div>
 	<div class="w3-panel w3-green w3-round w3-padding">
 		<form method="POST">
