@@ -46,6 +46,7 @@ function get_Time() {
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'hostname')">Hostname</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'expand_disc')">Expand Disc</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'usbpower')">USB Power</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'passwords')">Passwords</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'infos')">System Information</button>
 </div>	
 
@@ -118,6 +119,24 @@ function get_Time() {
 		</form>
 	</div>
 </div>
+
+<div id="passwords" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round w3-padding">
+		<b>This page allows you to change the passwords of user "pi".</b>
+	</div>
+	<div class="w3-panel w3-green w3-round w3-padding">
+		<form method="POST">
+			<b>Web-Interface:</b><br><br>
+			Old password:<br>
+			<input type="password" name="old_pw" id="old_pw" value=""> <br><br>
+			New password:<br>
+			<input type="password" name="new_pw" id="new_pw" value=""> <br><br>
+			Confirm new password:<br>
+			<input type="password" name="new_pw_confirm" name="new_pw_confirm" value=""> <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Update password" name="update_password"><br>
+		</form>
+	</div>
+</div>	
 
 <div id="infos" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
