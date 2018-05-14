@@ -570,9 +570,10 @@
 	
 	// change http password
 	if(isset($_POST['update_password'])){
-		$cmd = "sudo docker run -t --rm -v /etc/apache2/.htpasswd:/tmp/pwfile pwchange:1.0 pwchange.sh \"".$_POST['old_pw']."\" \"".$_POST['new_pw']."\" \"".$_POST['new_pw_confirm']."\"";
-		start_docker($cmd, "passwords");
-	}
+        $cmd = "sudo docker run -t --rm -v /etc/apache2/.htpasswd:/tmp/pwfile pwchange:1.0 /pwchange.sh \"".$_POST['old_pw']."\" \"".$_POST['new_pw']."\" \"".$_POST['new_pw_confirm']."\" 2>&1";
+        start_docker($cmd, "passwords");
+        }
+
 	
 	
 	
