@@ -122,12 +122,13 @@ function get_Time() {
 
 <div id="passwords" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round w3-padding">
-		<b>This page allows you to change the passwords of user "pi".</b><br>
+		<b>This page allows you to change the default passwords.</b><br>
 		Never use quotation marks " or ' in passwords!
 	</div>
 	<div class="w3-panel w3-green w3-round w3-padding">
 		<form method="POST">
-			<b>Web-Interface:</b><br><br>
+			<b>Web-Interface:</b><br>
+			Here you can change the password for user "pi" used to log into this web-interface.<br><br>
 			Old password:<br>
 			<input type="password" name="old_pw" id="old_pw" value=""> <br><br>
 			New password:<br>
@@ -135,6 +136,20 @@ function get_Time() {
 			Confirm new password:<br>
 			<input type="password" name="new_pw_confirm" name="new_pw_confirm" value=""> <br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Update password" name="update_password"><br>
+		</form>
+	</div>
+	<div class="w3-panel w3-green w3-round w3-padding">
+		<form method="POST">
+			<b>MySQL: rteu</b><br>
+			Here you can change the password of database-user "rteu". Don't forget to also set the new password in the <a href="../data/data.php">database settings</a>!<br>
+			All services currently using the database will need to be restarted!<br><br>
+			Old password:<br>
+			<input type="password" name="old_mysql_pw" id="old_mysql_pw" value=""> <br><br>
+			New password:<br>
+			<input type="password" name="new_mysql_pw" id="new_mysql_pw" value=""> <br><br>
+			Confirm new password:<br>
+			<input type="password" name="new_mysql_pw_confirm" name="new_mysql_pw_confirm" value=""> <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Update password" name="update_mysql_password"><br>
 		</form>
 	</div>
 </div>	

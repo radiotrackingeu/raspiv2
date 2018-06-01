@@ -568,14 +568,17 @@
 		start_docker_echo($cmd_change,"usbpower","USB power off timer set.");			
 	}
 	
-	// change http password
+	// Passwords
+	//http
 	if(isset($_POST['update_password'])){
         $cmd = "sudo docker run -t --rm -v /etc/apache2/.htpasswd:/tmp/pwfile pwchange:1.0 /pwchange.sh \"".$_POST['old_pw']."\" \"".$_POST['new_pw']."\" \"".$_POST['new_pw_confirm']."\" 2>&1";
         start_docker($cmd, "passwords");
         }
-
-	
-	
+	//mysql
+	if(isset($_POST['update_mysql_password'])){
+        $cmd = "sudo docker run -t --rm pwchange:1.1 /mysql_pwchange.sh \"".$_POST['old_mysql_pw']."\" \"".$_POST['new_mysql_pw']."\" \"".$_POST['new_mysql_pw_confirm']."\" 2>&1";
+        start_docker($cmd, "passwords");
+        }
 	
 	//General Functions
 	function start_docker($docker_cmd,$block_to_jump){

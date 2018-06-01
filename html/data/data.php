@@ -77,7 +77,7 @@
 			<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+8000)."/phpmyadmin/"?>"> Link to PhpMyAdmin </a>
 		</form>
 		<br>
-		<h3>Configure Database</h3>
+		<h3>Configure Database Connection</h3>
 		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 				<p>
 					<label for="db_host">Hostname / IP:</label>

@@ -4,7 +4,7 @@ UNAME="pi"
 
 if [[ $# -ne 3 ]]; then
 	printf "Usage: $0 <old_pw> <new_pw> <new_pw>\n"
-	printf "Password was NOT changed!"
+	printf "Password was NOT changed!\n"
 	exit 1
 fi
 
