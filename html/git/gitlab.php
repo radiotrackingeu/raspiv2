@@ -31,6 +31,7 @@
 	$image_version_umts="1.0";
 	$image_version_wifi="1.0";
 	$image_version_microphone="1.0";
+	$image_version_pwchange="1.0";
 	
  ?>
 <!-- Enter text here-->
@@ -126,7 +127,7 @@
 			<input type="submit" class="w3-btn w3-brown" value="USB Power On/Off" name="install_hubctrl"/> <br> <br>
 						
 			<hr>
-			Password changer<br><br>
+			Password changer<br><br>			
 			<input type="submit" class="w3-btn w3-brown" value="Password changer" name="install_pwchange"/> <br> <br>
 
 		</form>
@@ -265,7 +266,7 @@
 			}
 			if (isset($_POST["install_pwchange"])) {
 				echo '<pre>';
-				$test = system('sudo docker build -t pwchange:1.0 /home/pi/gitrep/raspiv2/Docker/pwchange/. 2>&1', $ret);
+				$test = system('sudo docker build -t pwchange:1.1 /home/pi/gitrep/raspiv2/Docker/pwchange/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			error_reporting(E_ALL);
