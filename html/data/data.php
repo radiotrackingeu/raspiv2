@@ -68,12 +68,13 @@
 	<div class="w3-panel w3-green w3-round">
 		<br>
 
-		<h3>Control Database</h3><br>
+		<h3>Control Local Database</h3><br>
 		<form method='POST' enctype="multipart/form-data">
 			<input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Start Database" name="start_mysql" />
 			<input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Stop Database" name="stop_mysql" /><br><br>
 			<input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Start Management Tool" name="start_phpmyadmin" />
 			<input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Stop Management Tool" name="stop_phpmyadmin" /><br><br>
+            <input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Delete all data" name="empty_DB" /><br><br>
 			<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+8000)."/phpmyadmin/"?>"> Link to PhpMyAdmin </a>
 		</form>
 		<br>

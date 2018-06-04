@@ -483,6 +483,10 @@
 		$cmd = "sudo docker stop phpmyadmin";
 		start_docker($cmd,'mysql');
 	}
+    if (isset($_POST["empty_DB"])) {
+        $cmd = "sudo docker run -t --rm --net=host pwchange:1.1 mysql --host=".$config['database']['db_host']." --user=".$config['database']['db_user']." --password=".$config['database']['db_pass']." rteu -e \"SET FOREIGN_KEY_CHECKS = 0; TRUNCATE table runs; TRUNCATE TABLE signals; SET FOREIGN_KEY_CHECKS = 1\"";
+        start_docker_echo($cmd, 'mysql', $cmd);
+    }
 	
 	if (isset($_POST["change_db_settings"])){
 		echo "<script type='text/javascript'>document.getElementById('mysql').style.display = 'block';</script>";
