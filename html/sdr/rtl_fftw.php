@@ -254,11 +254,11 @@ function setVisibility(menu, label, element) {
 				</p>
                 <p>
 					<label for="minDuration_<?=$i?>"> Minimum Signal Length (seconds):</label>
-					<input class="w3-input w3-mobile" style="width:30%" type="number" id="minDuration_<?=$i?>" name="minDuration_<?=$i?>" value="<?php echo isset($config['logger']['minDuration_'.$i]) ? $config['logger']['minDuration_'.$i] : 0 ?>">
+					<input class="w3-input w3-mobile" style="width:30%" type="number" id="minDuration_<?=$i?>" name="minDuration_<?=$i?>" step="any" value="<?php echo isset($config['logger']['minDuration_'.$i]) ? $config['logger']['minDuration_'.$i] : 0 ?>">
 				</p>
                 <p>
 					<label for="maxDuration_<?=$i?>"> Maximum Signal Length (seconds):</label>
-					<input class="w3-input w3-mobile" style="width:30%" type="number" id="maxDuration_<?=$i?>" name="maxDuration_<?=$i?>" value="<?php echo isset($config['logger']['maxDuration_'.$i]) ? $config['logger']['maxDuration_'.$i] : 1 ?>">
+					<input class="w3-input w3-mobile" style="width:30%" type="number" id="maxDuration_<?=$i?>" name="maxDuration_<?=$i?>" step="any" value="<?php echo isset($config['logger']['maxDuration_'.$i]) ? $config['logger']['maxDuration_'.$i] : 1 ?>">
 				</p>
 				<p>
 					Number of bins in FFT (default: 400):<br>
