@@ -80,6 +80,8 @@ function setVisibility(menu, label, element) {
 					<br>
 					Threshold: <?php echo $config['logger']['threshold_'.$i]?> dB above Noise
 					<br>
+                    Duration: <?php echo $config['logger']['minDuration_'.$i]." - ".$config['logger']['maxDuration_'.$i]?> sec
+                    <br>
 					<form class="w3-right-align" method="POST" enctype="multipart/form-data" action="">
 						<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start_<?=$i?>" />
 						<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop_<?=$i?>" />
