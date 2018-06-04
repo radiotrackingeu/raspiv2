@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 UNAME="rteu"
 
 if [[ $# -ne 3 ]]; then
