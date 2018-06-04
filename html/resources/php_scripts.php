@@ -466,9 +466,7 @@
 		start_docker($cmd,'radio_data');
 	}
 	if (isset($_POST["start_mysql"])){
-		$autostart=isset($config['database']['db_start']) && $config['database']['db_start']=="Yes" ? "--restart=always " : "";
-		$rm_container=isset($config['database']['db_start']) && $config['database']['db_start']!="Yes" ? "--rm " : "";
-		$cmd = "sudo docker run -t ".$autostart."--name=mysql ".$rm_container." -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql mysql:1.0 2>&1";
+		$cmd = "sudo docker start mysql 2>&1";
 		start_docker_quite($cmd,'mysql');
 	}
 	if (isset($_POST["stop_mysql"])){
