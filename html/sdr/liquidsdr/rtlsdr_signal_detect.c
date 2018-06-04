@@ -18,13 +18,11 @@
 #include <limits.h>
 #include <mysql.h>
 
-#define DB_BASE "rteu"
-#define DB_TABLE "rteu.signals"
+#define DB_BASE     "rteu"
+#define DB_TABLE    "rteu.signals"
 
-#define BILLION 	1000000000L
+#define BILLION     1000000000L
 
-#define MIN_LENGTH 0
-#define MAX_LENGTH 1
 
 float               *   psd_template;
 float               *   psd;
@@ -43,20 +41,24 @@ int                 tmp_transforms = 0;
 struct timespec     t_start;
 int                 keepalive = 300;
 
-int					run_id=0;
+int                 run_id=0;
 
 int                 write_to_db = 0;
-MYSQL           *   con;
-char            *   db_host = NULL, *db_user = NULL, *db_pass = NULL;
-unsigned int 		db_port=0;
+MYSQL               *   con;
+char                *   db_host = NULL,
+                    *   db_user = NULL,
+                    *   db_pass = NULL;
+unsigned int        db_port=0;
 
 struct option longopts[] = {
     {"sql",       no_argument, &write_to_db, 1},
     {"db_host",   required_argument, NULL, 900},
-	{"db_port",   required_argument, NULL, 901},
+    {"db_port",   required_argument, NULL, 901},
     {"db_user",   required_argument, NULL, 902},
     {"db_pass",   required_argument, NULL, 903},
-	{"db_run_id", required_argument, NULL, 904},
+    {"db_run_id", required_argument, NULL, 904},
+    {"ll",        required_argument, NULL, 905},
+    {"lu",        required_argument, NULL, 906},
     {0,0,0,0}
 };
 
@@ -72,12 +74,14 @@ void usage()
     printf("  -b <number>       : number of bins used for fft, default is 400\n");
     printf("  -n <number>       : number of samples per fft, default is 50\n");
     printf("  -k <seconds>      : prints a keep-alive statement every <sec> seconds, default is 300\n");
+    printf(" --ll <limit>       : set lower limit in seconds for signal duration. Shorter signals will not be logged.");
+    printf(" --lu <limit>       : set upper limit in seconds for signal duration. Longer signals will not be logged.");
     printf(" --sql              : write to database, requires --db_user, --db_pass\n");
     printf(" --db_host <host>   : address of SQL server to use, default is localhost\n");
     printf(" --db_port <pass>   : port on which to connect, use 0 if unsure\n");
     printf(" --db_user <user>   : username for SQL server \n");
-	printf(" --db_pass <pass>   : matching password\n");
-	printf(" --db_run_id <id>	: numeric id of this recording run. Used to link it to its metadata in the SQL database");
+    printf(" --db_pass <pass>   : matching password\n");
+    printf(" --db_run_id <id>   : numeric id of this recording run. Used to link it to its metadata in the SQL database");
 }
 
 // read samples from file and store into buffer
@@ -86,21 +90,21 @@ unsigned int buf_read(FILE *          _fid,
                       unsigned int    _buf_len);
 
 // forward declaration of methods for signal detection
-int   update_detect(float _threshold);
-int   update_count();
-int   update_groups();
-int   signal_complete  	(int _group_id);
-float get_group_freq   	(int _group_id);
-float get_group_bw     	(int _group_id);
-float get_group_time   	(int _group_id);
-float get_group_max_sig (int _group_id);
-unsigned long long get_group_start_time(int _group_id);
-int   clear_group_count	(int _group_id);
-int   step(float _threshold, unsigned int _sampling_rate);
-void  format_timestamp(const struct timespec _time, char * _buf, const unsigned long _buf_len);
-struct timespec timeAdd(const struct timespec _t1, const struct timespec _t2);
-//char  before(const struct timespec _a, const struct timespec _b);
-void  free_memory();
+int                 update_detect           (float _threshold);
+int                 update_count            ();
+int                 update_groups           ();
+int                 signal_complete         (int _group_id);
+float               get_group_freq          (int _group_id);
+float               get_group_bw            (int _group_id);
+float               get_group_time          (int _group_id);
+float               get_group_max_sig       (int _group_id);
+unsigned long long  get_group_start_time    (int _group_id);
+int                 clear_group_count       (int _group_id);
+int                 step                    (float _threshold, unsigned int _sampling_rate, float lowerLimit, float upperLimit);
+void                format_timestamp        (const struct timespec _time, char * _buf, const unsigned long _buf_len);
+struct timespec     timeAdd                 (const struct timespec _t1, const struct timespec _t2);
+//char                before                  (const struct timespec _a, const struct timespec _b);
+void                free_memory             ();
 
 
 // main program
@@ -112,6 +116,8 @@ int main(int argc, char*argv[])
     unsigned long   sampling_rate       = 250000;
                     nfft                = 400;
                     timestep            = 50;
+    float           lowerLimit          = 0,
+                    upperLimit          = 1;
 
     // read command-line options
     int dopt;
@@ -119,32 +125,34 @@ int main(int argc, char*argv[])
         switch (dopt) {
         case 'h': usage();                              return 0;
         case 'i': strncpy(filename_input,optarg,256);   break;
-        case 't': threshold = atof(optarg);             break;
+        case 't': threshold = strtof(optarg, NULL);     break;
         case 's': read_from_stdin = 1;                  break;
         case 'r': sampling_rate = atoi(optarg);         break;
-		case 'b': nfft = atoi(optarg);         			break;
-        case 'n': timestep = atoi(optarg);         		break;
+        case 'b': nfft = atoi(optarg);                  break;
+        case 'n': timestep = atoi(optarg);              break;
         case 'k': keepalive = atoi(optarg);             break;
         case 900: db_host = optarg;                     break;
-		case 901: db_port = atoi(optarg);               break;
+        case 901: db_port = atoi(optarg);               break;
         case 902: db_user = optarg;                     break;
         case 903: db_pass = optarg;                     break;
         case 904: run_id = atoi(optarg);                break;
+        case 905: lowerLimit = strtof(optarg, NULL);    break;
+        case 906: upperLimit = strtof(optarg, NULL);    break;
         case 0  :                                       break; // return value of getopt_long() when setting a flag
         default : exit(1);
         }
     }
 
     // reset counters, etc.
-    psd_template =  (float*) calloc(nfft, sizeof(float));
-    psd =           (float*) calloc(nfft, sizeof(float));
-    psd_max =       (float*) calloc(nfft, sizeof(float));
-    detect =        (int*)   calloc(nfft, sizeof(int));
-    count =         (int*)   calloc(nfft, sizeof(int));
-    groups =        (int*)   calloc(nfft, sizeof(int));
-    psd_sample =    (unsigned long long*) calloc(nfft, sizeof(unsigned long long));
-	keepalive *= sampling_rate / timestep;
-	keepalive += keepalive%16;
+    psd_template =  (float*)                calloc(nfft, sizeof(float));
+    psd =           (float*)                calloc(nfft, sizeof(float));
+    psd_max =       (float*)                calloc(nfft, sizeof(float));
+    detect =        (int*)                  calloc(nfft, sizeof(int));
+    count =         (int*)                  calloc(nfft, sizeof(int));
+    groups =        (int*)                  calloc(nfft, sizeof(int));
+    psd_sample =    (unsigned long long*)   calloc(nfft, sizeof(unsigned long long));
+    keepalive *=                            sampling_rate / timestep;
+    keepalive +=                            keepalive%16;
 
 
     // create spectrogram
@@ -195,19 +203,20 @@ int main(int argc, char*argv[])
     } else {
         fid = fopen(filename_input,"r");
         if (fid == NULL) {
-	        fprintf(stderr,"error: could not open %s for reading\n", filename_input);
-        	exit(-1);
-		}
+            fprintf(stderr,"error: could not open %s for reading\n", filename_input);
+            exit(-1);
+        }
     }
     if (write_to_db!=0)
-	    printf("Also sending data to SQL Server at %s.\n", db_host);
-	clock_gettime(CLOCK_REALTIME,&t_start);
-	char tbuf[30];
-	format_timestamp(t_start,tbuf,30);
-	printf("Will print timestamp every %i transforms\n", keepalive);
-	printf("%s\n",tbuf);
-	//print row names
-	printf("timestamp;samples;duration;signal_freq;signal_bw;max_signal\n");
+        printf("Also sending data to SQL Server at %s.\n", db_host);
+    printf("Ignoring signals shorter than %f and longer than %f\n", lowerLimit, upperLimit);
+    clock_gettime(CLOCK_REALTIME,&t_start);
+    char tbuf[30];
+    format_timestamp(t_start,tbuf,30);
+    printf("Will print timestamp every %i transforms\n", keepalive);
+    printf("%s\n",tbuf);
+    //print row names
+    printf("timestamp;samples;duration;signal_freq;signal_bw;max_signal\n");
 
     // continue processing as long as there are samples in the file
     unsigned long int total_samples  = 0;
@@ -225,8 +234,8 @@ int main(int argc, char*argv[])
         // accumulate spectrum
         spgramcf_write(periodogram, buf, buf_len);
 
-		//get number of transforms per cycle tmp_transforms
-		tmp_transforms = spgramcf_get_num_transforms(periodogram);
+        //get number of transforms per cycle tmp_transforms
+        tmp_transforms = spgramcf_get_num_transforms(periodogram);
 
         if (tmp_transforms >= 16)
         {
@@ -236,34 +245,34 @@ int main(int argc, char*argv[])
             // compute average template for one second
             if (num_transforms<= sampling_rate / timestep) {
                 // set template PSD for relative signal detection
-				// Add up all signal strength to derive minimum value
-				int i;
-				for (i=0;i<nfft;i++) {
-					if ( psd[i] < psd_template[i] ) {
-						psd_template[i] = psd[i];
-					}
-				}
-				memmove(psd_max, psd, nfft*sizeof(float));
+                // Add up all signal strength to derive minimum value
+                int i;
+                for (i=0;i<nfft;i++) {
+                    if ( psd[i] < psd_template[i] ) {
+                    psd_template[i] = psd[i];
+                    }
+                }
+                memmove(psd_max, psd, nfft*sizeof(float));
             } else {
                 // detect differences between current PSD estimate and template
-                step(threshold, sampling_rate);
+                step(threshold, sampling_rate, lowerLimit, upperLimit);
             }
 
             // update counters and reset spectrogram object
             num_transforms += spgramcf_get_num_transforms(periodogram);
             spgramcf_reset(periodogram);
-			
-			// print keepalive
+            
+            // print keepalive
             if (num_transforms%keepalive == 0) {
                 struct timespec now;
                 clock_gettime(CLOCK_REALTIME,&now);
-				num_transforms = 0;
+                num_transforms = 0;
                 t_start = now;
                 char tbuf[30];
                 char sql_statement[256];
                 format_timestamp(now,tbuf,30);
                 printf("%s;;;;;\n",tbuf);
-				fflush(stdout);
+                fflush(stdout);
                 if (write_to_db!=0) {
                     snprintf(sql_statement, sizeof(sql_statement),
                         "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw,max_signal,run) VALUE(\"%s\",0,0.0,0.0,0.0,0.0,%i)",
@@ -287,7 +296,7 @@ int main(int argc, char*argv[])
     // close input files
     fclose(fid);
     if (con!=NULL)
-	mysql_close(con);
+    mysql_close(con);
 
 
     // write accumulated PSD
@@ -332,14 +341,14 @@ int update_detect(float _threshold)
     for (i=0; i<nfft; i++) {
         // relative
         // detect[i] = ((psd[i] - psd_template[i]) > _threshold) ? 1 : 0;
-		if((psd[i] - psd_template[i]) > _threshold){
+        if((psd[i] - psd_template[i]) > _threshold){
             if (psd_sample[i]==0) psd_sample[i]=num_transforms;
-			detect[i]=1; //write matrix for detection
-			psd_max[i] = (psd_max[i]>psd[i]) ? psd_max[i] : psd[i]; //save highest values
-		}
-		else{
-			detect[i]=0;
-		}
+            detect[i]=1; //write matrix for detection
+            psd_max[i] = (psd_max[i]>psd[i]) ? psd_max[i] : psd[i]; //save highest values
+        }
+        else{
+            detect[i]=0;
+        }
         // absolute
         //detect[i] = (psd[i] > _threshold) ? 1 : 0;
         total += detect[i];
@@ -446,12 +455,12 @@ float get_group_time(int _group_id)
 float get_group_max_sig(int _group_id)
 {
     int i;
-	float noise = 1;
+    float noise = 1;
     float max = -1000;
     for (i=0; i<nfft; i++) {
         if (groups[i] == _group_id && psd_max[i] > max)
             max = psd_max[i];
-			noise = psd_template[i];
+            noise = psd_template[i];
     }
     return max-noise; //10*log10(1e10*(max/10) / 1e10*(noise/10))
 }
@@ -464,7 +473,7 @@ unsigned long long get_group_start_time(int _group_id)
     for (i=0; i<nfft; i++) {
         if (groups[i] == _group_id && psd_sample[i] < starttime) {
             starttime=psd_sample[i];
-		}
+        }
     }
     return starttime;
 };
@@ -477,15 +486,15 @@ int clear_group_count(int _group_id)
         if (groups[i] == _group_id)
         {
             count[i] = 0;
-			psd_max[i] = -1000;
-			psd_sample[i] = 0;
+            psd_max[i] = -1000;
+            psd_sample[i] = 0;
         }
     }
     return 0;
 }
 
 // look for signal
-int step(float _threshold, unsigned int _sampling_rate)
+int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float upperLimit)
 {
     update_detect(_threshold);
     update_count ();
@@ -499,7 +508,7 @@ int step(float _threshold, unsigned int _sampling_rate)
         if (signal_complete(i)) {
             // signal started & stopped
             float duration = tmp_transforms*get_group_time(i)*timestep/_sampling_rate; // duration [samples]
-            if (duration > MIN_LENGTH && duration < MAX_LENGTH )
+            if (duration >= lowerLimit && duration <= upperLimit )
             {
                 float ftime = (float)get_group_start_time(i) * ratio;
                 struct timespec tm;
@@ -507,9 +516,9 @@ int step(float _threshold, unsigned int _sampling_rate)
                 tm.tv_sec = (long)ftime;
                 tm = timeAdd(t_start, tm);
                 format_timestamp(tm, timestamp, 30);
-                float signal_freq = get_group_freq(i)*_sampling_rate;          	// center frequency estimate (normalized)
-                float signal_bw   = get_group_bw(i)*_sampling_rate;            	// bandwidth estimate (normalized)
-                float max_signal  = get_group_max_sig(i);						// maximum signal strength per group
+                float signal_freq = get_group_freq(i)*_sampling_rate;           // center frequency estimate (normalized)
+                float signal_bw   = get_group_bw(i)*_sampling_rate;             // bandwidth estimate (normalized)
+                float max_signal  = get_group_max_sig(i);                       // maximum signal strength per group
                 printf("%s;%llu;%-10.6f;%9.6f;%9.6f;%f\n",
                         timestamp, num_transforms, duration, signal_freq, signal_bw,max_signal);
                 fflush(stdout);

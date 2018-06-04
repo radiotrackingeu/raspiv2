@@ -10,7 +10,7 @@ fi
 mysql --host=127.0.0.1 --user=$UNAME --password=$1 -e "exit" 2>/dev/null
 RETVAL=$?
 if [[ $RETVAL -ne 0 ]]; then
-        printf "Old password is incorrect.\n"
+        printf "Could not verify old password. Make sure old password is correct, and local MySQL server is reachable.\n"
         exit $RETVAL
 fi
 

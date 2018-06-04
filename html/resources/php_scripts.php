@@ -214,7 +214,7 @@
 		start_docker($cmd, 'tab_logger_single');
 	}
 	
-	//General Looger Function
+	//General Logger Function
 	function cmd_docker($dev) {
 		return "sudo docker run --rm --name=logger-sdr-d".$dev." --net=host -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ liquidsdr:1.0 bash -c";
 	}
@@ -230,7 +230,7 @@
 		return "rtl_sdr -d ".$dev." -f ".$config['logger']['center_freq_'.$dev]." -s ".$config['logger']['freq_range_'.$dev]." -g ".$config['logger']['log_gain_'.$dev]." -";
 	}
 	function cmd_liquidsdr($config, $dev) {
-		return "/tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$config['logger']['threshold_'.$dev]." -r ".$config['logger']['freq_range_'.$dev]." -b ".$config['logger']['nfft_'.$dev]." -n ".$config['logger']['timestep_'.$dev];
+		return "/tmp/liquidsdr/rtlsdr_signal_detect -s -t ".$config['logger']['threshold_'.$dev]." -r ".$config['logger']['freq_range_'.$dev]." -b ".$config['logger']['nfft_'.$dev]." -n ".$config['logger']['timestep_'.$dev]." --ll ".$config['logger']['minDuration_'.$dev]." --lu ".$config['logger']['maxDuration_'.$dev];
 	}
 	function cmd_matched_filters($config, $dev) {
 		return "/tmp/liquidsdr/matched_signal_detect -s -t ".$config['logger']['threshold_'.$dev]." -r ".$config['logger']['freq_range_'.$dev]." -p 22";

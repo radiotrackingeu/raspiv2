@@ -30,7 +30,7 @@ function setVisibility(menu, label, element) {
 	
 	$GLOBALS["num_rec"] = exec("lsusb | grep -c -e '0bda:2838'");
 	$tmparr=array();
-	$valuearr=array('antenna_id_','antenna_position_N_','antenna_position_E_','antenna_orientation_','antenna_beam_width_','log_gain_','center_freq_','freq_range_','threshold_','nfft_','timestep_','use_sql_','timer_start_','timer_start_time_','timer_stop_','timer_stop_time_','timer_mode_');
+	$valuearr=array('antenna_id_','antenna_position_N_','antenna_position_E_','antenna_orientation_','antenna_beam_width_','log_gain_','center_freq_','freq_range_','threshold_','minDuration_','maxDuration_','nfft_','timestep_','use_sql_','timer_start_','timer_start_time_','timer_stop_','timer_stop_time_','timer_mode_');
 	for ($i=0; $i<4; $i++) {
 			foreach($valuearr as $var) {
 				$tmparr[]=$var.$i;
@@ -249,8 +249,16 @@ function setVisibility(menu, label, element) {
 
 			<div id="det<?=$i?>_settings" class="w3-container w3-hide">
 				<p>				
-					<label for="threshold_<?=$i?>"> Log Level </label>
+					<label for="threshold_<?=$i?>"> Log Level: </label>
 					<input class="w3-input w3-mobile" style="width:30%" type="number" id="threshold_<?=$i?>" name="threshold_<?=$i?>" value="<?php echo isset($config['logger']['threshold_'.$i]) ? $config['logger']['threshold_'.$i] : 10 ?>">
+				</p>
+                <p>
+					<label for="minDuration_<?=$i?>"> Minimum Signal Length (seconds):</label>
+					<input class="w3-input w3-mobile" style="width:30%" type="number" id="minDuration_<?=$i?>" name="minDuration_<?=$i?>" value="<?php echo isset($config['logger']['minDuration_'.$i]) ? $config['logger']['minDuration_'.$i] : 0 ?>">
+				</p>
+                <p>
+					<label for="maxDuration_<?=$i?>"> Maximum Signal Length (seconds):</label>
+					<input class="w3-input w3-mobile" style="width:30%" type="number" id="maxDuration_<?=$i?>" name="maxDuration_<?=$i?>" value="<?php echo isset($config['logger']['maxDuration_'.$i]) ? $config['logger']['maxDuration_'.$i] : 1 ?>">
 				</p>
 				<p>
 					Number of bins in FFT (default: 400):<br>
