@@ -1,4 +1,6 @@
 #!/bin/bash
+# $1: SSID
+# $2: PW
 
 # change /etc/crontab and comment docker wifi line
 OLDSTRING='@reboot root docker run -d --rm --privileged --net=host wifi:1.0'

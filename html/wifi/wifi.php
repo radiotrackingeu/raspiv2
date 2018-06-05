@@ -109,7 +109,7 @@
 	// be aware of the wifi version in the shell script!!!
 	if (isset($_POST["connect_wifi"])){
 		echo '<pre>';
-		$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/stop_hotspot_set_wifi_ssid.sh ".$_POST["ssid_wifi"]." ".$_POST["pw_wifi"], $ret);
+		$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/stop_hotspot_set_wifi_ssid.sh \"".$_POST["ssid_wifi"]."\" \"".$_POST["pw_wifi"]."\"", $ret);
 		echo '</pre>';
 	}
 	if (isset($_POST["start_hotspot"])){
