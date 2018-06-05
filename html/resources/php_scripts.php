@@ -412,7 +412,7 @@
 	}
     //WebRX Functions
     function cmd_webRX_start($id) {
-        return "sudo docker run --rm -t --name webrx-sdr-d".$id." --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ."(81+$id).":8073 webrx:1.0 sh /cfiles/start_openwebrx_d".$i.".sh";
+        return "sudo docker run --rm -t --name webrx-sdr-d".$id." --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".(81+$id).":8073 webrx:1.0 sh /cfiles/start_openwebrx_d".$id.".sh";
     }
     function cmd_webRX_stop($id) {
         return "sudo docker stop webrx-sdr-d".$id." 2>&1";
