@@ -14,6 +14,14 @@
 	require_once '../cfg/baseConfig.php';
 	//load top menu
 	require_once RESOURCES_PATH.'/header.php';
+    //load functions
+	require_once RESOURCES_PATH.'/helpers.php';
+    //load ConfigLite
+	require_once CONFIGLITE_PATH.'/Lite.php';
+	
+    define ('confSection', 'network');
+    define ('confKeys', array('ssid_hotspot', 'pw_hotspot'));
+    $config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
  ?>
 <!-- Enter text here-->
 
@@ -23,16 +31,16 @@
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'lan')">Lan Connection</button>
 </div>
 
-<div id="hotspot" class="w3-container city">
+<div id="hotspot" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		After you have modified anything - please reboot.
-		<form method='POST' enctype="multipart/form-data">
+		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config);?>">
 			<br>
 			Hotspot-Name: <br>
-			<input type="text" name="ssid_hotspot" value="rteuv2">
+			<input type="text" name="ssid_hotspot" value="<?php echo isset($config['network']['ssid_hotspot']) ? $config['network']['ssid_hotspot'] : "rteuv3" ?>">
 			<br><br>
 			Password: <br>
-			<input type="text" name="pw_hotspot" value="sdrtracking">
+			<input type="password" name="pw_hotspot" value="<?php echo isset($config['network']['pw_hotspot']) ? $config['network']['pw_hotspot'] : "sdrtracking" ?>">
 			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Create Hotspot" name="start_hotspot" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
@@ -51,7 +59,7 @@
 			<input type="text" name="ssid_wifi" value="<?php $out=shell_exec("iwgetid -r"); echo $out; ?>">
 			<br><br>
 			Password: <br>
-			<input type="text" name="pw_wifi" value="******">
+			<input type="password" name="pw_wifi" value="******">
 			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Change" name="connect_wifi" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
@@ -106,17 +114,7 @@
 		$test = system('ifconfig -a', $ret);
 		echo '</pre>';
 	}
-	// be aware of the wifi version in the shell script!!!
-	if (isset($_POST["connect_wifi"])){
-		echo '<pre>';
-		$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/stop_hotspot_set_wifi_ssid.sh \"".$_POST["ssid_wifi"]."\" \"".$_POST["pw_wifi"]."\"", $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["start_hotspot"])){
-		echo '<pre>';
-		$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/start_hotspot_stop_wifi.sh ".$_POST["ssid_hotspot"]." ".$_POST["pw_hotspot"]);
-		echo '</pre>';
-	}
+
 ?>
 
 <?php

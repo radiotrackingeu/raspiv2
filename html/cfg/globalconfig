@@ -142,3 +142,7 @@ rf_gain_3 = 20
 [system]
 usb_timer_start_time = "20:00"
 usb_timer_stop_time = "06:00"
+
+[network]
+ssid_hotspot = "rteuv3"
+pw_hotspot = "sdrtracking"

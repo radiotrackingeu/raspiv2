@@ -575,7 +575,7 @@
 		start_docker_echo($cmd_change,"usbpower","USB power off timer set.");			
 	}
 	
-	// Passwords
+// Passwords
 	//http
 	if(isset($_POST['update_password'])){
         $cmd = "sudo docker run -t --rm -v /etc/apache2/.htpasswd:/tmp/pwfile pwchange:1.1 /pwchange.sh \"".$_POST['old_pw']."\" \"".$_POST['new_pw']."\" \"".$_POST['new_pw_confirm']."\" 2>&1";
@@ -586,8 +586,19 @@
         $cmd = "sudo docker run -t --net=host --rm pwchange:1.1 /mysql_pwchange.sh \"".$_POST['old_mysql_pw']."\" \"".$_POST['new_mysql_pw']."\" \"".$_POST['new_mysql_pw_confirm']."\" 2>&1";
         start_docker($cmd, "passwords");
         }
-	
-	//General Functions
+//WIFI	
+    // Connect to network
+    // be aware of the wifi version in the shell script!!!
+	if (isset($_POST["connect_wifi"])){
+		$cmd = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/stop_hotspot_set_wifi_ssid.sh \"".$_POST["ssid_wifi"]."\" \"".$_POST["pw_wifi"]."\"";
+		start_docker_echo($cmd, 'wifi_con', "Wifi will connect to new network after reboot. Hotspot will be deactivated.\n SSID:     ".$_POST["ssid_wifi"]."\n Password: ".$_POST["pw_wifi"]);
+	}
+    // Open Hotspot
+	if (isset($_POST["start_hotspot"])){
+		$cmd = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/start_hotspot_stop_wifi.sh \"".$_POST["ssid_hotspot"]."\" \"".$_POST["pw_hotspot"]."\"";
+		start_docker_echo($cmd, 'hotspot', "Hotspot will be active after reboot.\n SSID:     ".$_POST["ssid_hotspot"]."\n Password: ".$_POST["pw_hotspot"]);
+	}
+//General Functions
 	function start_docker($docker_cmd,$block_to_jump){
 		echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
 		echo '<pre>';
