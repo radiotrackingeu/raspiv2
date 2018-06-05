@@ -1,5 +1,8 @@
 <?php
-	//for debugging purposes
+    //number of receivers connected
+    $GLOBALS["num_rec"] = exec("lsusb | grep -c -e '0bda:2838'");
+	
+    //for debugging purposes
 	function console_log( $data ){
 	  echo '<script>';
 	  echo 'console.log('. json_encode( $data ) .')';

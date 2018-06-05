@@ -355,65 +355,70 @@
 			start_docker("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"", 'tab_logger_timer');
 		}
 	}	
-	
+//WebRX
+	//WebRX Settings
+	if (isset($_POST["change_webRX_settings"])){
+		for ($i=0; $i<4; $i++) {
+            echo "Receiver ".$i.":";
+            $cmd = "sh /var/www/html/sdr/change_config_webrx_d".$i.".sh ".$_POST["fft_fps_".$i]." ".$_POST["fft_size_".$i]." ".$_POST["samp_rate_".$i]." ".$_POST["center_freq_".$i]." ".$_POST["rf_gain_".$i]." 2>&1";
+            start_docker($cmd,'settings_webrx_tab');
+        }
+    }
+    //WebRX Start/Stop
+    //All
+    if (isset($_POST["rtl_websdr_start_all"])){
+        for ($i=0; $i<$GLOBALS["num_rec"]; $i++) {
+            start_docker_quite(cmd_webRX_start($i),'webrx_tab');
+        }
+    }
+    if (isset($_POST["rtl_websdr_stop_all"])){
+        $cmd = ":";
+        for ($i=0; $i<$GLOBALS["num_rec"]; $i++) {
+            $cmd .=" && ".cmd_webRX_stop($i);
+        }
+        start_docker($cmd, 'webrx_tab');
+    }
+    
 	//WebRX d0
 	if (isset($_POST["rtl_websdr_d0"])){
-		$cmd = "sudo docker run --rm -t --name webrx-sdr-d0 --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p 81:8073 webrx:1.0 sh /cfiles/start_openwebrx.sh";
-		start_docker_quite($cmd,'webrx_tab');
+		start_docker_quite(cmd_webRX_start(0),'webrx_tab');
 	}
 	if (isset($_POST["rtl_websdr_stop_d0"])){
-		$cmd = "sudo docker stop webrx-sdr-d0 2>&1";
-		start_docker_echo($cmd,'webrx_tab','Spectrogram Server 0 stopped if it was running');
-	}
-	if (isset($_POST["change_config_websdr_d0"])){
-		$cmd = "sh /var/www/html/sdr/change_config_webrx.sh ".$_POST["fft_fps_0"]." ".$_POST["fft_size_0"]." ".$_POST["samp_rate_0"]." ".$_POST["center_freq_0"]." ".$_POST["rf_gain_0"]." 2>&1";
-		start_docker($cmd,'settings_webrx_tab');
+		start_docker_echo(cmd_webRX_stop(0),'webrx_tab','Spectrogram Server 0 stopped if it was running');
 	}
 	
 	//WebRX d1
 	if (isset($_POST["rtl_websdr_d1"])){
-		$cmd = "sudo docker run --rm -t --name webrx-sdr-d1 --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p 82:8073 webrx:1.0 sh /cfiles/start_openwebrx_d1.sh";
-		start_docker_quite($cmd,'webrx_tab');
+		start_docker_quite(cmd_webRX_start(1),'webrx_tab');
 	}
 	if (isset($_POST["rtl_websdr_stop_d1"])){
-		$cmd = "sudo docker stop webrx-sdr-d1 2>&1";
-		start_docker_echo($cmd,'webrx_tab','Spectrogram Server 1 stopped if it was running');
-	}
-	if (isset($_POST["change_config_websdr_d1"])){
-		$cmd = "sh /var/www/html/sdr/change_config_webrx_d1.sh ".$_POST["fft_fps_1"]." ".$_POST["fft_size_1"]." ".$_POST["samp_rate_1"]." ".$_POST["center_freq_1"]." ".$_POST["rf_gain_1"]." 2>&1";
-		start_docker($cmd,'settings_webrx_tab');
+		start_docker_echo(cmd_webRX_stop(1),'webrx_tab','Spectrogram Server 1 stopped if it was running');
 	}
 	
 	//WebRX d2
 	if (isset($_POST["rtl_websdr_d2"])){
-		$cmd = "sudo docker run --rm -t --name webrx-sdr-d2 --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p 83:8073 webrx:1.0 sh /cfiles/start_openwebrx_d2.sh";
-		start_docker_quite($cmd,'webrx_tab');
+		start_docker_quite(cmd_webRX_start(2),'webrx_tab');
 	}
 	if (isset($_POST["rtl_websdr_stop_d2"])){
-		$cmd = "sudo docker stop webrx-sdr-d2 2>&1";
-		start_docker_echo($cmd,'webrx_tab','Spectrogram Server 2 stopped if it was running');
-	}
-	if (isset($_POST["change_config_websdr_d2"])){
-		$cmd = "sh /var/www/html/sdr/change_config_webrx_d2.sh ".$_POST["fft_fps_2"]." ".$_POST["fft_size_2"]." ".$_POST["samp_rate_2"]." ".$_POST["center_freq_2"]." ".$_POST["rf_gain_2"]." 2>&1";
-		start_docker($cmd,'settings_webrx_tab');
+		start_docker_echo(cmd_webRX_stop(2),'webrx_tab','Spectrogram Server 2 stopped if it was running');
 	}
 	
 	//WebRX d3
 	if (isset($_POST["rtl_websdr_d3"])){
-		$cmd = "sudo docker run --rm -t --name webrx-sdr-d3 --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p 84:8073 webrx:1.0 sh /cfiles/start_openwebrx_d3.sh";
-		start_docker_quite($cmd,'webrx_tab');
+		start_docker_quite(cmd_webRX_start(3),'webrx_tab');
 	}
 	if (isset($_POST["rtl_websdr_stop_d3"])){
-		$cmd = "sudo docker stop webrx-sdr-d3 2>&1";
-		start_docker_echo($cmd,'webrx_tab','Spectrogram Server 3 stopped if it was running');
+		start_docker_echo(cmd_webRX_stop(3),'webrx_tab','Spectrogram Server 3 stopped if it was running');
 	}
-	if (isset($_POST["change_config_websdr_d3"])){
-		$cmd = "sh /var/www/html/sdr/change_config_webrx_d3.sh ".$_POST["fft_fps_3"]." ".$_POST["fft_size_3"]." ".$_POST["samp_rate_3"]." ".$_POST["center_freq_3"]." ".$_POST["rf_gain_3"]." 2>&1";
-		start_docker($cmd,'settings_webrx_tab');
-	}
-	
+    //WebRX Functions
+    function cmd_webRX_start($id) {
+        return "sudo docker run --rm -t --name webrx-sdr-d".$id." --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ."(81+$id).":8073 webrx:1.0 sh /cfiles/start_openwebrx_d".$i.".sh";
+    }
+    function cmd_webRX_stop($id) {
+        return "sudo docker stop webrx-sdr-d".$id." 2>&1";
+    }
 	//SDR# - Server
-	
+
 	if (isset($_POST["rtl_tcp_start_d0"])){
 		$cmd = "sudo docker run --rm --name=sharp_server_sdr_d0 -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr:1.0 rtl_tcp -d 0 -a  '0.0.0.0' -p '1234' 2>&1";
 		start_docker_quite($cmd,'sdr_server');

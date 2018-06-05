@@ -120,14 +120,24 @@ time_start_vpn = "reboot"
 [WebRX]
 fft_size_0 = 512
 fft_size_1 = 512
+fft_size_2 = 512
+fft_size_3 = 512
 fft_fps_0 = 27
 fft_fps_1 = 27
+fft_fps_2 = 27
+fft_fps_3 = 27
 samp_rate_0 = 250000
 samp_rate_1 = 250000
+samp_rate_2 = 250000
+samp_rate_3 = 250000
 center_freq_0 = 150100000
 center_freq_1 = 150100000
+center_freq_2 = 150100000
+center_freq_3 = 150100000
 rf_gain_0 = 20
 rf_gain_1 = 20
+rf_gain_2 = 20
+rf_gain_3 = 20
 
 [system]
 usb_timer_start_time = "20:00"

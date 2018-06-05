@@ -2,7 +2,7 @@
 
 # first copy config
 
-cp /cfiles/config_webrx.py /opt/openwebrx/newconfig.py
+cp /cfiles/config_webrx_d0.py /opt/openwebrx/newconfig.py
 
 # start openwebrx with modified config
 
