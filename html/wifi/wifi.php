@@ -114,7 +114,7 @@
 	}
 	if (isset($_POST["start_hotspot"])){
 		echo '<pre>';
-		$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/start_hotspot_stop_wifi.sh");
+		$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/start_hotspot_stop_wifi.sh ".$_POST["ssid_hotspot"]." ".$_POST["pw_hotspot"]);
 		echo '</pre>';
 	}
 ?>

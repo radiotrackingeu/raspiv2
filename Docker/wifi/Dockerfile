@@ -13,7 +13,7 @@ COPY hostapd.conf /etc/hostapd/hostapd.conf
 
 RUN sudo chmod 600 /etc/hostapd/hostapd.conf
 
-RUN echo "DAMON_CONF="etc/hostapd/hostapd.conf"" > /etc/default/hostapd
+RUN echo "DAEMON_CONF=\"etc/hostapd/hostapd.conf\"" > /etc/default/hostapd
 
 COPY dnsmasq.conf /etc/dnsmasq.conf
 COPY interfaces /etc/network/interfaces
