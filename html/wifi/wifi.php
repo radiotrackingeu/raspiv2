@@ -94,30 +94,6 @@
 <!-- Enter text here-->
 
 <?php
-	if (isset($_POST["change_lan"])){
-		echo '<pre>';
-		$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp2/ wifi:1.0 sh /tmp1/static_lan.sh ".$_POST["lan_ip"]." ".$_POST["lan_gate"], $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["change_auto"])){
-		echo '<pre>';
-		$test = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp2/ wifi:1.0 sh /tmp1/dhcp_lan.sh ".$_POST["lan_ip"]." ".$_POST["lan_gate"], $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["reboot"])){
-		echo '<pre>';
-		$test = system('sudo reboot', $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["ifconfig_all"])){
-		echo '<pre>';
-		$test = system('ifconfig -a', $ret);
-		echo '</pre>';
-	}
-
-?>
-
-<?php
 	//load footer
 	require_once RESOURCES_PATH.'/footer.php';
 	//load javascripts
