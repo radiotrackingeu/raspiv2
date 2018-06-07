@@ -184,11 +184,6 @@
 		
 		
 		<?php
-			if (isset($_POST["reboot"])){
-				echo '<pre>';
-				$test = system('sudo reboot', $ret);
-				echo '</pre>';
-			}
 			if (isset($_POST["update_docker_git"])){
 				echo '<pre>';
 				$test = system('sudo docker build  -t git:1.0 /home/pi/gitrep/raspiv2/Docker/gitlab/. 2>&1', $ret);
@@ -271,27 +266,27 @@
 			}
 			error_reporting(E_ALL);
 			ini_set('display_errors', 1);
-			if (isset($_POST["upload_files"])){
-				$target_file1 = "/var/www/html/git/id_rsa";
-				if (move_uploaded_file($_FILES["fileToUpload_id"]["tmp_name"], $target_file1)) {
-					echo "The file has been uploaded.";
-				} else {
-					echo "Sorry, there was an error uploading your private key.";
-				}
-				$target_file2 = "/var/www/html/git/id_rsa.pub";
-				if (move_uploaded_file($_FILES["fileToUpload_pub"]["tmp_name"], $target_file2)) {
-					echo "The file has been uploaded.";
-				} else {
-					echo "Sorry, there was an error uploading your public key.";
-				}
-			}				
-			if (isset($_POST["rm_files"])){
-				$cmd1 = "rm /var/www/html/git/id_rsa";
-				$cmd2 = "rm /var/www/html/git/id_rsa.pub";
-				$result = system($cmd1);
-				$result = system($cmd2);
-				echo "Config has been removed";
-			}
+			// if (isset($_POST["upload_files"])){
+				// $target_file1 = "/var/www/html/git/id_rsa";
+				// if (move_uploaded_file($_FILES["fileToUpload_id"]["tmp_name"], $target_file1)) {
+					// echo "The file has been uploaded.";
+				// } else {
+					// echo "Sorry, there was an error uploading your private key.";
+				// }
+				// $target_file2 = "/var/www/html/git/id_rsa.pub";
+				// if (move_uploaded_file($_FILES["fileToUpload_pub"]["tmp_name"], $target_file2)) {
+					// echo "The file has been uploaded.";
+				// } else {
+					// echo "Sorry, there was an error uploading your public key.";
+				// }
+			// }				
+			// if (isset($_POST["rm_files"])){
+				// $cmd1 = "rm /var/www/html/git/id_rsa";
+				// $cmd2 = "rm /var/www/html/git/id_rsa.pub";
+				// $result = system($cmd1);
+				// $result = system($cmd2);
+				// echo "Config has been removed";
+			// }
 			if (isset($_POST["installed_images"])){
 				echo '<pre>';
 				$content = system('sudo docker images', $ret);
@@ -317,17 +312,18 @@
 				$test = system('sudo docker rmi -f $(sudo docker images -q)', $ret);
 				echo '</pre>';
 			}
-			if (isset($_POST["create_keys"])){
-				echo '<pre>';
-				$content = system('ssh-keygen -f /var/www/html/git/id_rsa -t rsa -P "" -b 4096 -C '. $email, $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["show_keys"])){
-				echo '<pre>';
-				$content = system('cat /var/www/html/git/id_rsa', $ret);
-				echo '</pre>';
-			}
+			// if (isset($_POST["create_keys"])){
+				// echo '<pre>';
+				// $content = system('ssh-keygen -f /var/www/html/git/id_rsa -t rsa -P "" -b 4096 -C '. $email, $ret);
+				// echo '</pre>';
+			// }
+			// if (isset($_POST["show_keys"])){
+				// echo '<pre>';
+				// $content = system('cat /var/www/html/git/id_rsa', $ret);
+				// echo '</pre>';
+			// }
 			
+            //upload config
 			if (isset($_POST["ul_config"]))
 				if ($_FILES["file_config"]["size"]!=0 ) {
 					$finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -349,6 +345,7 @@
 				else
 					echo "No file given.";
 			
+            //restore last config
 			if (isset($_POST["restore_config"])) {
 				if (!file_exists(CONFIGFILES_PATH."/globalconfig.bak"))
 					echo "No backup found.";
@@ -362,6 +359,7 @@
 				}
 			}
 			
+            //restore from git
 			if (isset($_POST["restore_default"])) {
 				$git_file = GITREPO_PATH."/html/cfg/globalconfig";
 				if(!file_exists($git_file))
@@ -377,8 +375,6 @@
 			}
 			
 		?>
-
-<!-- Enter text here-->
 
 <?php
 	//load footer

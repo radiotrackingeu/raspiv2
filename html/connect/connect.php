@@ -55,9 +55,9 @@
 		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 			<p>VPN Certificate.</p>
 			<input type="file" name="fileToUpload" id="fileToUpload">
-			<input type="submit" class="w3-btn w3-brown" value="Upload Certificate" name="upload_cfg">
+			<input type="submit" class="w3-btn w3-brown" value="Upload Certificate" name="upload_cert">
 			<br><br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Remove Certificate" name="rm_config">
+			<input type="submit" class="w3-btn w3-brown" value="Remove Certificate" name="rm_cert">
 			<br><br>
 		</form>
 	</div>
