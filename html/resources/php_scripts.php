@@ -550,6 +550,9 @@
         $target_file = "/var/www/html/connect/client.conf";
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
             echo "The file has been uploaded.";
+            if (is_writeable($target_file)) {
+                prepend("#certname:".$_FILES["fileToUpload"]["name"]."\n",$target_file);
+            }
         } else {
             echo "Sorry, there was an error uploading your file.";
         }
@@ -707,13 +710,6 @@
 }
 ////////////////////////    Unused    ////////////////////////
 {
-	// if (isset($_POST["cron_light_on"])){
-		// echo '<pre>';
-		// $cmd = $_POST["cron_lights"]."root       sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ i2c:1.0 sh /tmp/start_all_lights.sh 2>&1";
-		// $file = "/etc/crontab";
-		// $test = system("sudo docker run -t --rm --privileged -v /var/www/html/git/:/tmp/ git:1.0 sh /tmp/add_cronjob.sh ".$cmd." ".$file , $ret);
-		// echo '</pre>';
-	// }	
 }
 ?>
 
