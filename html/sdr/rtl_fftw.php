@@ -351,8 +351,8 @@ function setVisibility(menu, label, element) {
             <form method='POST' enctype="multipart/form-data" action="" onsubmit="openCity(event, 'tab_logger_signals')">
                 <label for="signal_length">Signal length in s:</label>
                 <div id="signal_length" class="w3-bar">
-                    <input class="w3-mobile" type="number" value="0.02" pattern='[0-9\.]+' title="Use . as decimal separator" name="signal_length_from"> - 
-                    <input class="w3-mobile" type="number" value="0.03" pattern='[0-9\.]+' title="Use . as decimal separator" name="signal_length_to">
+                    <input class="w3-mobile" type="number" value="0.02" pattern='[0-9\.]+' step="any" title="Use . as decimal separator" name="signal_length_from"> - 
+                    <input class="w3-mobile" type="number" value="0.03" pattern='[0-9\.]+' step="any" title="Use . as decimal separator" name="signal_length_to">
                 </div><br>
                 <label for="signal_freq">Signal freq in Hz:</label>
                 <div id="signal_freq" class="w3-bar">
