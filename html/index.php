@@ -92,7 +92,11 @@
         </div>
         <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
             Apps currently running:<br>
-            <?php system("sudo docker ps --filter \"status=running\" --format\"table {{.Names}}\t{{.Image}}\"");?>
+            <div style="margin-left:20px">
+            <pre>
+                <?php system("sudo docker ps --filter \"status=running\" --format \"table {{.Names}}\t{{.Image}}\"");?>
+            </pre>
+            </div>
         </div>
     </div>
 </div>
