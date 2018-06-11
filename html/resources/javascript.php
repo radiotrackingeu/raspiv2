@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
 function openCity(evt, cityName) {
     var i, x, tablinks;
     x = document.getElementsByClassName("city");
@@ -30,26 +30,26 @@ function myAccordion(id) {
     }
 }
 
-    function copyInput(formName, excludeList) {
+function copyInput(formName, excludeList) {
 //        var exclude= ["antenna_id_", "antenna_orientation_", "change_logger_setting"];
-        var elements = document.getElementById(formName).elements;
-        for (var i=0, element; element = elements[i++];) {
-            <!-- console.log(element.id); -->
-            <!-- console.log(element.id.charAt(element.id.length-1)); -->
-            var name=element.getAttribute("name");
-            if (name==null || isNaN(parseInt(name.slice(-1),10)))
-                continue;
-            var nonum=name.substr(0,name.length-1);
-            if (excludeList.indexOf(nonum)==-1 && name.charAt(name.length-1)!="0") {
-                var ref=elements[nonum.concat("0")];
-                if (element.type=="radio") {
-                    document.getElementById(name.concat("_y")).checked = document.getElementById(nonum.concat("0_y")).checked;
-                    document.getElementById(name.concat("_n")).checked = document.getElementById(nonum.concat("0_n")).checked;
-                } else {
-                    element.value = ref.value;
-                }
+    var elements = document.getElementById(formName).elements;
+    for (var i=0, element; element = elements[i++];) {
+        <!-- console.log(element.id); -->
+        <!-- console.log(element.id.charAt(element.id.length-1)); -->
+        var name=element.getAttribute("name");
+        if (name==null || isNaN(parseInt(name.slice(-1),10)))
+            continue;
+        var nonum=name.substr(0,name.length-1);
+        if (excludeList.indexOf(nonum)==-1 && name.charAt(name.length-1)!="0") {
+            var ref=elements[nonum.concat("0")];
+            if (element.type=="radio") {
+                document.getElementById(name.concat("_y")).checked = document.getElementById(nonum.concat("0_y")).checked;
+                document.getElementById(name.concat("_n")).checked = document.getElementById(nonum.concat("0_n")).checked;
+            } else {
+                element.value = ref.value;
             }
         }
-        return 0;
     }
+    return 0;
+}
 </script>

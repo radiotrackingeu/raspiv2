@@ -52,8 +52,7 @@
     {
         //Start/Stop
         if (isset($_POST["log_start_all"])){
-            $num = exec("lsusb | grep -c -e '0bda:2838'");
-            for ($i=0; $i<$num; $i++) {
+            for ($i=0; $i<$GLOBALS["num_rec"]; $i++) {
                 $file_name = $config['logger']['antenna_id_'.$i] ."_". date('Y_m_d_H_i');
                 $file_path = "/tmp/record/" . $file_name;
                 $run_id = write_run_to_db($config, $i, $file_name);
@@ -63,8 +62,7 @@
             }
         }
         if (isset($_POST["log_stop_all"])){
-            $num = exec("lsusb | grep -c -e '0bda:2838'");
-            for ($i=0; $i<$num; $i++) {
+            for ($i=0; $i<$GLOBALS["num_rec"]; $i++) {
                 $cmd ="sudo docker stop logger-sdr-d".$i." 2>&1";
                 start_docker($cmd, 'tab_logger_range');
             }
@@ -118,8 +116,7 @@
     {
         //Start/Stop
         if (isset($_POST["log_single_start_all"])){
-            $num = exec("lsusb | grep -c -e '0bda:2838'");
-            for ($i=0; $i<$num; $i++) {
+            for ($i=0; $i<$GLOBALS["num_rec"]; $i++) {
                 $file_name = $config['logger']['antenna_id_'.$i] ."_". date('Y_m_d_H_i');
                 $file_path = "/tmp/record/" . $file_name;
                 $run_id = write_run_to_db($config, $i, $file_name);
@@ -129,9 +126,8 @@
             }
         }
         if (isset($_POST["log_single_stop_all"])){
-            $num = exec("lsusb | grep -c -e '0bda:2838'");
             $cmd = ":";
-            for ($i=0; $i<$num; $i++) {
+            for ($i=0; $i<$GLOBALS["num_rec"]; $i++) {
                 $cmd .=" && sudo docker stop logger-sdr-d".$i." 2>&1";
             }
             start_docker($cmd, 'tab_logger_single');
@@ -706,7 +702,7 @@
         echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";	
 }
     function check_docker($docker_name){
-        if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=".$docker_name.")")){
+        if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} ".$docker_name), FILTER_VALIDATE_BOOLEAN)){
             echo "<span class='w3-tag w3-red w3-xlarge'>Device is in use</span> \n \n";
         }
         else{

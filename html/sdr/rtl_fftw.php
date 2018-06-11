@@ -180,7 +180,7 @@ function setVisibility(menu, label, element) {
 	<?php endif;?>
 </div>
 
-<!------------------------------------------------- Tab Logger Settings ------------------------------------------------->
+<!-------------------------------- Tab Logger Settings ------------------------------------------------------------------>
 
 <div id="tab_logger_settings" class="city w3-mobile" style="display:none">
     <form method='POST' id="rec_settings" enctype="multipart/form-data" action="<?php update_Config($config);?>">
@@ -343,7 +343,7 @@ function setVisibility(menu, label, element) {
     </div>
 </div>
 
-<!------------------------------------------------- Tab Latest Signals ------------------------------------------------->
+<!-------------------------------- Tab Latest Signals ------------------------------------------------------------------>
 
 <div id="tab_logger_signals" class="city w3-mobile" style="display:<?php echo (isset($_POST['get_signals']) ? 'block' : 'none')?>">
     <div class= "w3-row-padding">
