@@ -238,6 +238,12 @@
                     $cmd_change = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/  -v /etc/:/tmp/ git:1.0 sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"";
                     start_docker_echo($cmd_change,"tab_logger_settings","Receiver ".$i." will be stopped every day at ".$config['logger']['timer_stop_time_'.$i].".");			
                 }
+                if ($_POST["use_sql_0"]=="Yes" || $_POST["use_sql_1"]=="Yes" || $_POST["use_sql_2"]=="Yes" || $_POST["use_sql_3"]=="Yes") {
+                    if(!filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} mysql"), FILTER_VALIDATE_BOOLEAN)) {
+                        $cmd = "sudo docker start mysql 2>&1";
+                        start_docker_echo($cmd,'"tab_logger_settings', "Started MySQL Database.");
+                    }
+                }
                 
             }
         }
