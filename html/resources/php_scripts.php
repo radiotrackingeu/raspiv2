@@ -488,7 +488,9 @@
     if (isset($_POST["start_hotspot"])){
         $pw=$_POST["pw_hotspot"];
         if (strlen($pw)>=8 && strlen($pw)<=63) {
-            $cmd = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/start_hotspot_stop_wifi.sh \"".$_POST["ssid_hotspot"]."\" \"".$_POST["pw_hotspot"]."\"";
+            $ssid=addslashes(addcslashes($_POST["ssid_hotspot"],"\\"));
+            $pw=addslashes(addcslashes($pw,"\\"));
+            $cmd = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/start_hotspot_stop_wifi.sh \"".$ssid."\" \"".$pw."\"";
             start_docker_echo($cmd, 'hotspot', "Hotspot will be active after reboot.\n SSID:     ".$_POST["ssid_hotspot"]."\n Password: ".$_POST["pw_hotspot"]);
         } else
             start_docker_echo(":", 'hotspot', "Password needs to be 8 to 63 characters long.");
@@ -498,7 +500,9 @@
   {
     // be aware of the wifi version in the shell script!!!
     if (isset($_POST["connect_wifi"])){
-        $cmd = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/stop_hotspot_set_wifi_ssid.sh \"".$_POST["ssid_wifi"]."\" \"".$_POST["pw_wifi"]."\"";
+        $ssid=addslashes(addcslashes($_POST["ssid_wifi"],"\\"));
+        $pw=addslashes(addcslashes($_POST["pw_wifi"],"\\"));
+        $cmd = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/stop_hotspot_set_wifi_ssid.sh \"".$ssid."\" \"".$pw."\"";
         start_docker_echo($cmd, 'wifi_con', "Wifi will connect to new network after reboot. Hotspot will be deactivated.\n SSID:     ".$_POST["ssid_wifi"]."\n Password: ".$_POST["pw_wifi"]);
     }
   }

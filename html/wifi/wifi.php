@@ -59,7 +59,7 @@
 			<input type="text" name="ssid_wifi" value="<?php $out=shell_exec("iwgetid -r"); echo $out; ?>">
 			<br><br>
 			Password: <br>
-			<input type="password" name="pw_wifi" value="******">
+			<input type="password" name="pw_wifi" value="">
 			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Change" name="connect_wifi" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
