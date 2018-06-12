@@ -39,7 +39,7 @@
 			Hotspot-Name: <br>
 			<input type="text" name="ssid_hotspot" value="<?php echo isset($config['network']['ssid_hotspot']) ? $config['network']['ssid_hotspot'] : "rteuv3" ?>">
 			<br><br>
-			Password: (8-63 characters, no ~ )<br>
+			Password: (8-63 characters)<br>
 			<input type="password" name="pw_hotspot" value="<?php echo isset($config['network']['pw_hotspot']) ? $config['network']['pw_hotspot'] : "sdrtracking" ?>">
 			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Create Hotspot" name="start_hotspot" />

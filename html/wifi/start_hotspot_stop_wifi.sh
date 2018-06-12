@@ -12,23 +12,23 @@ grep -q "$OLDSTRING" $FILE &&
 # change ssid and password
 
 FILE="/tmp1/hostapd.conf"
-OLDSTRING=$(grep ^ssid $FILE)
+OLDSTRING="^ssid.*$"
 NEWSTRING="ssid=$1"
 grep -q $OLDSTRING $FILE && 
     sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE
 
-OLDSTRING=$(grep ^wpa_passphrase $FILE)
+OLDSTRING="^wpa_passphrase.*$"
 NEWSTRING="wpa_passphrase=$2"
 grep -q $OLDSTRING $FILE && 
     sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE
 
-OLDSTRING=$(grep ssid /tmp/wpa_supplicant/wpa_supplicant.conf)
+OLDSTRING="^ssid.*$"
 NEWSTRING="ssid=none"
 FILE="/tmp/wpa_supplicant/wpa_supplicant.conf"
 grep -q $OLDSTRING $FILE && 
     sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE
 	
-OLDSTRING=$(grep psk /tmp/wpa_supplicant/wpa_supplicant.conf)
+OLDSTRING="^psk.*$"
 NEWSTRING="psk=none"
 FILE="/tmp/wpa_supplicant/wpa_supplicant.conf"
 grep -q $OLDSTRING $FILE && 

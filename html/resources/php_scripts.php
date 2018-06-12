@@ -487,11 +487,11 @@
   {
     if (isset($_POST["start_hotspot"])){
         $pw=$_POST["pw_hotspot"];
-        if (strlen($pw)>=8 && strlen($pw)<=63 && strpos($pw, '~')===FALSE) {
+        if (strlen($pw)>=8 && strlen($pw)<=63) {
             $cmd = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/start_hotspot_stop_wifi.sh \"".$_POST["ssid_hotspot"]."\" \"".$_POST["pw_hotspot"]."\"";
             start_docker_echo($cmd, 'hotspot', "Hotspot will be active after reboot.\n SSID:     ".$_POST["ssid_hotspot"]."\n Password: ".$_POST["pw_hotspot"]);
         } else
-            echo "Password needs to be 8 to 63 characters long and may not contain the ~ character.";
+            start_docker_echo(":", 'hotspot', "Password needs to be 8 to 63 characters long.");
     }
   }
   //-------------------- WiFi Connect --------------------//
