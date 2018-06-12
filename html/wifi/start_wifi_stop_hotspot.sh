@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # change /etc/crontab and comment docker wifi line
-OLDSTRING='@reboot root docker run -d --rm --privileged --net=host wifi:1.0'
-NEWSTRING='#@reboot root docker run -d --rm --privileged --net=host wifi:1.0'
+OLDSTRING=$(grep -P 'wifi:\d\.\d' $FILE)
+NEWSTRING='#@reboot root docker run -d --name=wifi --rm --privileged --net=host -v /var/www/html/wifi/hostapd.conf:/etc/hostapd/hostapd.conf wifi:1.0'
 FILE="/tmp/crontab"
 grep -q "$OLDSTRING" $FILE && 
     sed -i "s/^$OLDSTRING/$NEWSTRING/g" $FILE || echo -e "$NEWSTRING \n#" >> $FILE

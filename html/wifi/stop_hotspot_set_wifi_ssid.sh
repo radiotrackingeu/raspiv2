@@ -5,9 +5,9 @@
 # change /etc/crontab and comment docker wifi line
 FILE="/tmp/crontab"
 OLDSTRING=$(grep -P 'wifi:\d\.\d' $FILE)
-NEWSTRING='#$OLDSTRING'
+NEWSTRING="#$OLDSTRING"
 grep -q "$OLDSTRING" $FILE && 
-    sed -i "s/^$OLDSTRING/$NEWSTRING/g" $FILE || echo -e "$NEWSTRING \n#" >> $FILE
+    sed -i "s~^$OLDSTRING~$NEWSTRING~g" $FILE || echo -e "$NEWSTRING \n#" >> $FILE
 # change ssid and password
 
 OLDSTRING=$(grep ssid /tmp/wpa_supplicant/wpa_supplicant.conf)
