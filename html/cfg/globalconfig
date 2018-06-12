@@ -2,8 +2,6 @@ Hostname = "nyctalus"
 HOTSPOT = 1
 SSID = ""
 WIFI-PW = ""
-HOTSPOT-SSID = "rteuv2"
-HOTSPOT-PW = "sdrtracking"
 FIX-IP = ""
 LAN-IP = "192.168.1.1"
 Center_Freq = "150.100MHz"
@@ -144,5 +142,5 @@ usb_timer_start_time = "20:00"
 usb_timer_stop_time = "06:00"
 
 [network]
-ssid_hotspot = "rteuv3"
+ssid_hotspot = "rteuv2"
 pw_hotspot = "sdrtracking"
