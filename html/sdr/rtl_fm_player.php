@@ -21,7 +21,7 @@
 
 <div class="w3-row row-padding w3-container">
 	<div class="w3-panel w3-green w3-round w3-padding-24" >
-		<audio controls autoplay preload="none"><source src='<?php echo "http://".$_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+$_POST['dev'])?>' type='audio/mpeg'>Your browser does not support the audio element.</audio>
+		<audio controls autoplay preload="none"><source src='<?php echo "http://".$_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1+$_POST['dev'])?>' type='audio/mpeg'>Your browser does not support the audio element.</audio>
 		<form method="post" enctype="multipart/form-data" style="padding-left:20px; display:inline-block; vertical-align:top" onsubmit="return closeSelf(this);">
 			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_stop_<?php echo $_POST['dev']; ?>"/>
 		</form>
