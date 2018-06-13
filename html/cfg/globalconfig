@@ -111,6 +111,7 @@ db_host = "127.0.0.1"
 db_port = 3306
 db_user = "rteu"
 db_pass = "rteuv2!"
+db_keep = 1000
 
 [remote]
 time_start_vpn = "reboot"

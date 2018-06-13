@@ -62,10 +62,8 @@
             }
         }
         if (isset($_POST["log_stop_all"])){
-            for ($i=0; $i<$GLOBALS["num_rec"]; $i++) {
-                $cmd ="sudo docker stop logger-sdr-d".$i." 2>&1";
-                start_docker($cmd, 'tab_logger_range');
-            }
+            $cmd ="sudo docker stop $(sudo docker ps --filter name=logger-sdr --format {{.Names}})";
+            start_docker($cmd, 'tab_logger_range');
         }
         if (isset($_POST["log_start_0"])){
             $file_name = $config['logger']['antenna_id_0'] ."_". date('Y_m_d_H_i');
@@ -126,10 +124,7 @@
             }
         }
         if (isset($_POST["log_single_stop_all"])){
-            $cmd = ":";
-            for ($i=0; $i<$GLOBALS["num_rec"]; $i++) {
-                $cmd .=" && sudo docker stop logger-sdr-d".$i." 2>&1";
-            }
+            $cmd = "sudo docker stop $(sudo docker ps --filter name=logger-sdr --format {{.Names}})";
             start_docker($cmd, 'tab_logger_single');
         }
          if (isset($_POST["log_single_start_0"])){
@@ -280,10 +275,7 @@
             }
         }
         if (isset($_POST["rtl_websdr_stop_all"])){
-            $cmd = ":";
-            for ($i=0; $i<$GLOBALS["num_rec"]; $i++) {
-                $cmd .=" && ".cmd_webRX_stop($i);
-            }
+            $cmd = "sudo docker stop $(sudo docker ps --filter name=webrx-sdr --format {{.Names}})";
             start_docker($cmd, 'webrx_tab');
         }
         if (isset($_POST["rtl_websdr_d0"])){
@@ -468,10 +460,21 @@
         start_docker($cmd,'mysql');
     }
     if (isset($_POST["empty_DB"])) {
-        $cmd = "sudo docker run -t --rm --net=host pwchange:1.1 mysql --host=".$config['database']['db_host']." --user=".$config['database']['db_user']." --password=".$config['database']['db_pass']." rteu -e \"SET FOREIGN_KEY_CHECKS = 0; TRUNCATE table runs; TRUNCATE TABLE signals; SET FOREIGN_KEY_CHECKS = 1\"";
-        start_docker_echo($cmd, 'mysql', "Database is now empty!");
+        $cmd="sudo docker run -t --rm --net=host pwchange:1.1 mysql --host=".$config['database']['db_host']." --user=".$config['database']['db_user']." --password=".$config['database']['db_pass']." rteu -e \"";
+        $statement="";
+        if (isset($_POST["db_keep"]) && $_POST["db_keep"] != 0) {
+            $sql1 = "DELETE FROM \`signals\` WHERE \`id\` < (SELECT MIN(\`id\`) FROM (SELECT * FROM \`signals\` ORDER BY \`id\` DESC LIMIT ".$_POST["db_keep"].") AS \`last_entries\`);";
+            $sql2 = "DELETE FROM \`runs\` WHERE NOT EXISTS ( SELECT 1 FROM \`signals\` WHERE \`runs\`.\`id\` = \`signals\`.\`run\`);";
+            $cmd .= $sql1." ".$sql2."\"";
+            $statement = "Deleted all but ".$_POST["db_keep"]." entries!";
+        } else {
+            $sql = "SET FOREIGN_KEY_CHECKS = 0; TRUNCATE table runs; TRUNCATE TABLE signals; SET FOREIGN_KEY_CHECKS = 1";
+            $cmd .= $sql."\"";
+            $statement = "Database is now empty!";
+        }
+        start_docker_echo($cmd, 'mysql', $statement);
     }
-    if (isset($_POST["change_db_settings"])){
+    if (isset($_POST["change_db_settings"]) || isset($_POST["empty_DB"])){
         echo "<script type='text/javascript'>document.getElementById('mysql').style.display = 'block';</script>";
     }
   }

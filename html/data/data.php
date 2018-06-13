@@ -21,7 +21,7 @@
 	require_once CONFIGLITE_PATH.'/Lite.php';
 	
 		define ('confSection', 'database');
-		define ('confKeys', array('db_host', 'db_port', 'db_user', 'db_pass'));
+		define ('confKeys', array('db_host', 'db_port', 'db_user', 'db_pass','db_keep'));
 		$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
 ?>
 
@@ -78,28 +78,38 @@
 			<input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Stop Database" name="stop_mysql" /><br><br>
 			<input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Start Management Tool" name="start_phpmyadmin" />
 			<input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Stop Management Tool" name="stop_phpmyadmin" /><br><br>
-            <input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Delete all data" name="empty_DB" /><br><br>
 			<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+8000)."/phpmyadmin/"?>"> Link to PhpMyAdmin </a>
 		</form>
     </div>
+    
+	<div class="w3-panel w3-green w3-round w3-padding">
+        <h3>Database Cleanup</h3>
+        <p>Allows you to delete all, or all but the last <i>n</i> signals from the database.</p>
+		<form method='POST' enctype="multipart/form-data" action=<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>>
+            <label for="db_keep">Number of signals to keep:</label>
+            <input type="number" class="w3-input" style="width:20%" id="db_keep" name="db_keep" value="<?php echo isset($config[confSection]['db_keep']) ? $config[confSection]['db_keep'] : 0 ?>"><br>
+            <input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Delete data" name="empty_DB" />
+		</form>
+    </div>
+    
 	<div class="w3-panel w3-green w3-round w3-padding">
 		<h3>Configure Database Connection</h3>
 		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
 				<p>
 					<label for="db_host">Hostname / IP:</label>
-					<input class="w3-input w3-mobile" style="width:20%;" type="text" id="db_host" name="db_host" value="<?php echo isset($config['database']['db_host']) ? $config['database']['db_host'] : "127.0.0.1" ?>">
+					<input class="w3-input w3-mobile" style="width:20%;" type="text" id="db_host" name="db_host" value="<?php echo isset($config[confSection]['db_host']) ? $config[confSection]['db_host'] : "127.0.0.1" ?>">
 				</p>
 				<p>
 					<label for="db_port">Port:</label>
-					<input class="w3-input w3-mobile" style="width:20%;" type="text" id="db_port" name="db_port" value="<?php echo isset($config['database']['db_port']) ? $config['database']['db_port'] : "3306" ?>">
+					<input class="w3-input w3-mobile" style="width:20%;" type="text" id="db_port" name="db_port" value="<?php echo isset($config[confSection]['db_port']) ? $config[confSection]['db_port'] : "3306" ?>">
 				</p>
 				<p>			
 					User:
-					<input class="w3-input w3-mobile" style="width:20%;" type="text" name="db_user" value="<?php echo isset($config['database']['db_user']) ? $config['database']['db_user'] : "root" ?>">
+					<input class="w3-input w3-mobile" style="width:20%;" type="text" name="db_user" value="<?php echo isset($config[confSection]['db_user']) ? $config[confSection]['db_user'] : "root" ?>">
 				</p>
 				<p>		
 					Password:
-					<input class="w3-input w3-mobile" style="width:20%;" type="password" name="db_pass" value="<?php echo isset($config['database']['db_pass']) ? $config['database']['db_pass'] : "" ?>">
+					<input class="w3-input w3-mobile" style="width:20%;" type="password" name="db_pass" value="<?php echo isset($config[confSection]['db_pass']) ? $config[confSection]['db_pass'] : "" ?>">
 				</p>
 				<input class="w3-input w3-btn w3-mobile w3-brown" style="width:15%;" type="submit" class="w3-btn w3-brown" value="Change settings" name="change_db_settings"><br>				
 		</form>
