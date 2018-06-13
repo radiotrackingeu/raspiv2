@@ -53,7 +53,8 @@
             <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
                 <form method="POST" enctype="multipart/form-data" action="">
                     <input type="submit" class="w3-btn w3-brown" value="Start all" name="rtl_websdr_start_all" />
-                    <input type="submit" class="w3-btn w3-brown" value="Stop all" name="rtl_websdr_stop_all" />
+                    <input type="submit" class="w3-btn w3-brown" value="Stop all" name="rtl_websdr_stop_all" /><br>
+                    Running more than two Spectrogram servers will likely overwhelm the cpu!
                 </form>
             </div>
         </div>
