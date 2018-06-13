@@ -78,7 +78,7 @@
         </div>
         <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">            
         <?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
-                <button type="button" onclick="myAccordion('rec<?=$i?>_status')" class="w3-button w3-green w3-block w3-left-align">Receiver <?=$i?>: <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} logger-sdr-d".$i), FILTER_VALIDATE_BOOLEAN)) echo "running"; else echo "not running"; ?></button>
+                <button type="button" onclick="myAccordion('rec<?=$i?>_status')" class="w3-button w3-green w3-block w3-left-align">Logger <?=$i?>: <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} logger-sdr-d".$i), FILTER_VALIDATE_BOOLEAN)) echo "running"; else echo "not running"; ?></button>
                 <div id="rec<?=$i?>_status" class="w3-container w3-hide" style="margin-left:15px">
                     Range: <span style="margin-left:37px"><?php echo ($config['logger']['center_freq_'.$i]-$config['logger']['freq_range_'.$i]/2)/1000000?> MHz to <?php echo ($config['logger']['center_freq_'.$i]+$config['logger']['freq_range_'.$i]/2)/1000000?> MHz</span>
                     <br>
