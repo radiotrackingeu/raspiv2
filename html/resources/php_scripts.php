@@ -307,7 +307,7 @@
     {    if (isset($_POST["change_webRX_settings"])){
             for ($i=0; $i<4; $i++) {
                 echo "Receiver ".$i.":";
-                $cmd = "sh /var/www/html/sdr/change_config_webrx_d".$i.".sh ".$_POST["fft_fps_".$i]." ".$_POST["fft_size_".$i]." ".$_POST["samp_rate_".$i]." ".$_POST["center_freq_".$i]." ".$_POST["rf_gain_".$i]." 2>&1";
+                $cmd = "sh /var/www/html/sdr/change_config_webrx.sh ".$i." ".$_POST["fft_fps_".$i]." ".$_POST["fft_size_".$i]." ".$_POST["samp_rate_".$i]." ".$_POST["center_freq_".$i]." ".$_POST["rf_gain_".$i]." 2>&1";
                 start_docker($cmd,'settings_webrx_tab');
             }
         }
