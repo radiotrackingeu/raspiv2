@@ -155,8 +155,8 @@ function get_Time() {
 </div>	
 
 <div id="infos" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<br> The Temperature of the CPU is:  <?php echo shell_exec("cat /sys/class/thermal/thermal_zone0/temp") ?>
+	<div class="w3-panel w3-green w3-round w3-padding">
+		The Temperature of the CPU is:  <?php echo round(0.001 * intVal(fgets(fopen("/sys/class/thermal/thermal_zone0/temp","r"))))."&deg;C" ?>
 	</div>
 </div>
 
