@@ -78,15 +78,32 @@
         </div>
         <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">            
         <?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
-                <button type="button" onclick="myAccordion('rec<?=$i?>_status')" class="w3-button w3-green w3-block w3-left-align">Logger <?=$i?>: <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} logger-sdr-d".$i), FILTER_VALIDATE_BOOLEAN)) echo "running"; else echo "not running"; ?></button>
+                <button type="button" onclick="myAccordion('rec<?=$i?>_status')" class="w3-button w3-green w3-block w3-left-align">Logger <?=$i?> <b><?php echo $config['logger']['antenna_id_'.$i]?></b>: <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} logger-sdr-d".$i), FILTER_VALIDATE_BOOLEAN)) echo "running"; else echo "not running"; ?></button>
                 <div id="rec<?=$i?>_status" class="w3-container w3-hide" style="margin-left:15px">
-                    Range: <span style="margin-left:37px"><?php echo ($config['logger']['center_freq_'.$i]-$config['logger']['freq_range_'.$i]/2)/1000000?> MHz to <?php echo ($config['logger']['center_freq_'.$i]+$config['logger']['freq_range_'.$i]/2)/1000000?> MHz</span>
+                    Frequency: <span style="margin-left:10px"><?php echo ($config['logger']['center_freq_'.$i]/1000000)?> MHz
                     <br>
-                    Gain: <span style="margin-left:50px"> <?php echo $config['logger']['log_gain_'.$i]?> dB</span>
+                    Range: <span style="margin-left:41px"><?php echo ($config['logger']['center_freq_'.$i]-$config['logger']['freq_range_'.$i]/2)/1000000?> MHz to <?php echo ($config['logger']['center_freq_'.$i]+$config['logger']['freq_range_'.$i]/2)/1000000?> MHz</span>
                     <br>
-                    Threshold: <span style="margin-left:10px"><?php echo $config['logger']['threshold_'.$i]?> dB above Noise</span>
+                    Gain: <span style="margin-left:54px"><?php echo $config['logger']['log_gain_'.$i]?> dB</span>
                     <br>
-                    Duration: <span style="margin-left:19px"><?php echo $config['logger']['minDuration_'.$i]." - ".$config['logger']['maxDuration_'.$i]?> sec</span>
+                    Threshold: <span style="margin-left:14px"><?php echo $config['logger']['threshold_'.$i]?> dB above Noise</span>
+                    <br>
+                    Duration: <span style="margin-left:23px"><?php echo $config['logger']['minDuration_'.$i]." - ".$config['logger']['maxDuration_'.$i]?> sec</span>
+                    <br>
+                    MySQL: <span style="margin-left:36px"><?php if($config['logger']['use_sql_'.$i]=="Yes") :?>Writing to database at <?php echo $config['database']['db_host'];?>
+                               <?php else:?> Not writing to database.<?php endif;?></span>
+                    <br>
+                    Timer: <span style="margin-left:45px"><?php echo (
+                        $config['logger']['timer_start_'.$i]!="start_no" ? "Start ".(
+                            $config['logger']['timer_mode_'.$i]=="freq_range" ? "range" : (
+                                $config['logger']['timer_mode_'.$i]=="single_freq" ? "single frequency" : "" 
+                            )
+                        )." logger at ".(
+                            $config['logger']['timer_start_'.$i] == "start_time" ? $config['logger']['timer_start_time_'.$i] : "boot"
+                        ) : "No autostart"
+                    )."  -  ".(
+                        $config['logger']['timer_stop_'.$i]=="stop_time" ? "Stop logger at ".$config['logger']['timer_stop_time_'.$i] : "No autostop"                        
+                    ) ?></span>
                 </div>
             <?php endfor;?>
         </div>

@@ -232,7 +232,7 @@
                 if ($_POST["use_sql_0"]=="Yes" || $_POST["use_sql_1"]=="Yes" || $_POST["use_sql_2"]=="Yes" || $_POST["use_sql_3"]=="Yes") {
                     if(!filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} mysql"), FILTER_VALIDATE_BOOLEAN)) {
                         $cmd = "sudo docker start mysql 2>&1";
-                        start_docker_echo($cmd,'"tab_logger_settings', "Started MySQL Database.");
+                        start_docker_echo($cmd,"tab_logger_settings", "Started MySQL Database.");
                     }
                 }
                 

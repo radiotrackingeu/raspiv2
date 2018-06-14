@@ -41,7 +41,6 @@ function setVisibility(menu, label, element) {
 	define ('confKeys', $tmparr);
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
-    
 ?>
 
 <!-- Enter text here-->
@@ -74,16 +73,18 @@ function setVisibility(menu, label, element) {
             <?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
                 <div class="w3-half">
                     <div class="w3-panel w3-green w3-round">
-                        <h3>Receiver <?=$i?></h3><br>
-                        Range: <?php echo ($config['logger']['center_freq_'.$i]-$config['logger']['freq_range_'.$i]/2)/1000000?> MHz to <?php echo ($config['logger']['center_freq_'.$i]+$config['logger']['freq_range_'.$i]/2)/1000000?> MHz
+                        <h3>Receiver <?=$i?> <b><?php echo $config['logger']['antenna_id_'.$i]?></b></h3><br>
+                        Range: <span style="margin-left:37px"><?php echo ($config['logger']['center_freq_'.$i]-$config['logger']['freq_range_'.$i]/2)/1000000?> MHz to <?php echo ($config['logger']['center_freq_'.$i]+$config['logger']['freq_range_'.$i]/2)/1000000?> MHz</span>
                         <br>
-                        Gain: <?php echo $config['logger']['log_gain_'.$i]?> dB
+                        Gain: <span style="margin-left:50px"><?php echo $config['logger']['log_gain_'.$i]?> dB</span>
                         <br>
-                        Threshold: <?php echo $config['logger']['threshold_'.$i]?> dB above Noise
+                        Threshold: <span style="margin-left:10px"><?php echo $config['logger']['threshold_'.$i]?> dB above Noise</span>
                         <br>
-                        Duration: <?php echo $config['logger']['minDuration_'.$i]." - ".$config['logger']['maxDuration_'.$i]?> sec
+                        Duration: <span style="margin-left:19px"><?php echo $config['logger']['minDuration_'.$i]." - ".$config['logger']['maxDuration_'.$i]?> sec</span>
                         <br>
-                        <form class="w3-right-align" method="POST" enctype="multipart/form-data" action="">
+                        MySQL: <span style="margin-left:32px"><?php if($config['logger']['use_sql_'.$i]=="Yes") :?>Writing to database at <?php echo $config['database']['db_host'];?>
+                               <?php else:?> Not writing to database.<?php endif;?></span>
+                        <form class="w3-right-align" method="POST" enctype="multipart/form-data" action="" style="margin-top:10px">
                             <input type="submit" class="w3-btn w3-brown" value="Start" name="log_start_<?=$i?>" />
                             <input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop_<?=$i?>" />
                         </form>
@@ -139,14 +140,16 @@ function setVisibility(menu, label, element) {
 	<?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
 	<div class="w3-half">
 		<div class="w3-panel w3-green w3-round">
-			<h3>Receiver <?=$i?></h3><br>
-			Frequency: <?php echo ($config['logger']['center_freq_'.$i]/1000000)?> MHz
+			<h3>Receiver <?=$i?> <b><?php echo $config['logger']['antenna_id_'.$i]?></b></h3><br>
+			Frequency: <span style="margin-left:10px"><?php echo ($config['logger']['center_freq_'.$i]/1000000)?> MHz</span>
 			<br>
-			Gain: <?php echo $config['logger']['log_gain_'.$i]?> dB
+			Gain: <span style="margin-left:54px"><?php echo $config['logger']['log_gain_'.$i]?> dB</span>
 			<br>
-			Threshold: <?php echo $config['logger']['threshold_'.$i]?> dB above Noise
+			Threshold: <span style="margin-left:14px"><?php echo $config['logger']['threshold_'.$i]?> dB above Noise</span>
 			<br>
-			<form class="w3-right-align" method="POST" enctype="multipart/form-data" action="">
+            MySQL: <span style="margin-left:36px"><?php if($config['logger']['use_sql_'.$i]=="Yes") :?>Writing to database at <?php echo $config['database']['db_host'];?>
+                               <?php else:?> Not writing to database<?php endif;?></span>
+			<form class="w3-right-align" method="POST" enctype="multipart/form-data" action="" style="margin-top:10px">
 				<input type="submit" class="w3-btn w3-brown" value="Start" name="log_single_start_<?=$i?>" />
 				<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_single_stop_<?=$i?>" />
 			</form>
