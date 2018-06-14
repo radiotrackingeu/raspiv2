@@ -127,7 +127,7 @@
             $cmd = "sudo docker stop $(sudo docker ps --filter name=logger-sdr --format {{.Names}})";
             start_docker($cmd, 'tab_logger_single');
         }
-         if (isset($_POST["log_single_start_0"])){
+        if (isset($_POST["log_single_start_0"])){
             $file_name = $config['logger']['antenna_id_0'] ."_". date('Y_m_d_H_i');
             $file_path = "/tmp/record/" . $file_name;
             $run_id = write_run_to_db($config, 0, $file_name);

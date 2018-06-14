@@ -48,7 +48,7 @@
             <div style="margin-left:20px">
             <?php echo ($GLOBALS["num_rec"]==0 ? "No receivers connected!" : $GLOBALS["num_rec"]." receiver".($GLOBALS["num_rec"]>1 ? "s" : "")." connected - ".exec("sudo docker ps | grep -c logger")." running.");?><br>
             MySQL-Server: <span class="w3-tooltip" style="display:inline-block; margin-left:10px">
-                <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} mysql"),FILTER_VALIDATE_BOOLEAN)) : ?>
+                <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} mysql 2>/dev/null"),FILTER_VALIDATE_BOOLEAN)) : ?>
 					<span class="w3-text w3-small w3-round w3-brown w3-tag"style="position:absolute; bottom:100%; left:50%; margin-left:-80px; width:160px">MySQL database is running.</span>
                     <i class="fas fa-check-circle"></i>
                 <?php else : ?>
@@ -57,7 +57,7 @@
                 <?php endif; ?>
             </span><br>
             WiFi Hotspot: <span class="w3-tooltip" style="display:inline-block; margin-left:22px">
-                <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} wifi"),FILTER_VALIDATE_BOOLEAN)) : ?>
+                <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} wifi 2>/dev/null"),FILTER_VALIDATE_BOOLEAN)) : ?>
 					<span class="w3-text w3-small w3-round w3-brown w3-tag"style="position:absolute; bottom:100%; left:50%; margin-left:-80px; width:160px">WiFi Hotspot is running.</span>
                     <i class="fas fa-check-circle"></i>
                 <?php else : ?>
@@ -66,7 +66,7 @@
                 <?php endif; ?>
             </span><br>
             VPN: <span class="w3-tooltip" style="display:inline-block; margin-left:87px">
-                <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} vpn_tunnel"),FILTER_VALIDATE_BOOLEAN)) : ?>
+                <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} vpn_tunnel 2>/dev/null"),FILTER_VALIDATE_BOOLEAN)) : ?>
 					<span class="w3-text w3-small w3-round w3-brown w3-tag"style="position:absolute; bottom:100%; left:50%; margin-left:-80px; width:160px">VPN tunnel established.</span>
                     <i class="fas fa-check-circle"></i>
                 <?php else : ?>
@@ -79,7 +79,7 @@
         <?php if ($GLOBALS["num_rec"]>0):?>
         <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
         <?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
-                <button type="button" onclick="myAccordion('rec<?=$i?>_status')" class="w3-button w3-green w3-block w3-left-align">Logger <?=$i?> <b><?php echo $config['logger']['antenna_id_'.$i]?></b>: <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} logger-sdr-d".$i), FILTER_VALIDATE_BOOLEAN)) echo "running"; else echo "not running"; ?></button>
+                <button type="button" onclick="myAccordion('rec<?=$i?>_status')" class="w3-button w3-green w3-block w3-left-align">Logger <?=$i?> <b><?php echo $config['logger']['antenna_id_'.$i]?></b>: <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} logger-sdr-d".$i." 2>/dev/null"), FILTER_VALIDATE_BOOLEAN)) echo "running"; else echo "not running"; ?></button>
                 <div id="rec<?=$i?>_status" class="w3-container w3-hide" style="margin-left:15px">
                     Frequency: <span style="margin-left:10px"><?php echo ($config['logger']['center_freq_'.$i]/1000000)?> MHz
                     <br>
