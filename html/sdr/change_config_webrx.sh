@@ -11,7 +11,7 @@ FILE="/var/www/html/sdr/config_webrx_d$1.py"
 #$2 is the fft_fps
 OLDSTRING="fft_fps"
 NEWSTRING="fft_fps=$2"
-grep -q "$^OLDSTRING" $FILE && 
+grep -q "^$OLDSTRING" $FILE && 
     sed -i "/^$OLDSTRING/c\\$NEWSTRING" $FILE
 	
 echo "Set FFT Framerate to $2"
@@ -19,7 +19,7 @@ echo "Set FFT Framerate to $2"
 #$3 is the fft_size
 OLDSTRING="fft_size"
 NEWSTRING="fft_size=$3"
-grep -q "$^OLDSTRING" $FILE && 
+grep -q "^$OLDSTRING" $FILE && 
     sed -i "/^$OLDSTRING/c\\$NEWSTRING" $FILE
 
 echo "Set FFT Size to $3"
@@ -28,7 +28,7 @@ echo "Set FFT Size to $3"
 
 OLDSTRING="samp_rate"
 NEWSTRING="samp_rate=$4"
-grep -q "$^OLDSTRING" $FILE && 
+grep -q "^$OLDSTRING" $FILE && 
     sed -i "/^$OLDSTRING/c\\$NEWSTRING" $FILE
 	
 echo "Set sample rate to $4"
@@ -37,7 +37,7 @@ echo "Set sample rate to $4"
 
 OLDSTRING="center_freq"
 NEWSTRING="center_freq=$5"
-grep -q "$^OLDSTRING" $FILE && 
+grep -q "^$OLDSTRING" $FILE && 
     sed -i "/^$OLDSTRING/c\\$NEWSTRING" $FILE
 	
 echo "Set center frequency to $5"
