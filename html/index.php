@@ -46,7 +46,7 @@
             <b id="server_time" style="float:right"></b>
             <h2><?php system("hostname")?></h2>
             <div style="margin-left:20px">
-            <?php echo ($GLOBALS["num_rec"]==0 ? "No receivers connected!" : $GLOBALS["num_rec"]." receiver".($GLOBALS["num_rec"]>1 ? "s" : "")." connected - ".system("sudo docker ps | grep -c logger")." running.");?><br>
+            <?php echo ($GLOBALS["num_rec"]==0 ? "No receivers connected!" : $GLOBALS["num_rec"]." receiver".($GLOBALS["num_rec"]>1 ? "s" : "")." connected - ".exec("sudo docker ps | grep -c logger")." running.");?><br>
             MySQL-Server: <span class="w3-tooltip" style="display:inline-block; margin-left:10px">
                 <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} mysql"),FILTER_VALIDATE_BOOLEAN)) : ?>
 					<span class="w3-text w3-small w3-round w3-brown w3-tag"style="position:absolute; bottom:100%; left:50%; margin-left:-80px; width:160px">MySQL database is running.</span>
