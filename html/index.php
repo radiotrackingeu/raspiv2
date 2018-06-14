@@ -46,7 +46,7 @@
             <b id="server_time" style="float:right"></b>
             <h2><?php system("hostname")?></h2>
             <div style="margin-left:20px">
-            <?php echo $GLOBALS["num_rec"] ?> receivers connected - <?php system("sudo docker ps | grep -c logger");?> running.<br>
+            <?php echo ($GLOBALS["num_rec"]==0 ? "No receivers connected!" : $GLOBALS["num_rec"]." receiver".($GLOBALS["num_rec"]>1 ? "s" : "")." connected - ".system("sudo docker ps | grep -c logger")." running.");?><br>
             MySQL-Server: <span class="w3-tooltip" style="display:inline-block; margin-left:10px">
                 <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} mysql"),FILTER_VALIDATE_BOOLEAN)) : ?>
 					<span class="w3-text w3-small w3-round w3-brown w3-tag"style="position:absolute; bottom:100%; left:50%; margin-left:-80px; width:160px">MySQL database is running.</span>
@@ -76,7 +76,8 @@
             </span>
             </div>
         </div>
-        <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">            
+        <?php if ($GLOBALS["num_rec"]>0):?>
+        <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
         <?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
                 <button type="button" onclick="myAccordion('rec<?=$i?>_status')" class="w3-button w3-green w3-block w3-left-align">Logger <?=$i?> <b><?php echo $config['logger']['antenna_id_'.$i]?></b>: <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} logger-sdr-d".$i), FILTER_VALIDATE_BOOLEAN)) echo "running"; else echo "not running"; ?></button>
                 <div id="rec<?=$i?>_status" class="w3-container w3-hide" style="margin-left:15px">
@@ -107,6 +108,7 @@
                 </div>
             <?php endfor;?>
         </div>
+        <?php endif;?>
         <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
             Apps currently running:<br>
             <div style="margin-left:20px">
