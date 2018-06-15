@@ -262,8 +262,10 @@
   {
     //Functions
     function cmd_webRX_start($id) {
-        return "sudo docker run --rm -t --name webrx-sdr-d".$id." --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".(81+$id).":8073 webrx:1.0 sh /cfiles/start_openwebrx_d".$id.".sh";
-    }
+        if (!check_image_exists("webrx-sdr-d".$id))
+            exec("sudo docker create -t --name webrx-sdr-d".$id." --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($id+81).":8073 webrx:1.0 sh /cfiles/start_openwebrx_d".$id.".sh >/dev/null");
+        return "sudo docker start webrx-sdr-d".$id;
+}
     function cmd_webRX_stop($id) {
         return "sudo docker stop webrx-sdr-d".$id." 2>&1";
     }
@@ -279,25 +281,25 @@
             start_docker($cmd, 'webrx_tab');
         }
         if (isset($_POST["rtl_websdr_d0"])){
-            start_docker_quite(cmd_webRX_start(0),'webrx_tab');
+            start_docker_echo(cmd_webRX_start(0),'webrx_tab',"Starting Spectrogram server for receiver 0");
         }
         if (isset($_POST["rtl_websdr_stop_d0"])){
             start_docker_echo(cmd_webRX_stop(0),'webrx_tab','Spectrogram Server 0 stopped if it was running');
         }
         if (isset($_POST["rtl_websdr_d1"])){
-            start_docker_quite(cmd_webRX_start(1),'webrx_tab');
+            start_docker_echo(cmd_webRX_start(1),'webrx_tab',"Starting Spectrogram server for receiver 1");
         }
         if (isset($_POST["rtl_websdr_stop_d1"])){
             start_docker_echo(cmd_webRX_stop(1),'webrx_tab','Spectrogram Server 1 stopped if it was running');
         }
         if (isset($_POST["rtl_websdr_d2"])){
-            start_docker_quite(cmd_webRX_start(2),'webrx_tab');
+            start_docker_echo(cmd_webRX_start(2),'webrx_tab',"Starting Spectrogram server for receiver 2");
         }
         if (isset($_POST["rtl_websdr_stop_d2"])){
             start_docker_echo(cmd_webRX_stop(2),'webrx_tab','Spectrogram Server 2 stopped if it was running');
         }
         if (isset($_POST["rtl_websdr_d3"])){
-            start_docker_quite(cmd_webRX_start(3),'webrx_tab');
+            start_docker_echo(cmd_webRX_start(3),'webrx_tab',"Starting Spectrogram server for receiver 3");
         }
         if (isset($_POST["rtl_websdr_stop_d3"])){
             start_docker_echo(cmd_webRX_stop(3),'webrx_tab','Spectrogram Server 3 stopped if it was running');
@@ -719,6 +721,11 @@
         else{
             echo "Device is not in use";
         }
+    }
+    function check_image_exists($name) {
+        $ret_val = 0;
+        system("sudo docker inspect ".$name." >/dev/null 2>&1", $ret_val);
+        return $ret_val;
     }
 }
 ////////////////////////    Unused    ////////////////////////
