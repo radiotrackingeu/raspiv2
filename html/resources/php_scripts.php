@@ -446,6 +446,8 @@
   //--------------------   Database   --------------------//
   {
     if (isset($_POST["start_mysql"])){
+	if (!check_image_exists("mysql"))
+	    exec("sudo docker create -t --restart=unless-stopped --name=mysql -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql  mysql:1.0 2>&1");
         $cmd = "sudo docker start mysql 2>&1";
         start_docker_quite($cmd,'mysql');
     }
