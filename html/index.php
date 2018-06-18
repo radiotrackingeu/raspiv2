@@ -112,8 +112,18 @@
         <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
             Apps currently running:<br>
             <div style="margin-left:20px">
-            <pre><?php system("sudo docker ps --filter \"status=running\" --format \"table {{.Names}}\t{{.Image}}\"");?></pre>
+<table class="w3-table w3-small w3-responsive">
+                <tr style="border-bottom:thin solid white;"> <th>Service</th><th>Image</th></tr>
+                <?php system("sudo docker ps --filter \"status=running\" --format \"{{.Names}}\t{{.Image}}\" | awk '{print \"<tr><td>\"$1\"</td><td>\"$2\"</td></tr>\"}'");?>
+            </table>
             </div>
+        </div>
+        <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+            Disk Space:<br>
+            <span style="margin-left:20px"> <?php system("df -h | grep /dev/root | awk '{gsub(\"G\",\"\&thinsp;GB\"); print $3\" of \"$2\" i.e. \"$5\" used, \"$4\" free\"}'")?>
+            </span><br>
+            Temperature:<br>
+            <span style="margin-left:20px"> <?php echo round(0.001 * intVal(fgets(fopen("/sys/class/thermal/thermal_zone0/temp","r"))))."&thinsp;&deg;C"?>
         </div>
     </div>
 </div>

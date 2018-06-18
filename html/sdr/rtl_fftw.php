@@ -99,7 +99,7 @@ function setVisibility(menu, label, element) {
                     <br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
                     <?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
                     <?php 
-                    if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d".$i.")")){
+                    if(check_device_use($i)){
                         echo "<span class='w3-tag w3-red w3-large'>Radio ".$i." running</span> \n \n";
                     }
                     else{
@@ -164,7 +164,7 @@ function setVisibility(menu, label, element) {
 				<br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
 				<?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
 				<?php 
-				if(shell_exec("sudo docker inspect -f {{.State.Running}} $(sudo docker ps -a -q --filter name=sdr-d".$i.")")){
+				if(check_device_use($i)){
 					echo "<span class='w3-tag w3-red w3-large'>Radio ".$i." running</span> \n \n";
 				}
 				else{

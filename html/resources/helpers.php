@@ -39,5 +39,26 @@
         unlink($orig_filename);
         rename($temp_filename, $orig_filename);
 }
+    
+    function check_device_use($id) {
+        return filter_var(shell_exec("sudo docker ps -q --filter name=sdr-d".$id." | wc -l"), FILTER_VALIDATE_BOOLEAN);
+    }
+    
+    function check_container_runnning($container_name) {
+        $ret_val=0;
+        unset($ret_arr);
+        exec("sudo docker inspect -f {{.State.Running}} ".$container_name,$ret_arr, $ret_val);
+        error_log(print_r($ret_arr));
+        if ($ret_val!=0)
+            return FALSE;
+        else
+            return filter_var($ret_arr[0], FILTER_VALIDATE_BOOLEAN);
+    }
+    
+    function check_image_exists($name) {
+        $ret_val = 0;
+        system("sudo docker inspect ".$name." >/dev/null 2>&1", $ret_val);
+        return $ret_val==0;
+    }
 ?>
 

@@ -724,11 +724,6 @@
             echo "Device is not in use";
         }
     }
-    function check_image_exists($name) {
-        $ret_val = 0;
-        system("sudo docker inspect ".$name." >/dev/null 2>&1", $ret_val);
-        return $ret_val;
-    }
 }
 ////////////////////////    Unused    ////////////////////////
 {
