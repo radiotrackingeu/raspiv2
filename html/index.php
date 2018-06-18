@@ -122,7 +122,7 @@
             Disk Space:<br>
             <span style="margin-left:20px"> <?php system("df -h | grep /dev/root | awk '{gsub(\"G\",\"\&thinsp;GB\"); print $3\" of \"$2\" i.e. \"$5\" used, \"$4\" free\"}'")?>
             </span><br>
-            Temperature:<br>
+            CPU Temperature:<br>
             <span style="margin-left:20px"> <?php echo round(0.001 * intVal(fgets(fopen("/sys/class/thermal/thermal_zone0/temp","r"))))."&thinsp;&deg;C"?>
         </div>
     </div>
