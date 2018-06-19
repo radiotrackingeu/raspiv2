@@ -34,7 +34,7 @@
 <div id="hotspot" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
 		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config);?>">
-			<br>
+			<p>Please reboot after stopping the hotspot</p>
 			Hotspot-Name: <br>
 			<input type="text" name="ssid_hotspot" value="<?php echo isset($config['network']['ssid_hotspot']) ? $config['network']['ssid_hotspot'] : "rteuv3" ?>">
 			<br><br>
@@ -43,6 +43,7 @@
 			<br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Start Hotspot" name="start_hotspot" />
 			<input type="submit" class="w3-btn w3-brown" value="Stop Hotspot" name="stop_hotspot" />
+            <input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
 			<br><br>
 		</form>
 	</div>
