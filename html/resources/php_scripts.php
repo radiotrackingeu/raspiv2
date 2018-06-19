@@ -262,7 +262,7 @@
   {
     //Functions
     function cmd_webRX_start($id) {
-        if (!check_image_exists("webrx-sdr-d".$id))
+        if (!check_container_exists("webrx-sdr-d".$id))
             exec("sudo docker create -t --name webrx-sdr-d".$id." --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($id+81).":8073 webrx:1.0 sh /cfiles/start_openwebrx_d".$id.".sh >/dev/null");
         return "sudo docker start webrx-sdr-d".$id;
 }
@@ -446,8 +446,8 @@
   //--------------------   Database   --------------------//
   {
     if (isset($_POST["start_mysql"])){
-	if (!check_image_exists("mysql"))
-	    exec("sudo docker create -t --restart=unless-stopped --name=mysql -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql  mysql:1.0 2>&1");
+        if (!check_container_exists("mysql"))
+            exec("sudo docker create -t --restart=unless-stopped --name=mysql -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql  mysql:1.0 2>&1");
         $cmd = "sudo docker start mysql 2>&1";
         start_docker_quite($cmd,'mysql');
     }
@@ -493,14 +493,22 @@
   //--------------------   Hotspot    --------------------//
   {
     if (isset($_POST["start_hotspot"])){
+        if (!check_container_exists("wifi"))
+            exec("sudo docker create --name=wifi --restart=unless-stopped --privileged --net=host -v /var/www/html/wifi/hostapd.conf:/etc/hostapd/hostapd.conf wifi:1.0 >/dev/null");
         $pw=$_POST["pw_hotspot"];
         if (strlen($pw)>=8 && strlen($pw)<=63) {
             $ssid=addslashes(addcslashes($_POST["ssid_hotspot"],"\\"));
             $pw=addslashes(addcslashes($pw,"\\"));
             $cmd = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/start_hotspot_stop_wifi.sh \"".$ssid."\" \"".$pw."\"";
-            start_docker_echo($cmd, 'hotspot', "Hotspot will be active after reboot.\n SSID:     ".$_POST["ssid_hotspot"]."\n Password: ".$_POST["pw_hotspot"]);
+            $cmd2 = "sudo docker start wifi";
+            start_docker_echo($cmd." && ".$cmd2, 'hotspot', "Starting WiFi hotspot.\n SSID:     ".$_POST["ssid_hotspot"]."\n Password: ".$_POST["pw_hotspot"]."<br><br>Hotspot will run and restart until stopped.");
         } else
             start_docker_echo(":", 'hotspot', "Password needs to be 8 to 63 characters long.");
+    }
+    
+    if (isset($_POST["stop_hotspot"])) {
+        $cmd = "sudo docker stop wifi";
+        start_docker_echo($cmd,"hotspot","Shutting down WiFi hotspot.");
     }
   }
   //-------------------- WiFi Connect --------------------//
@@ -510,7 +518,8 @@
         $ssid=addslashes(addcslashes($_POST["ssid_wifi"],"\\"));
         $pw=addslashes(addcslashes($_POST["pw_wifi"],"\\"));
         $cmd = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/stop_hotspot_set_wifi_ssid.sh \"".$ssid."\" \"".$pw."\"";
-        start_docker_echo($cmd, 'wifi_con', "Wifi will connect to new network after reboot. Hotspot will be deactivated.\n SSID:     ".$_POST["ssid_wifi"]."\n Password: ".$_POST["pw_wifi"]);
+        $cmd2 = "sudo docker stop wifi";
+        start_docker_echo($cmd." && ".$cmd2, 'wifi_con', "Wifi will connect to new network after reboot. Hotspot will be deactivated.\n SSID:     ".$_POST["ssid_wifi"]."\n Password: ".$_POST["pw_wifi"]);
     }
   }
   //-------------------- LAN Connect  --------------------//
@@ -723,6 +732,11 @@
         else{
             echo "Device is not in use";
         }
+    }
+    function check_container_exists($name) {
+        $ret_val = 0;
+        system("sudo docker inspect ".$name." >/dev/null 2>&1", $ret_val);
+        return $ret_val;
     }
 }
 ////////////////////////    Unused    ////////////////////////

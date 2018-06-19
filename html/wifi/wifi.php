@@ -33,7 +33,6 @@
 
 <div id="hotspot" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
-		After you have modified anything - please reboot.
 		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config);?>">
 			<br>
 			Hotspot-Name: <br>
@@ -42,8 +41,8 @@
 			Password: (8-63 characters)<br>
 			<input type="password" name="pw_hotspot" value="<?php echo isset($config['network']['pw_hotspot']) ? $config['network']['pw_hotspot'] : "sdrtracking" ?>">
 			<br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Create Hotspot" name="start_hotspot" />
-			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
+			<input type="submit" class="w3-btn w3-brown" value="Start Hotspot" name="start_hotspot" />
+			<input type="submit" class="w3-btn w3-brown" value="Stop Hotspot" name="stop_hotspot" />
 			<br><br>
 		</form>
 	</div>

@@ -196,7 +196,7 @@
 			}
 			if (isset($_POST["install_wifi"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t wifi:1.0 /home/pi/gitrep/raspiv2/Docker/wifi/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t wifi:1.0 /home/pi/gitrep/raspiv2/Docker/wifi/. 2>&1 && sudo docker create --name=wifi --restart=unless-stopped --privileged --net=host -v /var/www/html/wifi/hostapd.conf:/etc/hostapd/hostapd.conf wifi:1.0', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_rtlsdr"])){
