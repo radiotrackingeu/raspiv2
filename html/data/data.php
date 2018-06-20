@@ -3,215 +3,132 @@
 
 <title>radio-tracking.eu</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/weblib/w3.css">
-<link rel="stylesheet" href="/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/weblib/w3.css">
+<link rel="stylesheet" href="/resources/weblib/css/fontawesome-all.css">
+<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/additional.css">
 
 <body>
 
-<div class="w3-container w3-green">
-<h1>radio-tracking.eu</h1>
-  <img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:20%"><br>
- <button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
-</div>
- 
-
-<div class="w3-bar w3-light-grey" style="display:none" id="sidebar">
-	<!-- Home -->
-	<a class="w3-bar-item w3-button w3-mobile" href="/index.html"><i class="fa fa-home"></i> Home</a>
+<?php
+	//load config
+	require_once '../cfg/baseConfig.php';
+	//load top menu
+	require_once RESOURCES_PATH.'/header.php';
+	//load functions
+	require_once RESOURCES_PATH.'/helpers.php';
+		//load ConfigLite
+	require_once CONFIGLITE_PATH.'/Lite.php';
 	
-	<!-- Radio -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('radio')">
-			<i class="fa fa-podcast"></i> Radio <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="radio" class="w3-dropdown-content w3-card-4">
-			<a href="/sdr/rtl_fm.php">WebRadio</a>
-			<a href="/sdr/rtl_fftw.php">Recorder</a>
-			<a href="/sdr/rtl_tcp.php">SDR#-Server</a>
-			<a href="/sdr/websdr.php">WebRX</a>
-		</div>
-	</div>
-
-	<!-- Camera -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('camera')">
-			<i class="fa fa-camera"></i> Camera <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="camera" class="w3-dropdown-content w3-card-4">
-			<a href="/picam/picam.php">Start</a>
-			<a href="/picam/setup_picam.php">Setup</a>
-		</div>
-	</div>
-
-	<!-- Microphone -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('mic')">
-			<i class="fa fa-microphone"></i> Microphone <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="mic" class="w3-dropdown-content w3-card-4">
-			<a href="/micro/micro.php">Start</a>
-			<a href="/micro/micro_setup.php">Setup</a>
-		</div>
-	</div>
-	
-	<!-- GPS -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('gps')">
-			<i class="fa fa-compass"></i> GPS <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="gps" class="w3-dropdown-content w3-card-4">
-			<a href="/gps/gps.php">Start</a>
-			<a href="/gps/gps_setup.php">Setup</a>
-		</div>
-	</div>
-		
-	
-	<!-- Data storage -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('data')">
-			<i class="fa fa-database "></i> Data <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="data" class="w3-dropdown-content w3-card-4">
-			<a href="/data/data.php">Start</a>
-			<a href="/data/data_setup.php">Setup</a>
-		</div>
-	</div>
-	
-	<!-- WiFi -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('wifi')">
-			<i class="fa fa-wifi"></i> WiFi <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="wifi" class="w3-dropdown-content w3-card-4">
-			<a href="/wifi/wifi.php">Start</a>
-			<a href="/wifi/wifi_setup.php">Setup</a>
-		</div>
-	</div>
-		
-	<!-- Remote controll -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('remote')">
-			<i class="fa fa-exchange"></i> Remote <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="remote" class="w3-dropdown-content w3-card-4">
-			<a href="/connect/connect.php">Start</a>
-			<a href="/connect/umts_setup.php">UMTS Setup</a>
-			<a href="/connect/vpn_setup.php">VPN Setup</a>
-		</div>
-	</div>
-	
-	<!-- System settings -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('system')">
-			<i class="fa fa-wrench"></i> System <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="system" class="w3-dropdown-content w3-card-4">
-			<a href="/git/gitlab.php">Software</a>
-			<a href="/git/system.php">System</a>
-			<a href="/git/git_setup.php">Documentation</a>
-		</div>
-	</div>
-	
-	<!-- License -->
-	<a class="w3-bar-item w3-button w3-mobile" href="/license.html"><i class="fa fa-registered"></i> License</a>
-</div>
+		define ('confSection', 'database');
+		define ('confKeys', array('db_host', 'db_port', 'db_user', 'db_pass','db_keep'));
+		$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
+?>
 
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('camera1')">Camera</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('radio1')">Radio</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'camera_data')">Camera</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'radio_data')">Radio</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'mysql')">Database</button>
 </div>
 
-<div id="camera1" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<br>
-
+<div id="camera_data" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round w3-padding">
 		<h3>Zip Camera's record folder</h3><br>
 		<form method='POST' enctype="multipart/form-data">
-			<input type="text" name="zip_name" value="<?php echo date('Y_m_d_H_i')?>">
+			<input type="text" name="zip__camera_name" value="<?php echo "Camera_".date('Y_m_d_H_i')?>">
 			<input type="submit" class="w3-btn w3-brown" value="Zip All Camera Recordings" name="zip_camera" /> <br><br>
 			You can find the zipped files here: <a href="/picam/zipped/">Record Folder</a> <br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Delete all recordings" name="rm_record_folder" />
-			<input type="submit" class="w3-btn w3-brown" value="Delete all zipped files" name="rm_zip_folder" /><br><br>
-
+			<input type="submit" class="w3-btn w3-brown" value="Delete all recordings" name="rm_cam_record_folder" />
+			<input type="submit" class="w3-btn w3-brown" value="Delete all zipped files" name="rm_cam_zip_folder" /><br><br>
 		</form>
-		<br>
 	</div>
 </div>
-<div id="radio1" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<br>
-		To record a Frequency Spektrum for a given time, just modify the entries below and press Start.
-		<h3>Record properties</h3><br>
+
+<div id="radio_data" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round w3-padding">
+
+		<h3>Zip Logger's record folder</h3><br>
 		<form method='POST' enctype="multipart/form-data">
-			<table style="width:90%">
-				<tr>
-					<td>Gain in DB:</td>
-					<td><input type="text" name="log_gain" value="20"></td>
-					<td>Gain of the recording device. Higher gain results in more noise.</td>
-				</tr>
-				<tr>
-					<td>Zip Name:</td>
-					<td><input type="text" name="zipasd_name" value="<?php echo date('Y_m_d_H_i')?>"></td>
-					<td>You can find the results here: <a href="/picam/zipped/">Record Folder</a></td>
-				</tr>
-			</table>
-			<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start" />
-			<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop" />
+			<input type="text" name="zip_logger_name" value="<?php echo "Logger_".date('Y_m_d_H_i')?>">
+			<input type="submit" class="w3-btn w3-brown" value="Zip All Logger Recordings" name="zip_logger" /> <br><br>
+			You can find the zipped files here: <a href="/sdr/zipped/">Record Folder</a> <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Delete all recordings" name="rm_logger_record_folder" />
+			<input type="submit" class="w3-btn w3-brown" value="Delete all zipped files" name="rm_logger_zip_folder" /><br><br>
+
 		</form>
-		<br>
+	</div>
+</div>
+
+<div id="mysql" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round w3-padding">
+		<h3>Control Local Database <span class="w3-tooltip" style="display:inline-block; margin-left:20px">
+            <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} mysql"),FILTER_VALIDATE_BOOLEAN)) : ?>
+					<span class="w3-text w3-small w3-round w3-brown w3-tag"style="position:absolute; bottom:100%; left:50%; margin-left:-80px; width:160px">MySQL database is running.</span>
+                    <i class="fas fa-check-circle"></i>
+            <?php else : ?>
+                    <span class="w3-text w3-small w3-round w3-brown w3-tag" style="position:absolute; bottom:100%; left:50%; margin-left:-100px; width:200px">MySQL database is NOT running.</span>
+                    <i class="fas fa-times-circle"></i>
+            <?php endif; ?>
+                    </span></h3>
+        <p>Once started the database will keep running and restarting (i.e. after reboot) until stopped through the button below.</p>
+		<form method='POST' enctype="multipart/form-data">
+			<input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Start Database" name="start_mysql" />
+			<input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Stop Database" name="stop_mysql" /><br><br>
+			<input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Start Management Tool" name="start_phpmyadmin" />
+			<input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Stop Management Tool" name="stop_phpmyadmin" /><br><br>
+			<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+8000)."/phpmyadmin/"?>"> Link to PhpMyAdmin </a>
+		</form>
+    </div>
+    
+	<div class="w3-panel w3-green w3-round w3-padding">
+        <h3>Database Cleanup</h3>
+        <p>Allows you to delete all, or all but the last <i>n</i> signals from the database.</p>
+		<form method='POST' enctype="multipart/form-data" action=<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>>
+            <label for="db_keep">Number of signals to keep:</label>
+            <input type="number" class="w3-input" style="width:20%" id="db_keep" name="db_keep" value="<?php echo isset($config[confSection]['db_keep']) ? $config[confSection]['db_keep'] : 0 ?>"><br>
+            <input type="submit" class="w3-btn w3-brown" style="width:15%;" value="Delete data" name="empty_DB" />
+		</form>
+    </div>
+    
+	<div class="w3-panel w3-green w3-round w3-padding">
+		<h3>Configure Database Connection</h3>
+		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
+				<p>
+					<label for="db_host">Hostname / IP:</label>
+					<input class="w3-input w3-mobile" style="width:20%;" type="text" id="db_host" name="db_host" value="<?php echo isset($config[confSection]['db_host']) ? $config[confSection]['db_host'] : "127.0.0.1" ?>">
+				</p>
+				<p>
+					<label for="db_port">Port:</label>
+					<input class="w3-input w3-mobile" style="width:20%;" type="text" id="db_port" name="db_port" value="<?php echo isset($config[confSection]['db_port']) ? $config[confSection]['db_port'] : "3306" ?>">
+				</p>
+				<p>			
+					User:
+					<input class="w3-input w3-mobile" style="width:20%;" type="text" name="db_user" value="<?php echo isset($config[confSection]['db_user']) ? $config[confSection]['db_user'] : "root" ?>">
+				</p>
+				<p>		
+					Password:
+					<input class="w3-input w3-mobile" style="width:20%;" type="password" name="db_pass" value="<?php echo isset($config[confSection]['db_pass']) ? $config[confSection]['db_pass'] : "" ?>">
+				</p>
+				<input class="w3-input w3-btn w3-mobile w3-brown" style="width:15%;" type="submit" class="w3-btn w3-brown" value="Change settings" name="change_db_settings"><br>				
+		</form>
 	</div>
 </div>
 
 
 <!-- Enter text here-->
 
-	<?php
-			error_reporting(E_ALL);
-			ini_set('display_errors', 1);
-			
-			
-			if (isset($_POST["zip_camera"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ git zip -r /tmp/zipped/".$_POST["zip_name"]." /tmp/record/ 2>&1", $ret);
-				echo '</pre>';
-			}
-			
-			if (isset($_POST["rm_zip_folder"])){
-				echo '<pre>';
-				$test = system("rm -rf /var/www/html/picam/zipped/* 2>&1", $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["rm_record_folder"])){
-				echo '<pre>';
-				$test = system("rm -rf /var/www/html/picam/record/* 2>&1", $ret);
-				echo '</pre>';
-			}
+<?php
+	//load footer
+	require_once RESOURCES_PATH.'/footer.php';
+	//load javascripts
+	require_once RESOURCES_PATH.'/javascript.php';
+	//load php_scripts
+	require_once RESOURCES_PATH.'/php_scripts.php';
+ ?>
 
-	?>
-
-
-<script>
-function openCity(cityName) {
-    var i;
-    var x = document.getElementsByClassName("city");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(cityName).style.display = "block";  
-}
-function w3_switch(name) {
-	var x = document.getElementById(name);
-    if (x.style.display == "none") {
-        x.style.display = "block";
-    } else { 
-        x.style.display = "none";
-    }
-}
-</script>
-
-
+ 
+ 
 </body>
-
 </html>

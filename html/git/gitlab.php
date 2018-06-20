@@ -3,323 +3,264 @@
 
 <title>radio-tracking.eu</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/weblib/w3.css">
-<link rel="stylesheet" href="/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/weblib/w3.css">
+<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/additional.css">
 
 <body>
 
-<div class="w3-container w3-green">
-<h1>radio-tracking.eu</h1>
-  <img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:25%"><br>
- <button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
-</div>
- 
-
-<div class="w3-bar w3-light-grey" style="display:none" id="sidebar">
-	<!-- Home -->
-	<a class="w3-bar-item w3-button w3-mobile" href="/index.html"><i class="fa fa-home"></i> Home</a>
+<?php
+	//load config
+	require_once '../cfg/baseConfig.php';
+	//load top menu
+	require_once RESOURCES_PATH.'/header.php';
+	//load functions
+	require_once RESOURCES_PATH.'/helpers.php';
+	//load ConfigLite
+	require_once CONFIGLITE_PATH.'/Lite.php';
 	
-	<!-- Radio -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('radio')">
-			<i class="fa fa-podcast"></i> Radio <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="radio" class="w3-dropdown-content w3-card-4">
-			<a href="/sdr/rtl_fm.php">WebRadio</a>
-			<a href="/sdr/rtl_fftw.php">Recorder</a>
-			<a href="/sdr/rtl_tcp.php">SDR#-Server</a>
-			<a href="/sdr/websdr.php">WebRX</a>
-		</div>
-	</div>
-
-	<!-- Camera -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('camera')">
-			<i class="fa fa-camera"></i> Camera <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="camera" class="w3-dropdown-content w3-card-4">
-			<a href="/picam/picam.php">Start</a>
-			<a href="/picam/setup_picam.php">Setup</a>
-		</div>
-	</div>
-
-	<!-- Microphone -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('mic')">
-			<i class="fa fa-microphone"></i> Microphone <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="mic" class="w3-dropdown-content w3-card-4">
-			<a href="/micro/micro.php">Start</a>
-			<a href="/micro/micro_setup.php">Setup</a>
-		</div>
-	</div>
+	//define config section and items.
+	define ('confSection', 'gitlab_updates');
+	define ('confKeys', array('online_repository','lokal_branch','git_keepcfg'));
 	
-	<!-- GPS -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('gps')">
-			<i class="fa fa-compass"></i> GPS <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="gps" class="w3-dropdown-content w3-card-4">
-			<a href="/gps/gps.php">Start</a>
-			<a href="/gps/gps_setup.php">Setup</a>
-		</div>
-	</div>
-		
+	//load values from config
+	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');	
 	
-	<!-- Data storage -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('data')">
-			<i class="fa fa-database "></i> Data <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="data" class="w3-dropdown-content w3-card-4">
-			<a href="/data/data.php">Start</a>
-			<a href="/data/data_setup.php">Setup</a>
-		</div>
-	</div>
+	//Image versions
+	$image_version_git="1.0";
+	$image_version_umts="1.0";
+	$image_version_wifi="1.0";
+	$image_version_microphone="1.0";
+	$image_version_pwchange="1.0";
 	
-	<!-- WiFi -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('wifi')">
-			<i class="fa fa-wifi"></i> WiFi <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="wifi" class="w3-dropdown-content w3-card-4">
-			<a href="/wifi/wifi.php">Start</a>
-			<a href="/wifi/wifi_setup.php">Setup</a>
-		</div>
-	</div>
-		
-	<!-- Remote controll -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('remote')">
-			<i class="fa fa-exchange"></i> Remote <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="remote" class="w3-dropdown-content w3-card-4">
-			<a href="/connect/connect.php">Start</a>
-			<a href="/connect/umts_setup.php">UMTS Setup</a>
-			<a href="/connect/vpn_setup.php">VPN Setup</a>
-		</div>
-	</div>
-	
-	<!-- System settings -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('system')">
-			<i class="fa fa-wrench"></i> System <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="system" class="w3-dropdown-content w3-card-4">
-			<a href="/git/gitlab.php">Software</a>
-			<a href="/git/system.php">System</a>
-			<a href="/git/git_setup.php">Documentation</a>
-		</div>
-	</div>
-	
-	<!-- License -->
-	<a class="w3-bar-item w3-button w3-mobile" href="/license.html"><i class="fa fa-registered"></i> License</a>
-</div>
-
+ ?>
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('GIT')">Update</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('install')">Install</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('running_docker')">Status</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('git_setup')">Setup Update</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('create_id')">Create Key</button>
-  
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'GIT')">System Update</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'install')">Install/Update Applications</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'running_docker')">Application Status</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'config_file')">Configuration File</button>
+</div>
+
+<div id="GIT" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
+		Update the User Interface - if a single Application has been updated - please go afterwards to Applications. Please also choose to keep your old config file or update it with standard settings.<br><br>
+		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF'];?>">
+				<select name="git_checkout">
+					<option value="master" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "master" ?  "selected" : ""; ?>>Stable Version</option>
+					<option value="live" <?php echo isset($config['gitlab_updates']['lokal_branch']) && $config['gitlab_updates']['lokal_branch'] == "live" ? "selected" : ""; ?>>Development Version</option>
+				</select>
+				<select name="git_keepcfg">
+					<option value="updatecfg" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "updatecfg" ? "selected" : ""; ?>>Update config file</option>
+					<option value="keepcfg" <?php echo isset($config['gitlab_updates']['git_keepcfg']) && $config['gitlab_updates']['git_keepcfg'] == "keepcfg" ?  "selected" : ""; ?>>Keep old config file</option>
+				</select>
+				<select name="git_switch_system">
+					<option value="build_none" SELECTED>No change in system</option>
+					<option value="build_raspi3">Update for Raspberry Pi 3</option>
+					<option value="build_raspi_zerow">Update for Raspberry Pi Zero W</option>
+				</select>
+			<input class="w3-btn w3-brown" type="submit" value="Update User Interface" name="update_rep" onclick="openCity('GIT')"/>
+		</form>
+		<br>
+	</div>
 </div>
 	
-	<div id="GIT" class="w3-container city" style="display:none">
-		<br>First download then install the feature - installing requires also an internet connection and requires some time. <br><br>
-		<form method="POST" enctype="multipart/form-data" onsubmit="return openCity('GIT');">
-				<select name="git_checkout">
-					<option value="master">Stable Version</option>
-					<option value="live">Development Version</option>
-				</select> 
-			<input class="w3-btn" type="submit" value="Download Recipes and HTML Files" name="update_rep" onclick="openCity('GIT')"/>
-			<input class="w3-btn" type="submit" value="Reboot" name="reboot" "/>
-		</form>
-	</div>
-	<div id="install" class="w3-container city" style="display:none">
+<div id="install" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
 		<form method="POST" onsubmit="document.getElementById('install').style.display = 'block');">
-		<br>
-		<input type="submit" class="w3-btn" value="Downloader" name="update_docker_git"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="Remote" name="update_docker_umts"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="WiFi" name="install_wifi"/> <br> <br> 
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="Radio" name="install_rtlsdr"/> <br> <br> 
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="WebRX" name="install_webrx"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="Picam" name="install_picam"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="I2C" name="install_i2c"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="SoX" name="install_sox"/> <br> <br>
-		
-		<hr>
-		<input type="submit" class="w3-btn" value="RTL_433" name="install_rtl_433"/> <br> <br>
-		<hr>
-		<input type="submit" class="w3-btn" value="Logger" name="install_rtl_433_mod"/> <br> <br>
-		
-		<hr>	
-		<input type="submit" class="w3-btn" value="GammaRF" name="install_gammrf"/> <br> <br>
-		
-		<hr>
+			<br>
+			<input type="submit" class="w3-btn w3-brown" value="Update" name="update_docker_git"/> <br> <br>
+			Available: <?php echo $image_version_git;?>
+			Equivalent with Installed version: <?php $test=system("if sudo docker images --filter reference=git | grep -q 1.0; then echo yes; else echo no; fi 2>&1", $ret); ?>
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="Remote" name="update_docker_umts"/> <br> <br>
+			Available: <?php echo $image_version_umts;?>
+			Equivalent with Installed version: <?php $test=system("if sudo docker images --filter reference=umts | grep -q 1.0; then echo yes; else echo no; fi 2>&1", $ret); ?>
+			
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="WiFi" name="install_wifi"/> <br> <br> 
+			Available: <?php echo $image_version_wifi;?>
+			Equivalent with Installed version: <?php $test=system("if sudo docker images --filter reference=wifi | grep -q 1.0; then echo yes; else echo no; fi 2>&1", $ret); ?>
+			
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="WebRadio" name="install_rtlsdr"/> <br> <br> 
+			
+			<hr>
+			OpenWebRX<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Spectrogram" name="install_webrx"/> <br> <br>
+			
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="MotionEye" name="install_motioneye"/> <br> <br>
+			
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="Motion Detection" name="install_motion_detection"/> <br> <br>
+			
+			<hr>
+			I2C<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Light Controls" name="install_i2c"/> <br> <br>
+			
+			
+			<hr>
+			SoX<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Microphone" name="install_sox"/> <br> <br>
+			Available: <?php echo $image_version_microphone;?>
+			Equivalent with Installed version: <?php system("if sudo docker images --filter reference=microphone | grep -q 1.0; then echo yes; else echo no; fi") ?>
+			<hr>
+			RTL_433<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Sensor Readings" name="install_rtl_433"/> <br> <br>
+			
+			<hr>
+			LiquidSDR<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Logger" name="install_liquidsdr"/> <br> <br>
+			
+			<hr>
+			MySQL<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Database" name="install_mysql"/> <br> <br>
+					
+			<hr>
+			PhpMyAdmin<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Database-Management" name="install_phpmyadmin"/> <br> <br>
+						
+			<hr>
+			USB Power On/Off<br><br>
+			<input type="submit" class="w3-btn w3-brown" value="USB Power On/Off" name="install_hubctrl"/> <br> <br>
+						
+			<hr>
+			Password changer<br><br>			
+			<input type="submit" class="w3-btn w3-brown" value="Password changer" name="install_pwchange"/> <br> <br>
 
 		</form>
 	</div>
-		<div id="git_setup" class="w3-container city" style="display:none">
-		    <form method="post" enctype="multipart/form-data">
-			<br>
-				Select private key to upload (the one without an ending): 
-				<br><br>
-				<input type="file" name="fileToUpload_id" id="fileToUpload_id">
-				<br><br><br>
-				Select public key to upload (the one with a .pub ending):
-				<br><br>
-				<input type="file" name="fileToUpload_pub" id="fileToUpload_pub">
-				<br><br><br><br>
-				<input type="submit" class="w3-btn" value="Upload keys" name="upload_files">
-				<input type="submit" class="w3-btn" value="Remove Files" name="rm_files">
-			</form>
+</div>
 
-		</div>
-		<div id="running_docker" class="w3-container city" style="display:none">
+<div id="running_docker" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round">
 		<form method="POST">
 			<br>
-			<input type="submit" class="w3-btn" value="Runnning" name="running_containers">
-			<input type="submit" class="w3-btn" value="Installed" name="installed_images">
-			<input type="submit" class="w3-btn" value="Stop all" name="stop_all">
-			<input type="submit" class="w3-btn" value="Remove all stopped containers" name="rm_all">
-			<input type="submit" class="w3-btn" value="Remove all unsed Images" name="rmi_unused">
-			<input type="submit" class="w3-btn" value="Remove all Images" name="rmi_all">
-			<br>
 			
-
+			<input type="submit" class="w3-btn w3-brown" value="List running Applications" name="running_containers">
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="List installed Applications" name="installed_images">
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="Stop all running Applications" name="stop_all">
+			Careful, this will also disable the Hotspot!
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="Delete all stopped containers" name="rm_all">
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="Delete all unsed Images" name="rmi_unused">
+			<hr>
+			<input type="submit" class="w3-btn w3-brown" value="Delete all Images" name="rmi_all">
+			<br><br>
 		</form>
-		</div>
+	</div>
+</div>
 		
-		<div id="create_id" class="w3-container city" style="display:none">
-		<br>
-		<form method="POST">
-			<input type="submit" class="w3-btn" value="Create new Keys" name="create_keys">
-			<input type="submit" class="w3-btn" value="Show installed key" name="show_keys"> <br>
-			<label class="w3-label w3-validate">Email</label>
-			<input class="w3-input" type="email">
-			
-		</form>
-		<a target="_blank" href="/git/id_rsa">Open Key in new tab</a>
-			
-			<?php
-
-			?>
+<div id="config_file" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round w3-padding">
+	Here you can down- and upload configuration files.<br>
+	When you upload a new file, a copy of the old one will be made. This copy of the last configuration file can be restored by clicking the corresponding button.<br>
+	Restoring the default configuration will load the configuration file that came with the last software update.
+	<hr>
+		<div class="w3-bar w3-padding">
+		<a class="w3-btn w3-brown" href="../cfg/globalconfig" download>Download current config</a>
 		</div>
-		<div id="output" class="w3-container city" style="display:block">
-		<br> Please choose one of the option shown above - the result will be displayed here:
+		<br>
+		<form method="POST" enctype="multipart/form-data">
+		<div class="w3-bar w3-padding">
+			<input type="submit" class="w3-btn w3-brown" value="Upload new config" name="ul_config">
+			<input type="file" class="w3-btn w3-green" name="file_config" style="hover:none">
+		</div>
+		<br>
+		<div class="w3-bar w3-padding">
+			<input type="submit" class="w3-btn w3-brown" value="Restore last config" name="restore_config">
+			<input type="submit" class="w3-btn w3-brown" value="Restore default config" name="restore_default">
+		</div>
+		<br>
+		</form>
+	</div>
+</div>		
+		
+		
+		
 		<?php
-			error_reporting(E_ALL);
-			ini_set('display_errors', 1);
-			if (isset($_POST["update_rep"])){
-				echo '<pre>';
-				$test = system('sudo docker run --rm -t -v /home/pi/gitrep/:/home/pi/gitrep/ -v /var/www/html/:/var/www/html/ --net="host" git sh /home/pi/gitrep/raspiv2/Docker/gitlab/update_html.sh ' .$_POST["git_checkout"]. ' 2>&1', $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["reboot"])){
-				echo '<pre>';
-				$test = system('sudo reboot', $ret);
-				echo '</pre>';
-			}
 			if (isset($_POST["update_docker_git"])){
 				echo '<pre>';
-				$test = system('sudo docker build  -t git /home/pi/gitrep/raspiv2/Docker/gitlab/. 2>&1', $ret);
+				$test = system('sudo docker build  -t git:1.0 /home/pi/gitrep/raspiv2/Docker/gitlab/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["update_docker_umts"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t umts /home/pi/gitrep/raspiv2/Docker/umts/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t umts:1.0 /home/pi/gitrep/raspiv2/Docker/umts/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_wifi"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t wifi /home/pi/gitrep/raspiv2/Docker/wifi/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t wifi:1.0 /home/pi/gitrep/raspiv2/Docker/wifi/. 2>&1 && sudo docker create --name=wifi --restart=unless-stopped --privileged --net=host -v /var/www/html/wifi/hostapd.conf:/etc/hostapd/hostapd.conf wifi:1.0', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_rtlsdr"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t rtlsdr /home/pi/gitrep/raspiv2/Docker/rtlsdr/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t rtlsdr:1.0 /home/pi/gitrep/raspiv2/Docker/rtlsdr/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_webrx"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t webrx /home/pi/gitrep/raspiv2/Docker/webrx/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t webrx:1.0 /home/pi/gitrep/raspiv2/Docker/webrx/. 2>&1', $ret);
 				echo '</pre>';
 			}
-			if (isset($_POST["install_picam"])){
+			if (isset($_POST["install_motioneye"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t picam /home/pi/gitrep/raspiv2/Docker/picam/. 2>&1', $ret);
+				$test = system('sudo docker pull ccrisan/motioneye:dev-armhf 2>&1', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["install_motion_detection"])){
+				echo '<pre>';
+				$test = system('sudo docker build --no-cache -t motion_detection:1.0 /home/pi/gitrep/raspiv2/Docker/motion_detection/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_rtl_433"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t rtl_433 /home/pi/gitrep/raspiv2/Docker/rtl_433/. 2>&1', $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["install_rtl_433_mod"])){
-				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t rtl_433_mod /home/pi/gitrep/raspiv2/Docker/rtl_433_mod/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t rtl_433:1.0 /home/pi/gitrep/raspiv2/Docker/rtl_433/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_i2c"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t i2c /home/pi/gitrep/raspiv2/Docker/i2c/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t i2c:1.0 /home/pi/gitrep/raspiv2/Docker/i2c/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_sox"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t mircophone /home/pi/gitrep/raspiv2/Docker/microphone/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t microphone:1.0 /home/pi/gitrep/raspiv2/Docker/microphone/. 2>&1', $ret);
 				echo '</pre>';
 			}
-			if (isset($_POST["install_gammrf"])){
+			if (isset($_POST["install_liquidsdr"])){
 				echo '<pre>';
-				$test = system('sudo docker build -t gammrf /home/pi/gitrep/raspiv2/Docker/gammrf/. 2>&1', $ret);
+				$test = system('sudo docker build --no-cache -t liquidsdr:1.0 /home/pi/gitrep/raspiv2/Docker/liquidsdr/. 2>&1', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["install_mysql"])){
+				echo '<pre>';
+				$test = system('sudo docker build --no-cache -t mysql:1.0 /home/pi/gitrep/raspiv2/Docker/mysql/. 2>&1 && sudo docker create -t --restart=unless-stopped --name=mysql -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql  mysql:1.0 2>&1', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["install_phpmyadmin"])){
+				echo '<pre>';
+				$test = system('sudo docker build -t phpmyadmin:1.0 /home/pi/gitrep/raspiv2/Docker/phpmyadmin/. 2>&1', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["install_hubctrl"])){
+				echo '<pre>';
+				$test = system('sudo docker build -t hubctrl:1.0 /home/pi/gitrep/raspiv2/Docker/hubctrl/. 2>&1', $ret);
+				echo '</pre>';
+			}
+			if (isset($_POST["install_pwchange"])) {
+				echo '<pre>';
+				$test = system('sudo docker build -t pwchange:1.1 /home/pi/gitrep/raspiv2/Docker/pwchange/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			error_reporting(E_ALL);
 			ini_set('display_errors', 1);
-			if (isset($_POST["upload_files"])){
-				$target_file1 = "/var/www/html/git/id_rsa";
-				if (move_uploaded_file($_FILES["fileToUpload_id"]["tmp_name"], $target_file1)) {
-					echo "The file has been uploaded.";
-				} else {
-					echo "Sorry, there was an error uploading your private key.";
-				}
-				$target_file2 = "/var/www/html/git/id_rsa.pub";
-				if (move_uploaded_file($_FILES["fileToUpload_pub"]["tmp_name"], $target_file2)) {
-					echo "The file has been uploaded.";
-				} else {
-					echo "Sorry, there was an error uploading your public key.";
-				}
-			}				
-			if (isset($_POST["rm_files"])){
-				$cmd1 = "rm /var/www/html/git/id_rsa";
-				$cmd2 = "rm /var/www/html/git/id_rsa.pub";
-				$result = liveExecuteCommand($cmd1);
-				$result = liveExecuteCommand($cmd2);
-				echo "Config has been removed";
-			}
-			if (isset($_POST["running_containers"])){
-				echo '<pre>';
-				$content = system('sudo docker ps', $ret);
-				echo '</pre>';
-			}
 			if (isset($_POST["installed_images"])){
 				echo '<pre>';
 				$content = system('sudo docker images', $ret);
@@ -345,80 +286,68 @@
 				$test = system('sudo docker rmi -f $(sudo docker images -q)', $ret);
 				echo '</pre>';
 			}
-			if (isset($_POST["create_keys"])){
-				echo '<pre>';
-				$content = system('ssh-keygen -f /var/www/html/git/id_rsa -t rsa -P "" -b 4096 -C '. $email, $ret);
-				echo '</pre>';
+			
+            //upload config
+			if (isset($_POST["ul_config"]))
+				if ($_FILES["file_config"]["size"]!=0 ) {
+					$finfo = finfo_open(FILEINFO_MIME_TYPE);
+					$mtype = finfo_file($finfo,$_FILES["file_config"]["tmp_name"]);
+					if ($mtype == "text/plain")
+					{
+						rename(CONFIGFILES_PATH."/globalconfig", CONFIGFILES_PATH."/globalconfig.bak");
+						if (move_uploaded_file($_FILES["file_config"]["tmp_name"], CONFIGFILES_PATH."/globalconfig")){
+							echo "Successfully uploaded new config file.";
+							$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
+						} else {
+							rename(CONFIGFILES_PATH."/globalconfig.bak", CONFIGFILES_PATH."/globalconfig");
+							echo "An error occured. Restored old config file.";
+						}
+					}
+					else 
+						echo "That was not a valid config file.";
+				}
+				else
+					echo "No file given.";
+			
+            //restore last config
+			if (isset($_POST["restore_config"])) {
+				if (!file_exists(CONFIGFILES_PATH."/globalconfig.bak"))
+					echo "No backup found.";
+				else {
+					if (copy(CONFIGFILES_PATH."/globalconfig.bak", CONFIGFILES_PATH."/globalconfig")) {
+						echo "Configuration file restored.";
+						$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
+					} else
+						echo "Error: Could not copy config file.";
+					
+				}
 			}
-			if (isset($_POST["show_keys"])){
-				echo '<pre>';
-				$content = system('cat /var/www/html/git/id_rsa', $ret);
-				echo '</pre>';
+			
+            //restore from git
+			if (isset($_POST["restore_default"])) {
+				$git_file = GITREPO_PATH."/html/cfg/globalconfig";
+				if(!file_exists($git_file))
+					echo "No backup found.";
+				else {
+					if (copy($git_file, CONFIGFILES_PATH."/globalconfig")) {
+						echo "Configuration file restored.";
+						$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
+					} else
+						echo "Error: Could not copy config file.";
+					
+				}
 			}
+			
 		?>
-	</div>
 
-
-
-<script>
-function openCity(cityName) {
-    var i;
-    var x = document.getElementsByClassName("city");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(cityName).style.display = "block";  
-}
-function w3_switch(name) {
-	var x = document.getElementById(name);
-    if (x.style.display == "none") {
-        x.style.display = "block";
-    } else { 
-        x.style.display = "none";
-    }
-}
-</script>
-
-<!-- Enter text here-->
+<?php
+	//load footer
+	require_once RESOURCES_PATH.'/footer.php';
+	//load javascripts
+	require_once RESOURCES_PATH.'/javascript.php';
+	//load php_scripts
+	require_once RESOURCES_PATH.'/php_scripts.php';
+ ?>
 
 </body>
-
 </html>
-
-<?php 
-function liveExecuteCommand($cmd)
-{
-
-    while (@ ob_end_flush()); // end all output buffers if any
-
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-
-    $live_output     = "";
-    $complete_output = "";
-
-    while (!feof($proc))
-    {
-        $live_output     = fread($proc, 4096);
-        $complete_output = $complete_output . $live_output;
-        echo "$live_output";
-        @ flush();
-    }
-
-    pclose($proc);
-
-    // get exit status
-    preg_match('/[0-9]+$/', $complete_output, $matches);
-
-    // return exit status and intended output
-    return array (
-                    'exit_status'  => intval($matches[0]),
-                    'output'       => str_replace("Exit status : " . $matches[0], '', $complete_output)
-                 );
-}
-function unliveExecuteCommand($cmd)
-{
-    while (@ ob_end_flush()); // end all output buffers if any
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-    pclose($proc);
-}
-?>

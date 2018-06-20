@@ -2,408 +2,465 @@
 <html>
 
 <title>radio-tracking.eu</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/weblib/w3.css">
-<link rel="stylesheet" href="/weblib/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/resources/weblib/w3.css">
+<link rel="stylesheet" href="/resources/weblib/css/fontawesome-all.css">
+<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/additional.css">
+
+<script>
+function setVisibility(menu, label, element) {
+	var vis = menu.value==label ? "visible" : "hidden";
+	document.getElementById(element).style.visibility = vis;
+}
+</script>
 
 <body>
-
-<div class="w3-container w3-green">
-<h1>radio-tracking.eu</h1>
-  <img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:25%"><br>
- <button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
-</div>
- 
-
-<div class="w3-bar w3-light-grey" style="display:none" id="sidebar">
-	<!-- Home -->
-	<a class="w3-bar-item w3-button w3-mobile" href="/index.html"><i class="fa fa-home"></i> Home</a>
-	
-	<!-- Radio -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('radio')">
-			<i class="fa fa-podcast"></i> Radio <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="radio" class="w3-dropdown-content w3-card-4">
-			<a href="/sdr/rtl_fm.php">WebRadio</a>
-			<a href="/sdr/rtl_fftw.php">Recorder</a>
-			<a href="/sdr/rtl_tcp.php">SDR#-Server</a>
-			<a href="/sdr/websdr.php">WebRX</a>
-		</div>
-	</div>
-
-	<!-- Camera -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('camera')">
-			<i class="fa fa-camera"></i> Camera <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="camera" class="w3-dropdown-content w3-card-4">
-			<a href="/picam/picam.php">Start</a>
-			<a href="/picam/setup_picam.php">Setup</a>
-		</div>
-	</div>
-
-	<!-- Microphone -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('mic')">
-			<i class="fa fa-microphone"></i> Microphone <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="mic" class="w3-dropdown-content w3-card-4">
-			<a href="/micro/micro.php">Start</a>
-			<a href="/micro/micro_setup.php">Setup</a>
-		</div>
-	</div>
-	
-	<!-- GPS -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('gps')">
-			<i class="fa fa-compass"></i> GPS <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="gps" class="w3-dropdown-content w3-card-4">
-			<a href="/gps/gps.php">Start</a>
-			<a href="/gps/gps_setup.php">Setup</a>
-		</div>
-	</div>
-		
-	
-	<!-- Data storage -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('data')">
-			<i class="fa fa-database "></i> Data <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="data" class="w3-dropdown-content w3-card-4">
-			<a href="/data/data.php">Start</a>
-			<a href="/data/data_setup.php">Setup</a>
-		</div>
-	</div>
-	
-	<!-- WiFi -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('wifi')">
-			<i class="fa fa-wifi"></i> WiFi <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="wifi" class="w3-dropdown-content w3-card-4">
-			<a href="/wifi/wifi.php">Start</a>
-			<a href="/wifi/wifi_setup.php">Setup</a>
-		</div>
-	</div>
-		
-	<!-- Remote controll -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('remote')">
-			<i class="fa fa-exchange"></i> Remote <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="remote" class="w3-dropdown-content w3-card-4">
-			<a href="/connect/connect.php">Start</a>
-			<a href="/connect/umts_setup.php">UMTS Setup</a>
-			<a href="/connect/vpn_setup.php">VPN Setup</a>
-		</div>
-	</div>
-	
-	<!-- System settings -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('system')">
-			<i class="fa fa-wrench"></i> System <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="system" class="w3-dropdown-content w3-card-4">
-			<a href="/git/gitlab.php">Software</a>
-			<a href="/git/system.php">System</a>
-			<a href="/git/git_setup.php">Documentation</a>
-		</div>
-	</div>
-	
-	<!-- License -->
-	<a class="w3-bar-item w3-button w3-mobile" href="/license.html"><i class="fa fa-registered"></i> License</a>
-</div>
-
-<!-- Enter text here-->
-<div class="w3-bar w3-brown w3-mobile">
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('logger')">Logger</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('logger_timer')">Logger Timer</button>
-	<button class="w3-bar-item w3-button w3-mobile" onclick="openCity('spectrum')">Spectrum</button>
-</div>
-
-<div id="spectrum" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<br>
-		To record a Frequency Spektrum for a given time, just modify the entries below and press Start.
-		<h3>Record properties</h3><br>
-		<form method='POST' enctype="multipart/form-data"> 
-			<table style="width:90%">
-				<tr>
-					<td>Center Frequency:</td>
-					<td><input type="text" name="cfreq" value="150190k"></td>
-					<td>Frequency in the middle of the frequency range of 250 kHz</td>
-				</tr>
-				<tr>
-					<td>Gain in mDB:</td>
-					<td><input type="text" name="gain" value="400"></td>
-					<td>Gain of the recording device. Higher gain results in more noise.</td>
-				</tr>
-				<tr>
-					<td>Record Time:</td>
-					<td><input type="text" name="rtime" value="1m"></td>
-					<td>The is the actual overall recording time. You can use units like m for minutes and h for hours.</td>
-				</tr>
-				<tr>
-					<td>Record Name:</td>
-					<td><input type="text" name="rname" value="d0"></td>
-					<td>Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a></td>
-				</tr>
-			</table>
-			<br>
-			<br>
-			Start or stop recording/s: 
-			<br>
-			<br>
-			<input type="submit" class="w3-btn w3-brown" value="Start" name="fftw_start" />
-			<input type="submit" class="w3-btn w3-brown" value="Stop" name="fftw_stop" />
-		</form> 
-		<br>
-	</div>
-</div>
-
-<div id="logger" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<br>
-		<h3>Logger settings</h3><br>
-		<form method='POST' enctype="multipart/form-data">
-
-				Gain in DB:<br>
-				<input type="number" name="log_gain" value="20"><br>
-				Gain of the recording device. Higher gain results in more noise. max 49DB
-				<br><br>
-				Center Frequency in Hz:<br>
-				<input type="number" name="center_freq" value="150100000"><br>
-				Frequency Range to monitor: <br>
-				<select name="freq_range">
-					<option value="250000">250kHz</option>
-					<option value="1024000">1024kHz</option>
-				</select> 
-				<br>
-				Log Detection Level:<br>
-				<input type="text" name="log_level" value="0"><br>
-				0 means automatic - level up to 16384
-				<br><br>
-				Record Name:<br>
-				<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
-				Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a><br><br>
-				
-				
-			<input type="submit" class="w3-btn w3-brown" value="Start" name="log_start" />
-			<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop" />
-		</form>
-		<br>
-	</div>
-</div>
-
-<div id="logger_timer" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<br>
-		<h3>Logger settings</h3><br>
-		<form method='POST' enctype="multipart/form-data">
-		
-			Gain in DB:<br>
-			<input type="number" name="log_gain" value="20"><br>
-			Gain of the recording device. Higher gain results in more noise. max 49DB
-			<br><br>
-			Center Frequency in Hz:<br>
-			<input type="number" name="center_freq" value="150100000"><br>
-			Frequency Range to monitor: <br>
-			<select name="freq_range">
-				<option value="250000">250kHz</option>
-				<option value="1024000">1024kHz</option>
-			</select> 
-			<br>
-			Log Detection Level:<br>
-			<input type="text" name="log_level" value="0"><br>
-			0 means automatic - level up to 16384
-			<br><br>
-			Record Name:<br>
-			<input type="text" name="log_name" value="<?php echo date('Y_m_d_H_i')?>"><br>
-			Each record will be given a file name, be careful, the same name will overwrite existing files. You can find the results here: <a href="/sdr/record/">Record Folder</a><br><br>
-
-			<input type="radio" name="start_timer" value="start_no" checked> No start<br>
-			<input type="radio" name="start_timer" value="reboot"> Start at Boot<br>
-			<input type="radio" name="start_timer" value="start_on_time"> Start at times stated below<br>
-				Minute
-				<select name="start_min">
-					<option value="0">0</option>
-					<option value="10">10</option>
-					<option value="20">20</option>
-					<option value="30">30</option>
-					<option value="40">40</option>
-					<option value="50">50</option>
-				</select> 
-				Hour
-				<select name="start_hour">
-					<option value="0">0</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-					<option value="11">11</option>
-					<option value="12">12</option>
-					<option value="13">13</option>
-					<option value="14">14</option>
-					<option value="15">15</option>
-					<option value="16">16</option>
-					<option value="17">17</option>
-					<option value="18">18</option>
-					<option value="19">19</option>
-					<option value="20">20</option>
-					<option value="21">21</option>
-					<option value="22">22</option>
-					<option value="23">23</option>
-				</select>
-			<br><br>
-			<input type="radio" name="stop_timer" value="stop_no" checked> No stop<br>
-			<input type="radio" name="stop_timer" value="stop_on_time"> Stop at times stated below<br>
-				Minute
-				<select name="stop_min">
-					<option value="0">0</option>
-					<option value="10">10</option>
-					<option value="20">20</option>
-					<option value="30">30</option>
-					<option value="40">40</option>
-					<option value="50">50</option>
-				</select> 
-				Hour
-				<select name="stop_hour">
-					<option value="0">0</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-					<option value="11">11</option>
-					<option value="12">12</option>
-					<option value="13">13</option>
-					<option value="14">14</option>
-					<option value="15">15</option>
-					<option value="16">16</option>
-					<option value="17">17</option>
-					<option value="18">18</option>
-					<option value="19">19</option>
-					<option value="20">20</option>
-					<option value="21">21</option>
-					<option value="22">22</option>
-					<option value="23">23</option>
-				</select>
-				<br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Change Settings" name="change_logger_cron" />
-		</form>
-		<br>
-	</div>
-</div>
-
 <?php
-
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
-	if (isset($_POST["fftw_start"])){
-		$cmd = "rtl_power_fftw -r 250000 -f " . $_POST["cfreq"]. " -b 128 -t 0.1 -g " . $_POST["gain"]. " -q -d 0 -e " . $_POST["rtime"]. " -m /home/" . $_POST["rname"];
-		echo '<pre>';
-		$test = system("sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtlsdr ".$cmd." 2>&1", $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["fftw_stop"])){
-		echo '<pre>';
-		$result = system("sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtlsdr) 2>&1", $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["log_start"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
-		unliveExecuteCommand($cmd);
-	}
-	if (isset($_POST["log_stop"])){
-		echo '<pre>';
-		$result = system("sudo docker stop $(sudo docker ps -a -q --filter ancestor=rtl_433_mod) 2>&1", $ret);
-		echo '</pre>';
-	}
-	if (isset($_POST["change_logger_cron"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash -c 'rtl_433 -f ".$_POST["center_freq"]." -s ".$_POST["freq_range"]." -t -q -A -l ".$_POST["log_level"]." -g " . $_POST["log_gain"]. " 2> /home/" . $_POST["log_name"]."'";
-		if($_POST["start_timer"]=="reboot"){
-			$change= "@reboot root " .$cmd;
-			$search = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash";
-			$file_to_replace="/tmp/crontab";
-			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"", $ret);
-			echo "System will now start logger upon start with the following settings: Frequency: ".$_POST["center_freq"]." Frequency-Range: ".$_POST["freq_range"]." Log-Level: ".$_POST["log_level"]." Gain: " . $_POST["log_gain"]. " and File-Name: ". $_POST["log_name"];
-		}
-		if($_POST["start_timer"]=="start_no"){
-			$change= "#@reboot root " .$cmd;
-			$search = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash";
-			$file_to_replace="/tmp/crontab";
-			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"", $ret);
-			echo "System will not start logger upon start";
-		}
-		if($_POST["start_timer"]=="start_on_time"){
-			$change= $_POST["start_min"]. " ".$_POST["start_hour"]." * * * root " .$cmd;
-			$search = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/record/:/home/ rtl_433_mod bash";
-			$file_to_replace="/tmp/crontab";
-			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"", $ret);
-			echo "System will now start logger upon start with the following settings: <br><br>Frequency: ".$_POST["center_freq"]." Frequency-Range: ".$_POST["freq_range"]." Log-Level: ".$_POST["log_level"]." Gain: " . $_POST["log_gain"]. " and File-Name: ". $_POST["log_name"];
-		}
-		$stop_cmd="sudo docker stop \\$(sudo docker ps -a -q --filter ancestor=rtl_433_mod)";
-		if($_POST["stop_timer"]=="stop_no"){
-			$change= "#".$stop_cmd;
-			$search = $stop_cmd;
-			$file_to_replace="/tmp/crontab";
-			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"" .$file_to_replace."\"", $ret);
-			echo "System will not stop logger";
-		}
-		if($_POST["stop_timer"]=="stop_on_time"){
-			$change= $_POST["stop_min"]. " ".$_POST["stop_hour"]." * * * root " .$stop_cmd;
-			$search = $stop_cmd;
-			$file_to_replace="/tmp/crontab";
-			$result = system("sudo docker run -t --rm --privileged --net=host -v /var/www/html/sdr/:/tmp1/ -v /etc/:/tmp/ git sh /tmp1/cronjob_logger.sh \"".$search."\" \"".$change."\" \"".$file_to_replace."\"", $ret);
-			echo "System will now stop logger at specific time";
-		}
-	}
-	function unliveExecuteCommand($cmd)
-	{
-		while (@ ob_end_flush()); // end all output buffers if any
-		$proc = popen("$cmd 2>&1", 'r');
-		pclose($proc);
-	}
+	//load config
+	require_once '../cfg/baseConfig.php';
+	//load top menu
+	require_once RESOURCES_PATH.'/header.php';
+	//load functions
+	require_once RESOURCES_PATH.'/helpers.php';
+	//load ConfigLite
+	require_once CONFIGLITE_PATH.'/Lite.php';
 	
+	
+	$tmparr=array();
+	$valuearr=array('antenna_id_','antenna_position_N_','antenna_position_E_','antenna_orientation_','antenna_beam_width_','log_gain_','center_freq_','freq_range_','threshold_','minDuration_','maxDuration_','nfft_','timestep_','use_sql_','timer_start_','timer_start_time_','timer_stop_','timer_stop_time_','timer_mode_');
+	for ($i=0; $i<4; $i++) {
+			foreach($valuearr as $var) {
+				$tmparr[]=$var.$i;
+			}
+		}
+	//define config section and items.
+	define ('confSection', 'logger');
+	define ('confKeys', $tmparr);
+	//load values from config
+	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
 ?>
 
 <!-- Enter text here-->
+<div class="w3-bar w3-brown w3-mobile">
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_range')">Frequency Range</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_single')">Single Frequency</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_settings')">Settings</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'tab_logger_signals')">Latest Signals</button>
+</div>
+
+<!-------------------------------- Range Logger -------------------------------------------------------------------->
+
+<div id="tab_logger_range" class="city w3-mobile" style="display:none">
+    <?php if ($GLOBALS["num_rec"] == 0): ?>
+        <div class= "w3-row-padding">
+            <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+            No receivers detected! Please connect at least one receiver and reload the page.
+            </div>
+        </div>
+    <?php else: ?>
+        <div class= "w3-row-padding">
+            <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+                <form method="POST" enctype="multipart/form-data" action="">
+                    <input type="submit" class="w3-btn w3-brown" value="Start all" name="log_start_all" />
+                    <input type="submit" class="w3-btn w3-brown" value="Stop all" name="log_stop_all" />
+                </form>
+            </div>
+        </div>
+        <div class= "w3-row-padding">
+            <?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
+                <div class="w3-half">
+                    <div class="w3-panel w3-green w3-round">
+                        <h3>Receiver <?=$i?> <b><?php echo $config['logger']['antenna_id_'.$i]?></b></h3><br>
+                        Range: <span style="margin-left:37px"><?php echo ($config['logger']['center_freq_'.$i]-$config['logger']['freq_range_'.$i]/2)/1000000?> MHz to <?php echo ($config['logger']['center_freq_'.$i]+$config['logger']['freq_range_'.$i]/2)/1000000?> MHz</span>
+                        <br>
+                        Gain: <span style="margin-left:50px"><?php echo $config['logger']['log_gain_'.$i]?> dB</span>
+                        <br>
+                        Threshold: <span style="margin-left:10px"><?php echo $config['logger']['threshold_'.$i]?> dB above Noise</span>
+                        <br>
+                        Duration: <span style="margin-left:19px"><?php echo $config['logger']['minDuration_'.$i]." - ".$config['logger']['maxDuration_'.$i]?> sec</span>
+                        <br>
+                        MySQL: <span style="margin-left:32px"><?php if($config['logger']['use_sql_'.$i]=="Yes") :?>Writing to database at <?php echo $config['database']['db_host'];?>
+                               <?php else:?> Not writing to database.<?php endif;?></span>
+                        <form class="w3-right-align" method="POST" enctype="multipart/form-data" action="" style="margin-top:10px">
+                            <input type="submit" class="w3-btn w3-brown" value="Start" name="log_start_<?=$i?>" />
+                            <input type="submit" class="w3-btn w3-brown" value="Stop" name="log_stop_<?=$i?>" />
+                        </form>
+                        <br>
+                    </div>
+                </div>
+            <?php endfor;?>
+        </div>
+        <div class="w3-row-padding">
+            <div class="w3-half">
+                <div class=" w3-panel w3-green w3-round">
+                    <br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
+                    <?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
+                    <?php 
+                    if(check_device_use($i)){
+                        echo "<span class='w3-tag w3-red w3-large'>Radio ".$i." running</span> \n \n";
+                    }
+                    else{
+                        echo "<span class='w3-tag w3-green w3-large'>Radio ".$i." not running</span> \n \n";
+                    }
+                    ?>
+                    <br><br>
+                    <?php endfor;?>
+                    <form method="post" enctype="multipart/form-data">
+                        <input type='submit' class='w3-btn w3-brown' value='Update Receiver Status' name='update_device_info_fr'/>
+                        <br><br>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
+</div>
+<!-------------------------------- Single Frequency Logger -------------------------------------------------------------------->
+
+<div id="tab_logger_single" class="city w3-mobile" style="display:none">
+<?php if ($GLOBALS["num_rec"] == 0): ?>
+	<div class= "w3-row-padding">
+		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+		No receivers detected! Please connect at least one receiver and reload the page.
+		</div>
+	</div>
+<?php else: ?>
+	<div class= "w3-row-padding">
+		<div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+			<form method="POST" enctype="multipart/form-data" action="">
+				<input type="submit" class="w3-btn w3-brown" value="Start all" name="log_single_start_all" />
+				<input type="submit" class="w3-btn w3-brown" value="Stop all" name="log_single_stop_all" />
+			</form>
+		</div>
+	</div>
+<div class="w3-row-padding">
+	<?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
+	<div class="w3-half">
+		<div class="w3-panel w3-green w3-round">
+			<h3>Receiver <?=$i?> <b><?php echo $config['logger']['antenna_id_'.$i]?></b></h3><br>
+			Frequency: <span style="margin-left:10px"><?php echo ($config['logger']['center_freq_'.$i]/1000000)?> MHz</span>
+			<br>
+			Gain: <span style="margin-left:54px"><?php echo $config['logger']['log_gain_'.$i]?> dB</span>
+			<br>
+			Threshold: <span style="margin-left:14px"><?php echo $config['logger']['threshold_'.$i]?> dB above Noise</span>
+			<br>
+            MySQL: <span style="margin-left:36px"><?php if($config['logger']['use_sql_'.$i]=="Yes") :?>Writing to database at <?php echo $config['database']['db_host'];?>
+                               <?php else:?> Not writing to database<?php endif;?></span>
+			<form class="w3-right-align" method="POST" enctype="multipart/form-data" action="" style="margin-top:10px">
+				<input type="submit" class="w3-btn w3-brown" value="Start" name="log_single_start_<?=$i?>" />
+				<input type="submit" class="w3-btn w3-brown" value="Stop" name="log_single_stop_<?=$i?>" />
+			</form>
+			<br>
+		</div>
+	</div>
+	<?php endfor;?>
+</div>
+	<div class="w3-row-padding">
+		<div class="w3-half">
+			<div class=" w3-panel w3-green w3-round">
+				<br><a target="_blank" href="/sdr/record/"><h4>Link to Record Folder</h4></a><br>
+				<?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
+				<?php 
+				if(check_device_use($i)){
+					echo "<span class='w3-tag w3-red w3-large'>Radio ".$i." running</span> \n \n";
+				}
+				else{
+					echo "<span class='w3-tag w3-green w3-large'>Radio ".$i." not running</span> \n \n";
+				}
+				?>
+				<br><br>
+				<?php endfor;?>
+				<form method="post" enctype="multipart/form-data">
+					<input type='submit' class='w3-btn w3-brown' value='Update Receiver Status' name='update_device_info_fr'/>
+					<br><br>
+				</form>
+			</div>
+		</div>
+	</div>
+	<?php endif;?>
+</div>
+
+<!-------------------------------- Tab Logger Settings ------------------------------------------------------------------>
+
+<div id="tab_logger_settings" class="city w3-mobile" style="display:none">
+    <form method='POST' id="rec_settings" enctype="multipart/form-data" action="<?php update_Config($config);?>">
+        <div class="w3-row-padding">
+            <?php for ($i=0; $i<4; $i++): ?>
+                <div class="w3-half">
+                    <div class="w3-panel w3-green w3-round">
+                        <h3>Receiver <?=$i?>
+                            <?php if ($i==0) :?> 
+                                <span class="w3-tooltip" style="float:right">
+                                    <span class="w3-text w3-small w3-round w3-brown w3-tag">Copy settings (except name and orientation) to all receivers.</span>
+                                    <i class="fas fa-clone" onclick="copyInput('rec_settings', ['antenna_id_', 'antenna_orientation_', 'change_logger_setting'])" style="cursor:pointer;float:right"></i>
+                                </span>
+                            <?php endif;?>
+                        </h3><br>
+                        <button type=button onclick="myAccordion('rec<?=$i?>_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Receiver Settings</h4></button>
+                        <div id="rec<?=$i?>_settings" class="w3-container w3-hide">
+                            <p>
+                            Gain in dB (default 20):<br>
+                            <input class="w3-input w3-mobile" style="width:30%" type="number" id="log_gain_<?=$i?>" name="log_gain_<?=$i?>" value="<?php echo isset($config['logger']['log_gain_'.$i]) ? $config['logger']['log_gain_'.$i] : 20 ?>">
+                            <small>Gain of the recording device. Higher gain results in more noise. max 49DB</small>
+                            </p>
+                            <p>
+                            Center Frequency in Hz:<br>
+                            <input class="w3-input w3-mobile" style="width:30%" type="number" id="center_freq_<?=$i?>" name="center_freq_<?=$i?>" value="<?php echo isset($config['logger']['center_freq_'.$i]) ? $config['logger']['center_freq_'.$i] : 150100000 ?>">
+                            </p>
+                            <p>
+                            Frequency Range to monitor:<br>
+                            <select class="w3-select w3-mobile"  style="width:30%" id="freq_range_<?=$i?>" name="freq_range_<?=$i?>">
+                                <option value="250000" <?php echo isset($config['logger']['freq_range_'.$i]) && $config['logger']['freq_range_'.$i] == "250000" ? "selected" : "" ?>>250kHz</option>
+                                <option value="1024000" <?php echo isset($config['logger']['freq_range_'.$i]) && $config['logger']['freq_range_'.$i] == "1024000" ? "selected" : "" ?>>1024kHz</option>
+                            </select> 
+                            </p>
+                        </div>
+                        <button type=button onclick="myAccordion('ant<?=$i?>_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Antenna Settings</h4></button>
+
+                        <div id="ant<?=$i?>_settings" class="w3-container w3-hide">
+                            <p>
+                                Unique name for this Antenna:<br>
+                                <input class="w3-input w3-mobile" style="width:70%" type="text" id="antenna_id_<?=$i?>" name="antenna_id_<?=$i?>" value="<?php echo isset($config['logger']['antenna_id_'.$i]) ? $config['logger']['antenna_id_'.$i] : "rteu_r".$i."_"?>">
+                                <small>This - together with a timestamp - will be used as filename and antenna id in the database.</small>
+                            </p>
+                            Antenna Position:&emsp;
+                            <span class="w3-tooltip">
+                                <i class="fas fa-map-marker-alt" onclick="getLocation(<?=$i?>,1)" style="cursor:pointer"></i>
+                                <span class="w3-text w3-small w3-round w3-brown w3-tag">
+                                    Get Position from Browser.
+                                </span>
+                            </span><br>
+                            <div id="input_position_<?=i?>" class="w3-half" style = "margin-bottom: 16px">
+                                <label>Latitude</label>
+                                <input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_position_N_<?=$i?>" name="antenna_position_N_<?=$i?>" value="<?php echo isset($config['logger']['antenna_position_N_'.$i]) ? $config['logger']['antenna_position_N_'.$i] : 1.234?>">
+                            </div>
+                            <div class="w3-half" style = "margin-bottom: 16px">
+                                <label>Longitude</label>
+                                <input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_position_E_<?=$i?>" name="antenna_position_E_<?=$i?>" value="<?php echo isset($config['logger']['antenna_position_E_'.$i]) ? $config['logger']['antenna_position_E_'.$i] : 5.678?>">
+                            </div>
+                            <p>
+                                Antenna Orientation in degrees (i.e. N=0, E=90, S=180):&emsp;
+                                <span class="w3-tooltip">
+                                    <i class="fas fa-location-arrow" onclick="getLocation(<?=$i?>,0)" style="cursor:pointer"></i>
+                                    <span class="w3-text w3-small w3-round w3-brown w3-tag">
+                                        Get Position from Browser.
+                                    </span>
+                                </span><br><br>
+                                <input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_orientation_<?=$i?>" name="antenna_orientation_<?=$i?>" value="<?php echo isset($config['logger']['antenna_orientation_'.$i]) ? $config['logger']['antenna_orientation_'.$i] : 42?>">
+                            </p>
+                            <p>
+                                Antenna beam width in degrees:<br>
+                                <input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_beam_width_<?=$i?>" name="antenna_beam_width_<?=$i?>" value="<?php echo isset($config['logger']['antenna_beam_width_'.$i]) ? $config['logger']['antenna_beam_width_'.$i] : 42?>">
+                            </p>
+                            <br>
+                        </div>
+
+                        <button type=button onclick="myAccordion('det<?=$i?>_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Detection Settings</h4></button>
+                        <div id="det<?=$i?>_settings" class="w3-container w3-hide">
+                            <p>				
+                                <label for="threshold_<?=$i?>"> Log Level: </label>
+                                <input class="w3-input w3-mobile" style="width:30%" type="number" id="threshold_<?=$i?>" name="threshold_<?=$i?>" value="<?php echo isset($config['logger']['threshold_'.$i]) ? $config['logger']['threshold_'.$i] : 10 ?>">
+                            </p>
+                            <p>
+                                <label for="minDuration_<?=$i?>"> Minimum Signal Length (seconds):</label>
+                                <input class="w3-input w3-mobile" style="width:30%" type="number" id="minDuration_<?=$i?>" name="minDuration_<?=$i?>" step="any" value="<?php echo isset($config['logger']['minDuration_'.$i]) ? $config['logger']['minDuration_'.$i] : 0 ?>">
+                            </p>
+                            <p>
+                                <label for="maxDuration_<?=$i?>"> Maximum Signal Length (seconds):</label>
+                                <input class="w3-input w3-mobile" style="width:30%" type="number" id="maxDuration_<?=$i?>" name="maxDuration_<?=$i?>" step="any" value="<?php echo isset($config['logger']['maxDuration_'.$i]) ? $config['logger']['maxDuration_'.$i] : 1 ?>">
+                            </p>
+                            <p>
+                                Number of bins in FFT (default: 400):<br>
+                                <input class="w3-input w3-mobile" style="width:30%" type="number" id="nfft_<?=$i?>" name="nfft_<?=$i?>" value="<?php echo isset($config['logger']['nfft_'.$i]) ? $config['logger']['nfft_'.$i] : 400 ?>">
+                            </p>
+                            <p>
+                                Number of samples per FFT (default: 50):<br>
+                                <input class="w3-input w3-mobile" style="width:30%" type="number" id="timestep_<?=$i?>" name="timestep_<?=$i?>" value="<?php echo isset($config['logger']['timestep_'.$i]) ? $config['logger']['timestep_'.$i] : 50 ?>">
+                            </p>
+                            <br>
+                        </div>
+
+                        <button type=button onclick="myAccordion('tim<?=$i?>_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Timer Settings</h4></button>
+                        <div id="tim<?=$i?>_settings" class="w3-container w3-hide">
+                            <p>
+                                <label for="timer_mode_<?=$i?>"> Which detection mode to use</label><br>
+                                <select class="w3-select w3-mobile" style="width:30%" id="timer_mode_<?=$i?>" name="timer_mode_<?=$i?>">
+                                    <option value="freq_range" <?php echo isset($config['logger']['timer_mode_'.$i]) && $config['logger']['timer_mode_'.$i] == "freq_range" ? "selected" : "" ?>>Use Frequency Range</option> 
+                                    <option value="single_freq" <?php echo isset($config['logger']['timer_mode_'.$i]) && $config['logger']['timer_mode_'.$i] == "single_freq" ? "selected" : "" ?>>Use single Frequency</option>
+                                </select>
+                            </p>
+                            <p>
+                                <label for="timer_start_<?=$i?>"> Automatically start at</label><br>
+                                <select class="w3-select w3-mobile" style="width:30%" id="timer_start_<?=$i?>" name="timer_start_<?=$i?>">
+                                    <option value="start_no" <?php echo isset($config['logger']['timer_start_'.$i]) && $config['logger']['timer_start_'.$i] == "start_no" ? "selected" : "" ?>>Don't start automatically</option> 
+                                    <option value="start_boot" <?php echo isset($config['logger']['timer_start_'.$i]) && $config['logger']['timer_start_'.$i] == "start_boot" ? "selected" : "" ?>>Start on boot</option>
+                                    <option value="start_time" <?php echo isset($config['logger']['timer_start_'.$i]) && $config['logger']['timer_start_'.$i] == "start_time" ? "selected" : "" ?>>Start at given time</option>
+                                </select>
+                                <input class="w3-input w3-mobile" style="width:30%" type="time" name="timer_start_time_<?=$i?>" id="timer_start_time_<?=$i?>" value="<?php echo isset($config['logger']['timer_start_time_'.$i]) ? $config['logger']['timer_start_time_'.$i] : ""?>">
+                            </p>
+                            <p>
+                            <label for="timer_stop_<?=$i?>"> Automatically stop at</label><br>
+                                <select class="w3-select w3-mobile" style="width:30%" id="timer_stop_<?=$i?>" name="timer_stop_<?=$i?>">
+                                    <option value="stop_no" <?php echo isset($config['logger']['timer_stop_'.$i]) && $config['logger']['timer_stop_'.$i] == "stop_no" ? "selected" : ""?>>Don't stop automatically</option> 
+                                    <option value="stop_time" <?php echo isset($config['logger']['timer_stop_'.$i]) && $config['logger']['timer_stop_'.$i] == "stop_time" ? "selected" : ""?>>Stop at given time</option>
+                                </select>
+                                <input class="w3-input w3-mobile" style="width:30%" type="time" name="timer_stop_time_<?=$i?>" id="timer_stop_time_<?=$i?>" value="<?php echo isset($config['logger']['timer_stop_time_'.$i]) ? $config['logger']['timer_stop_time_'.$i] : ""?>">
+                            </p>
+                        </div>
+                    
+                        <button type=button onclick="myAccordion('dat<?=$i?>_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Database Settings</h4></button>
+                        <div id="dat<?=$i?>_settings" class="w3-container w3-hide">
+                            <p>
+                                Enable logging to SQL database? 
+                                <span class="w3-tooltip"> <i class="fa fa-info-circle" aria-hidden="false"></i>
+                                    <span class="w3-text w3-small w3-round w3-brown w3-tag">
+                                        Go to Data <i class="fa fa-caret-right" aria-hidden="true"></i> Start <i class="fa fa-caret-right" aria-hidden="true"></i> Database to setup connection details.
+                                    </span>
+                                </span><br>
+                                <input class="w3-radio w3-mobile" id="use_sql_<?=$i?>_y" type="radio" name="use_sql_<?=$i?>" value="Yes" <?php echo isset($config['logger']['use_sql_'.$i]) && $config['logger']['use_sql_'.$i] == "Yes" ? 'checked="true"' : ''?>>
+                                <label class="w3-margin-right" for="use_sql_<?=$i?>_y">Yes</label>
+                                <input class="w3-radio w3-mobile" id="use_sql_<?=$i?>_n" type="radio" name="use_sql_<?=$i?>" value="No" <?php echo isset($config['logger']['use_sql_'.$i]) && $config['logger']['use_sql_'.$i] == "No" ? 'checked="false"' : ''?>>
+                                <label class="w3-margin-right" for="use_sql_<?=$i?>_n">No</label>	
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            <?php endfor;?>
+        </div>
+    </form>
+    <input form="rec_settings" class="w3-mobile w3-btn w3-brown" style="position:fixed;right:140px;bottom:70px;" type="submit" value="Change Settings" id="change_logger_settings" name="change_logger_settings"><br>
+    <div class="w3-row-padding">
+        <div class="w3-container w3-green w3-round" style="margin-right:8px;margin-left:8px">
+            <form method='POST' enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <br>
+                After an update a compilation of the code might be necessary. 
+                <br><br>
+                <input type="submit" class="w3-btn w3-brown" value="Compile Raspi 3" name="compile"/>
+                <input type="submit" class="w3-btn w3-brown" value="Compile Raspi Zero" name="compile_raspi_zero"/>
+                <br><br>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-------------------------------- Tab Latest Signals ------------------------------------------------------------------>
+
+<div id="tab_logger_signals" class="city w3-mobile" style="display:<?php echo (isset($_POST['get_signals']) ? 'block' : 'none')?>">
+    <div class= "w3-row-padding">
+        <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+            <form method='POST' enctype="multipart/form-data" action="" onsubmit="openCity(event, 'tab_logger_signals')">
+                <label for="signal_length">Signal length in s:</label>
+                <div id="signal_length" class="w3-bar">
+                    <input class="w3-mobile" type="number" value="0.02" pattern='[0-9\.]+' step="any" title="Use . as decimal separator" name="signal_length_from"> - 
+                    <input class="w3-mobile" type="number" value="0.03" pattern='[0-9\.]+' step="any" title="Use . as decimal separator" name="signal_length_to">
+                </div><br>
+                <label for="signal_freq">Signal freq in Hz:</label>
+                <div id="signal_freq" class="w3-bar">
+                    <input class="w3-mobile" type="number" value="150100000" pattern='[0-9]+' name="signal_freq_from"> - 
+                    <input class="w3-mobile" type="number" value="150130000" pattern='[0-9]+' name="signal_freq_to">
+                </div><br>
+                <label for="signal_strength">Minimum signal strength:<br></label>
+                <input class="w3-mobile" type="number" value="30" pattern='[0-9]+' name="signal_strength" id="signal_strength"><br><br>
+                <label for="num_results">Number of signals to get:<br></label>
+                <input class="w3-mobile" type="number" value="30" pattern='[0-9]+' name="num_results" id="num_results"><br><br>
+                <input type="submit" class="w3-btn w3-brown" value="Get Signals" name="get_signals"/>
+            </form>
+        </div>
+    </div>
+
+    <?php if (isset($_POST['get_signals'])) : ?>
+        <div class= "w3-row-padding">
+            <style>
+                .w3-hoverable tbody tr:hover{background-color:#795548}
+            </style>
+            <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+                <?php
+                    $con = @mysqli_connect($config['database']['db_host'].":".$config['database']['db_port'], $config['database']['db_user'], $config['database']['db_pass'],"rteu");
+                    if (mysqli_connect_errno()) {
+                        echo "Connection to ".$config['database']['db_host'].":".$config['database']['db_port']." failed: " . mysqli_connect_error();
+                    } else {
+                        $select = "SELECT signals.*, runs.center_freq FROM signals LEFT JOIN runs ON signals.run=runs.id";
+                        $sig_length = "duration >= ".$_POST['signal_length_from']." AND duration <= ".$_POST['signal_length_to'];
+                        $sig_freq = "signal_freq >= ".$_POST['signal_freq_from'].".0 - center_freq AND signal_freq <= ".$_POST['signal_freq_to'].".0 - center_freq";
+                        $sig_strength = "max_signal>= ".$_POST['signal_strength'];
+                        $query = $select." WHERE ".$sig_length." AND ".$sig_freq." AND ".$sig_strength." LIMIT ".$_POST['num_results'];
+                        //echo $query."<br>";
+                        $result = mysqli_query($con, $query);
+                        //echo mysqli_error($con);
+                        if (!$result)
+                            echo mysqli_info($con);
+                        elseif (mysqli_num_rows($result) == 0)
+                            echo "<br><b>No entries matched the given parameters!</b><br>";
+                        else {
+                            echo "<div class='w3-responsive'>\n";
+                            echo "<table class='w3-table w3-hoverable w3-bordered'>\n";
+                            echo "<tr class='w3-brown'><th>Timestamp</th><th>Duration</th><th>Frequency</th><th>Bandwidth</th><th>Strength</th></tr>\n";
+                            while ($row = mysqli_fetch_array($result)) {
+                                $sig_freq=(float)$row['signal_freq'];
+                                $center_freq=(float)$row['center_freq'];
+                                echo "<tr><td> ".$row['timestamp']." </td><td> ".$row['duration']." </td><td> ".($sig_freq+$center_freq)." </td><td> ".$row['signal_bw']." </td><td> ".$row['max_signal']." </td></tr>\n";
+                            }
+                            mysqli_free_result($result);
+                            echo "</table>\n";
+                            echo "</div>\n";
+                        }
+                        mysqli_close($con);
+                    }
+                ?>
+            </div>
+        </div>
+    <?php endif;?>
+</div>
+
+<div id="geoModal" class="w3-modal">
+    <div class="w3-modal-content">
+        <div class="w3-container">
+            <span onclick="document.getElementById('geoModal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+            <p id="modalText"></p>
+        </div>
+    </div>
+</div>
 
 
+<?php
+    //load footer
+    require_once RESOURCES_PATH.'/footer.php';
+    //load javascripts
+    require_once RESOURCES_PATH.'/javascript.php';
+    //load php_scripts
+    require_once RESOURCES_PATH.'/php_scripts.php';
+ ?>
+ 
 <script>
-function openCity(cityName) {
-    var i;
-    var x = document.getElementsByClassName("city");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
+    function getLocation(i,loc) {
+        if (navigator.geolocation) {
+            if (loc) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    showPosition(i,position);
+                });
+            } else {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    showHeading(i,position);
+                });
+            }
+        } else { 
+            document.getElementById("modalText").innerText = "<b> Geolocation is not supported by this browser.</b>";
+            document.getElementById('geoModal').style.display='block';
+        }
     }
-    document.getElementById(cityName).style.display = "block";  
-}
-function w3_switch(name) {
-	var x = document.getElementById(name);
-    if (x.style.display == "none") {
-        x.style.display = "block";
-    } else { 
-        x.style.display = "none";
-    }
-}
 
+    function showPosition(i, position) {
+        document.getElementById("antenna_position_N_"+i).value = position.coords.latitude;
+        document.getElementById("antenna_position_E_"+i).value = position.coords.longitude;
+    }
+
+    function showHeading(i, position) {
+        document.getElementById("antenna_orientation_"+i).value = position.heading;
+    }
 </script>
 
-
 </body>
-
 </html>

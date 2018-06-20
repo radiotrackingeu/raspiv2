@@ -3,249 +3,132 @@
 
 <title>radio-tracking.eu</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/weblib/w3.css">
-<link rel="stylesheet" href="/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/weblib/w3.css">
+<link rel="stylesheet" href="/resources/weblib/css/fontawesome-all.css">
+<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/additional.css">
 
 <body>
-
-<div class="w3-container w3-green">
-<h1>radio-tracking.eu</h1>
-  <img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:25%"><br>
- <button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
-</div>
+<?php
+	//load config
+	require_once '../cfg/baseConfig.php';
+	//load top menu
+	require_once RESOURCES_PATH.'/header.php';
+	//load functions
+	require_once RESOURCES_PATH.'/helpers.php';
+	//load ConfigLite
+	require_once CONFIGLITE_PATH.'/Lite.php';	
+	
+	//define config section and items.
+	$tmparr=array();
+	$valuearr=array('fft_size_','fft_fps_','samp_rate_','center_freq_','rf_gain_');
+	for ($i=0; $i<4; $i++) {
+			foreach($valuearr as $var) {
+				$tmparr[]=$var.$i;
+			}
+		}
+	define ('confSection', 'WebRX');
+	define ('confKeys', $tmparr);
+	//load values from config
+	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
+?>
  
-
-<div class="w3-bar w3-light-grey" style="display:none" id="sidebar">
-	<!-- Home -->
-	<a class="w3-bar-item w3-button w3-mobile" href="/index.html"><i class="fa fa-home"></i> Home</a>
-	
-	<!-- Radio -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('radio')">
-			<i class="fa fa-podcast"></i> Radio <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="radio" class="w3-dropdown-content w3-card-4">
-			<a href="/sdr/rtl_fm.php">WebRadio</a>
-			<a href="/sdr/rtl_fftw.php">Recorder</a>
-			<a href="/sdr/rtl_tcp.php">SDR#-Server</a>
-			<a href="/sdr/websdr.php">WebRX</a>
-		</div>
-	</div>
-
-	<!-- Camera -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('camera')">
-			<i class="fa fa-camera"></i> Camera <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="camera" class="w3-dropdown-content w3-card-4">
-			<a href="/picam/picam.php">Start</a>
-			<a href="/picam/setup_picam.php">Setup</a>
-		</div>
-	</div>
-
-	<!-- Microphone -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('mic')">
-			<i class="fa fa-microphone"></i> Microphone <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="mic" class="w3-dropdown-content w3-card-4">
-			<a href="/micro/micro.php">Start</a>
-			<a href="/micro/micro_setup.php">Setup</a>
-		</div>
-	</div>
-	
-	<!-- GPS -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('gps')">
-			<i class="fa fa-compass"></i> GPS <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="gps" class="w3-dropdown-content w3-card-4">
-			<a href="/gps/gps.php">Start</a>
-			<a href="/gps/gps_setup.php">Setup</a>
-		</div>
-	</div>
-		
-	
-	<!-- Data storage -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('data')">
-			<i class="fa fa-database "></i> Data <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="data" class="w3-dropdown-content w3-card-4">
-			<a href="/data/data.php">Start</a>
-			<a href="/data/data_setup.php">Setup</a>
-		</div>
-	</div>
-	
-	<!-- WiFi -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('wifi')">
-			<i class="fa fa-wifi"></i> WiFi <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="wifi" class="w3-dropdown-content w3-card-4">
-			<a href="/wifi/wifi.php">Start</a>
-			<a href="/wifi/wifi_setup.php">Setup</a>
-		</div>
-	</div>
-		
-	<!-- Remote controll -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('remote')">
-			<i class="fa fa-exchange"></i> Remote <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="remote" class="w3-dropdown-content w3-card-4">
-			<a href="/connect/connect.php">Start</a>
-			<a href="/connect/umts_setup.php">UMTS Setup</a>
-			<a href="/connect/vpn_setup.php">VPN Setup</a>
-		</div>
-	</div>
-	
-	<!-- System settings -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('system')">
-			<i class="fa fa-wrench"></i> System <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="system" class="w3-dropdown-content w3-card-4">
-			<a href="/git/gitlab.php">Software</a>
-			<a href="/git/system.php">System</a>
-			<a href="/git/git_setup.php">Documentation</a>
-		</div>
-	</div>
-	
-	<!-- License -->
-	<a class="w3-bar-item w3-button w3-mobile" href="/license.html"><i class="fa fa-registered"></i> License</a>
+<!---------------- Tab Menu -------------------------->
+<div class="w3-bar w3-brown w3-mobile">
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event,'webrx_tab')">Spectrogram</button>
+	<button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event,'settings_webrx_tab')">Settings</button>
 </div>
 
-
-<!-- Enter text here-->
-<div id="UMTS" class="w3-container">
-	<div class="w3-panel w3-green w3-round">
-		<br><br>
-		<form method="POST" enctype="multipart/form-data">
-			FFTs per second: <br>
-			<input type="number" name="fft_fps" value="27"><br> <br>
-			Number of bins in FFT: <br>
-			<select name="fft_size">
-				<option value="256">256</option>
-				<option value="512" selected="selected">512</option>
-				<option value="1024">1024</option>
-				<option value="2048">2048</option>
-				<option value="4096">4096</option>
-			</select> <br><br>
-			Sample rate / Frequency Range: <br>
-			<select name="samp_rate">
-				<option value="250000">250k</option>
-				<option value="1024000">1024k</option>
-			</select><br><br>
-			Center Frequency in Hz: <br>
-			<input type="number" name="center_freq" value="150100000"><br><br>
-			Gain: <br>
-			<input type="number" name="rf_gain" value="20"><br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Change settings befor start" name="change_config_websdr">
-			<input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr">
-			<input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop">
-			<br><br>
-			<a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1)?>"> Link to OpenWebRX </a>
-			<br><br>
-		</form>
-	</div>
-
-<br><br>
-
-
-	<?php
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
-	if (isset($_POST["rtl_websdr"])){
-		$cmd = "sudo docker run --rm -t --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($_SERVER['SERVER_PORT']+1).":8073 webrx sh /cfiles/start_openwebrx.sh";
-		$result = unliveExecuteCommand($cmd);
-	}
-	if (isset($_POST["rtl_websdr_stop"])){
-		echo '<pre>';
-		$cmd = "sudo docker stop $(sudo docker ps -a -q --filter ancestor=webrx) 2>&1";
-		$result = liveExecuteCommand($cmd);
-		#echo $result;
-		echo '</pre>';
-	}
-	if (isset($_POST["change_config_websdr"])){
-		echo '<pre>';
-		$cmd = "sh /var/www/html/sdr/change_config_webrx.sh ".$_POST["fft_fps"]." ".$_POST["fft_size"]." ".$_POST["samp_rate"]." ".$_POST["center_freq"]." ".$_POST["rf_gain"]." 2>&1";
-		$result = liveExecuteCommand($cmd);
-		echo $result;
-		echo '</pre>';
-	}
-	?>
-	
-<br><br>
-
-<br><br>
+<!---------------- Tabs ------------------------------>
+<!---------------- Spectrogram ------------------------>
+<div id="webrx_tab" class="city w3-mobile" style="display:none">
+    <?php if ($GLOBALS["num_rec"] == 0): ?>
+        <div class= "w3-row-padding">
+            <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+            No receivers detected! Please connect at least one receiver and reload the page.
+            </div>
+        </div>
+    <?php else: ?>
+        <div class= "w3-row-padding">
+            <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
+                <form method="POST" enctype="multipart/form-data" action="">
+                    <input type="submit" class="w3-btn w3-brown" value="Start all" name="rtl_websdr_start_all" />
+                    <input type="submit" class="w3-btn w3-brown" value="Stop all" name="rtl_websdr_stop_all" /><br>
+                    Running more than two Spectrogram servers will likely overwhelm the cpu!
+                </form>
+            </div>
+        </div>
+        <div class= "w3-row-padding">
+            <?php for ($i=0; $i<$GLOBALS["num_rec"]; $i++): ?>
+            <div class="w3-half">
+                <div class="w3-panel w3-green w3-round">
+                    <h3>Receiver <?=$i?></h3>
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="submit" class="w3-btn w3-brown" value="Start" name="rtl_websdr_d<?=$i?>">
+                        <input type="submit" class="w3-btn w3-brown" value="Stop" name="rtl_websdr_stop_d<?=$i?>">
+                        <br><br>
+                        <a target="_blank" href="http://<?php echo $_SERVER['SERVER_NAME'].":".($_SERVER['SERVER_PORT']+1+$i)?>"> Link to Device <?=$i?> </a>
+                        <br><br>
+                    </form>
+                </div>
+            </div>
+            <?php endfor; ?>
+        </div>
+    <?php endif;?>
 </div>
+
+<!---------------- Settings -------------------------->
+<div id="settings_webrx_tab" class="city w3-mobile" style="display:none">
+    <form method='POST' id="webRX_settings" enctype="multipart/form-data" action="<?php update_Config($config);?>">	
+		<div class="w3-row-padding">
+			<?php for ($i=0; $i<4; $i++): ?>
+				<div class="w3-half">
+					<div class="w3-panel w3-green w3-round">
+						<h3>Receiver <?=$i?>
+							<?php if ($i==0) :?>
+								<span class="w3-tooltip" style="float:right">
+									<span class="w3-text w3-small w3-round w3-brown w3-tag">Copy settings to all receivers.</span>
+									<i class="fas fa-clone" onclick="copyInput('webRX_settings', [])" style="cursor:pointer;float:right"></i>
+								</span>
+							<?php endif;?></h3><br>
+							FFTs per second: <br>
+							<input type="number" name="fft_fps_<?=$i?>" value="<?php echo isset($config['WebRX']['fft_fps_'.$i]) ? $config['WebRX']['fft_fps_'.$i] : 27 ?>"><br> <br>
+							Number of bins in FFT: <br>
+							<select name="fft_size_<?=$i?>">
+								<option value="256" <?php echo isset($config['WebRX']['fft_size_'.$i]) && $config['WebRX']['fft_size_'.$i] == "256" ? "selected" : "" ?>>256</option>
+								<option value="512" <?php echo isset($config['WebRX']['fft_size_'.$i]) && $config['WebRX']['fft_size_'.$i] == "512" ? "selected" : "" ?>>512</option>
+								<option value="1024" <?php echo isset($config['WebRX']['fft_size_'.$i]) && $config['WebRX']['fft_size_'.$i] == "1024" ? "selected" : "" ?>>1024</option>
+								<option value="2048" <?php echo isset($config['WebRX']['fft_size_'.$i]) && $config['WebRX']['fft_size_'.$i] == "2048" ? "selected" : "" ?>>2048</option>
+								<option value="4096" <?php echo isset($config['WebRX']['fft_size_'.$i]) && $config['WebRX']['fft_size_'.$i] == "4096" ? "selected" : "" ?>>4096</option>
+							</select> <br><br>
+							Sample rate / Frequency Range: <br>
+							<select name="samp_rate_<?=$i?>">
+								<option value="250000" <?php echo isset($config['WebRX']['samp_rate_'.$i]) && $config['WebRX']['samp_rate_'.$i] == "250000" ? "selected" : "" ?>>250k</option>
+								<option value="1024000" <?php echo isset($config['WebRX']['samp_rate_'.$i]) && $config['WebRX']['samp_rate_'.$i] == "1024000" ? "selected" : "" ?>>1024k</option>
+							</select><br><br>
+							Center Frequency in Hz: <br>
+							<input type="number" name="center_freq_<?=$i?>" value="<?php echo isset($config['WebRX']['center_freq_'.$i]) ? $config['WebRX']['center_freq_'.$i] : 150100000 ?>"><br><br>
+							Gain: <br>
+							<input type="number" name="rf_gain_<?=$i?>" value="<?php echo isset($config['WebRX']['rf_gain_'.$i]) ? $config['WebRX']['rf_gain_'.$i] : 20 ?>"><br><br>
+					</div>
+				</div>
+			<?php endfor; ?>
+		</div>
+	</form>
+    <input form="webRX_settings" class="w3-mobile w3-btn w3-brown" style="position:fixed;right:140px;bottom:70px;" type="submit" value="Change Settings" id="change_webRX_settings" name="change_webRX_settings"><br>	
+</div>
+	
 
 <!-- Enter text here-->
 
-
-<script>
-function openCity(cityName) {
-    var i;
-    var x = document.getElementsByClassName("city");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(cityName).style.display = "block";  
-}
-function w3_switch(name) {
-	var x = document.getElementById(name);
-    if (x.style.display == "none") {
-        x.style.display = "block";
-    } else { 
-        x.style.display = "none";
-    }
-}
-</script>
-
+<?php
+	//load footer
+	require_once RESOURCES_PATH.'/footer.php';
+	//load javascripts
+	require_once RESOURCES_PATH.'/javascript.php';
+	//load php_scripts
+	require_once RESOURCES_PATH.'/php_scripts.php';
+ ?>
 
 </body>
-
 </html>
-
-<?php 
-
-function liveExecuteCommand($cmd)
-{
-
-    while (@ ob_end_flush()); // end all output buffers if any
-
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-
-    $live_output     = "";
-    $complete_output = "";
-
-    while (!feof($proc))
-    {
-        $live_output     = fread($proc, 4096);
-        $complete_output = $complete_output . $live_output;
-        echo "$live_output";
-        @ flush();
-    }
-
-    pclose($proc);
-
-    // get exit status
-    preg_match('/[0-9]+$/', $complete_output, $matches);
-
-    // return exit status and intended output
-    return array (
-                    'exit_status'  => intval($matches[0]),
-                    'output'       => str_replace("Exit status : " . $matches[0], '', $complete_output)
-                 );
-}
-function unliveExecuteCommand($cmd)
-{
-    while (@ ob_end_flush()); // end all output buffers if any
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-    pclose($proc);
-}
-
-
-
-?>

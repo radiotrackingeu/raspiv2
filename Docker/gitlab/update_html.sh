@@ -9,14 +9,26 @@
 #git config --global user.name "Radio Tracking Eu"
 #eval $(ssh-agent -s) && ssh-add /root/.ssh/id_rsa
 
-# Running on live branch with githab repository
+# Running on live branch with github repository
 cd /home/pi/gitrep/raspiv2/
 echo 'Download new repositry:'
 git pull
 git checkout $1
 git reset --hard origin/$1
 echo Switched to $1 branch.
-echo '<br> Copy new repositry.'
+echo '<br>Copy new repositry.'
+if [ $2 = 'keepcfg' ]
+then 
+	echo '<br> Save old config.'
+	cp /var/www/html/cfg/globalconfig /home/pi/globalconfig
+fi
+
 cp -R /home/pi/gitrep/raspiv2/html/ /var/www/
 echo 'Refresh porperty rights. <br>'
-chown -R www-data:www-data /var/www/
+find /var/www -not -path "*/mysql*" -exec chown www-data:www-data {} \;
+
+if [ $2 = 'keepcfg' ]
+then 
+	echo '<br> Copy back old config.'
+	cp /home/pi/globalconfig /var/www/html/cfg/globalconfig 
+fi

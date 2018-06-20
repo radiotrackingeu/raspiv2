@@ -3,153 +3,66 @@
 
 <title>radio-tracking.eu</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/weblib/w3.css">
-<link rel="stylesheet" href="/weblib/css/font-awesome.min.css">
-
-<body>
-
-<div class="w3-container w3-green">
-<h1>radio-tracking.eu</h1>
-	<img src="/images/logo_rteu.png" alt="radio-tracking.eu" style="width:25%"><br>
-	<button class="w3-button w3-green w3-round-xxlarge w3-hover-red w3-xlarge" onclick="w3_switch('sidebar')"><i class="fa fa-bars" aria-hidden="true"> Menu</i></button>
-	<i class="fa fa-wrench"></i> System
- </div>
+<link rel="stylesheet" href="/resources/weblib/w3.css">
+<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/additional.css">
+<script type="text/javascript">
+function refresh_time(){
+	var timeout=1000;
+	t=setTimeout("get_Time()", timeout);
+ }
  
+function get_Time() {
+	var t = new Date();
+	document.getElementById("client_time").innerHTML = t.toUTCString();
+	document.getElementById("client_time_input").value = t.toUTCString();
+	rf=refresh_time();
+}
+</script>
 
-<div class="w3-bar w3-light-grey" style="display:none" id="sidebar">
-	<!-- Home -->
-	<a class="w3-bar-item w3-button w3-mobile" href="/index.html"><i class="fa fa-home"></i> Home</a>
-	
-	<!-- Radio -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('radio')">
-			<i class="fa fa-podcast"></i> Radio <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="radio" class="w3-dropdown-content w3-card-4">
-			<a href="/sdr/rtl_fm.php">WebRadio</a>
-			<a href="/sdr/rtl_fftw.php">Recorder</a>
-			<a href="/sdr/rtl_tcp.php">SDR#-Server</a>
-			<a href="/sdr/websdr.php">WebRX</a>
-		</div>
-	</div>
+<body onload="get_Time()">
 
-	<!-- Camera -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('camera')">
-			<i class="fa fa-camera"></i> Camera <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="camera" class="w3-dropdown-content w3-card-4">
-			<a href="/picam/picam.php">Start</a>
-			<a href="/picam/setup_picam.php">Setup</a>
-		</div>
-	</div>
-
-	<!-- Microphone -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('mic')">
-			<i class="fa fa-microphone"></i> Microphone <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="mic" class="w3-dropdown-content w3-card-4">
-			<a href="/micro/micro.php">Start</a>
-			<a href="/micro/micro_setup.php">Setup</a>
-		</div>
-	</div>
+<?php
+	//load config
+	require_once '../cfg/baseConfig.php';
+	//load top menu
+	require_once RESOURCES_PATH.'/header.php';
+	//load functions
+	require_once RESOURCES_PATH.'/helpers.php';
+	//load ConfigLite
+	require_once CONFIGLITE_PATH.'/Lite.php';
 	
-	<!-- GPS -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('gps')">
-			<i class="fa fa-compass"></i> GPS <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="gps" class="w3-dropdown-content w3-card-4">
-			<a href="/gps/gps.php">Start</a>
-			<a href="/gps/gps_setup.php">Setup</a>
-		</div>
-	</div>
-		
-	
-	<!-- Data storage -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('data')">
-			<i class="fa fa-database "></i> Data <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="data" class="w3-dropdown-content w3-card-4">
-			<a href="/data/data.php">Start</a>
-			<a href="/data/data_setup.php">Setup</a>
-		</div>
-	</div>
-	
-	<!-- WiFi -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('wifi')">
-			<i class="fa fa-wifi"></i> WiFi <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="wifi" class="w3-dropdown-content w3-card-4">
-			<a href="/wifi/wifi.php">Start</a>
-			<a href="/wifi/wifi_setup.php">Setup</a>
-		</div>
-	</div>
-		
-	<!-- Remote controll -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('remote')">
-			<i class="fa fa-exchange"></i> Remote <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="remote" class="w3-dropdown-content w3-card-4">
-			<a href="/connect/connect.php">Start</a>
-			<a href="/connect/umts_setup.php">UMTS Setup</a>
-			<a href="/connect/vpn_setup.php">VPN Setup</a>
-		</div>
-	</div>
-	
-	<!-- System settings -->
-	<div class="w3-dropdown-hover w3-mobile">
-		<button class="w3-button" onclick="dropd('system')">
-			<i class="fa fa-wrench"></i> System <i class="fa fa-caret-down"></i>
-		</button>
-		<div id="system" class="w3-dropdown-content w3-card-4">
-			<a href="/git/gitlab.php">Software</a>
-			<a href="/git/system.php">System</a>
-			<a href="/git/git_setup.php">Documentation</a>
-		</div>
-	</div>
-	
-	<!-- License -->
-	<a class="w3-bar-item w3-button w3-mobile" href="/license.html"><i class="fa fa-registered"></i> License</a>
-</div>
-
+	//define config section and items.
+	define ('confSection', 'system');
+	define ('confKeys', array('usb_timer_start_time', 'usb_timer_stop_time'));
+	//load values from config
+	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
+ ?>
+ 
 <!-- Enter text here-->
 
 <div class="w3-bar w3-brown w3-mobile">
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('schedule')">Schedule</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('date')">Time/Date</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('hostname')">Hostname</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('expand_disc')">Expand Disc</button>
-  <button class="w3-bar-item w3-button w3-mobile" onclick="openCity('infos')">System Information</button>
-</div>
-
-<div id="schedule" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<form method="POST">
-			<br>
-			You can leave out the weekday <br><br>
-			<input type="text" name="new_date" value="* * * * *"> <br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Light on" name="cron_light_on"><br>
-			<input type="text" name="new_date" value="* * * * *"> <br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Light off" name="cron_light_off"><br>
-			<br>
-		</form>
-	</div>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'date')">Time/Date</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'hostname')">Hostname</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'expand_disc')">Expand Disc</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'usbpower')">USB Power</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'passwords')">Passwords</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'infos')">System Information</button>
 </div>	
 
-
 <div id="date" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
+	<div class="w3-panel w3-green w3-round w3-padding">
 		<form method="POST">
-			<br>
 			You can leave out the weekday <br><br>
 			<input type="text" name="new_date" value="<?php echo shell_exec("date")?>"> <br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Update date and time" name="update_date"><br>
-			<br>
+		</form>
+	</div>
+	<div class="w3-panel w3-green w3-round w3-padding">
+			Current date and time on your device:  <b id="client_time"></b><br><br>
+		<form method="POST" id="set_time_from_client" enctype="multipart/form-data" action="">
+			<input type="submit" class="w3-btn w3-brown" value="Update date and time" name="update_date_from_client">
+			<input type="hidden" name="client_time_input" id="client_time_input" value="">
 		</form>
 	</div>
 </div>	
@@ -185,123 +98,78 @@
 	</div>
 </div>	
 
-<div id="infos" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round">
-		<br> The Temperature of the CPU is:  <?php echo shell_exec("cat /sys/class/thermal/thermal_zone0/temp") ?>
+<div id="usbpower" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round w3-padding">
+		Turn Power to all USB ports on or off:
+		<form method="POST" enctype="multipart/form-data" action="">
+			<input type="submit" class="w3-btn w3-brown" value="USB Power ON" name="usb_power_on">
+			<input type="submit" class="w3-btn w3-brown" value="USB Power OFF" name="usb_power_off">
+		</form>
+
+	</div>
+	<div class="w3-panel w3-green w3-round w3-padding">
+		Set a timer to power all USB ports on and off automatically:
+		<form method="POST" enctype="multipart/form-data" action="<?php update_Config($config);?>"> 
+			<label for="usb_timer_start_time"> Power on at:</label><br>
+			<input class="w3-mobile" type="time" name="usb_timer_start_time" id="usb_timer_start_time" value="<?php echo isset($config['system']['usb_timer_start_time']) ? $config['system']['usb_timer_start_time'] : ""?>"><br>
+			<label for="usb_timer_stop_time"> Power off at:</label><br>
+			<input class="w3-mobile"  type="time" name="usb_timer_stop_time" id="usb_timer_stop_time" value="<?php echo isset($config['system']['usb_timer_stop_time']) ? $config['system']['usb_timer_stop_time'] : ""?>"><br><br>
+			<input class="w3-mobile w3-btn w3-brown"  type="submit" value="Set Timer" name="set_usb_timer">
+			<input class="w3-mobile w3-btn w3-brown"  type="submit" value="Disable Timer" name="disable_usb_timer"><br>
+		</form>
+	</div>
+</div>
+
+<div id="passwords" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round w3-padding">
+		<b>This page allows you to change the default passwords.</b><br>
+		Never use quotation marks " or ' in passwords!
+	</div>
+	<div class="w3-panel w3-green w3-round w3-padding">
+		<form method="POST">
+			<b>Web-Interface:</b><br>
+			Here you can change the password for user "pi" used to log into this web-interface.<br><br>
+			Old password:<br>
+			<input type="password" name="old_pw" id="old_pw" value=""> <br><br>
+			New password:<br>
+			<input type="password" name="new_pw" id="new_pw" value=""> <br><br>
+			Confirm new password:<br>
+			<input type="password" name="new_pw_confirm" name="new_pw_confirm" value=""> <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Update password" name="update_password"><br>
+		</form>
+	</div>
+	<div class="w3-panel w3-green w3-round w3-padding">
+		<form method="POST">
+			<b>MySQL: rteu</b><br>
+			Here you can change the password of database-user "rteu". Don't forget to also set the new password in the <a href="../data/data.php">database settings</a>!<br>
+			All services currently using the database will need to be restarted!<br><br>
+			Old password:<br>
+			<input type="password" name="old_mysql_pw" id="old_mysql_pw" value=""> <br><br>
+			New password:<br>
+			<input type="password" name="new_mysql_pw" id="new_mysql_pw" value=""> <br><br>
+			Confirm new password:<br>
+			<input type="password" name="new_mysql_pw_confirm" name="new_mysql_pw_confirm" value=""> <br><br>
+			<input type="submit" class="w3-btn w3-brown" value="Update password" name="update_mysql_password"><br>
+		</form>
 	</div>
 </div>	
-	
 
-<div id="output" class="w3-container city" style="display:block">
-	<br> Please choose one of the option shown above - the result will be displayed here:
-		<?php
-			error_reporting(E_ALL);
-			ini_set('display_errors', 1);
-			if (isset($_POST["update_date"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged git date --set \"".$_POST["new_date"]."\" 2>&1", $ret);
-				echo '</pre>';
-			}
-			
-			if (isset($_POST["change_hostname"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/change_hostname.sh ".$_POST["new_hostname"]." 2>&1", $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["cron_light_on"])){
-				echo '<pre>';
-				$cmd = $_POST["cron_lights"]."root       sudo docker run -t --rm --privileged -v /var/www/html/picam/:/tmp/ i2c sh /tmp/start_all_lights.sh 2>&1";
-				$file = "/etc/crontab";
-				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/git/:/tmp/ git sh /tmp/add_cronjob.sh ".$cmd." ".$file , $ret);
-				echo '</pre>';
-			}
-			
-			if (isset($_POST["exp_disc"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/expand_disk.sh 2>&1", $ret);
-				echo '</pre>';
-			}
-			
-			if (isset($_POST["stop_exp_disc"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm -v /var/www/html/git/:/tmp1/ -v /etc/:/tmp/ git bash /tmp1/stop_expand.sh 2>&1", $ret);
-				echo '</pre>';
-			}
-			if (isset($_POST["disc_usage"])){
-				echo '<pre>';
-				$test = system('df -h', $ret);
-				echo '</pre>';
-			}
-			
-			if (isset($_POST["reboot"])){
-				echo '<pre>';
-				$test = system('sudo reboot', $ret);
-				echo '</pre>';
-			}
-		?>
+<div id="infos" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round w3-padding">
+		The Temperature of the CPU is:  <?php echo round(0.001 * intVal(fgets(fopen("/sys/class/thermal/thermal_zone0/temp","r"))))."&thinsp;&deg;C" ?>
+	</div>
 </div>
 
 
-
-<script>
-function openCity(cityName) {
-    var i;
-    var x = document.getElementsByClassName("city");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(cityName).style.display = "block";  
-}
-function w3_switch(name) {
-	var x = document.getElementById(name);
-    if (x.style.display == "none") {
-        x.style.display = "block";
-    } else { 
-        x.style.display = "none";
-    }
-}
-</script>
-
 <!-- Enter text here-->
-
+<?php
+	//load footer
+	require_once RESOURCES_PATH.'/footer.php';
+	//load javascripts
+	require_once RESOURCES_PATH.'/javascript.php';
+	//load php_scripts
+	require_once RESOURCES_PATH.'/php_scripts.php';
+ ?>
 </body>
 
 </html>
-
-<?php 
-function liveExecuteCommand($cmd)
-{
-
-    while (@ ob_end_flush()); // end all output buffers if any
-
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-
-    $live_output     = "";
-    $complete_output = "";
-
-    while (!feof($proc))
-    {
-        $live_output     = fread($proc, 4096);
-        $complete_output = $complete_output . $live_output;
-        echo "$live_output";
-        @ flush();
-    }
-
-    pclose($proc);
-
-    // get exit status
-    preg_match('/[0-9]+$/', $complete_output, $matches);
-
-    // return exit status and intended output
-    return array (
-                    'exit_status'  => intval($matches[0]),
-                    'output'       => str_replace("Exit status : " . $matches[0], '', $complete_output)
-                 );
-}
-function unliveExecuteCommand($cmd)
-{
-    while (@ ob_end_flush()); // end all output buffers if any
-    $proc = popen("$cmd 2>&1 ; echo Exit status : $?", 'r');
-    pclose($proc);
-}
-?>
