@@ -1,0 +1,147 @@
+Hostname = "nyctalus"
+HOTSPOT = 1
+SSID = ""
+WIFI-PW = ""
+FIX-IP = ""
+LAN-IP = "192.168.1.1"
+Center_Freq = "150.100MHz"
+Logger_Gain = 20
+
+[SDR_Radio]
+Radio_Gain_0 = 20
+Radio_Gain_1 = 21
+Freq1_0 = "150.04M"
+Freq1_1 = "151.04M"
+Freq2_0 = "150.06M"
+Freq2_1 = "151.06M"
+Freq3_0 = "150.08M"
+Freq3_1 = "151.08M"
+Freq4_0 = "150.10M"
+Freq4_1 = "151.10M"
+Freq5_0 = "150.12M"
+Freq5_1 = "151.12M"
+Freq6_0 = "150.14M"
+Freq6_1 = "151.14M"
+
+[gitlab_updates]
+online_repository = "github"
+lokal_branch = "live"
+git_keepcfg = "updatecfg"
+
+[logger]
+antenna_id_0 = "rteu_r0"
+antenna_position_N_0 = 1.234
+antenna_position_E_0 = 5.678
+antenna_orientation_0 = 42
+antenna_beam_width_0 = 45
+log_gain_0 = 19
+center_freq_0 = 150100001
+freq_range_0 = 250000
+threshold_0 = 11
+nfft_0 = 400
+timestep_0 = 50
+minDuration_0 = 0
+maxDuration_0 = 1
+use_sql_0 = "No"
+timer_start_0 = "start_no"
+timer_start_time_0 = "20:30"
+timer_stop_0 = "stop_no"
+timer_stop_time_0 = "05:30"
+timer_mode_0 = "freq_range"
+antenna_id_1 = "rteu_r1"
+antenna_position_N_1 = 1.234
+antenna_position_E_1 = 5.678
+antenna_orientation_1 = 42
+antenna_beam_width_1 = 45
+log_gain_1 = 22
+center_freq_1 = 150100000
+freq_range_1 = 250000
+threshold_1 = 12
+nfft_1 = 400
+timestep_1 = 50
+minDuration_1 = 0
+maxDuration_1 = 1
+use_sql_1 = "No"
+timer_start_1 = "start_no"
+timer_start_time_1 = "20:30"
+timer_stop_1 = "stop_no"
+timer_stop_time_1 = "05:30"
+timer_mode_1 = "freq_range"
+antenna_id_2 = "rteu_r2"
+antenna_position_N_2 = 1.234
+antenna_position_E_2 = 5.678
+antenna_orientation_2 = 42
+antenna_beam_width_2 = 45
+log_gain_2 = 23
+center_freq_2 = 150100000
+freq_range_2 = 250000
+threshold_2 = 13
+nfft_2 = 400
+timestep_2 = 50
+minDuration_2 = 0
+maxDuration_2 = 1
+use_sql_2 = "No"
+timer_start_2 = "start_no"
+timer_start_time_2 = "20:30"
+timer_stop_2 = "stop_no"
+timer_stop_time_2 = "05:30"
+timer_mode_2 = "freq_range"
+antenna_id_3 = "rteu_r3"
+antenna_position_N_3 = 1.234
+antenna_position_E_3 = 5.678
+antenna_orientation_3 = 42
+antenna_beam_width_3 = 45
+log_gain_3 = 24
+center_freq_3 = 150100000
+freq_range_3 = 250000
+threshold_3 = 14
+nfft_3 = 400
+timestep_3 = 50
+minDuration_3 = 0
+maxDuration_3 = 1
+use_sql_3 = "No"
+timer_start_3 = "start_no"
+timer_start_time_3 = "20:30"
+timer_stop_3 = "stop_no"
+timer_stop_time_3 = "05:30"
+timer_mode_3 = "freq_range"
+
+[database]
+db_host = "127.0.0.1"
+db_port = 3306
+db_user = "rteu"
+db_pass = "rteuv2!"
+db_keep = 1000
+
+[remote]
+time_start_vpn = "reboot"
+
+[WebRX]
+fft_size_0 = 512
+fft_size_1 = 512
+fft_size_2 = 512
+fft_size_3 = 512
+fft_fps_0 = 27
+fft_fps_1 = 27
+fft_fps_2 = 27
+fft_fps_3 = 27
+samp_rate_0 = 250000
+samp_rate_1 = 250000
+samp_rate_2 = 250000
+samp_rate_3 = 250000
+center_freq_0 = 150100000
+center_freq_1 = 150100000
+center_freq_2 = 150100000
+center_freq_3 = 150100000
+rf_gain_0 = 20
+rf_gain_1 = 20
+rf_gain_2 = 20
+rf_gain_3 = 20
+
+[system]
+usb_timer_start_time = "20:00"
+usb_timer_stop_time = "06:00"
+
+[network]
+ssid_hotspot = "rteuv2"
+pw_hotspot = "sdrtracking"
