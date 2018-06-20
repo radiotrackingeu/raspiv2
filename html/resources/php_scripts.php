@@ -738,7 +738,7 @@
         }
     }
     function check_container_exists($name) {
-        $ret_val = 0;
+        $ret_val = 1;
         system("sudo docker inspect ".$name." >/dev/null 2>&1", $ret_val);
         return $ret_val;
     }
