@@ -120,7 +120,7 @@ db_pass = "rteuv2!"
 db_keep = 1000
 
 [remote]
-time_start_vpn = "reboot"
+time_start_vpn = "start_no"
 
 [WebRX]
 fft_size_0 = 512
