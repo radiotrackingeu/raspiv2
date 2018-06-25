@@ -1,24 +1,5 @@
 <!DOCTYPE html>
-<html>
 
-<title>radio-tracking.eu</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/resources/weblib/w3.css">
-<link rel="stylesheet" href="/resources/weblib/css/fontawesome-all.css">
-<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
-<link rel="stylesheet" href="/resources/additional.css">
-<script type="text/javascript">
-    var serverTime= <?php echo time()*1000;?>;
-    var localTime = new Date();
-    var timeDiff = serverTime - localTime.getTime();
-
-    setInterval(function() {
-        var serverTime = new Date().getTime() + timeDiff;
-        document.getElementById("server_time").innerHTML = new Date(serverTime).toUTCString();    
-    }, 1000);
-</script>
-
-<body>
 <?php
 	//load config
 	require_once './cfg/baseConfig.php';
@@ -33,6 +14,16 @@
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
  ?>
 <!-- Enter text here-->
+<script type="text/javascript">
+    var serverTime= <?php echo time()*1000;?>;
+    var localTime = new Date();
+    var timeDiff = serverTime - localTime.getTime();
+
+    setInterval(function() {
+        var serverTime = new Date().getTime() + timeDiff;
+        document.getElementById("server_time").innerHTML = new Date(serverTime).toUTCString();    
+    }, 1000);
+</script>
 
 <div class="w3-bar w3-brown w3-mobile">
 	<button class="w3-bar-item w3-button w3-mobile tablink active-item" onclick="openCity(event, 'status')">Status</button>
@@ -183,6 +174,3 @@
     //load php_scripts
     require_once RESOURCES_PATH.'/php_scripts.php';
  ?>
- 
-</body>
-</html>

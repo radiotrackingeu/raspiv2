@@ -1,23 +1,4 @@
 <!DOCTYPE html>
-<html>
-
-<title>radio-tracking.eu</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="stylesheet" href="/resources/weblib/w3.css">
-<link rel="stylesheet" href="/resources/weblib/css/fontawesome-all.css">
-<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
-<link rel="stylesheet" href="/resources/additional.css">
-
-<script>
-function setVisibility(menu, label, element) {
-	var vis = menu.value==label ? "visible" : "hidden";
-	document.getElementById(element).style.visibility = vis;
-}
-</script>
-
-<body>
 <?php
 	//load config
 	require_once '../cfg/baseConfig.php';
@@ -426,16 +407,6 @@ function setVisibility(menu, label, element) {
         </div>
     </div>
 </div>
-
-
-<?php
-    //load footer
-    require_once RESOURCES_PATH.'/footer.php';
-    //load javascripts
-    require_once RESOURCES_PATH.'/javascript.php';
-    //load php_scripts
-    require_once RESOURCES_PATH.'/php_scripts.php';
- ?>
  
 <script>
     function getLocation(i,loc) {
@@ -465,5 +436,11 @@ function setVisibility(menu, label, element) {
     }
 </script>
 
-</body>
-</html>
+<?php
+    //load footer
+    require_once RESOURCES_PATH.'/footer.php';
+    //load javascripts
+    require_once RESOURCES_PATH.'/javascript.php';
+    //load php_scripts
+    require_once RESOURCES_PATH.'/php_scripts.php';
+ ?>

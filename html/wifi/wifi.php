@@ -1,13 +1,4 @@
 <!DOCTYPE html>
-<html>
-
-<title>radio-tracking.eu</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/resources/weblib/w3.css">
-<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
-<link rel="stylesheet" href="/resources/additional.css">
-
-<body>
 
 <?php
 	//load config
@@ -36,7 +27,7 @@
 		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config);?>">
 			<p>Please reboot after stopping the hotspot</p>
 			Hotspot-Name: <br>
-			<input type="text" name="ssid_hotspot" value="<?php echo isset($config['network']['ssid_hotspot']) ? $config['network']['ssid_hotspot'] : "rteuv3" ?>">
+			<input type="text" name="ssid_hotspot" value="<?php echo isset($config['network']['ssid_hotspot']) ? $config['network']['ssid_hotspot'] : "rteuv2" ?>">
 			<br><br>
 			Password: (8-63 characters)<br>
 			<input type="password" name="pw_hotspot" value="<?php echo isset($config['network']['pw_hotspot']) ? $config['network']['pw_hotspot'] : "sdrtracking" ?>">
@@ -101,6 +92,3 @@
 	//load php_scripts
 	require_once RESOURCES_PATH.'/php_scripts.php';
  ?>
-</body>
-
-</html>

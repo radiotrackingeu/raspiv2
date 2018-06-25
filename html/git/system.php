@@ -1,27 +1,4 @@
 <!DOCTYPE html>
-<html>
-
-<title>radio-tracking.eu</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/resources/weblib/w3.css">
-<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
-<link rel="stylesheet" href="/resources/additional.css">
-<script type="text/javascript">
-function refresh_time(){
-	var timeout=1000;
-	t=setTimeout("get_Time()", timeout);
- }
- 
-function get_Time() {
-	var t = new Date();
-	document.getElementById("client_time").innerHTML = t.toUTCString();
-	document.getElementById("client_time_input").value = t.toUTCString();
-	rf=refresh_time();
-}
-</script>
-
-<body onload="get_Time()">
-
 <?php
 	//load config
 	require_once '../cfg/baseConfig.php';
@@ -38,6 +15,15 @@ function get_Time() {
 	//load values from config
 	$config = new Config_Lite(CONFIGFILES_PATH.'/globalconfig');
  ?>
+
+<script type="text/javascript">
+function get_Time() {
+	var t = new Date();
+	document.getElementById("client_time").innerHTML = t.toUTCString();
+	document.getElementById("client_time_input").value = t.toUTCString();
+}
+setInterval("get_Time()",1000);
+</script>
  
 <!-- Enter text here-->
 
@@ -170,6 +156,3 @@ function get_Time() {
 	//load php_scripts
 	require_once RESOURCES_PATH.'/php_scripts.php';
  ?>
-</body>
-
-</html>

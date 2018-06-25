@@ -1,3 +1,14 @@
+<html>
+<title><?php trim(system("hostname"))?></title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="/resources/weblib/w3.css">
+<link rel="stylesheet" href="/resources/weblib/css/fontawesome-all.css">
+<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/additional.css">
+
+<body>
 <div class="w3-cell-row">
 	<div class="w3-container w3-cell w3-cell-right w3-large w3-green w3-mobile" style="width:20%">
 		<br>
