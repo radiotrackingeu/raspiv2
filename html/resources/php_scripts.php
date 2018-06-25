@@ -739,7 +739,7 @@
     function check_container_exists($name) {
         $ret_val = 0;
         system("sudo docker inspect ".$name." >/dev/null 2>&1", $ret_val);
-        return $ret_val;
+        return !(filter_var($ret_val,FILTER_VALIDATE_BOOLEAN));
     }
 }
 ////////////////////////    Unused    ////////////////////////
