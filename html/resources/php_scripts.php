@@ -262,9 +262,10 @@
   {
     //Functions
     function cmd_webRX_start($id) {
-        if (!check_container_exists("webrx-sdr-d".$id))
+        if (!check_container_exists("webrx-sdr-d".$id)){
             exec("sudo docker create -t --name webrx-sdr-d".$id." --device=/dev/bus/usb -v /var/www/html/sdr/:/cfiles/ -p ".($id+81).":8073 webrx:1.0 sh /cfiles/start_openwebrx_d".$id.".sh >/dev/null");
-        return "sudo docker start webrx-sdr-d".$id;
+        }
+		return "sudo docker start webrx-sdr-d".$id;
 }
     function cmd_webRX_stop($id) {
         return "sudo docker stop webrx-sdr-d".$id." 2>&1";
@@ -737,7 +738,7 @@
         }
     }
     function check_container_exists($name) {
-        $ret_val = 0;
+        $ret_val = 1;
         system("sudo docker inspect ".$name." >/dev/null 2>&1", $ret_val);
         return !(filter_var($ret_val,FILTER_VALIDATE_BOOLEAN));
     }
