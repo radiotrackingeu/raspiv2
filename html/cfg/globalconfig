@@ -105,6 +105,12 @@ timer_start_time_3 = "20:30"
 timer_stop_3 = "stop_no"
 timer_stop_time_3 = "05:30"
 timer_mode_3 = "freq_range"
+latest_sig_len_from = 0.01
+latest_sig_len_to = 0.03
+latest_cfreq = 150.1
+latest_freq_range = 250
+latest_sig_str = 15
+latest_num = 30
 
 [database]
 db_host = "127.0.0.1"
