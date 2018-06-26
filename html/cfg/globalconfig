@@ -1,4 +1,4 @@
-Hostname = "nyctalus"
+Hostname = "paur"
 HOTSPOT = 1
 SSID = ""
 WIFI-PW = ""
@@ -149,5 +149,5 @@ usb_timer_start_time = "20:00"
 usb_timer_stop_time = "06:00"
 
 [network]
-ssid_hotspot = "rteuv2"
+ssid_hotspot = "rteuv4"
 pw_hotspot = "sdrtracking"
