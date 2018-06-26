@@ -511,8 +511,6 @@
         $pw=addslashes(addcslashes($_POST["pw_wifi"],"\\"));
         $cmd = "sudo docker run -t --rm --privileged --net=host -v /var/www/html/wifi/:/tmp1/ -v /etc/:/tmp/ wifi:1.0 sh /tmp1/stop_hotspot_set_wifi_ssid.sh \"".$ssid."\" \"".$pw."\"";
         start_docker_echo($cmd, 'wifi_con', "Wifi will connect to new network after reboot. Hotspot will be deactivated.\n SSID:     ".$_POST["ssid_wifi"]."\n Password: ".$_POST["pw_wifi"]);
-        $cmd_docker = "sudo docker stop wifi";
-        start_docker_echo($cmd_wpa." && ".$cmd_docker, 'wifi_con', "Wifi will connect to new network after reboot. Hotspot will be deactivated.\n SSID:     ".$_POST["ssid_wifi"]."\n Password: ".$_POST["pw_wifi"]);
     }
   }
   //-------------------- LAN Connect  --------------------//
