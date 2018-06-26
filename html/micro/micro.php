@@ -29,7 +29,7 @@
 			
 			if (isset($_POST["start_record_mic"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/micro/:/tmp/ microphone AUDIODEV=hw:1 rec -c1 -r 250000 /tmp/record.wav sinc 10000 silence 1 0.1 1% trim 0 5 2>&1", $ret);
+				$test = system("sudo docker run -t --name microphone --rm --privileged -v /var/www/html/micro/:/tmp/ microphone AUDIODEV=hw:1 rec -c1 -r 250000 /tmp/record.wav sinc 10000 silence 1 0.1 1% trim 0 5 2>&1", $ret);
 				echo '</pre>';
 			}
 

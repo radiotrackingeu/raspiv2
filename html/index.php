@@ -64,7 +64,24 @@
                     <span class="w3-text w3-small w3-round w3-brown w3-tag" style="position:absolute; bottom:100%; left:50%; margin-left:-100px; width:200px">VPN tunnel NOT established.</span>
                     <i class="fas fa-times-circle"></i>
                 <?php endif; ?>
-            </span>
+            </span><br>
+            Camera: <span class="w3-tooltip" style="display:inline-block; margin-left:59px">
+              <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} camera 2>/dev/null"),FILTER_VALIDATE_BOOLEAN) || filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} motion_detection 2>/dev/null"),FILTER_VALIDATE_BOOLEAN)) : ?>
+                <span class="w3-text w3-small w3-round w3-brown w3-tag"style="position:absolute; bottom:100%; left:50%; margin-left:-80px; width:160px">MotionEye or Motion Detection is running.</span>
+                <i class="fas fa-check-circle"></i>
+              <?php else : ?>
+                <span class="w3-text w3-small w3-round w3-brown w3-tag" style="position:absolute; bottom:100%; left:50%; margin-left:-100px; width:200px">Neither MotionEye nor Motion Detection are running.</span>
+                <i class="fas fa-times-circle"></i>
+              <?php endif; ?>
+            </span><br>
+            Microphone: <span class="w3-tooltip" style="display:inline-block; margin-left:31px">
+          <?php if(filter_var(shell_exec("sudo docker inspect -f {{.State.Running}} microphone 2>/dev/null"),FILTER_VALIDATE_BOOLEAN)) : ?>
+                <span class="w3-text w3-small w3-round w3-brown w3-tag"style="position:absolute; bottom:100%; left:50%; margin-left:-80px; width:160px">Microphone is recording.</span>
+              <i class="fas fa-check-circle"></i>
+          <?php else : ?>
+              <span class="w3-text w3-small w3-round w3-brown w3-tag" style="position:absolute; bottom:100%; left:50%; margin-left:-100px; width:200px">Microphone is NOT recording.</span>
+              <i class="fas fa-times-circle"></i>
+          <?php endif; ?>
             </div>
         </div>
         <?php if ($GLOBALS["num_rec"]>0):?>
