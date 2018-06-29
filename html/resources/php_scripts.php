@@ -464,7 +464,7 @@
         start_docker($cmd,'mysql');
     }
     if (isset($_POST["empty_DB"])) {
-        $cmd="sudo docker run -t --rm --net=host pwchange:1.1 mysql --host=".$config['database']['db_host']." --user=".$config['database']['db_user']." --password=".$config['database']['db_pass']." rteu -e \"";
+        $cmd="sudo docker run -t --rm --net=host mysql:1.0 mysql --host=".$config['database']['db_host']." --user=".$config['database']['db_user']." --password=".$config['database']['db_pass']." rteu -e \"";
         $statement="";
         if (isset($_POST["db_keep"]) && $_POST["db_keep"] != 0) {
             $sql1 = "DELETE FROM \`signals\` WHERE \`id\` < (SELECT MIN(\`id\`) FROM (SELECT * FROM \`signals\` ORDER BY \`id\` DESC LIMIT ".$_POST["db_keep"].") AS \`last_entries\`);";
