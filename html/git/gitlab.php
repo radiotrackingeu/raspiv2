@@ -1,14 +1,4 @@
 <!DOCTYPE html>
-<html>
-
-<title>radio-tracking.eu</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/resources/weblib/w3.css">
-<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
-<link rel="stylesheet" href="/resources/additional.css">
-
-<body>
-
 <?php
 	//load config
 	require_once '../cfg/baseConfig.php';
@@ -196,7 +186,7 @@
 			}
 			if (isset($_POST["install_wifi"])){
 				echo '<pre>';
-				$test = system('sudo docker build --no-cache -t wifi:1.0 /home/pi/gitrep/raspiv2/Docker/wifi/. 2>&1 && sudo docker create --name=wifi --restart=unless-stopped --privileged --net=host -v /var/www/html/wifi/hostapd.conf:/etc/hostapd/hostapd.conf wifi:1.0', $ret);
+				$test = system('sudo docker build --no-cache -t wifi:1.0 /home/pi/gitrep/raspiv2/Docker/wifi/. 2>&1', $ret);
 				echo '</pre>';
 			}
 			if (isset($_POST["install_rtlsdr"])){
@@ -348,6 +338,3 @@
 	//load php_scripts
 	require_once RESOURCES_PATH.'/php_scripts.php';
  ?>
-
-</body>
-</html>

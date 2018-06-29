@@ -1,4 +1,4 @@
-Hostname = "nyctalus"
+Hostname = "paur"
 HOTSPOT = 1
 SSID = ""
 WIFI-PW = ""
@@ -105,6 +105,12 @@ timer_start_time_3 = "20:30"
 timer_stop_3 = "stop_no"
 timer_stop_time_3 = "05:30"
 timer_mode_3 = "freq_range"
+latest_sig_len_from = 0.01
+latest_sig_len_to = 0.03
+latest_cfreq = 150.1
+latest_freq_range = 250
+latest_sig_str = 15
+latest_num = 30
 
 [database]
 db_host = "127.0.0.1"
@@ -114,7 +120,7 @@ db_pass = "rteuv2!"
 db_keep = 1000
 
 [remote]
-time_start_vpn = "reboot"
+time_start_vpn = "start_no"
 
 [WebRX]
 fft_size_0 = 512
@@ -143,5 +149,5 @@ usb_timer_start_time = "20:00"
 usb_timer_stop_time = "06:00"
 
 [network]
-ssid_hotspot = "rteuv2"
+ssid_hotspot = "rteuv4"
 pw_hotspot = "sdrtracking"

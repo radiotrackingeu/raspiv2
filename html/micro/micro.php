@@ -1,13 +1,4 @@
 <!DOCTYPE html>
-<html>
-
-<title>radio-tracking.eu</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/resources/weblib/w3.css">
-<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
-<link rel="stylesheet" href="/resources/additional.css">
-
-<body>
 
 <?php
 	//load config
@@ -38,7 +29,7 @@
 			
 			if (isset($_POST["start_record_mic"])){
 				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged -v /var/www/html/micro/:/tmp/ microphone AUDIODEV=hw:1 rec -c1 -r 250000 /tmp/record.wav sinc 10000 silence 1 0.1 1% trim 0 5 2>&1", $ret);
+				$test = system("sudo docker run -t --name microphone --rm --privileged -v /var/www/html/micro/:/tmp/ microphone AUDIODEV=hw:1 rec -c1 -r 250000 /tmp/record.wav sinc 10000 silence 1 0.1 1% trim 0 5 2>&1", $ret);
 				echo '</pre>';
 			}
 
@@ -46,12 +37,10 @@
 	</p>
 <!-- Enter text here-->
 
-<div id="container"></div>
-
-<div class="w3-container w3-center w3-brown">
-  Online-Website: <a href="https://radio-tracking.eu/">radio-tracking.eu</a>
-  Email: <a href= "mailto:info@radio-tracking.eu">info@radio-tracking.eu</a>
-</div>
+<?php
+	//load footer
+	require_once RESOURCES_PATH.'/footer.php';
+?>
 
 
 <script>
@@ -72,8 +61,3 @@ function w3_switch(name) {
     }
 }
 </script>
-
-
-</body>
-
-</html>

@@ -1,14 +1,4 @@
 <!DOCTYPE html>
-<html>
-
-<title>radio-tracking.eu</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/resources/weblib/w3.css">
-<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
-<link rel="stylesheet" href="/resources/additional.css">
-
-<body>
-
 <?php
 	//load config
 	require_once '../cfg/baseConfig.php';
@@ -66,7 +56,7 @@
 
 <div id="VPN_Setup" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round-xlarge">
-		<form method="post" enctype="multipart/form-data" action="<?php update_Config($config); echo $_SERVER['PHP_SELF']; ?>">
+		<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<p>VPN Certificate.</p>
 			<input type="file" name="fileToUpload" id="fileToUpload"><br><br>
 			<input type="submit" class="w3-btn w3-brown" value="Upload Certificate" name="upload_cert">
@@ -87,6 +77,3 @@
 	//load php_scripts
 	require_once RESOURCES_PATH.'/php_scripts.php';
  ?>
-
-</body>
-</html>

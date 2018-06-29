@@ -1,23 +1,4 @@
 <!DOCTYPE html>
-<html>
-
-<title>radio-tracking.eu</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="stylesheet" href="/resources/weblib/w3.css">
-<link rel="stylesheet" href="/resources/weblib/css/fontawesome-all.css">
-<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
-<link rel="stylesheet" href="/resources/additional.css">
-
-<script>
-function setVisibility(menu, label, element) {
-	var vis = menu.value==label ? "visible" : "hidden";
-	document.getElementById(element).style.visibility = vis;
-}
-</script>
-
-<body>
 <?php
 	//load config
 	require_once '../cfg/baseConfig.php';
@@ -36,6 +17,7 @@ function setVisibility(menu, label, element) {
 				$tmparr[]=$var.$i;
 			}
 		}
+	array_push($tmparr,'latest_sig_len_from','latest_sig_len_to','latest_cfreq','latest_freq_range','latest_sig_str', 'latest_num');
 	//define config section and items.
 	define ('confSection', 'logger');
 	define ('confKeys', $tmparr);
@@ -351,21 +333,21 @@ function setVisibility(menu, label, element) {
 <div id="tab_logger_signals" class="city w3-mobile" style="display:<?php echo (isset($_POST['get_signals']) ? 'block' : 'none')?>">
     <div class= "w3-row-padding">
         <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
-            <form method='POST' enctype="multipart/form-data" action="" onsubmit="openCity(event, 'tab_logger_signals')">
-                <label for="signal_length">Signal length in s:</label>
-                <div id="signal_length" class="w3-bar">
-                    <input class="w3-mobile" type="number" value="0.02" pattern='[0-9\.]+' step="any" title="Use . as decimal separator" name="signal_length_from"> - 
-                    <input class="w3-mobile" type="number" value="0.03" pattern='[0-9\.]+' step="any" title="Use . as decimal separator" name="signal_length_to">
+            <form method='POST' enctype="multipart/form-data" action="<?php update_Config($config);?>" onsubmit="openCity(event, 'tab_logger_signals')">
+                <label for="latest_sig_len">Signal length in s:</label>
+                <div id="latest_sig_len" class="w3-bar">
+                    <input class="w3-mobile" type="number" value="<?php echo isset($config['logger']['latest_sig_len_from']) ? $config['logger']['latest_sig_len_from'] : 0.01 ?>" pattern='[0-9\.]+' step="any" title="Use . as decimal separator" name="latest_sig_len_from"> - 
+                    <input class="w3-mobile" type="number" value="<?php echo isset($config['logger']['latest_sig_len_to']) ? $config['logger']['latest_sig_len_to'] : 0.03 ?>" pattern='[0-9\.]+' step="any" title="Use . as decimal separator" name="latest_sig_len_to">
                 </div><br>
-                <label for="signal_freq">Signal freq in Hz:</label>
-                <div id="signal_freq" class="w3-bar">
-                    <input class="w3-mobile" type="number" value="150100000" pattern='[0-9]+' name="signal_freq_from"> - 
-                    <input class="w3-mobile" type="number" value="150130000" pattern='[0-9]+' name="signal_freq_to">
+                <div id="latest_freq" class="w3-bar">
+					<label for="latest_cfreq">Center Freq in MHz:</label><span style="margin-left:73px"></span><label for="latest_freq_range">Freq Range in kHz:<br></label> 
+                    <input class="w3-mobile" type="number" value="<?php echo isset($config['logger']['latest_cfreq']) ? $config['logger']['latest_cfreq'] : 150.1 ?>" pattern='[0-9]+' name="latest_cfreq" id="latest_cfreq"> <span  style="margin-left:12px"></span>
+                    <input class="w3-mobile" type="number" value="<?php echo isset($config['logger']['latest_freq_range']) ? $config['logger']['latest_freq_range'] : 250 ?>" pattern='[0-9]+' name="latest_freq_range" id="latest_freq_range">
                 </div><br>
-                <label for="signal_strength">Minimum signal strength:<br></label>
-                <input class="w3-mobile" type="number" value="30" pattern='[0-9]+' name="signal_strength" id="signal_strength"><br><br>
-                <label for="num_results">Number of signals to get:<br></label>
-                <input class="w3-mobile" type="number" value="30" pattern='[0-9]+' name="num_results" id="num_results"><br><br>
+                <label for="latest_sig_str">Minimum signal strength:<br></label>
+                <input class="w3-mobile" type="number" value="<?php echo isset($config['logger']['latest_sig_str']) ? $config['logger']['latest_sig_str'] : 15 ?>" pattern='[0-9]+' name="latest_sig_str" id="latest_sig_str"><br><br>
+                <label for="latest_num">Number of signals to get:<br></label>
+                <input class="w3-mobile" type="number" value="<?php echo isset($config['logger']['latest_num']) ? $config['logger']['latest_num'] : 250 ?>" pattern='[0-9]+' name="latest_num" id="latest_num"><br><br>
                 <input type="submit" class="w3-btn w3-brown" value="Get Signals" name="get_signals"/>
             </form>
         </div>
@@ -379,14 +361,16 @@ function setVisibility(menu, label, element) {
             <div class="w3-panel w3-green w3-round w3-padding" style="margin-right:8px;margin-left:8px">
                 <?php
                     $con = @mysqli_connect($config['database']['db_host'].":".$config['database']['db_port'], $config['database']['db_user'], $config['database']['db_pass'],"rteu");
+					$freq=$_POST['latest_cfreq']*1000000;
+					$delta=$_POST['latest_freq_range']*500;
                     if (mysqli_connect_errno()) {
                         echo "Connection to ".$config['database']['db_host'].":".$config['database']['db_port']." failed: " . mysqli_connect_error();
                     } else {
                         $select = "SELECT signals.*, runs.center_freq FROM signals LEFT JOIN runs ON signals.run=runs.id";
-                        $sig_length = "duration >= ".$_POST['signal_length_from']." AND duration <= ".$_POST['signal_length_to'];
-                        $sig_freq = "signal_freq >= ".$_POST['signal_freq_from'].".0 - center_freq AND signal_freq <= ".$_POST['signal_freq_to'].".0 - center_freq";
-                        $sig_strength = "max_signal>= ".$_POST['signal_strength'];
-                        $query = $select." WHERE ".$sig_length." AND ".$sig_freq." AND ".$sig_strength." LIMIT ".$_POST['num_results'];
+                        $sig_length = "duration >= ".$_POST['latest_sig_len_from']." AND duration <= ".$_POST['latest_sig_len_to'];
+                        $sig_freq = "signal_freq >= ".($freq-$delta).".0 - center_freq AND signal_freq <= ".($freq+$delta).".0 - center_freq";
+                        $sig_strength = "max_signal>= ".$_POST['latest_sig_str'];
+                        $query = $select." WHERE ".$sig_length." AND ".$sig_freq." AND ".$sig_strength." LIMIT ".$_POST['latest_num'];
                         //echo $query."<br>";
                         $result = mysqli_query($con, $query);
                         //echo mysqli_error($con);
@@ -423,16 +407,6 @@ function setVisibility(menu, label, element) {
         </div>
     </div>
 </div>
-
-
-<?php
-    //load footer
-    require_once RESOURCES_PATH.'/footer.php';
-    //load javascripts
-    require_once RESOURCES_PATH.'/javascript.php';
-    //load php_scripts
-    require_once RESOURCES_PATH.'/php_scripts.php';
- ?>
  
 <script>
     function getLocation(i,loc) {
@@ -462,5 +436,11 @@ function setVisibility(menu, label, element) {
     }
 </script>
 
-</body>
-</html>
+<?php
+    //load footer
+    require_once RESOURCES_PATH.'/footer.php';
+    //load javascripts
+    require_once RESOURCES_PATH.'/javascript.php';
+    //load php_scripts
+    require_once RESOURCES_PATH.'/php_scripts.php';
+ ?>

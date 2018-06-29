@@ -1,13 +1,4 @@
 <!DOCTYPE html>
-<html>
-
-<title>radio-tracking.eu</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/resources/weblib/w3.css">
-<link rel="stylesheet" href="/resources/weblib/css/font-awesome.min.css">
-<link rel="stylesheet" href="/resources/additional.css">
-
-<body>
 
 <?php
 	//load config
@@ -33,17 +24,17 @@
 
 <div id="hotspot" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round">
+		After you have modified anything - please reboot.
 		<form method='POST' enctype="multipart/form-data" action="<?php update_Config($config);?>">
-			<p>Please reboot after stopping the hotspot</p>
+			<br>
 			Hotspot-Name: <br>
-			<input type="text" name="ssid_hotspot" value="<?php echo isset($config['network']['ssid_hotspot']) ? $config['network']['ssid_hotspot'] : "rteuv3" ?>">
+			<input type="text" name="ssid_hotspot" value="<?php echo isset($config['network']['ssid_hotspot']) ? $config['network']['ssid_hotspot'] : "rteuv2" ?>">
 			<br><br>
 			Password: (8-63 characters)<br>
 			<input type="password" name="pw_hotspot" value="<?php echo isset($config['network']['pw_hotspot']) ? $config['network']['pw_hotspot'] : "sdrtracking" ?>">
 			<br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Start Hotspot" name="start_hotspot" />
-			<input type="submit" class="w3-btn w3-brown" value="Stop Hotspot" name="stop_hotspot" />
-            <input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
+			<input type="submit" class="w3-btn w3-brown" value="Create Hotspot" name="start_hotspot" />
+			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
 			<br><br>
 		</form>
 	</div>
@@ -101,6 +92,3 @@
 	//load php_scripts
 	require_once RESOURCES_PATH.'/php_scripts.php';
  ?>
-</body>
-
-</html>
