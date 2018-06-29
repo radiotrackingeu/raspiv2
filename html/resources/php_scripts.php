@@ -470,11 +470,11 @@
             $sql1 = "DELETE FROM \`signals\` WHERE \`id\` < (SELECT MIN(\`id\`) FROM (SELECT * FROM \`signals\` ORDER BY \`id\` DESC LIMIT ".$_POST["db_keep"].") AS \`last_entries\`);";
             $sql2 = "DELETE FROM \`runs\` WHERE NOT EXISTS ( SELECT 1 FROM \`signals\` WHERE \`runs\`.\`id\` = \`signals\`.\`run\`);";
             $cmd .= $sql1." ".$sql2."\"";
-            $statement = "Deleted all but ".$_POST["db_keep"]." entries!";
+            $statement = "Deleted all but ".$_POST["db_keep"]." entries!  ". $cmd;
         } else {
             $sql = "SET FOREIGN_KEY_CHECKS = 0; TRUNCATE table runs; TRUNCATE TABLE signals; SET FOREIGN_KEY_CHECKS = 1";
             $cmd .= $sql."\"";
-            $statement = "Database is now empty!";
+            $statement = "Database is now empty!  ".$cmd;
         }
         start_docker_echo($cmd, 'mysql', $statement);
     }
