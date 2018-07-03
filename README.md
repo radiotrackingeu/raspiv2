@@ -1,5 +1,5 @@
 # Raspberry Pi - Radio Tracking using RTLSDR Receivers
-Radio Tracking Software for Raspberry Pi 3 Version 2
+Radio Tracking Software for Raspberry Pi 3 Version 4
 
 Please first visit the radio-tracking.eu website and download the latest image.
 
