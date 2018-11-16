@@ -34,7 +34,7 @@
 <script type="text/javascript">
 	function closeSelf(f) {
 		f.submit();
-		window.close();
+		setTimeout(function(){window.close();},500);
 	}
 </script>
 <?php
