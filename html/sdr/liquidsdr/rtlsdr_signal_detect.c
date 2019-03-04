@@ -216,7 +216,7 @@ int main(int argc, char*argv[])
     printf("Will print timestamp every %i transforms\n", keepalive);
     printf("%s\n",tbuf);
     //print row names
-    printf("timestamp;samples;duration;signal_freq;signal_bw;max_signal;avg_noise\n");
+    printf("timestamp;samples;duration;signal_freq;signal_bw;max_signal;noise\n");
 
     // continue processing as long as there are samples in the file
     unsigned long int total_samples  = 0;
@@ -275,7 +275,7 @@ int main(int argc, char*argv[])
                 fflush(stdout);
                 if (write_to_db!=0) {
                     snprintf(sql_statement, sizeof(sql_statement),
-                        "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw,max_signal,avg_noise,run) VALUE(\"%s\",0,0.0,0.0,0.0,0.0,0.0,%i)",
+                        "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw,max_signal,noise,run) VALUE(\"%s\",0,0.0,0.0,0.0,0.0,0.0,%i)",
                         DB_TABLE, tbuf, run_id
                     );
                     mysql_query(con, sql_statement);
@@ -458,26 +458,27 @@ float get_group_max_sig(int _group_id)
     float noise = 1;
     float max = -1000;
     for (i=0; i<nfft; i++) {
-        if (groups[i] == _group_id && psd_max[i] > max)
+        if (groups[i] == _group_id && psd_max[i] > max) {
             max = psd_max[i];
             noise = psd_template[i];
+        }
     }
     return max-noise; //10*log10(1e10*(max/10) / 1e10*(noise/10))
 }
 
-// get average group noise, weighted by signal count
-float get_group_average_noise(int _group_id)
+// get noise at max signal
+float get_group_noise(int _group_id)
 {
     int i;
     float noise = 0;
-    int count=0;
+    float max = -1000;
     for (i=0; i<nfft; i++) {
-        if (groups[i]==_group_id) {
-            noise += psd_template[i] * count[i];
-            count+=count[i];
+        if (groups[i] == _group_id && psd_max[i] > max) {
+            max = psd_max[i];
+            noise = psd_template[i];
         }
     }
-    return noise/count;
+    return noise;
 }
 
 //get earliest timestamp for given group
@@ -534,14 +535,14 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                 float signal_freq = get_group_freq(i)*_sampling_rate;           // center frequency estimate (normalized)
                 float signal_bw   = get_group_bw(i)*_sampling_rate;             // bandwidth estimate (normalized)
                 float max_signal  = get_group_max_sig(i);                       // maximum signal strength per group
-                float avg_noise   = get_group_average_noise(i);                 // average noise level per group
+                float noise   = get_group_average_noise(i);                 // average noise level per group
                 printf("%s;%llu;%-10.6f;%9.6f;%9.6f;%f;%f\n",
-                        timestamp, num_transforms, duration, signal_freq, signal_bw,max_signal,avg_noise);
+                        timestamp, num_transforms, duration, signal_freq, signal_bw,max_signal,noise);
                 fflush(stdout);
                 if (write_to_db!=0) {
                     snprintf(sql_statement, sizeof(sql_statement),
-                        "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, avg_noise, run) VALUE(\"%s\",%llu,%-10.6f,%9.6f,%9.6f,%f,%f,%i)",
-                        DB_TABLE, timestamp, num_transforms, duration, signal_freq, signal_bw, max_signal, avg_noise, run_id
+                        "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, noise, run) VALUE(\"%s\",%llu,%-10.6f,%9.6f,%9.6f,%f,%f,%i)",
+                        DB_TABLE, timestamp, num_transforms, duration, signal_freq, signal_bw, max_signal, noise, run_id
                     );
                     mysql_query(con, sql_statement);
 #ifdef MYSQL_ERRORS

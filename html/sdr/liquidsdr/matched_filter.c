@@ -252,7 +252,7 @@ int main(int argc, char*argv[])
 	printf("Will print timestamp every %i transforms\n", keepalive);
 	printf("%s\n",tbuf);
 	//print row names
-	printf("timestamp;samples;duration;signal_freq;signal_bw;max_signal;avg_noise\n");
+	printf("timestamp;samples;duration;signal_freq;signal_bw;max_signal;noise\n");
 
   // generate template
   unsigned int n = (Fs2 / 1000) * pulse_length;
@@ -462,7 +462,7 @@ int update_detect(float _threshold, float _freq_offset, unsigned int _nPts)
       fflush(stdout);
       if (write_to_db!=0) {
         snprintf(sql_statement, sizeof(sql_statement),
-            "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, avg_noise, run) VALUE(\"%s\",%lu,%1.3f,%9.6f,%9.6f,%f,-0.0,%i)",
+            "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, noise, run) VALUE(\"%s\",%lu,%1.3f,%9.6f,%9.6f,%f,-0.0,%i)",
             DB_TABLE, timestamp, sample , ((float)pulse_length)/1000, _freq_offset, -1.0f, fSNR, run_id
         );
         mysql_query(con, sql_statement);
@@ -530,7 +530,7 @@ void print_keepalive() {
     fflush(stdout);
     if (write_to_db!=0) {
         snprintf(sql_statement, sizeof(sql_statement),
-            "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, avg_noise, run) VALUE(\"%s\",0,0.0,0.0,-1.0,0.0,-0.0,%i)",
+            "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, noise, run) VALUE(\"%s\",0,0.0,0.0,-1.0,0.0,-0.0,%i)",
             DB_TABLE, tbuf, run_id
         );
         mysql_query(con, sql_statement);
