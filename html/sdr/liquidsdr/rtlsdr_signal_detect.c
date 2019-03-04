@@ -455,14 +455,12 @@ float get_group_time(int _group_id)
 float get_group_max_sig(int _group_id)
 {
     int i;
-    float noise = 1;
     float max = -1000;
     for (i=0; i<nfft; i++) {
         if (groups[i] == _group_id && psd_max[i] > max)
             max = psd_max[i];
-            noise = psd_template[i];
     }
-    return max-noise; //10*log10(1e10*(max/10) / 1e10*(noise/10))
+    return max+100; //10*log10(1e10*(max/10) / 1e10*(noise/10))
 }
 
 //get earliest timestamp for given group
