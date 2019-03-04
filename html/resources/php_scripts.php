@@ -769,11 +769,11 @@
     }
         
     function report_device_use($service,$id,$block) {
-      avail=!check_device_use($id);
-      if (!avail) {
+      $avail=!check_device_use($id);
+      if (!$avail) {
         start_docker_echo("",$block,"Could not start ".$service." on Receiver ".$id."<br>Receiver ".$id." is currently in use by another service (i.e. Logger, Spectrogram, SDR#, Webradio, ...).");
       }
-      return(avail);
+      return($avail);
     }
 }
 ////////////////////////    Unused    ////////////////////////
