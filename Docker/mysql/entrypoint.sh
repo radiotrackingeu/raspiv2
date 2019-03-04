@@ -9,6 +9,7 @@ if [ "$1" = 'mysqld' ]; then
 	# read DATADIR from the MySQL config
 	DATADIR="$("$@" --verbose --help 2>/dev/null | awk '$1 == "datadir" { print $2; exit }')"
 	
+  tempSqlFile='/tmp/mysql-first-time.sql'
 	if [ ! -d "$DATADIR/mysql" ]; then
 		if [ -z "$MYSQL_ROOT_PASSWORD" -a -z "$MYSQL_ALLOW_EMPTY_PASSWORD" ]; then
 			echo >&2 'error: database is uninitialized and MYSQL_ROOT_PASSWORD not set'
@@ -24,7 +25,6 @@ if [ "$1" = 'mysqld' ]; then
 		# semicolons (no line breaks or comments are permitted).
 		# TODO proper SQL escaping on ALL the things D:
 		
-		tempSqlFile='/tmp/mysql-first-time.sql'
 		cat > "$tempSqlFile" <<-EOSQL
 			DELETE FROM mysql.user ;
 			CREATE USER 'root'@'%' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' ;
@@ -44,19 +44,19 @@ if [ "$1" = 'mysqld' ]; then
 			fi
 		fi
 		
-		# create user, database and tables for radiotrackingeu project
-		cat >> "$tempSqlFile" <<-EOSQL
-				CREATE USER 'rteu'@'%' IDENTIFIED BY 'rteuv2!' ;
-				CREATE DATABASE rteu ;
-				CREATE TABLE rteu.runs (\`id\` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, \`device\` VARCHAR(60), \`pos_x\` FLOAT, \`pos_y\` FLOAT, \`orientation\` SMALLINT UNSIGNED, \`beam_width\` SMALLINT UNSIGNED, \`gain\` TINYINT UNSIGNED, \`center_freq\` INT UNSIGNED, \`freq_range\` INT UNSIGNED, \`threshold\` TINYINT UNSIGNED, \`fft_bins\` SMALLINT UNSIGNED, \`fft_samples\` TINYINT UNSIGNED);
-				CREATE TABLE rteu.signals (\`id\` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, \`timestamp\` CHAR(30), \`samples\` BIGINT, \`duration\` FLOAT, \`signal_freq\` FLOAT, \`signal_bw\` FLOAT, \`max_signal\` FLOAT, \`avg_noise\` FLOAT, \`run\` INT UNSIGNED NOT NULL, FOREIGN KEY(\`run\`) REFERENCES rteu.runs(\`id\`) ON DELETE CASCADE);
-				GRANT ALL ON rteu.* TO 'rteu'@'%';
-		EOSQL
-		
 		echo 'FLUSH PRIVILEGES ;' >> "$tempSqlFile"
 		
-		set -- "$@" --init-file="$tempSqlFile"
 	fi
+  # create user, database and tables for radiotrackingeu project
+  cat >> "$tempSqlFile" <<-EOSQL
+      CREATE USER IF NOT EXISTS 'rteu'@'%' IDENTIFIED BY 'rteuv2!' ;
+      CREATE DATABASE IF NOT EXISTS rteu ;
+      CREATE TABLE IF NOT EXISTS rteu.runs (\`id\` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, \`device\` VARCHAR(60), \`pos_x\` FLOAT, \`pos_y\` FLOAT, \`orientation\` SMALLINT UNSIGNED, \`beam_width\` SMALLINT UNSIGNED, \`gain\` TINYINT UNSIGNED, \`center_freq\` INT UNSIGNED, \`freq_range\` INT UNSIGNED, \`threshold\` TINYINT UNSIGNED, \`fft_bins\` SMALLINT UNSIGNED, \`fft_samples\` TINYINT UNSIGNED);
+      CREATE TABLE IF NOT EXISTS rteu.signals (\`id\` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, \`timestamp\` CHAR(30), \`samples\` BIGINT, \`duration\` FLOAT, \`signal_freq\` FLOAT, \`signal_bw\` FLOAT, \`max_signal\` FLOAT, \`avg_noise\` FLOAT, \`run\` INT UNSIGNED NOT NULL, FOREIGN KEY(\`run\`) REFERENCES rteu.runs(\`id\`) ON DELETE CASCADE);
+      GRANT ALL ON rteu.* TO 'rteu'@'%';
+		EOSQL
+		
+  set -- "$@" --init-file="$tempSqlFile"
 	
 	chown -R mysql:mysql "$DATADIR"
 fi
