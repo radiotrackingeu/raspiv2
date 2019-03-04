@@ -252,7 +252,7 @@ int main(int argc, char*argv[])
 	printf("Will print timestamp every %i transforms\n", keepalive);
 	printf("%s\n",tbuf);
 	//print row names
-	printf("timestamp;samples;duration;signal_freq;signal_bw;max_signal\n");
+	printf("timestamp;samples;duration;signal_freq;signal_bw;max_signal;noise\n");
 
   // generate template
   unsigned int n = (Fs2 / 1000) * pulse_length;
@@ -424,14 +424,14 @@ int update_detect(float _threshold, float _freq_offset, unsigned int _nPts)
 	// find peak
   for (i=0; i<_nPts; i++)
   {
-      // find values above threshold and find the highest value
-  if( (correlation[i] > _threshold) && (correlation[i] > maxVal))
-  {
-    maxVal = correlation[i];
-    index = i;
-    nr_convol = num_convolutions;
+    // find values above threshold and find the highest value
+    if( (correlation[i] > _threshold) && (correlation[i] > maxVal))
+    {
+      maxVal = correlation[i];
+      index = i;
+      nr_convol = num_convolutions;
+    }
   }
-}
 
   // is value above last peak?
   if(maxVal > sig_detect.maxVal)
@@ -447,28 +447,29 @@ int update_detect(float _threshold, float _freq_offset, unsigned int _nPts)
     {
       // calc timestamp and print out data
       struct timespec tm;
-    char timestamp[30];
-    char sql_statement[256];
+      char timestamp[30];
+      char sql_statement[256];
 
-    sample = (sig_detect.nr_convol*timestep + sig_detect.index);
-    ftime  = ((float)sample / (float)Fs2);
-    tm.tv_nsec = (long)(fmodf(ftime,1)*BILLION);
-    tm.tv_sec = (long)ftime;
-    tm = timeAdd(t_start, tm);
-    format_timestamp(tm, timestamp, 30);
-    fSNR = 20 * log10(sig_detect.maxVal/average);
-    printf("%s;%10lu;%1.3f;%9.6f;%9.2f;%9.2f\n",
-        timestamp, sample, ((float)pulse_length)/1000, _freq_offset, -1.0f, fSNR);
-    fflush(stdout);
-    if (write_to_db!=0) {
+      sample = (sig_detect.nr_convol*timestep + sig_detect.index);
+      ftime  = ((float)sample / (float)Fs2);
+      tm.tv_nsec = (long)(fmodf(ftime,1)*BILLION);
+      tm.tv_sec = (long)ftime;
+      tm = timeAdd(t_start, tm);
+      format_timestamp(tm, timestamp, 30);
+      fSNR = 20 * log10(sig_detect.maxVal/average);
+      printf("%s;%10lu;%1.3f;%9.6f;%9.2f;%9.2f;-0.0\n",
+      timestamp, sample, ((float)pulse_length)/1000, _freq_offset, -1.0f, fSNR);
+      fflush(stdout);
+      if (write_to_db!=0) {
         snprintf(sql_statement, sizeof(sql_statement),
-            "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, run) VALUE(\"%s\",%lu,%1.3f,%9.6f,%9.6f,%f,%i)",
-            DB_TABLE, timestamp, sample , ((float)pulse_length)/1000, _freq_offset, -1.0f, fSNR, run_id);
+            "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, noise, run) VALUE(\"%s\",%lu,%1.3f,%9.6f,%9.6f,%f,-0.0,%i)",
+            DB_TABLE, timestamp, sample , ((float)pulse_length)/1000, _freq_offset, -1.0f, fSNR, run_id
+        );
         mysql_query(con, sql_statement);
         if (*mysql_error(con))
             fprintf(stderr, "Error while writing to db: %s", mysql_error(con));
 }
-    sig_detect.maxVal = 0;
+      sig_detect.maxVal = 0;
     }
   }
   return total;
@@ -529,7 +530,7 @@ void print_keepalive() {
     fflush(stdout);
     if (write_to_db!=0) {
         snprintf(sql_statement, sizeof(sql_statement),
-            "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, run) VALUE(\"%s\",0,0.0,0.0,-1.0,0.0,%i)",
+            "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, noise, run) VALUE(\"%s\",0,0.0,0.0,-1.0,0.0,-0.0,%i)",
             DB_TABLE, tbuf, run_id
         );
         mysql_query(con, sql_statement);
