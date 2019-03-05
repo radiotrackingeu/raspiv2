@@ -102,9 +102,10 @@ unsigned long long  get_group_start_time    (int _group_id);
 int                 clear_group_count       (int _group_id);
 int                 step                    (float _threshold, unsigned int _sampling_rate, float lowerLimit, float upperLimit);
 void                format_timestamp        (const struct timespec _time, char * _buf, const unsigned long _buf_len);
-struct timespec     timeAdd                 (const struct timespec _t1, const struct timespec _t2);
+struct timespec     time_add                 (const struct timespec _t1, const struct timespec _t2);
 //char                before                  (const struct timespec _a, const struct timespec _b);
 void                free_memory             ();
+void                open_connection          ();
 
 
 // main program
@@ -168,30 +169,7 @@ int main(int argc, char*argv[])
     // open SQL database
     if (write_to_db!=0)
     {
-        if (db_user==NULL || db_pass==NULL) {
-            fprintf(stderr, "Incomplete credentials supplied. Not writing to database.\n");
-            write_to_db = 0;
-        } else {
-            if (db_host == NULL){
-                db_host = "127.0.0.1";
-                fprintf(stderr, "No hostname given, trying 127.0.0.1.\n");
-            }
-
-            con =mysql_init(NULL);
-            if (con!=NULL) {
-                if (mysql_real_connect(con, db_host, db_user, db_pass,
-                      DB_BASE, db_port, NULL, 0) == NULL)
-                {
-                  fprintf(stderr, "%s\n", mysql_error(con));
-                  mysql_close(con);
-                  write_to_db = 0;
-                }
-            } else {
-                fprintf(stderr, "ERROR: %s\n", mysql_error(con));
-                write_to_db = 0;
-            }
-        }
-
+        open_connection()
     }
 
 
@@ -261,9 +239,10 @@ int main(int argc, char*argv[])
             // update counters and reset spectrogram object
             num_transforms += spgramcf_get_num_transforms(periodogram);
             spgramcf_reset(periodogram);
-            
+
             // print keepalive
             if (num_transforms%keepalive == 0) {
+                mysql_ping();
                 struct timespec now;
                 clock_gettime(CLOCK_REALTIME,&now);
                 num_transforms = 0;
@@ -512,7 +491,7 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                 struct timespec tm;
                 tm.tv_nsec = (long)(fmodf(ftime,1)*BILLION);
                 tm.tv_sec = (long)ftime;
-                tm = timeAdd(t_start, tm);
+                tm = time_add(t_start, tm);
                 format_timestamp(tm, timestamp, 30);
                 float signal_freq = get_group_freq(i)*_sampling_rate;           // center frequency estimate (normalized)
                 float signal_bw   = get_group_bw(i)*_sampling_rate;             // bandwidth estimate (normalized)
@@ -551,7 +530,7 @@ void format_timestamp(const struct timespec _time, char * _buf, const unsigned l
 }
 
 // add 2 timestamps
-struct timespec timeAdd(const struct timespec _t1, const struct timespec _t2)
+struct timespec time_add(const struct timespec _t1, const struct timespec _t2)
 {
     long sec = _t2.tv_sec + _t1.tv_sec;
     long nsec = _t2.tv_nsec + _t1.tv_nsec;
@@ -572,4 +551,29 @@ void free_memory() {
     free(groups);
 }
 
+void open_connection() {
+    if (db_user==NULL || db_pass==NULL) {
+        fprintf(stderr, "Incomplete credentials supplied. Not writing to database.\n");
+        write_to_db = 0;
+    } else {
+        if (db_host == NULL){
+            db_host = "127.0.0.1";
+            fprintf(stderr, "No hostname given, trying 127.0.0.1.\n");
+        }
+        con = mysql_init(NULL);
+        my_bool reconnect = 1;
+        mysql_options(&con, MYSQL_OPT_RECONNECT, &reconnect);
+        if (con!=NULL) {
+            if (mysql_real_connect(con, db_host, db_user, db_pass,
+                DB_BASE, db_port, NULL, 0) == NULL) {
+                fprintf(stderr, "%s\n", mysql_error(con));
+                mysql_close(con);
+                write_to_db = 0;
+            }
+        } else {
+            fprintf(stderr, "ERROR: %s\n", mysql_error(con));
+            write_to_db = 0;
+        }
+    }
+}
 
