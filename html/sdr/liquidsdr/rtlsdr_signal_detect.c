@@ -98,6 +98,7 @@ float               get_group_freq          (int _group_id);
 float               get_group_bw            (int _group_id);
 float               get_group_time          (int _group_id);
 float               get_group_max_sig       (int _group_id);
+float               get_group_noise         (int _group_id);
 unsigned long long  get_group_start_time    (int _group_id);
 int                 clear_group_count       (int _group_id);
 int                 step                    (float _threshold, unsigned int _sampling_rate, float lowerLimit, float upperLimit);
@@ -533,7 +534,7 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                 float signal_freq = get_group_freq(i)*_sampling_rate;           // center frequency estimate (normalized)
                 float signal_bw   = get_group_bw(i)*_sampling_rate;             // bandwidth estimate (normalized)
                 float max_signal  = get_group_max_sig(i);                       // maximum signal strength per group
-                float noise   = get_group_average_noise(i);                 // average noise level per group
+                float noise   = get_group_noise(i);                             // noise level per group
                 printf("%s;%llu;%-10.6f;%9.6f;%9.6f;%f;%f\n",
                         timestamp, num_transforms, duration, signal_freq, signal_bw,max_signal,noise);
                 fflush(stdout);
