@@ -53,12 +53,14 @@
         //Start/Stop
         if (isset($_POST["log_start_all"])){
             for ($i=0; $i<$GLOBALS["num_rec"]; $i++) {
+              if(report_device_use('Range Logger',$i,'tab_logger_range')) {
                 $file_name = $config['logger']['antenna_id_'.$i] ."_". date('Y_m_d_H_i');
                 $file_path = "/tmp/record/" . $file_name;
                 $run_id = write_run_to_db($config, $i, $file_name);
                 $cmd = cmd_docker($i)." '".cmd_rtl_sdr($config, $i)." 2> ".$file_path." | ".cmd_liquidsdr($config, $i).cmd_sql($config, $i, $run_id)." >> ". $file_path." 2>&1'";
                 $msg = 'Started Receiver '.$i.'.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id.'<br>';
                 start_docker_echo($cmd,'tab_logger_range',$msg);
+              }
             }
         }
         if (isset($_POST["log_stop_all"])){
@@ -66,44 +68,52 @@
             start_docker($cmd, 'tab_logger_range');
         }
         if (isset($_POST["log_start_0"])){
-            $file_name = $config['logger']['antenna_id_0'] ."_". date('Y_m_d_H_i');
-            $file_path = "/tmp/record/" . $file_name;
-            $run_id = write_run_to_db($config, 0, $file_name);
-            $cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." 2> ".$file_path." | ".cmd_liquidsdr($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
-            start_docker_echo($cmd,'tab_logger_range','Started Receiver 0.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+            if(report_device_use('Range Logger',0,'tab_logger_range')) {
+              $file_name = $config['logger']['antenna_id_0'] ."_". date('Y_m_d_H_i');
+              $file_path = "/tmp/record/" . $file_name;
+              $run_id = write_run_to_db($config, 0, $file_name);
+              $cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." 2> ".$file_path." | ".cmd_liquidsdr($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
+              start_docker_echo($cmd,'tab_logger_range','Started Receiver 0.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+            }
         }
         if (isset($_POST["log_stop_0"])){
             $cmd="sudo docker stop logger-sdr-d0 2>&1";
             start_docker($cmd, 'tab_logger_range');
         }
         if (isset($_POST["log_start_1"])){
+          if(report_device_use('Range Logger',1,'tab_logger_range')) {
             $file_name = $config['logger']['antenna_id_1'] ."_". date('Y_m_d_H_i');
             $file_path = "/tmp/record/" . $file_name;
             $run_id = write_run_to_db($config, 1, $file_name);
             $cmd = cmd_docker(1)." '".cmd_rtl_sdr($config, 1)." 2> ".$file_path." | ".cmd_liquidsdr($config, 1).cmd_sql($config, 1, $run_id)." >> ". $file_path." 2>&1'";
             start_docker_echo($cmd,'tab_logger_range','Started Receiver 1.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+          }
         }
         if (isset($_POST["log_stop_1"])){
             $cmd="sudo docker stop logger-sdr-d1 2>&1";
             start_docker($cmd, 'tab_logger_range');
         }
         if (isset($_POST["log_start_2"])){
+          if(report_device_use('Range Logger',2,'tab_logger_range')) {
             $file_name = $config['logger']['antenna_id_2'] ."_". date('Y_m_d_H_i');
             $file_path = "/tmp/record/" . $file_name;
             $run_id = write_run_to_db($config, 2, $file_name);
             $cmd = cmd_docker(2)." '".cmd_rtl_sdr($config, 2)." 2> ".$file_path." | ".cmd_liquidsdr($config, 2).cmd_sql($config, 2, $run_id)." >> ". $file_path." 2>&1'";
             start_docker_echo($cmd,'tab_logger_range','Started Receiver 2.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+          }
         }
         if (isset($_POST["log_stop_2"])){
             $cmd="sudo docker stop logger-sdr-d2 2>&1";
             start_docker($cmd, 'tab_logger_range');
         }
         if (isset($_POST["log_start_3"])){
+          if(report_device_use('Range Logger',3,'tab_logger_range')) {
             $file_name = $config['logger']['antenna_id_3'] ."_". date('Y_m_d_H_i');
             $file_path = "/tmp/record/" . $file_name;
             $run_id = write_run_to_db($config, 3, $file_name);
             $cmd = cmd_docker(3)." '".cmd_rtl_sdr($config, 3)." 2> ".$file_path." | ".cmd_liquidsdr($config, 3).cmd_sql($config, 3, $run_id)." >> ". $file_path." 2>&1'";
             start_docker_echo($cmd,'tab_logger_range','Started Receiver 3.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+          }
         }
         if (isset($_POST["log_stop_3"])){
             $cmd="sudo docker stop logger-sdr-d3 2>&1";
@@ -115,12 +125,14 @@
         //Start/Stop
         if (isset($_POST["log_single_start_all"])){
             for ($i=0; $i<$GLOBALS["num_rec"]; $i++) {
+              if(report_device_use('Single Logger',$i,'tab_logger_single')) {
                 $file_name = $config['logger']['antenna_id_'.$i] ."_". date('Y_m_d_H_i');
                 $file_path = "/tmp/record/" . $file_name;
                 $run_id = write_run_to_db($config, $i, $file_name);
                 $cmd = cmd_docker($i)." '".cmd_rtl_sdr($config, $i)." 2> ".$file_path." | ".cmd_matched_filters($config, $i).cmd_sql($config, $i, $run_id)." >> ". $file_path." 2>&1'";
                 $msg = 'Started Receiver '.$i.'.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id.'<br>';
                 start_docker_echo($cmd,'tab_logger_single',$msg);
+              }
             }
         }
         if (isset($_POST["log_single_stop_all"])){
@@ -128,44 +140,52 @@
             start_docker($cmd, 'tab_logger_single');
         }
         if (isset($_POST["log_single_start_0"])){
+          if(report_device_use('Single Logger',0,'tab_logger_single')) {
             $file_name = $config['logger']['antenna_id_0'] ."_". date('Y_m_d_H_i');
             $file_path = "/tmp/record/" . $file_name;
             $run_id = write_run_to_db($config, 0, $file_name);
             $cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." 2> ".$file_path." | ".cmd_matched_filters($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
             start_docker_echo($cmd,'tab_logger_single','Started Receiver 0.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+          }
         }
         if (isset($_POST["log_single_stop_0"])){
             $cmd="sudo docker stop logger-sdr-d0 2>&1";
             start_docker($cmd, 'tab_logger_single');
         }
         if (isset($_POST["log_single_start_1"])){
+          if(report_device_use('Single Logger',1,'tab_logger_single')) {
             $file_name = $config['logger']['antenna_id_1'] ."_". date('Y_m_d_H_i');
             $file_path = "/tmp/record/" . $file_name;
             $run_id = write_run_to_db($config, 1, $file_name);
             $cmd = cmd_docker(1)." '".cmd_rtl_sdr($config, 1)." 2> ".$file_path." | ".cmd_matched_filters($config, 1).cmd_sql($config, 1, $run_id)." >> ". $file_path." 2>&1'";
             start_docker_echo($cmd,'tab_logger_single','Started Receiver 1.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+          }
         }
         if (isset($_POST["log_single_stop_1"])){
             $cmd="sudo docker stop logger-sdr-d1 2>&1";
             start_docker($cmd, 'tab_logger_single');
         }
         if (isset($_POST["log_single_start_2"])){
+          if(report_device_use('Single Logger',2,'tab_logger_single')) {
             $file_name = $config['logger']['antenna_id_2'] ."_". date('Y_m_d_H_i');
             $file_path = "/tmp/record/" . $file_name;
             $run_id = write_run_to_db($config, 2, $file_name);
             $cmd = cmd_docker(2)." '".cmd_rtl_sdr($config, 2)." 2> ".$file_path." | ".cmd_matched_filters($config, 2).cmd_sql($config, 2, $run_id)." >> ". $file_path." 2>&1'";
             start_docker_echo($cmd,'tab_logger_single','Started Receiver 2.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+          }
         }
         if (isset($_POST["log_single_stop_2"])){
             $cmd="sudo docker stop logger-sdr-d2 2>&1";
             start_docker($cmd, 'tab_logger_single');
         }
         if (isset($_POST["log_single_start_3"])){
+          if(report_device_use('Single Logger',3,'tab_logger_single')) {
             $file_name = $config['logger']['antenna_id_3'] ."_". date('Y_m_d_H_i');
             $file_path = "/tmp/record/" . $file_name;
             $run_id = write_run_to_db($config, 3, $file_name);
             $cmd = cmd_docker(3)." '".cmd_rtl_sdr($config, 3)." 2> ".$file_path." | ".cmd_matched_filters($config, 3).cmd_sql($config, 3, $run_id)." >> ". $file_path." 2>&1'";
             start_docker_echo($cmd,'tab_logger_single','Started Receiver 3.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+          }
         }
         if (isset($_POST["log_single_stop_3"])){
             $cmd="sudo docker stop logger-sdr-d3 2>&1";
@@ -273,7 +293,9 @@
     {    //Start/Stop
         if (isset($_POST["rtl_websdr_start_all"])){
             for ($i=0; $i<$GLOBALS["num_rec"]; $i++) {
+            if(report_device_use('Spectoram',$i,'webrx_tab')) {
                 start_docker_quite(cmd_webRX_start($i),'webrx_tab');
+              }
             }
         }
         if (isset($_POST["rtl_websdr_stop_all"])){
@@ -281,25 +303,33 @@
             start_docker($cmd, 'webrx_tab');
         }
         if (isset($_POST["rtl_websdr_d0"])){
+          if(report_device_use('Spectoram',1,'webrx_tab')) {
             start_docker_echo(cmd_webRX_start(0),'webrx_tab',"Starting Spectrogram server for receiver 0");
+          }
         }
         if (isset($_POST["rtl_websdr_stop_d0"])){
             start_docker_echo(cmd_webRX_stop(0),'webrx_tab','Spectrogram Server 0 stopped if it was running');
         }
         if (isset($_POST["rtl_websdr_d1"])){
+          if(report_device_use('Spectoram',1,'webrx_tab')) {
             start_docker_echo(cmd_webRX_start(1),'webrx_tab',"Starting Spectrogram server for receiver 1");
+          }
         }
         if (isset($_POST["rtl_websdr_stop_d1"])){
             start_docker_echo(cmd_webRX_stop(1),'webrx_tab','Spectrogram Server 1 stopped if it was running');
         }
         if (isset($_POST["rtl_websdr_d2"])){
+          if(report_device_use('Spectoram',2,'webrx_tab')) {
             start_docker_echo(cmd_webRX_start(2),'webrx_tab',"Starting Spectrogram server for receiver 2");
+          }
         }
         if (isset($_POST["rtl_websdr_stop_d2"])){
             start_docker_echo(cmd_webRX_stop(2),'webrx_tab','Spectrogram Server 2 stopped if it was running');
         }
         if (isset($_POST["rtl_websdr_d3"])){
+          if(report_device_use('Spectoram',3,'webrx_tab')) {
             start_docker_echo(cmd_webRX_start(3),'webrx_tab',"Starting Spectrogram server for receiver 3");
+          }
         }
         if (isset($_POST["rtl_websdr_stop_d3"])){
             start_docker_echo(cmd_webRX_stop(3),'webrx_tab','Spectrogram Server 3 stopped if it was running');
@@ -378,27 +408,35 @@
   {
     //Start/Stop
     if (isset($_POST["rtl_tcp_start_d0"])){
-        $cmd = "sudo docker run --rm --name=sharp_server_sdr_d0 -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr:1.0 rtl_tcp -d 0 -a  '0.0.0.0' -p '1234' 2>&1";
+      if(report_device_use('SDR#-Server',0,'sdr_server')) {
+        $cmd = "sudo docker run --rm --name=sharp_server-sdr-d0 -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+1).":1234 rtlsdr:1.0 rtl_tcp -d 0 -a  '0.0.0.0' -p '1234' 2>&1";
         start_docker_quite($cmd,'sdr_server');
+      }
     }
     if (isset($_POST["rtl_tcp_start_81_d0"])){
-        $cmd = "sudo docker run --rm --name=sharp_server_sdr_d0 -t --device=/dev/bus/usb -p 81:1234 rtlsdr:1.0 rtl_tcp -d 0 -a  '0.0.0.0' -p '1234' 2>&1";
+      if(report_device_use('SDR#-Server',0,'sdr_server')) {
+        $cmd = "sudo docker run --rm --name=sharp_server-sdr-d0 -t --device=/dev/bus/usb -p 81:1234 rtlsdr:1.0 rtl_tcp -d 0 -a  '0.0.0.0' -p '1234' 2>&1";
         start_docker_quite($cmd,'sdr_server');
+      }
     }
     if (isset($_POST["rtl_tcp_stop_d0"])){
-        $cmd = "sudo docker stop sharp_server_sdr_d0 2>&1";
+        $cmd = "sudo docker stop sharp_server-sdr-d0 2>&1";
         start_docker($cmd,'sdr_server');
     }
     if (isset($_POST["rtl_tcp_start_d1"])){
-        $cmd = "sudo docker run --rm --name=sharp_server_sdr_d1 -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+2).":1234 rtlsdr:1.0 rtl_tcp -d 1 -a  '0.0.0.0' -p '1234' 2>&1";
+      if(report_device_use('SDR#-Server',1,'sdr_server')) {
+        $cmd = "sudo docker run --rm --name=sharp_server-sdr-d1 -t --device=/dev/bus/usb -p ".($_SERVER['SERVER_PORT']+2).":1234 rtlsdr:1.0 rtl_tcp -d 1 -a  '0.0.0.0' -p '1234' 2>&1";
         start_docker_quite($cmd,'sdr_server');
+      }
     }
     if (isset($_POST["rtl_tcp_start_82_d1"])){
-        $cmd = "sudo docker run --rm --name=sharp_server_sdr_d1 -t --device=/dev/bus/usb -p 82:1234 rtlsdr:1.0 rtl_tcp -d 1 -a  '0.0.0.0' -p '1234' 2>&1";
+      if(report_device_use('SDR#-Server',1,'sdr_server')) {
+        $cmd = "sudo docker run --rm --name=sharp_server-sdr-d1 -t --device=/dev/bus/usb -p 82:1234 rtlsdr:1.0 rtl_tcp -d 1 -a  '0.0.0.0' -p '1234' 2>&1";
         start_docker_quite($cmd,'sdr_server');
+      }
     }
     if (isset($_POST["rtl_tcp_stop_d1"])){
-        $cmd = "sudo docker stop sharp_server_sdr_d1) 2>&1";
+        $cmd = "sudo docker stop sharp_server-sdr-d1) 2>&1";
         start_docker($cmd,'sdr_server');
     }
   }
@@ -728,6 +766,14 @@
         $ret_val = 1;
         system("sudo docker inspect ".$name." >/dev/null 2>&1", $ret_val);
         return !(filter_var($ret_val,FILTER_VALIDATE_BOOLEAN));
+    }
+        
+    function report_device_use($service,$id,$block) {
+      avail=!check_device_use($id);
+      if (!avail) {
+        start_docker_echo("",$block,"Could not start ".$service." on Receiver ".$id."<br>Receiver ".$id." is currently in use by another service (i.e. Logger, Spectrogram, SDR#, Webradio, ...).");
+      }
+      return(avail);
     }
 }
 ////////////////////////    Unused    ////////////////////////
