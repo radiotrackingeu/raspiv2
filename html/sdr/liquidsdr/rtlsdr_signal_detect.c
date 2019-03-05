@@ -169,7 +169,7 @@ int main(int argc, char*argv[])
     // open SQL database
     if (write_to_db!=0)
     {
-        open_connection()
+        open_connection();
     }
 
 
@@ -242,7 +242,7 @@ int main(int argc, char*argv[])
 
             // print keepalive
             if (num_transforms%keepalive == 0) {
-                mysql_ping();
+                mysql_ping(con);
                 struct timespec now;
                 clock_gettime(CLOCK_REALTIME,&now);
                 num_transforms = 0;
@@ -562,7 +562,7 @@ void open_connection() {
         }
         con = mysql_init(NULL);
         my_bool reconnect = 1;
-        mysql_options(&con, MYSQL_OPT_RECONNECT, &reconnect);
+        mysql_options(con, MYSQL_OPT_RECONNECT, &reconnect);
         if (con!=NULL) {
             if (mysql_real_connect(con, db_host, db_user, db_pass,
                 DB_BASE, db_port, NULL, 0) == NULL) {
