@@ -122,6 +122,7 @@ void            format_timestamp(const struct timespec _time, char * _buf, const
 struct timespec timeAdd(const struct timespec _t1, const struct timespec _t2);
 float           MovingAverage(float *_InBuf, unsigned int len);
 void            print_keepalive();
+void            open_connection();
 
 
 // main program
@@ -196,28 +197,7 @@ int main(int argc, char*argv[])
     // open SQL database
   if (write_to_db!=0)
   {
-	  if (db_user==NULL || db_pass==NULL) {
-	    fprintf(stderr, "Incomplete credentials supplied. Not writing to database.\n");
-        write_to_db = 0;
-    } else {
-      if (db_host == NULL){
-        db_host = "127.0.0.1";
-        fprintf(stderr, "No hostname given, trying 127.0.0.1.\n");
-      }
-      con = mysql_init(NULL);
-      if (con != NULL) {
-        if (mysql_real_connect(con, db_host, db_user, db_pass,
-                               DB_BASE, db_port, NULL, 0) == NULL)
-        {
-          fprintf(stderr, "%s\n", mysql_error(con));
-          mysql_close(con);
-          write_to_db = 0;
-        }
-      } else {
-        fprintf(stderr, "ERROR: %s\n", mysql_error(con));
-                write_to_db = 0;
-      }
-    }
+	  open_connection();
   }
 
   // open input file
@@ -520,6 +500,7 @@ float MovingAverage(float *_InBuf, unsigned int len)
 }
 
 void print_keepalive() {
+    mysql_ping(con);
     struct timespec now;
     clock_gettime(CLOCK_REALTIME,&now);
     char tbuf[30];
@@ -538,4 +519,29 @@ void print_keepalive() {
     }
 }
 
+void open_connection() {
+    if (db_user==NULL || db_pass==NULL) {
+        fprintf(stderr, "Incomplete credentials supplied. Not writing to database.\n");
+        write_to_db = 0;
+    } else {
+        if (db_host == NULL){
+            db_host = "127.0.0.1";
+            fprintf(stderr, "No hostname given, trying 127.0.0.1.\n");
+        }
+        con = mysql_init(NULL);
+        my_bool reconnect = 1;
+        mysql_options(con, MYSQL_OPT_RECONNECT, &reconnect);
+        if (con!=NULL) {
+            if (mysql_real_connect(con, db_host, db_user, db_pass,
+                DB_BASE, db_port, NULL, 0) == NULL) {
+                fprintf(stderr, "%s\n", mysql_error(con));
+                mysql_close(con);
+                write_to_db = 0;
+            }
+        } else {
+            fprintf(stderr, "ERROR: %s\n", mysql_error(con));
+            write_to_db = 0;
+        }
+    }
+}
 
