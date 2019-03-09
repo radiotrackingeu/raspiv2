@@ -33,7 +33,7 @@
 			Password: (8-63 characters)<br>
 			<input type="password" name="pw_hotspot" value="<?php echo isset($config['network']['pw_hotspot']) ? $config['network']['pw_hotspot'] : "sdrtracking" ?>">
 			<br><br>
-			<input type="submit" class="w3-btn w3-brown" value="Create Hotspot" name="start_hotspot" />
+			<input type="submit" class="w3-btn w3-brown" value="Activate Hotspot" name="start_hotspot" />
 			<input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot" />
 			<br><br>
 		</form>
