@@ -231,7 +231,7 @@
 			}
 			if (isset($_POST["install_mysql"])){
 				echo '<pre>';
-        system('sudo docker rm "$(sudo docker ps -aq -f name="mysql")"')
+        system('sudo docker rm "$(sudo docker ps -aq -f name="mysql")"');
 				$test = system('sudo docker build --no-cache -t mysql:1.0 /home/pi/gitrep/raspiv2/Docker/mysql/. 2>&1 && sudo docker create -t --restart=unless-stopped --name=mysql -e MYSQL_ROOT_PASSWORD=rteuv2! -p 3306:3306 -v /var/www/html/data/mysql:/var/lib/mysql  mysql:1.0 2>&1', $ret);
 				echo '</pre>';
 			}
