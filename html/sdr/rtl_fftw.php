@@ -176,7 +176,7 @@
                         <h3>Receiver <?=$i?>
                             <?php if ($i==0) :?> 
                                 <span class="w3-tooltip" style="float:right">
-                                    <span class="w3-text w3-small w3-round w3-brown w3-tag">Copy settings (except name and orientation) to all receivers.</span>
+                                    <span class="w3-text w3-small w3-round w3-brown w3-text" style="position:absolute; right:0; top:15px; width:200px">Copy settings (except name and orientation) to all receivers.</span>
                                     <i class="fas fa-clone" onclick="copyInput('rec_settings', ['antenna_id_', 'antenna_orientation_', 'change_logger_setting'])" style="cursor:pointer;float:right"></i>
                                 </span>
                             <?php endif;?>
