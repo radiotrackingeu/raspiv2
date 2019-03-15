@@ -12,6 +12,7 @@ function openCity(evt, cityName) {
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active-item"; 
 }
+
 function w3_switch(name) {
     var x = document.getElementById(name);
     if (x.style.display == "none") {
@@ -51,5 +52,14 @@ function copyInput(formName, excludeList) {
         }
     }
     return 0;
+}
+
+function propagateAngle() {
+  var angle0 = parseInt(document.getElementById("antenna_orientation_0").value);
+  for (var i=1; i<=3; i++) {
+    if (document.getElementById("antenna_orientation_"+i))
+      document.getElementById("antenna_orientation_"+i).value=angle0 + i*90;
+  }
+  return 0;
 }
 </script>

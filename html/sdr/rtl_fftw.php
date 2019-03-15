@@ -176,7 +176,7 @@
                         <h3>Receiver <?=$i?>
                             <?php if ($i==0) :?> 
                                 <span class="w3-tooltip" style="float:right">
-                                    <span class="w3-text w3-small w3-round w3-brown w3-text" style="position:absolute; right:0; top:15px; width:200px">Copy settings (except name and orientation) to all receivers.</span>
+                                    <span class="w3-text w3-small w3-round w3-brown w3-text" style="position:absolute; right:0; top:25px; width:250px; padding: 3px">Copy settings (except name and orientation) to all receivers.</span>
                                     <i class="fas fa-clone" onclick="copyInput('rec_settings', ['antenna_id_', 'antenna_orientation_', 'change_logger_setting'])" style="cursor:pointer;float:right"></i>
                                 </span>
                             <?php endif;?>
@@ -211,9 +211,7 @@
                             Antenna Position:&emsp;
                             <span class="w3-tooltip">
                                 <i class="fas fa-map-marker-alt" onclick="getLocation(<?=$i?>,1)" style="cursor:pointer"></i>
-                                <span class="w3-text w3-small w3-round w3-brown w3-tag">
-                                    Get Position from Browser.
-                                </span>
+                                <span class="w3-text w3-small w3-round w3-brown w3-tag" style="position:absolute; left:0; top:25px; width:250px; padding: 3px">Get Position from Device.</span>
                             </span><br>
                             <div id="input_position_<?=i?>" class="w3-half" style = "margin-bottom: 16px">
                                 <label>Latitude</label>
@@ -227,10 +225,14 @@
                                 Antenna Orientation in degrees (i.e. N=0, E=90, S=180):&emsp;
                                 <span class="w3-tooltip">
                                     <i class="fas fa-location-arrow" onclick="getLocation(<?=$i?>,0)" style="cursor:pointer"></i>
-                                    <span class="w3-text w3-small w3-round w3-brown w3-tag">
-                                        Get Position from Browser.
-                                    </span>
-                                </span><br><br>
+                                    <span class="w3-text w3-small w3-round w3-brown w3-tag" style="position:absolute; right:0; top:25px; width:250px; padding: 3px">Get Orientation from Device.</span>
+                                </span>
+                                <?php if ($i==0) :?> 
+                                  &emsp; <span class="w3-tooltip">
+                                      <span class="w3-text w3-small w3-round w3-brown w3-text" style="position:absolute; right:0; top:25px; width:250px; padding: 3px">Set other antenna orientations accordingly (i.e. value below +90 / +180 / +270).</span>
+                                      <i class="fas fa-forward" onclick="propagateAngle()" style="cursor:pointer"></i>
+                                  </span>
+                                <?php endif;?><br><br>
                                 <input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_orientation_<?=$i?>" name="antenna_orientation_<?=$i?>" value="<?php echo isset($config['logger']['antenna_orientation_'.$i]) ? $config['logger']['antenna_orientation_'.$i] : 42?>">
                             </p>
                             <p>
