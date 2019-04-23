@@ -180,123 +180,132 @@
                                     <span class="rteutooltiptext" >Copy settings (except name and orientation) to all receivers.</span>
                                 </div>
                             <?php endif;?>
-                        </h3><br>
+                        </h3>
                         <button type=button onclick="myAccordion('rec<?=$i?>_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Receiver Settings</h4></button>
-                        <div id="rec<?=$i?>_settings" class="w3-container w3-hide">
+                        <div id="rec<?=$i?>_settings" class="w3-container w3-hide acc-top-border">
                             <p>
-                            Gain in dB (default 20):<br>
-                            <input class="w3-input w3-mobile" style="width:30%" type="number" id="log_gain_<?=$i?>" name="log_gain_<?=$i?>" value="<?php echo isset($config['logger']['log_gain_'.$i]) ? $config['logger']['log_gain_'.$i] : 20 ?>">
-                            <small>Gain of the recording device. Higher gain results in more noise. max 49DB</small>
+                              <label>
+                                Gain in dB (default 20):
+                              </label>
+                              <input class="w3-mobile" style="width:100%" type="number" id="log_gain_<?=$i?>" name="log_gain_<?=$i?>" value="<?php echo isset($config['logger']['log_gain_'.$i]) ? $config['logger']['log_gain_'.$i] : 20 ?>">
+                              <small>Gain of the recording device. Higher gain results in more noise. max 49dB</small>
                             </p>
                             <p>
-                            Center Frequency in Hz:<br>
-                            <input class="w3-input w3-mobile" style="width:30%" type="number" id="center_freq_<?=$i?>" name="center_freq_<?=$i?>" value="<?php echo isset($config['logger']['center_freq_'.$i]) ? $config['logger']['center_freq_'.$i] : 150100000 ?>">
+                              <label>
+                                Center Frequency in Hz:
+                              </label>
+                              <input class="w3-mobile" style="width:100%" type="number" id="center_freq_<?=$i?>" name="center_freq_<?=$i?>" value="<?php echo isset($config['logger']['center_freq_'.$i]) ? $config['logger']['center_freq_'.$i] : 150100000 ?>">
                             </p>
                             <p>
-                            Frequency Range to monitor:<br>
-                            <select class="w3-select w3-mobile"  style="width:30%" id="freq_range_<?=$i?>" name="freq_range_<?=$i?>">
-                                <option value="250000" <?php echo isset($config['logger']['freq_range_'.$i]) && $config['logger']['freq_range_'.$i] == "250000" ? "selected" : "" ?>>250kHz</option>
-                                <option value="1024000" <?php echo isset($config['logger']['freq_range_'.$i]) && $config['logger']['freq_range_'.$i] == "1024000" ? "selected" : "" ?>>1024kHz</option>
-                            </select> 
+                              <label>
+                                Frequency Range to monitor:
+                              </label>
+                              <select class="w3-mobile"  style="width:100%" id="freq_range_<?=$i?>" name="freq_range_<?=$i?>">
+                                  <option value="250000" <?php echo isset($config['logger']['freq_range_'.$i]) && $config['logger']['freq_range_'.$i] == "250000" ? "selected" : "" ?>>250kHz</option>
+                                  <option value="1024000" <?php echo isset($config['logger']['freq_range_'.$i]) && $config['logger']['freq_range_'.$i] == "1024000" ? "selected" : "" ?>>1024kHz</option>
+                              </select> 
                             </p>
                         </div>
                         <button type=button onclick="myAccordion('ant<?=$i?>_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Antenna Settings</h4></button>
 
-                        <div id="ant<?=$i?>_settings" class="w3-container w3-hide">
+                        <div id="ant<?=$i?>_settings" class="w3-container w3-hide acc-top-border">
                             <p>
-                                Unique name for this Antenna:<br>
-                                <input class="w3-input w3-mobile" style="width:70%" type="text" id="antenna_id_<?=$i?>" name="antenna_id_<?=$i?>" value="<?php echo isset($config['logger']['antenna_id_'.$i]) ? $config['logger']['antenna_id_'.$i] : "rteu_r".$i."_"?>">
-                                <small>This - together with a timestamp - will be used as filename and antenna id in the database.</small>
+                              <label>
+                                Unique name for this Antenna:
+                              </label>
+                              <input class="w3-mobile" style="width:100%" type="text" id="antenna_id_<?=$i?>" name="antenna_id_<?=$i?>" value="<?php echo isset($config['logger']['antenna_id_'.$i]) ? $config['logger']['antenna_id_'.$i] : "rteu_r".$i."_"?>">
+                              <small>This - together with a timestamp - will be used as filename and antenna id in the database.</small>
                             </p>
-                            Antenna Position:&emsp;
-                            <div style="display:inline-block">
+                            <div style="margin: 15px 0;">
+                              <label style="width:100%; display:inline-block;">
+                                Antenna Position:&emsp;
                                 <i class="fas fa-map-marker-alt rteutooltip" onclick="getLocation(<?=$i?>,1)" style="cursor:pointer"></i>
                                 <span class="rteutooltiptext" >Get Position from Device.</span>
-                            </div><br>
-                            <div id="input_position_<?=$i?>" class="w3-half" style = "margin-bottom: 16px">
-                                <label>Latitude</label>
-                                <input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_position_N_<?=$i?>" name="antenna_position_N_<?=$i?>" value="<?php echo isset($config['logger']['antenna_position_N_'.$i]) ? $config['logger']['antenna_position_N_'.$i] : 1.234?>">
-                            </div>
-                            <div class="w3-half" style = "margin-bottom: 16px">
-                                <label>Longitude</label>
-                                <input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_position_E_<?=$i?>" name="antenna_position_E_<?=$i?>" value="<?php echo isset($config['logger']['antenna_position_E_'.$i]) ? $config['logger']['antenna_position_E_'.$i] : 5.678?>">
+                              </label>
+                              <div id="input_position_<?=$i?>" class="w3-half" style = "margin-bottom: 16px; padding-left:15px">
+                                  <label>Latitude</label>
+                                  <input class="w3-mobile" style="width:100%" type="text" id="antenna_position_N_<?=$i?>" name="antenna_position_N_<?=$i?>" value="<?php echo isset($config['logger']['antenna_position_N_'.$i]) ? $config['logger']['antenna_position_N_'.$i] : 1.234?>">
+                              </div>
+                              <div class="w3-half" style = "margin-bottom: 16px; padding-left:15px">
+                                  <label>Longitude</label>
+                                  <input class="w3-mobile" style="width:100%" type="text" id="antenna_position_E_<?=$i?>" name="antenna_position_E_<?=$i?>" value="<?php echo isset($config['logger']['antenna_position_E_'.$i]) ? $config['logger']['antenna_position_E_'.$i] : 5.678?>">
+                              </div>
                             </div>
                             <p>
+                              <label style="display:inline-block">
                                 Antenna Orientation in degrees (i.e. N=0, E=90, S=180):&emsp;
-                                <div style="display:inline-block">
-                                    <i class="fas fa-location-arrow rteutooltip" onclick="getLocation(<?=$i?>,0)" style="cursor:pointer"></i>
-                                    <span class="rteutooltiptext" >Get Orientation from Device.</span>
-                                </div>
+                                <i class="fas fa-location-arrow rteutooltip" onclick="getLocation(<?=$i?>,0)" style="cursor:pointer"></i>
+                                <span class="rteutooltiptext" >Get Orientation from Device.</span>
                                 <?php if ($i==0) :?> 
-                                  &emsp; <div style="display:inline-block">
-                                      <i class="fas fa-forward rteutooltip" onclick="propagateAngle()" style="cursor:pointer"></i>
-                                      <span class="rteutooltiptext">Set other antenna orientations accordingly (i.e. value below +90 / +180 / +270).</span>
-                                  </div>
-                                <?php endif;?><br><br>
-                                <input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_orientation_<?=$i?>" name="antenna_orientation_<?=$i?>" value="<?php echo isset($config['logger']['antenna_orientation_'.$i]) ? $config['logger']['antenna_orientation_'.$i] : 42?>">
+                                  &emsp;
+                                  <i class="fas fa-forward rteutooltip" onclick="propagateAngle()" style="cursor:pointer"></i>
+                                  <span class="rteutooltiptext">Set other antenna orientations accordingly (i.e. value below +90 / +180 / +270).</span>
+                                <?php endif;?>
+                              </label>
+                              <input class="w3-mobile" style="width:100%" type="text" id="antenna_orientation_<?=$i?>" name="antenna_orientation_<?=$i?>" value="<?php echo isset($config['logger']['antenna_orientation_'.$i]) ? $config['logger']['antenna_orientation_'.$i] : 42?>">
                             </p>
                             <p>
-                                Antenna beam width in degrees:<br>
-                                <input class="w3-input w3-mobile" style="width:30%" type="text" id="antenna_beam_width_<?=$i?>" name="antenna_beam_width_<?=$i?>" value="<?php echo isset($config['logger']['antenna_beam_width_'.$i]) ? $config['logger']['antenna_beam_width_'.$i] : 42?>">
+                              <label>Antenna beam width in degrees:</label>
+                                <input class="w3-mobile" style="width:100%" type="text" id="antenna_beam_width_<?=$i?>" name="antenna_beam_width_<?=$i?>" value="<?php echo isset($config['logger']['antenna_beam_width_'.$i]) ? $config['logger']['antenna_beam_width_'.$i] : 42?>">
                             </p>
                             <br>
                         </div>
 
                         <button type=button onclick="myAccordion('det<?=$i?>_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Detection Settings</h4></button>
-                        <div id="det<?=$i?>_settings" class="w3-container w3-hide">
+                        <div id="det<?=$i?>_settings" class="w3-container w3-hide acc-top-border">
                             <p>				
                                 <label for="threshold_<?=$i?>"> Log Level: </label>
-                                <input class="w3-input w3-mobile" style="width:30%" type="number" id="threshold_<?=$i?>" name="threshold_<?=$i?>" value="<?php echo isset($config['logger']['threshold_'.$i]) ? $config['logger']['threshold_'.$i] : 10 ?>">
+                                <input class="w3-mobile" style="width:100%" type="number" id="threshold_<?=$i?>" name="threshold_<?=$i?>" value="<?php echo isset($config['logger']['threshold_'.$i]) ? $config['logger']['threshold_'.$i] : 10 ?>">
                             </p>
                             <p>
                                 <label for="minDuration_<?=$i?>"> Minimum Signal Length (seconds):</label>
-                                <input class="w3-input w3-mobile" style="width:30%" type="number" id="minDuration_<?=$i?>" name="minDuration_<?=$i?>" step="any" value="<?php echo isset($config['logger']['minDuration_'.$i]) ? $config['logger']['minDuration_'.$i] : 0 ?>">
+                                <input class="w3-mobile" style="width:100%" type="number" id="minDuration_<?=$i?>" name="minDuration_<?=$i?>" step="any" value="<?php echo isset($config['logger']['minDuration_'.$i]) ? $config['logger']['minDuration_'.$i] : 0 ?>">
                             </p>
                             <p>
                                 <label for="maxDuration_<?=$i?>"> Maximum Signal Length (seconds):</label>
-                                <input class="w3-input w3-mobile" style="width:30%" type="number" id="maxDuration_<?=$i?>" name="maxDuration_<?=$i?>" step="any" value="<?php echo isset($config['logger']['maxDuration_'.$i]) ? $config['logger']['maxDuration_'.$i] : 1 ?>">
+                                <input class="w3-mobile" style="width:100%" type="number" id="maxDuration_<?=$i?>" name="maxDuration_<?=$i?>" step="any" value="<?php echo isset($config['logger']['maxDuration_'.$i]) ? $config['logger']['maxDuration_'.$i] : 1 ?>">
                             </p>
                             <p>
                                 Number of bins in FFT (default: 400):<br>
-                                <input class="w3-input w3-mobile" style="width:30%" type="number" id="nfft_<?=$i?>" name="nfft_<?=$i?>" value="<?php echo isset($config['logger']['nfft_'.$i]) ? $config['logger']['nfft_'.$i] : 400 ?>">
+                                <input class="w3-mobile" style="width:100%" type="number" id="nfft_<?=$i?>" name="nfft_<?=$i?>" value="<?php echo isset($config['logger']['nfft_'.$i]) ? $config['logger']['nfft_'.$i] : 400 ?>">
                             </p>
                             <p>
                                 Number of samples per FFT (default: 50):<br>
-                                <input class="w3-input w3-mobile" style="width:30%" type="number" id="timestep_<?=$i?>" name="timestep_<?=$i?>" value="<?php echo isset($config['logger']['timestep_'.$i]) ? $config['logger']['timestep_'.$i] : 50 ?>">
+                                <input class="w3-mobile" style="width:100%" type="number" id="timestep_<?=$i?>" name="timestep_<?=$i?>" value="<?php echo isset($config['logger']['timestep_'.$i]) ? $config['logger']['timestep_'.$i] : 50 ?>">
                             </p>
                             <br>
                         </div>
 
                         <button type=button onclick="myAccordion('tim<?=$i?>_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Timer Settings</h4></button>
-                        <div id="tim<?=$i?>_settings" class="w3-container w3-hide">
+                        <div id="tim<?=$i?>_settings" class="w3-container w3-hide acc-top-border">
                             <p>
                                 <label for="timer_mode_<?=$i?>"> Which detection mode to use</label><br>
-                                <select class="w3-select w3-mobile" style="width:30%" id="timer_mode_<?=$i?>" name="timer_mode_<?=$i?>">
+                                <select class="w3-mobile" style="width:100%" id="timer_mode_<?=$i?>" name="timer_mode_<?=$i?>">
                                     <option value="freq_range" <?php echo isset($config['logger']['timer_mode_'.$i]) && $config['logger']['timer_mode_'.$i] == "freq_range" ? "selected" : "" ?>>Use Frequency Range</option> 
                                     <option value="single_freq" <?php echo isset($config['logger']['timer_mode_'.$i]) && $config['logger']['timer_mode_'.$i] == "single_freq" ? "selected" : "" ?>>Use single Frequency</option>
                                 </select>
                             </p>
                             <p>
                                 <label for="timer_start_<?=$i?>"> Automatically start at</label><br>
-                                <select class="w3-select w3-mobile" style="width:30%" id="timer_start_<?=$i?>" name="timer_start_<?=$i?>">
+                                <select class="w3-mobile" style="width:100%" id="timer_start_<?=$i?>" name="timer_start_<?=$i?>">
                                     <option value="start_no" <?php echo isset($config['logger']['timer_start_'.$i]) && $config['logger']['timer_start_'.$i] == "start_no" ? "selected" : "" ?>>Don't start automatically</option> 
                                     <option value="start_boot" <?php echo isset($config['logger']['timer_start_'.$i]) && $config['logger']['timer_start_'.$i] == "start_boot" ? "selected" : "" ?>>Start on boot</option>
                                     <option value="start_time" <?php echo isset($config['logger']['timer_start_'.$i]) && $config['logger']['timer_start_'.$i] == "start_time" ? "selected" : "" ?>>Start at given time</option>
                                 </select>
-                                <input class="w3-input w3-mobile" style="width:30%" type="time" name="timer_start_time_<?=$i?>" id="timer_start_time_<?=$i?>" value="<?php echo isset($config['logger']['timer_start_time_'.$i]) ? $config['logger']['timer_start_time_'.$i] : ""?>">
+                                <input class="w3-mobile" style="width:100%" type="time" name="timer_start_time_<?=$i?>" id="timer_start_time_<?=$i?>" value="<?php echo isset($config['logger']['timer_start_time_'.$i]) ? $config['logger']['timer_start_time_'.$i] : ""?>">
                             </p>
                             <p>
                             <label for="timer_stop_<?=$i?>"> Automatically stop at</label><br>
-                                <select class="w3-select w3-mobile" style="width:30%" id="timer_stop_<?=$i?>" name="timer_stop_<?=$i?>">
+                                <select class="w3-mobile" style="width:100%" id="timer_stop_<?=$i?>" name="timer_stop_<?=$i?>">
                                     <option value="stop_no" <?php echo isset($config['logger']['timer_stop_'.$i]) && $config['logger']['timer_stop_'.$i] == "stop_no" ? "selected" : ""?>>Don't stop automatically</option> 
                                     <option value="stop_time" <?php echo isset($config['logger']['timer_stop_'.$i]) && $config['logger']['timer_stop_'.$i] == "stop_time" ? "selected" : ""?>>Stop at given time</option>
                                 </select>
-                                <input class="w3-input w3-mobile" style="width:30%" type="time" name="timer_stop_time_<?=$i?>" id="timer_stop_time_<?=$i?>" value="<?php echo isset($config['logger']['timer_stop_time_'.$i]) ? $config['logger']['timer_stop_time_'.$i] : ""?>">
+                                <input class="w3-mobile" style="width:100%" type="time" name="timer_stop_time_<?=$i?>" id="timer_stop_time_<?=$i?>" value="<?php echo isset($config['logger']['timer_stop_time_'.$i]) ? $config['logger']['timer_stop_time_'.$i] : ""?>">
                             </p>
                         </div>
                     
                         <button type=button onclick="myAccordion('dat<?=$i?>_settings')" class="w3-button w3-green w3-block w3-left-align"><h4>Database Settings</h4></button>
-                        <div id="dat<?=$i?>_settings" class="w3-container w3-hide">
+                        <div id="dat<?=$i?>_settings" class="w3-container w3-hide acc-top-border">
                             <p>
                                 Enable logging to SQL database? 
                                 <span class="w3-tooltip"> <i class="fa fa-info-circle" aria-hidden="false"></i>
@@ -304,9 +313,9 @@
                                         Go to Data <i class="fa fa-caret-right" aria-hidden="true"></i> Start <i class="fa fa-caret-right" aria-hidden="true"></i> Database to setup connection details.
                                     </span>
                                 </span><br>
-                                <input class="w3-radio w3-mobile" id="use_sql_<?=$i?>_y" type="radio" name="use_sql_<?=$i?>" value="Yes" <?php echo isset($config['logger']['use_sql_'.$i]) && $config['logger']['use_sql_'.$i] == "Yes" ? 'checked="true"' : ''?>>
+                                <input class="w3-radio" id="use_sql_<?=$i?>_y" type="radio" name="use_sql_<?=$i?>" value="Yes" <?php echo isset($config['logger']['use_sql_'.$i]) && $config['logger']['use_sql_'.$i] == "Yes" ? 'checked="true"' : ''?>>
                                 <label class="w3-margin-right" for="use_sql_<?=$i?>_y">Yes</label>
-                                <input class="w3-radio w3-mobile" id="use_sql_<?=$i?>_n" type="radio" name="use_sql_<?=$i?>" value="No" <?php echo isset($config['logger']['use_sql_'.$i]) && $config['logger']['use_sql_'.$i] == "No" ? 'checked="false"' : ''?>>
+                                <input class="w3-radio" id="use_sql_<?=$i?>_n" type="radio" name="use_sql_<?=$i?>" value="No" <?php echo isset($config['logger']['use_sql_'.$i]) && $config['logger']['use_sql_'.$i] == "No" ? 'checked="false"' : ''?>>
                                 <label class="w3-margin-right" for="use_sql_<?=$i?>_n">No</label>	
                             </p>
                         </div>

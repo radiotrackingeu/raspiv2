@@ -29,3 +29,11 @@ display: none;
 .rteutooltip:hover + span {
     display: block;
 }
+
+button h4 {
+  margin: 5px 0;
+}
+
+.acc-top-border {
+  border-top: solid 2px white;
+}
