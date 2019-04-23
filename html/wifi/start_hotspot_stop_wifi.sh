@@ -22,6 +22,7 @@ NEWSTRING="wpa_passphrase=$2"
 grep -q $OLDSTRING $FILE && 
     sed -i "s/$OLDSTRING/$NEWSTRING/g" $FILE
 
+# delete ssid and psk from wpa_supplicant
 OLDSTRING="^ssid.*$"
 NEWSTRING="ssid=none"
 FILE="/tmp/wpa_supplicant/wpa_supplicant.conf"
