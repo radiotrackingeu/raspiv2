@@ -2,3 +2,30 @@
 background-color:#ccc!important;
 color:black!important
 }
+
+
+.rteutooltip {
+    display: inline-block;
+    text-indent:0em;
+}
+
+.rteutooltiptext {
+display: none;
+    width: calc(100vw - 47px);
+    color: #fff;
+    font-size:12px;
+    text-align:center;
+    background-color: #795548;
+    padding: 5px 5px;
+    left: 16px;
+    border: 2px solid #795548;
+    line-height: normal;
+    text-decoration: none;
+    position: absolute;
+    z-index: 1;
+
+}
+
+.rteutooltip:hover + span {
+    display: block;
+}
