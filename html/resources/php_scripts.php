@@ -29,19 +29,22 @@
         return "/tmp/liquidsdr/matched_signal_detect -s -t ".$config['logger']['threshold_'.$dev]." -r ".$config['logger']['freq_range_'.$dev]." -p 22";
     }
     function write_run_to_db($config, $device, $file_name) {
+        $hostname=`hostname`;
+        $PiSN=`cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2`;
         if ($config['logger']['use_sql_'.$device] != "Yes")
             return "Writing to database is switched off - see settings";
         $con = mysqli_connect($config['database']['db_host'].":".$config['database']['db_port'], $config['database']['db_user'], $config['database']['db_pass']);
             if (mysqli_connect_errno()) {
                 return "Connection to ".$config['database']['db_host'].":".$config['database']['db_port']." failed: " . mysqli_connect_error();	
             } else {
-                $cmd_sql = "INSERT INTO rteu.runs (device,pos_x,pos_y,orientation,beam_width,gain,center_freq,freq_range,threshold,fft_bins,fft_samples)".
-                    " VALUE ('".$file_name."',".                                     $config['logger']['antenna_position_N_'.$device].",".
-                                $config['logger']['antenna_position_E_'.$device].",".$config['logger']['antenna_orientation_'.$device].",".
-                                $config['logger']['antenna_beam_width_'.$device].",".$config['logger']['log_gain_'.$device].",".
-                                $config['logger']['center_freq_'.$device].",".       $config['logger']['freq_range_'.$device].",".
-                                $config['logger']['threshold_'.$device].",".         $config['logger']['nfft_'.$device].",".
-                                $config['logger']['timestep_'.$device].");";
+                $cmd_sql = "INSERT INTO rteu.runs (device,hostname,PiSN,pos_x,pos_y,orientation,beam_width,gain,center_freq,freq_range,threshold,fft_bins,fft_samples)".
+                    " VALUE ('".$file_name."','".$hostname."','".$PiSN."',".
+                                $config['logger']['antenna_position_N_'.$device].",".   $config['logger']['antenna_position_E_'.$device].",".
+                                $config['logger']['antenna_orientation_'.$device].",".  $config['logger']['antenna_beam_width_'.$device].",".
+                                $config['logger']['log_gain_'.$device].",".             $config['logger']['center_freq_'.$device].",".
+                                $config['logger']['freq_range_'.$device].",".           $config['logger']['threshold_'.$device].",".
+                                $config['logger']['nfft_'.$device].",".                 $config['logger']['timestep_'.$device].
+                    ");";
                 if(!mysqli_query($con, $cmd_sql))
                     return "Failed to write to db: ". mysqli_error($con);
                 else
