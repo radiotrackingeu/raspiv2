@@ -754,7 +754,7 @@
                       `cpu_load` tinyint(4) NOT NULL,
                       `mem_load` tinyint(4) NOT NULL,
                       PRIMARY KEY (`id`)
-                    ) "
+                    ) ";
           echo $query."<br>";
           $result = mysqli_query($con, $query);
           //echo mysqli_error($con);
