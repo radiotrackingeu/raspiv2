@@ -721,17 +721,17 @@
         $hostname=exec('hostname');
         $cmd_docker = "sudo docker run --rm -t --net=host -v /home/pi/gitrep/raspiv2/Docker/sensors/script.py:/root/script.py --privileged sensors python /root/script.py -n ".$hostname." -h ".$config['database']['db_host']." -P ".$config['database']['db_port']." -u ".$config['database']['db_user']." -p ".$config['database']['db_pass'];
         $replace = "*/".$_POST['sensors_interval']." * * * * root ".$cmd_docker;
-        $search = "sudo docker run .* sensors";
+        $search = "sudo docker run.* sensors";
         $file_to_replace = "/tmp/crontab";
         $cmd_change = "sudo docker run -t --rm -v /var/www/html/sdr/cronjob_logger.sh:/tmp/cronjob.sh -v /etc:/tmp git:1.0 sh /tmp/cronjob.sh \"".$search."\" \"".$replace."\" \"" .$file_to_replace."\"";
-        start_docker_echo($cmd_change, "sensors", $cmd_change);
+        start_docker_echo($cmd_change, "sensors", "System and sensor values will now be logged every ".$_POST['sensors_interval']." minutes to database at ".$config['database']['db_host'].".");
       }
       if (isset($_POST['sensors_stop'])) {
-        $search = "sudo docker run .* sensors";
+        $search = "sudo docker run.* sensors";
         $replace = "#sudo docker run sensors";
         $file_to_replace = "/tmp/crontab";
         $cmd_change = "sudo docker run -t --rm -v /var/www/html/sdr/cronjob_logger.sh:/tmp/cronjob.sh -v /etc:/tmp git:1.0 sh /tmp/cronjob.sh \"".$search."\" \"".$replace."\" \"" .$file_to_replace."\"";
-        start_docker_echo($cmd_change, "sensors", $cmd_change);
+        start_docker_echo($cmd_change, "sensors", "System and sensor values will no longer be logged.");
       }
       if (isset($_POST['sensors_create_table'])) {
         echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
