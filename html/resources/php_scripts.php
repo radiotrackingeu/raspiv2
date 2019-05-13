@@ -719,18 +719,18 @@
     {
       if (isset($_POST['sensors_start'])) {
         $hostname=exec('hostname');
-        $cmd_docker = "sudo docker run --rm -it -v /home/pi/gitrep/raspiv2/Docker/sensors/script.py:/root/script.py --privileged sensors python /root/script.py -n ".$hostname." -h ".$config['database']['db_host']." -P ".$config['database']['db_port']." -u ".$config['database']['db_user']." -p ".$config['database']['db_pass'];
+        $cmd_docker = "sudo docker run --rm -it --net=host -v /home/pi/gitrep/raspiv2/Docker/sensors/script.py:/root/script.py --privileged sensors python /root/script.py -n ".$hostname." -h ".$config['database']['db_host']." -P ".$config['database']['db_port']." -u ".$config['database']['db_user']." -p ".$config['database']['db_pass'];
         $replace = "*/".$_POST['sensors_interval']." * * * * root ".$cmd_docker;
         $search = "sudo docker run .* sensors";
         $file_to_replace = "/tmp/crontab";
-        $cmd_change = "sudo docker run -t --rm -v /var/www/html/sdr/cronjob_logger.sh:/tmp/cronjob.sh -v /etc/crontab:/tmp/crontab git:1.0 sh /tmp/cronjob.sh \"".$search."\" \"".$replace."\" \"" .$file_to_replace."\"";
+        $cmd_change = "sudo docker run -t --rm -v /var/www/html/sdr/cronjob_logger.sh:/tmp/cronjob.sh -v /etc:/tmp git:1.0 sh /tmp/cronjob.sh \"".$search."\" \"".$replace."\" \"" .$file_to_replace."\"";
         start_docker_echo($cmd_change, "sensors", $cmd_change);
       }
       if (isset($_POST['sensors_stop'])) {
         $search = "sudo docker run .* sensors";
         $replace = "#sudo docker run sensors";
         $file_to_replace = "/tmp/crontab";
-        $cmd_change = "sudo docker run -t --rm -v /var/www/html/sdr/cronjob_logger.sh:/tmp/cronjob.sh -v /etc/crontab:/tmp/crontab git:1.0 sh /tmp/cronjob.sh \"".$search."\" \"".$replace."\" \"" .$file_to_replace."\"";
+        $cmd_change = "sudo docker run -t --rm -v /var/www/html/sdr/cronjob_logger.sh:/tmp/cronjob.sh -v /etc:/tmp git:1.0 sh /tmp/cronjob.sh \"".$search."\" \"".$replace."\" \"" .$file_to_replace."\"";
         start_docker_echo($cmd_change, "sensors", $cmd_change);
       }
       if (isset($_POST['sensors_create_table'])) {
