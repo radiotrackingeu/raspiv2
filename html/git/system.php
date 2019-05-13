@@ -32,6 +32,7 @@ setInterval("get_Time()",1000);
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'hostname')">Hostname</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'expand_disc')">Expand Disc</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'usbpower')">USB Power</button>
+  <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'sensors')">Sensors</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'passwords')">Passwords</button>
   <button class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event, 'infos')">System Information</button>
 </div>	
@@ -105,6 +106,27 @@ setInterval("get_Time()",1000);
 		</form>
 	</div>
 </div>
+
+<div id="sensors" class="w3-container city" style="display:none">
+	<div class="w3-panel w3-green w3-round w3-padding">
+    <h3>This feature is currently under development!</h3>
+    This feature allows you to write data from different sensor to the database. It will also log key system figures such as CPU Temperature, CPU Load, Memory Load, File System Usage. All data will be written to the <em>rteu.sensors</em> table in the configured database.
+		<form method="POST" class="w3-padding">
+			<label for="interval">Polling interval in minutes:</label><br>
+      <input type="number" class="w3-mobile" value="1" name="sensors_interval" style="margin-bottom:10px"><br>
+			<input type="submit" class="w3-btn w3-brown" value="Start" name="sensors_start">
+      <input type="submit" class="w3-btn w3-brown" value="Stop" name="sensors_stop">
+		</form>
+	</div>
+	<div class="w3-panel w3-green w3-round w3-padding">
+    Click here to create the table <em>rteu.sensors</em> if it doesn't already exists<br>
+		<form method="POST" class="w3-padding">
+      <input type="submit" class="w3-btn w3-brown" value="Create sensors table" name="sensors_create_table">
+		</form>
+    
+    
+	</div>
+</div>	
 
 <div id="passwords" class="w3-container city" style="display:none">
 	<div class="w3-panel w3-green w3-round w3-padding">

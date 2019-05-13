@@ -715,6 +715,62 @@
             start_docker_echo($cmd_change,"usbpower","USB power off timer set.");			
         }
     }
+    //..................  Sensors   ..................//
+    {
+      if (isset($_POST['sensors_start'])) {
+        $cmd_docker = "sudo docker run --rm -it -v /home/pi/gitrep/raspiv2/Docker/sensors/script.py:/root/script.py --privileged sensors python -n ".`hostname`." -h ".$config['database']['db_host']." -P ".$config['database']['db_port']." -u ".$config['database']['db_user']." -p ".$config['database']['db_pass'];
+        $replace = "*/".$_POST['sensors_interval']." * * * * root ".$cmd_docker;
+        $search = "sudo docker run .* sensors";
+        $file_to_replace = "/tmp/crontab";
+        $cmd_change = "sudo docker run -t --rm -v /var/www/html/sdr/cronjob_logger.sh:/tmp/cronjob.sh -v /etc/crontab:/tmp/crontab git:1.0 sh /tmp/cronjob.sh \"".$search."\" \"".$replace."\" \"" .$file_to_replace."\"";
+        start_docker_echo($cmd_change, "sensors", $cmd_change);
+      }
+      if (isset($_POST['sensors_stop'])) {
+        $search = "sudo docker run .* sensors";
+        $replace = "#sudo docker run sensors";
+        $file_to_replace = "/tmp/crontab";
+        $cmd_change = "sudo docker run -t --rm -v /var/www/html/sdr/cronjob_logger.sh:/tmp/cronjob.sh -v /etc/crontab:/tmp/crontab git:1.0 sh /tmp/cronjob.sh \"".$search."\" \"".$replace."\" \"" .$file_to_replace."\"";
+        start_docker_echo($cmd_change, "sensors", $cmd_change);
+      }
+      if (isset($_POST['sensors_create_table'])) {
+        echo "<script type='text/javascript'>document.getElementById('output_php').style.display='block';</script>";
+        echo '<pre>';
+        $con = @mysqli_connect($config['database']['db_host'].":".$config['database']['db_port'], $config['database']['db_user'], $config['database']['db_pass'],"rteu");
+        if (mysqli_connect_errno()) {
+          echo "Connection to ".$config['database']['db_host'].":".$config['database']['db_port']." failed: " . mysqli_connect_error();
+        } else {
+          $create = "CREATE TABLE IF NOT EXISTS sensors (
+                      `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                      `timestamp` varchar(30) NOT NULL,
+                      `hostname` varchar(60) NOT NULL,
+                      `PiSN` varchar(20) NOT NULL,
+                      `cpu_temp` float DEFAULT NULL,
+                      `air_temp` float DEFAULT NULL,
+                      `air_pressure` float DEFAULT NULL,
+                      `air_humidity` float DEFAULT NULL,
+                      `battery_voltage` float DEFAULT NULL,
+                      `magnetometer` float DEFAULT NULL,
+                      `disk_space_used` smallint(6) NOT NULL,
+                      `cpu_load` tinyint(4) NOT NULL,
+                      `mem_load` tinyint(4) NOT NULL,
+                      PRIMARY KEY (`id`)
+                    ) "
+          echo $query."<br>";
+          $result = mysqli_query($con, $query);
+          //echo mysqli_error($con);
+          if ($result)
+            echo "Successfully created table </em>rteu.sensors</em>";
+          else {
+            echo "Error: Could not create table!";
+            echo mysqli_error($con);
+          }
+          mysqli_free_result($result);
+        }
+        mysqli_close($con);
+        echo '</pre>';
+        echo "<script type='text/javascript'>document.getElementById('".$block_to_jump."').style.display = 'block';</script>";
+      }
+    }
     //..................  Passwords   ..................//
     {
         //http
