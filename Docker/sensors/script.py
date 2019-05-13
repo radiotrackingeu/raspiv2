@@ -96,7 +96,7 @@ def main(argv):
 
     # Convert the data to 12-bits
     raw_adc = (((data[0] & 0x0F) << 8 | data[1]) & 0xFFF)*2*3000/4096
-     print('Voltage:\t\t'+str(raw_adc))
+    print('Voltage:\t\t'+str(raw_adc))
 
     query = "INSERT INTO `sensors` (`hostname`, `PiSN`, `timestamp`, `cpu_temp`, `cpu_load`, `mem_load`, `battery_voltage`, `disk_space_used`) VALUES ('"+hostname+"','"+SN+"','"+time_pi+"','"+str(cpu_temp)+"','"+str(cpu_load)+"','"+str(mem_load)+"','"+str(raw_adc)+"','"+str(df)+"')"
     #print(query)
