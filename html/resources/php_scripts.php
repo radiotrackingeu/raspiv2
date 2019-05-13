@@ -719,7 +719,7 @@
     {
       if (isset($_POST['sensors_start'])) {
         $hostname=exec('hostname');
-        $cmd_docker = "sudo docker run --rm -it --net=host -v /home/pi/gitrep/raspiv2/Docker/sensors/script.py:/root/script.py --privileged sensors python /root/script.py -n ".$hostname." -h ".$config['database']['db_host']." -P ".$config['database']['db_port']." -u ".$config['database']['db_user']." -p ".$config['database']['db_pass'];
+        $cmd_docker = "sudo docker run --rm -t --net=host -v /home/pi/gitrep/raspiv2/Docker/sensors/script.py:/root/script.py --privileged sensors python /root/script.py -n ".$hostname." -h ".$config['database']['db_host']." -P ".$config['database']['db_port']." -u ".$config['database']['db_user']." -p ".$config['database']['db_pass'];
         $replace = "*/".$_POST['sensors_interval']." * * * * root ".$cmd_docker;
         $search = "sudo docker run .* sensors";
         $file_to_replace = "/tmp/crontab";
