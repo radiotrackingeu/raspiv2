@@ -755,8 +755,8 @@
                       `mem_load` tinyint(4) NOT NULL,
                       PRIMARY KEY (`id`)
                     ) ";
-          echo $query."<br>";
-          $result = mysqli_query($con, $query);
+          echo $create."<br>";
+          $result = mysqli_query($con, $create);
           //echo mysqli_error($con);
           if ($result)
             echo "Successfully created table </em>rteu.sensors</em>";
