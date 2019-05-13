@@ -34,7 +34,7 @@ def main(argv):
     hostname = ''
 
     try:
-        opts, args=getopt.getopt(argv,"h:u:p:d:n:",["help"])
+        opts, args=getopt.getopt(argv,"h:P:u:p:d:n:",["help"])
     except getopt.GetoptError:
         print('script.py -h <db_hostname> -P <db_port> -u <db_user> -p <db_password> -d <db_database> -n <local_hostname>')
         sys.exit(2)
