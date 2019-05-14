@@ -108,8 +108,17 @@ setInterval("get_Time()",1000);
 </div>
 
 <div id="sensors" class="w3-container city" style="display:none">
-	<div class="w3-panel w3-green w3-round w3-padding">
+	<div class="w3-panel w3-orange w3-round w3-padding">
     <h3>This feature is currently under development!</h3>
+  </div>
+	<div class="w3-panel w3-green w3-round w3-padding">
+    This feature requires I2C to be active.<br>
+    <form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<input type="submit" class="w3-btn w3-brown" value="Activate I2C" name="activate_i2c">
+			<input type="submit" class="w3-btn w3-brown" value="Deactivate I2C" name="deactivate_i2c">
+    </form>
+  </div>
+	<div class="w3-panel w3-green w3-round w3-padding">
     This feature allows you to write data from different sensor to the database. It will also log key system figures such as CPU Temperature, CPU Load, Memory Load, File System Usage. All data will be written to the <em>rteu.sensors</em> table in the configured database.
 		<form method="POST" class="w3-padding">
 			<label for="interval">Polling interval in minutes:</label><br>

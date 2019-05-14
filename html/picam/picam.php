@@ -99,18 +99,7 @@
 				$test = system("sudo docker run -t --rm --privileged -v /boot/:/tmp1/ -v /etc/:/tmp2/ -v /var/www/html/picam/:/tmp3/ i2c:1.0 sh /tmp3/stop_picam.sh 2>&1", $ret);
 				echo '</pre>';
 			}
-			
-			if (isset($_POST["activate_i2c"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged -v /boot/:/tmp1/ -v /etc/:/tmp2/ -v /var/www/html/picam/:/tmp3/ i2c:1.0 sh /tmp3/start_i2c.sh 2>&1", $ret);
-				echo '</pre>';
-			}
-			
-			if (isset($_POST["deactivate_i2c"])){
-				echo '<pre>';
-				$test = system("sudo docker run -t --rm --privileged -v /boot/:/tmp1/ -v /etc/:/tmp2/ -v /var/www/html/picam/:/tmp3/ i2c:1.0 sh /tmp3/stop_i2c.sh 2>&1", $ret);
-				echo '</pre>';
-			}
+      # I2C commands moved to php_scripts.php
 			
 			if (isset($_POST["activate_light"])){
 				echo '<pre>';
