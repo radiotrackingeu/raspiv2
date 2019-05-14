@@ -112,10 +112,11 @@ setInterval("get_Time()",1000);
     <h3>This feature is currently under development!</h3>
   </div>
 	<div class="w3-panel w3-green w3-round w3-padding">
-    This feature requires I2C to be active.<br>
+    This feature requires I2C to be active. Activate and reboot with buttons below:<br>
     <form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="submit" class="w3-btn w3-brown" value="Activate I2C" name="activate_i2c">
 			<input type="submit" class="w3-btn w3-brown" value="Deactivate I2C" name="deactivate_i2c">
+      <input type="submit" class="w3-btn w3-brown" value="Reboot" name="reboot">
     </form>
   </div>
 	<div class="w3-panel w3-green w3-round w3-padding">
