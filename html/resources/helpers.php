@@ -1,6 +1,6 @@
 <?php
     //number of receivers connected
-    $GLOBALS["num_rec"] = exec("lsusb | grep -c -e '0bda:2838' -e '0bda:2832'");
+    $GLOBALS["num_rec"] = exec("lsusb | grep -c -e '0bda:2838' -e '0bda:2832' -e '0ccd:00e0'");
 	
     //for debugging purposes
 	function console_log( $data ){
