@@ -204,7 +204,7 @@
                 $file_path = "/tmp/record/" . $file_name;
                 $run_id = -1;
                 if($_POST["timer_start_".$i]=="start_boot"||$_POST["timer_start_".$i]=="start_time"){
-                    $run_id = write_run_to_db($config, $i, $config['logger']['antenna_id_'.$i]."_".$config['logger']['timer_start_time_'.$i]);
+                    $run_id = write_run_to_db($config, $i, $config['logger']['antenna_id_'.$i]."_"."__autostarted___");
                 }
                 if($run_id>=0 && $_POST["timer_mode_".$i]=="single_freq"){
                     $cmd = cmd_docker($i)." '".cmd_rtl_sdr($config, $i)." 2> ".$file_path." | ".cmd_matched_filters($config, $i).cmd_sql($config, $i, $run_id)." >> ". $file_path." 2>\&1'";
