@@ -13,6 +13,16 @@
     function cmd_docker($dev) {
         return "sudo docker run --rm --name=logger-sdr-d".$dev." --net=host -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ liquidsdr:1.0 bash -c";
     }
+    function write_run_id($dev, $run_id) {
+      $f=fopen("/var/www/html/sdr/run_id_".$dev,"w");
+      fwrite($f, $run_id);
+      fclose($f);
+    }
+    function cmd_docker2($dev) {
+      if (!check_container_exists("logger-sdr-d".$dev))
+        exec("sudo docker create -t --name=logger-sdr-d".$dev." --restart=unless-stopped --net=host -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ -v /var/www/html/cfg/:/tmp2/ liquidsdr:1.0 /tmp/start_logger.sh ".$dev);
+      return "sudo docker start logger-sdr-d".$dev;
+    }
     function cmd_sql($config, $dev, $run_id) {
         if (!is_int($run_id)) {
             return "";
@@ -60,7 +70,9 @@
                 $file_name = $config['logger']['antenna_id_'.$i] ."_". date('Y_m_d_H_i');
                 $file_path = "/tmp/record/" . $file_name;
                 $run_id = write_run_to_db($config, $i, $file_name);
-                $cmd = cmd_docker($i)." '".cmd_rtl_sdr($config, $i)." 2> ".$file_path." | ".cmd_liquidsdr($config, $i).cmd_sql($config, $i, $run_id)." >> ". $file_path." 2>&1'";
+                write_run_id($i,$run_id);
+                $cmd = cmd_docker2($i);
+//                $cmd = cmd_docker($i)." '".cmd_rtl_sdr($config, $i)." 2> ".$file_path." | ".cmd_liquidsdr($config, $i).cmd_sql($config, $i, $run_id)." >> ". $file_path." 2>&1'";
                 $msg = 'Started Receiver '.$i.'.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id.'<br>';
                 start_docker_echo($cmd,'tab_logger_range',$msg);
               }
@@ -75,8 +87,10 @@
               $file_name = $config['logger']['antenna_id_0'] ."_". date('Y_m_d_H_i');
               $file_path = "/tmp/record/" . $file_name;
               $run_id = write_run_to_db($config, 0, $file_name);
-              $cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." 2> ".$file_path." | ".cmd_liquidsdr($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
-              start_docker_echo($cmd,'tab_logger_range','Started Receiver 0.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
+              write_run_id(0,$run_id);
+              $cmd = cmd_docker2(0);
+//              $cmd = cmd_docker(0)." '".cmd_rtl_sdr($config, 0)." 2> ".$file_path." | ".cmd_liquidsdr($config, 0).cmd_sql($config, 0, $run_id)." >> ". $file_path." 2>&1'";
+              start_docker_echo($cmd,'tab_logger_range','Started Receiver 0.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id.'<br>'.$cmd);
             }
         }
         if (isset($_POST["log_stop_0"])){
@@ -88,7 +102,9 @@
             $file_name = $config['logger']['antenna_id_1'] ."_". date('Y_m_d_H_i');
             $file_path = "/tmp/record/" . $file_name;
             $run_id = write_run_to_db($config, 1, $file_name);
-            $cmd = cmd_docker(1)." '".cmd_rtl_sdr($config, 1)." 2> ".$file_path." | ".cmd_liquidsdr($config, 1).cmd_sql($config, 1, $run_id)." >> ". $file_path." 2>&1'";
+            write_run_id(1,$run_id);
+            $cmd = cmd_docker2(1);
+//            $cmd = cmd_docker(1)." '".cmd_rtl_sdr($config, 1)." 2> ".$file_path." | ".cmd_liquidsdr($config, 1).cmd_sql($config, 1, $run_id)." >> ". $file_path." 2>&1'";
             start_docker_echo($cmd,'tab_logger_range','Started Receiver 1.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
           }
         }
@@ -101,7 +117,9 @@
             $file_name = $config['logger']['antenna_id_2'] ."_". date('Y_m_d_H_i');
             $file_path = "/tmp/record/" . $file_name;
             $run_id = write_run_to_db($config, 2, $file_name);
-            $cmd = cmd_docker(2)." '".cmd_rtl_sdr($config, 2)." 2> ".$file_path." | ".cmd_liquidsdr($config, 2).cmd_sql($config, 2, $run_id)." >> ". $file_path." 2>&1'";
+            write_run_id(2,$run_id);
+            $cmd = cmd_docker2(2);
+//            $cmd = cmd_docker(2)." '".cmd_rtl_sdr($config, 2)." 2> ".$file_path." | ".cmd_liquidsdr($config, 2).cmd_sql($config, 2, $run_id)." >> ". $file_path." 2>&1'";
             start_docker_echo($cmd,'tab_logger_range','Started Receiver 2.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
           }
         }
@@ -114,7 +132,9 @@
             $file_name = $config['logger']['antenna_id_3'] ."_". date('Y_m_d_H_i');
             $file_path = "/tmp/record/" . $file_name;
             $run_id = write_run_to_db($config, 3, $file_name);
-            $cmd = cmd_docker(3)." '".cmd_rtl_sdr($config, 3)." 2> ".$file_path." | ".cmd_liquidsdr($config, 3).cmd_sql($config, 3, $run_id)." >> ". $file_path." 2>&1'";
+            write_run_id(3,$run_id);
+            $cmd = cmd_docker2(3);
+//            $cmd = cmd_docker(3)." '".cmd_rtl_sdr($config, 3)." 2> ".$file_path." | ".cmd_liquidsdr($config, 3).cmd_sql($config, 3, $run_id)." >> ". $file_path." 2>&1'";
             start_docker_echo($cmd,'tab_logger_range','Started Receiver 3.<br>Device id: <a target="_blank" href="/sdr/record/'.$file_name.'">'.$file_name.'</a><br>Run id: '.$run_id);
           }
         }
