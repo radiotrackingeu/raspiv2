@@ -20,7 +20,7 @@
     }
     function cmd_docker2($dev) {
       if (!check_container_exists("logger-sdr-d".$dev))
-        exec("sudo docker create -t --name=logger-sdr-d".$dev." --restart=unless-stopped --net=host -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ -v /var/www/html/cfg/:/tmp2/ liquidsdr:1.0 /tmp/start_logger.sh ".$dev);
+        exec("sudo docker create -t --name=logger-sdr-d".$dev." --restart=unless-stopped --net=host -t --device=/dev/bus/usb -v /var/www/html/sdr/:/tmp/ -v /var/www/html/cfg/:/tmp2/ liquidsdr:1.0 bash /tmp/start_logger.sh ".$dev);
       return "sudo docker start logger-sdr-d".$dev;
     }
     function cmd_sql($config, $dev, $run_id) {
