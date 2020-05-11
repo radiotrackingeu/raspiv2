@@ -39,8 +39,8 @@
         return "/tmp/liquidsdr/matched_signal_detect -s -t ".$config['logger']['threshold_'.$dev]." -r ".$config['logger']['freq_range_'.$dev]." -p 22";
     }
     function write_run_to_db($config, $device, $file_name) {
-        $hostname=`hostname`;
-        $PiSN=`cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2`;
+        $hostname=trim(`hostname`);
+        $PiSN=trim(`cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2`);
         if ($config['logger']['use_sql_'.$device] != "Yes")
             return "Writing to database is switched off - see settings";
         $con = mysqli_connect($config['database']['db_host'].":".$config['database']['db_port'], $config['database']['db_user'], $config['database']['db_pass']);
