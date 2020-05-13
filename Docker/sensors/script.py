@@ -33,10 +33,13 @@ def main(argv):
 
     hostname = ''
 
+    read_V = True
+    raw_adc = 0
+
     try:
-        opts, args=getopt.getopt(argv,"h:P:u:p:d:n:",["help"])
+        opts, args=getopt.getopt(argv,"h:P:u:p:d:n:V",["help"])
     except getopt.GetoptError:
-        print('script.py -h <db_hostname> -P <db_port> -u <db_user> -p <db_password> -d <db_database> -n <local_hostname>')
+        print('script.py -h <db_hostname> -P <db_port> -u <db_user> -p <db_password> -d <db_database> -n <local_hostname> [-V]')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
@@ -51,8 +54,11 @@ def main(argv):
             db_database = arg
         elif opt == '-n':
             hostname = arg
+        elif opt == '-V':
+            read_V = False
         elif opt == '--help':
-            print('script.py -h <db_hostname> -u <db_user> -p <db_password> -d <db_database> -n <local_hostname>')
+            print('script.py -h <db_hostname> -u <db_user> -p <db_password> -d <db_database> -n <local_hostname> [-V]')
+            print('-V disable voltage readings')
             sys.exit()
             
     print('Hostname:\t\t'+hostname)
@@ -79,24 +85,25 @@ def main(argv):
     time_pi = str(datetime.datetime.now())
     print('Time:\t\t\t'+time_pi)
 
-    # Get I2C bus
-    bus = smbus.SMBus(1)
+    if read_V:
+        # Get I2C bus
+        bus = smbus.SMBus(1)
+        print(bus)
+        # ADC121C021 address, 0x50(80)
+        # Select configuration register, 0x02(02)
+        #               0x20(32)        Automatic conversion mode enabled
+        bus.write_byte_data(0x50, 0x02, 0x20)
 
-    # ADC121C021 address, 0x50(80)
-    # Select configuration register, 0x02(02)
-    #               0x20(32)        Automatic conversion mode enabled
-    bus.write_byte_data(0x50, 0x02, 0x20)
+        time.sleep(0.5)
 
-    time.sleep(0.5)
+        # ADC121C021 address, 0x50(80)
+        # Read data back from 0x00(00), 2 bytes
+        # raw_adc MSB, raw_adc LSB
+        data = bus.read_i2c_block_data(0x50, 0x00, 2)
 
-    # ADC121C021 address, 0x50(80)
-    # Read data back from 0x00(00), 2 bytes
-    # raw_adc MSB, raw_adc LSB
-    data = bus.read_i2c_block_data(0x50, 0x00, 2)
-
-    # Convert the data to 12-bits
-    raw_adc = (((data[0] & 0x0F) << 8 | data[1]) & 0xFFF)*2*3000/4096
-    print('Voltage:\t\t'+str(raw_adc))
+        # Convert the data to 12-bits
+        raw_adc = (((data[0] & 0x0F) << 8 | data[1]) & 0xFFF)*2*3000/4096
+        print('Voltage:\t\t'+str(raw_adc))
 
     query = "INSERT INTO `sensors` (`hostname`, `PiSN`, `timestamp`, `cpu_temp`, `cpu_load`, `mem_load`, `battery_voltage`, `disk_space_used`) VALUES ('"+hostname+"','"+SN+"','"+time_pi+"','"+str(cpu_temp)+"','"+str(cpu_load)+"','"+str(mem_load)+"','"+str(raw_adc)+"','"+str(df)+"')"
     #print(query)
