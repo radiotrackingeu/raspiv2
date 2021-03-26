@@ -352,7 +352,7 @@
                 </div><br>
                 <div id="latest_freq" class="w3-bar">
 					<label for="latest_cfreq">Center Freq in MHz:</label><span style="margin-left:73px"></span><label for="latest_freq_range">Freq Range in kHz:<br></label> 
-                    <input class="w3-mobile" type="number" value="<?php echo isset($config['logger']['latest_cfreq']) ? $config['logger']['latest_cfreq'] : 150.1 ?>" pattern='[0-9]+' name="latest_cfreq" id="latest_cfreq"> <span  style="margin-left:12px"></span>
+                    <input class="w3-mobile" type="number" value="<?php echo isset($config['logger']['latest_cfreq']) ? $config['logger']['latest_cfreq'] : 150.1 ?>" pattern='[0-9]+' step="any" name="latest_cfreq" id="latest_cfreq"> <span  style="margin-left:12px"></span>
                     <input class="w3-mobile" type="number" value="<?php echo isset($config['logger']['latest_freq_range']) ? $config['logger']['latest_freq_range'] : 250 ?>" pattern='[0-9]+' name="latest_freq_range" id="latest_freq_range">
                 </div><br>
                 <label for="latest_sig_str">Minimum signal strength:<br></label>
