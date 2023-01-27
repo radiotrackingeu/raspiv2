@@ -50,6 +50,8 @@ char                *   db_host = NULL,
                     *   db_pass = NULL;
 unsigned int        db_port=0;
 
+unsigned int        verbose = 1;
+
 struct option longopts[] = {
     {"sql",       no_argument, &write_to_db, 1},
     {"db_host",   required_argument, NULL, 900},
@@ -65,7 +67,7 @@ struct option longopts[] = {
 // print usage/help message
 void usage()
 {
-    printf("%s [-b num] [-d name] [-h] [-i file] [-k sec] [-n num] [-r rate] [-s] [--sql [--db_host host] --db_user user --db_pass pass] [-t thre]\n", __FILE__);
+    printf("%s [-b num] [-d name] [-h] [-i file] [-k sec] [-n num] [-r rate] [-s] [-v] [--sql [--db_host host] --db_user user --db_pass pass] [-t thre]\n", __FILE__);
     printf("  -h                : print this help\n");
     printf("  -i <file>         : input data filename\n");
     printf("  -t <threshold>    : detection threshold above psd, default: 10 dB\n");
@@ -74,6 +76,7 @@ void usage()
     printf("  -b <number>       : number of bins used for fft, default is 400\n");
     printf("  -n <number>       : number of samples per fft, default is 50\n");
     printf("  -k <seconds>      : prints a keep-alive statement every <sec> seconds, default is 300\n");
+    printf("  -v                : verbose mode\n");
     printf(" --ll <limit>       : set lower limit in seconds for signal duration. Shorter signals will not be logged.");
     printf(" --lu <limit>       : set upper limit in seconds for signal duration. Longer signals will not be logged.");
     printf(" --sql              : write to database, requires --db_user, --db_pass\n");
@@ -123,7 +126,7 @@ int main(int argc, char*argv[])
 
     // read command-line options
     int dopt;
-    while ((dopt = getopt_long(argc,argv,"hi:t:sr:b:n:d:k:", longopts, NULL)) != -1) {
+    while ((dopt = getopt_long(argc,argv,"hi:t:sr:b:n:d:k:v", longopts, NULL)) != -1) {
         switch (dopt) {
         case 'h': usage();                              return 0;
         case 'i': strncpy(filename_input,optarg,256);   break;
@@ -133,6 +136,7 @@ int main(int argc, char*argv[])
         case 'b': nfft = atoi(optarg);                  break;
         case 'n': timestep = atoi(optarg);              break;
         case 'k': keepalive = atoi(optarg);             break;
+        case 'v': verbose = 1;                          break;
         case 900: db_host = optarg;                     break;
         case 901: db_port = atoi(optarg);               break;
         case 902: db_user = optarg;                     break;
@@ -204,8 +208,10 @@ int main(int argc, char*argv[])
     {
         // read samples into buffer
         unsigned int r = buf_read(fid, buf, buf_len);
-        if (r != buf_len)
-            break;
+        if (r != buf_len){
+            fprintf(stderr,"Incomplete buffer read, only read %d of %d samples\n", r, buf_len);
+            break;// LOOKAT Here we can loose up to 63 (buf_len -1) values. fread moves a pointer over the file. Maybe use fseek 
+        }
 
         // apply DC blocking filter
         iirfilt_crcf_execute_block(dcblock, buf, buf_len, buf);
@@ -259,10 +265,10 @@ int main(int argc, char*argv[])
                         DB_TABLE, tbuf, run_id
                     );
                     mysql_query(con, sql_statement);
-#ifdef MYSQL_ERRORS
-                    if (*mysql_error(con))
+
+                    if (*mysql_error(con) && verbose) {
                         fprintf(stderr, "Error while writing to db: %s", mysql_error(con));
-#endif
+                    }
                 }
             }
 
@@ -301,8 +307,10 @@ unsigned int buf_read(FILE *          _fid,
     uint8_t      buf2[2];
     for (i=0; i<_buf_len; i++) {
         // try to read 2 samples at a time
-        if (fread(buf2, sizeof(uint8_t), 2, _fid) != 2)
-            break;
+        if (fread(buf2, sizeof(uint8_t), 2, _fid) != 2) {
+            fprintf(stderr,"Incomplete sample read, could not read 2 samples at once.\n");
+            break;// LOOKAT Here we loose max 1 value
+        }
         // convert to float complex type
         float complex x = ((float)(buf2[0]) - 127.0f) +
                           ((float)(buf2[1]) - 127.0f) * _Complex_I;
@@ -441,7 +449,7 @@ float get_group_max_sig(int _group_id)
             max = psd_max[i];
         }
     }
-    return max+100; //10*log10(1e10*(max/10) / 1e10*(noise/10))
+    return max+100; //10*log10(1e10*(max/10) / 1e10*(noise/10)) LOOKAT use actual values
 }
 
 // get noise at max signal
@@ -512,7 +520,8 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                 format_timestamp(tm, timestamp, 30);
                 float signal_freq = get_group_freq(i)*_sampling_rate;           // center frequency estimate (normalized)
                 float signal_bw   = get_group_bw(i)*_sampling_rate;             // bandwidth estimate (normalized)
-                float max_signal  = get_group_max_sig(i);                       // maximum signal strength per group
+                float max_signal  = get_group_max_sig(i);                       // maximum signal strength per group 
+                //LOOKAT  lets try using mean, maybe in its own col first to compare
                 float noise   = get_group_noise(i);                             // noise level per group
                 printf("%s;%llu;%-10.6f;%9.6f;%9.6f;%f;%f\n",
                         timestamp, num_transforms, duration, signal_freq, signal_bw,max_signal,noise);
@@ -523,10 +532,9 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                         DB_TABLE, timestamp, num_transforms, duration, signal_freq, signal_bw, max_signal, noise, run_id
                     );
                     mysql_query(con, sql_statement);
-#ifdef MYSQL_ERRORS
-                if (*mysql_error(con))
+                    if (*mysql_error(con) && verbose) {
                         fprintf(stderr, "Error while writing to db: %s", mysql_error(con));
-#endif
+                    }
                 }
             }
             // reset counters for group
@@ -595,3 +603,4 @@ void open_connection() {
     }
 }
 
+    
