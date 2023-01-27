@@ -52,6 +52,7 @@ unsigned int        db_port=0;
 
 unsigned int        verbose = 1;
 unsigned int        center_freq = 0;
+unsigned int        str_mode = 0;
 
 struct option longopts[] = {
     {"sql",       no_argument, &write_to_db, 1},
@@ -78,6 +79,7 @@ void usage()
     printf("  -n <number>       : number of samples per fft, default is 50\n");
     printf("  -c <number>       : center frequency set in rtl_sdr default is 0\n");
     printf("  -k <seconds>      : prints a keep-alive statement every <sec> seconds, default is 300\n");
+    printf("  -m <mode>         : select mode for signal strength:\n\t 1: max\n\t 2: mean\n");
     printf("  -v                : verbose mode\n");
     printf(" --ll <limit>       : set lower limit in seconds for signal duration. Shorter signals will not be logged.");
     printf(" --lu <limit>       : set upper limit in seconds for signal duration. Longer signals will not be logged.");
@@ -129,7 +131,7 @@ int main(int argc, char*argv[])
 
     // read command-line options
     int dopt;
-    while ((dopt = getopt_long(argc,argv,"hi:t:sr:b:n:d:k:v", longopts, NULL)) != -1) {
+    while ((dopt = getopt_long(argc,argv,"hi:t:sr:b:n:d:k:vc:m:", longopts, NULL)) != -1) {
         switch (dopt) {
         case 'h': usage();                              return 0;
         case 'i': strncpy(filename_input,optarg,256);   break;
@@ -141,6 +143,7 @@ int main(int argc, char*argv[])
         case 'k': keepalive = atoi(optarg);             break;
         case 'v': verbose = 1;                          break;
         case 'c': center_freq = atoi(optarg);           break;
+        case 'm': str_mode = atoi(optarg);              break;
         case 900: db_host = optarg;                     break;
         case 901: db_port = atoi(optarg);               break;
         case 902: db_user = optarg;                     break;
@@ -151,6 +154,14 @@ int main(int argc, char*argv[])
         case 0  :                                       break; // return value of getopt_long() when setting a flag
         default : exit(1);
         }
+    }
+
+    switch(str_mode) {
+      case 0  :   printf("No signal strength mode selected. Using default max\n"); str_mode=1; break;
+      case 1  :   printf("Using signal strength mode max.\n"); break;
+      case 2  :   printf("Using signal strength mode mean.\n"); break;
+      default :   printf("Invalid signal strength mode selected: %i.\n",str_mode); exit(1);
+
     }
 
     // reset counters, etc.
@@ -465,6 +476,21 @@ float get_group_max_sig(int _group_id)
     return max; //10*log10(1e10*(max/10) / 1e10*(noise/10)) LOOKAT use actual values
 }
 
+// get group mean signal from group
+float get_group_mean_sig(int _group_id)
+{
+    int i;
+    float mean =0;
+    int num_group=0;
+    for (i=0; i<nfft; i++) {
+        if (groups[i] == _group_id) {
+            mean = mean+psd_max[i];
+            num_group = num_group+1;
+        }
+    }
+    return mean/num_group;
+}
+
 // get noise at max signal
 float get_group_noise(int _group_id)
 {
@@ -533,7 +559,11 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                 format_timestamp(tm, timestamp, 24);
                 float signal_freq = center_freq + get_group_freq(i)*_sampling_rate/1000;           // center frequency estimate (normalized)
                 float signal_bw   = get_group_bw(i)*_sampling_rate/1000;             // bandwidth estimate (normalized)
-                float max_signal  = get_group_max_sig(i));                       // maximum signal strength per group 
+                float max_signal;
+                if (str_mode==2)
+                  max_signal = get_group_mean_sig(i);
+                else
+                 max_signal  = get_group_max_sig(i);                       // maximum signal strength per group 
                 //LOOKAT  lets try using mean, maybe in its own col first to compare
                 float noise   = get_group_noise(i);                             // noise level per group
                 if (write_to_db!=0) {
