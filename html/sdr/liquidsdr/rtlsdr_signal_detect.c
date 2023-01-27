@@ -175,8 +175,7 @@ int main(int argc, char*argv[])
     if (write_to_db!=0)
     {
         open_connection();
-    }
-
+    } 
 
     // open input file
     FILE * fid;
@@ -523,9 +522,6 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                 float max_signal  = get_group_max_sig(i);                       // maximum signal strength per group 
                 //LOOKAT  lets try using mean, maybe in its own col first to compare
                 float noise   = get_group_noise(i);                             // noise level per group
-                printf("%s;%llu;%-10.6f;%9.6f;%9.6f;%f;%f\n",
-                        timestamp, num_transforms, duration, signal_freq, signal_bw,max_signal,noise);
-                fflush(stdout);
                 if (write_to_db!=0) {
                     snprintf(sql_statement, sizeof(sql_statement),
                         "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, noise, run) VALUE(\"%s\",%llu,%-10.6f,%9.6f,%9.6f,%f,%f,%i)",
@@ -535,6 +531,10 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                     if (*mysql_error(con) && verbose) {
                         fprintf(stderr, "Error while writing to db: %s", mysql_error(con));
                     }
+                } else {
+                    printf("%s;%llu;%-10.6f;%9.6f;%9.6f;%f;%f\n",
+                            timestamp, num_transforms, duration, signal_freq, signal_bw,max_signal,noise);
+                    fflush(stdout);
                 }
             }
             // reset counters for group
