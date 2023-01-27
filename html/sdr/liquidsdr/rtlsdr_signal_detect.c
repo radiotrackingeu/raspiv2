@@ -123,6 +123,7 @@ int main(int argc, char*argv[])
                     timestep            = 50;
     float           lowerLimit          = 0,
                     upperLimit          = 1;
+    unsigned int    startup             = 1;
 
     // read command-line options
     int dopt;
@@ -226,10 +227,11 @@ int main(int argc, char*argv[])
             // compute power spectral density output
             spgramcf_get_psd(periodogram, psd);
 
-            // compute average template for one second
-            if (num_transforms<= sampling_rate / timestep) {
+            // compute average template for five second
+            if ( startup && num_transforms<= 5 * sampling_rate / timestep) { // run only once
                 // set template PSD for relative signal detection
                 // Add up all signal strength to derive minimum value
+                fprintf(stderr, "Getting template PSD");
                 int i;
                 for (i=0;i<nfft;i++) {
                     if ( psd[i] < psd_template[i] ) {
@@ -237,6 +239,7 @@ int main(int argc, char*argv[])
                     }
                 }
                 memmove(psd_max, psd, nfft*sizeof(float));
+                startup=0; // run only once
             } else {
                 // detect differences between current PSD estimate and template
                 step(threshold, sampling_rate, lowerLimit, upperLimit);
