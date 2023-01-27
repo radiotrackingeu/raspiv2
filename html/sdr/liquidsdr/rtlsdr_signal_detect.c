@@ -535,7 +535,7 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                 float noise   = get_group_noise(i);                             // noise level per group
                 if (write_to_db!=0) {
                     snprintf(sql_statement, sizeof(sql_statement),
-                        "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, noise, run) VALUE(\"%s\",%llu,%f,%.3f,%.3f,%.2f,%.2f,%i)",
+                        "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, noise, run) VALUE(\"%s\",%llu,%.02f,%.03f,%.03f,%.02f,%.02f,%i)",
                         DB_TABLE, timestamp, num_transforms, 1000*duration, signal_freq, signal_bw, max_signal, noise, run_id
                     );
                     mysql_query(con, sql_statement);
@@ -543,7 +543,7 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                         fprintf(stderr, "Error while writing to db: %s", mysql_error(con));
                     }
                 } else {
-                    printf("%s;%llu;%-10.6f;%9.6f;%9.6f;%f;%f\n",
+                    printf("%s;%llu;%.02f;%.03f;%.03f;%.02f;%.02f\n",
                             timestamp, num_transforms, duration, signal_freq, signal_bw,max_signal,noise);
                     fflush(stdout);
                 }
