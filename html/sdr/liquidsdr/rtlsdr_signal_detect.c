@@ -511,7 +511,7 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
     for (i=1; i<=num_groups; i++) {
         if (signal_complete(i)) {
             // signal started & stopped
-            float duration = 1000*tmp_transforms*get_group_time(i)*timestep/_sampling_rate; // duration [ms]
+            float duration = tmp_transforms*get_group_time(i)*timestep/_sampling_rate; // duration [samples]
             if (duration >= lowerLimit && duration <= upperLimit )
             {
                 float ftime = (float)get_group_start_time(i) * ratio;
@@ -528,7 +528,7 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                 if (write_to_db!=0) {
                     snprintf(sql_statement, sizeof(sql_statement),
                         "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, noise, run) VALUE(\"%s\",%llu,%f,%.3f,%.3f,%.2f,%.2f,%i)",
-                        DB_TABLE, timestamp, num_transforms, duration, signal_freq, signal_bw, max_signal, noise, run_id
+                        DB_TABLE, timestamp, num_transforms, 1000*duration, signal_freq, signal_bw, max_signal, noise, run_id
                     );
                     mysql_query(con, sql_statement);
                     if (*mysql_error(con) && verbose) {
