@@ -503,7 +503,7 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
     update_detect(_threshold);
     update_count ();
     int num_groups = update_groups();
-    char timestamp[30];
+    char timestamp[24];
     char sql_statement[256];
     // determine if signal has stopped based on group and detection
     int i;
@@ -511,7 +511,7 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
     for (i=1; i<=num_groups; i++) {
         if (signal_complete(i)) {
             // signal started & stopped
-            float duration = tmp_transforms*get_group_time(i)*timestep/_sampling_rate; // duration [samples]
+            float duration = 1000*tmp_transforms*get_group_time(i)*timestep/_sampling_rate; // duration [ms]
             if (duration >= lowerLimit && duration <= upperLimit )
             {
                 float ftime = (float)get_group_start_time(i) * ratio;
@@ -519,15 +519,15 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                 tm.tv_nsec = (long)(fmodf(ftime,1)*BILLION);
                 tm.tv_sec = (long)ftime;
                 tm = time_add(t_start, tm);
-                format_timestamp(tm, timestamp, 30);
-                float signal_freq = get_group_freq(i)*_sampling_rate;           // center frequency estimate (normalized)
-                float signal_bw   = get_group_bw(i)*_sampling_rate;             // bandwidth estimate (normalized)
-                float max_signal  = get_group_max_sig(i);                       // maximum signal strength per group 
+                format_timestamp(tm, timestamp, 24);
+                float signal_freq = get_group_freq(i)*_sampling_rate/1000;           // center frequency estimate (normalized)
+                float signal_bw   = get_group_bw(i)*_sampling_rate/1000;             // bandwidth estimate (normalized)
+                float max_signal  = get_group_max_sig(i));                       // maximum signal strength per group 
                 //LOOKAT  lets try using mean, maybe in its own col first to compare
                 float noise   = get_group_noise(i);                             // noise level per group
                 if (write_to_db!=0) {
                     snprintf(sql_statement, sizeof(sql_statement),
-                        "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, noise, run) VALUE(\"%s\",%llu,%-10.6f,%9.6f,%9.6f,%f,%f,%i)",
+                        "INSERT INTO %s (timestamp,samples,duration,signal_freq,signal_bw, max_signal, noise, run) VALUE(\"%s\",%llu,%f,%.3f,%.3f,%.2f,%.2f,%i)",
                         DB_TABLE, timestamp, num_transforms, duration, signal_freq, signal_bw, max_signal, noise, run_id
                     );
                     mysql_query(con, sql_statement);
@@ -551,11 +551,11 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
 // pretty-prints _time into _buf
 void format_timestamp(const struct timespec _time, char * _buf, const unsigned long _buf_len)
 {
-    char buffer[11];
+    char buffer[5];
     const time_t tm = (time_t) _time.tv_sec;
     strftime(_buf, _buf_len, "%F %T",gmtime(&tm));
-    sprintf(buffer, ".%09ld", _time.tv_nsec);
-    strncat(_buf, buffer, 10);
+    sprintf(buffer, ".%03ld", _time.tv_nsec);
+    strncat(_buf, buffer, 4);
 }
 
 // add 2 timestamps
