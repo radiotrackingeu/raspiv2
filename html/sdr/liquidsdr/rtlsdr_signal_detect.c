@@ -51,6 +51,7 @@ char                *   db_host = NULL,
 unsigned int        db_port=0;
 
 unsigned int        verbose = 1;
+unsigned int        center_freq = 0;
 
 struct option longopts[] = {
     {"sql",       no_argument, &write_to_db, 1},
@@ -75,6 +76,7 @@ void usage()
     printf("  -r <rate>         : sampling rate in Hz, default 250000Hz\n");
     printf("  -b <number>       : number of bins used for fft, default is 400\n");
     printf("  -n <number>       : number of samples per fft, default is 50\n");
+    printf("  -c <number>       : center frequency set in rtl_sdr default is 0\n");
     printf("  -k <seconds>      : prints a keep-alive statement every <sec> seconds, default is 300\n");
     printf("  -v                : verbose mode\n");
     printf(" --ll <limit>       : set lower limit in seconds for signal duration. Shorter signals will not be logged.");
@@ -138,6 +140,7 @@ int main(int argc, char*argv[])
         case 'n': timestep = atoi(optarg);              break;
         case 'k': keepalive = atoi(optarg);             break;
         case 'v': verbose = 1;                          break;
+        case 'c': center_freq = atoi(optarg);           break;
         case 900: db_host = optarg;                     break;
         case 901: db_port = atoi(optarg);               break;
         case 902: db_user = optarg;                     break;
@@ -528,7 +531,7 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                 tm.tv_sec = (long)ftime;
                 tm = time_add(t_start, tm);
                 format_timestamp(tm, timestamp, 24);
-                float signal_freq = get_group_freq(i)*_sampling_rate/1000;           // center frequency estimate (normalized)
+                float signal_freq = center_freq + get_group_freq(i)*_sampling_rate/1000;           // center frequency estimate (normalized)
                 float signal_bw   = get_group_bw(i)*_sampling_rate/1000;             // bandwidth estimate (normalized)
                 float max_signal  = get_group_max_sig(i));                       // maximum signal strength per group 
                 //LOOKAT  lets try using mean, maybe in its own col first to compare
