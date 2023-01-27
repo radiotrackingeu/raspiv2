@@ -459,7 +459,7 @@ float get_group_max_sig(int _group_id)
             max = psd_max[i];
         }
     }
-    return max+100; //10*log10(1e10*(max/10) / 1e10*(noise/10)) LOOKAT use actual values
+    return max; //10*log10(1e10*(max/10) / 1e10*(noise/10)) LOOKAT use actual values
 }
 
 // get noise at max signal
