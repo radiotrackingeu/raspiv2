@@ -205,7 +205,7 @@ int main(int argc, char*argv[])
         }
     }
     if (write_to_db!=0)
-        printf("Also sending data to SQL Server at %s.\n", db_host);
+        printf("Only sending data to SQL Server at %s. To enable logging to file disable database logging.\n", db_host);
     printf("Ignoring signals shorter than %f and longer than %f\n", lowerLimit, upperLimit);
     clock_gettime(CLOCK_REALTIME,&t_start);
     char tbuf[30];
@@ -585,6 +585,7 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
             clear_group_count(i);
         }
     }
+    fflush(stdout);
     return 0;
 }
 
