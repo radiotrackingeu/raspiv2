@@ -228,18 +228,25 @@ int main(int argc, char*argv[])
             spgramcf_get_psd(periodogram, psd);
 
             // compute average template for five second
-            if ( startup && num_transforms<= 5 * sampling_rate / timestep) { // run only once
+            if ( startup && num_transforms<= 1 * sampling_rate / timestep) { // run only once
                 // set template PSD for relative signal detection
                 // Add up all signal strength to derive minimum value
-                fprintf(stderr, "Getting template PSD");
                 int i;
+                float tmp_mean = 0.0, tmp_min = 100.0, tmp_max = -100.0;
                 for (i=0;i<nfft;i++) {
                     if ( psd[i] < psd_template[i] ) {
                     psd_template[i] = psd[i];
                     }
+                    tmp_min=fmin(tmp_min, psd_template[i]);
+                    tmp_max=fmax(tmp_max, psd_template[i]);
+                    tmp_mean=tmp_mean+psd_template[i];
                 }
+                tmp_mean=tmp_mean/nfft;
+                clock_gettime(CLOCK_REALTIME,&t_start);
+                char tbuf[30];
+                format_timestamp(t_start,tbuf,30);
+                fprintf(stderr, "%s - Getting template PSD: %f/%f/%f\n", tbuf, tmp_min, tmp_mean, tmp_max);
                 memmove(psd_max, psd, nfft*sizeof(float));
-                startup=0; // run only once
             } else {
                 // detect differences between current PSD estimate and template
                 step(threshold, sampling_rate, lowerLimit, upperLimit);
@@ -251,6 +258,7 @@ int main(int argc, char*argv[])
 
             // print keepalive
             if (num_transforms%keepalive == 0) {
+                startup = 0;
                 mysql_ping(con);
                 struct timespec now;
                 clock_gettime(CLOCK_REALTIME,&now);
