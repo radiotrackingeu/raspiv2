@@ -78,7 +78,7 @@ void usage()
     printf("  -r <rate>         : sampling rate in Hz, default 250000Hz\n");
     printf("  -b <number>       : number of bins used for fft, default is 400\n");
     printf("  -n <number>       : number of samples per fft, default is 50\n");
-    printf("  -c <number>       : center frequency set in rtl_sdr default is 0\n");
+    printf("  -c <number>       : center frequency in Hz, as set in rtl_sdr default is 0 for relative frequencies\n");
     printf("  -k <seconds>      : prints a keep-alive statement every <sec> seconds, default is 300\n");
     printf("  -m <mode>         : select mode for signal strength:\n\t 1: max\n\t 2: mean\n");
     printf("  -v                : verbose mode\n");
@@ -559,7 +559,7 @@ int step(float _threshold, unsigned int _sampling_rate, float lowerLimit, float 
                 tm.tv_sec = (long)ftime;
                 tm = time_add(t_start, tm);
                 format_timestamp(tm, timestamp, 24);
-                float signal_freq = center_freq + get_group_freq(i)*_sampling_rate/1000;           // center frequency estimate (normalized)
+                float signal_freq = (center_freq + get_group_freq(i)*_sampling_rate)/1000;           // center frequency estimate (normalized)
                 float signal_bw   = get_group_bw(i)*_sampling_rate/1000;             // bandwidth estimate (normalized)
                 float max_signal;
                 if (str_mode==2)
