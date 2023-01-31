@@ -246,7 +246,7 @@ int main(int argc, char*argv[])
             if ( startup && num_transforms<= len_templ * sampling_rate / timestep) { // run only once
                 // set template PSD for relative signal detection
                 // Add up all signal strength to derive minimum value
-                templ_count = 0;
+                templ_count = templ_count + 1;
                 int i;
                 float tmp_mean = 0.0, tmp_min = 100.0, tmp_max = -100.0;
                 for (i=0;i<nfft;i++) {
