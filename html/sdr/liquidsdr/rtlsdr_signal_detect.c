@@ -23,6 +23,7 @@
 
 #define BILLION     1000000000L
 
+#define len_templ   5
 
 float               *   psd_template;
 float               *   psd;
@@ -110,11 +111,10 @@ unsigned long long  get_group_start_time    (int _group_id);
 int                 clear_group_count       (int _group_id);
 int                 step                    (float _threshold, unsigned int _sampling_rate, float lowerLimit, float upperLimit);
 void                format_timestamp        (const struct timespec _time, char * _buf, const unsigned long _buf_len);
-struct timespec     time_add                 (const struct timespec _t1, const struct timespec _t2);
-//char                before                  (const struct timespec _a, const struct timespec _b);
+struct timespec     time_add                (const struct timespec _t1, const struct timespec _t2);
+//char                before                (const struct timespec _a, const struct timespec _b);
 void                free_memory             ();
-void                open_connection          ();
-
+void                open_connection         ();
 
 // main program
 int main(int argc, char*argv[])
@@ -218,6 +218,7 @@ int main(int argc, char*argv[])
     // continue processing as long as there are samples in the file
     unsigned long int total_samples  = 0;
     num_transforms = 0;
+    int templ_count = 0;
     do
     {
         // read samples into buffer
@@ -242,9 +243,10 @@ int main(int argc, char*argv[])
             spgramcf_get_psd(periodogram, psd);
 
             // compute average template for five second
-            if ( startup && num_transforms<= 1 * sampling_rate / timestep) { // run only once
+            if ( startup && num_transforms<= len_templ * sampling_rate / timestep) { // run only once
                 // set template PSD for relative signal detection
                 // Add up all signal strength to derive minimum value
+                templ_count = 0;
                 int i;
                 float tmp_mean = 0.0, tmp_min = 100.0, tmp_max = -100.0;
                 for (i=0;i<nfft;i++) {
@@ -259,7 +261,7 @@ int main(int argc, char*argv[])
                 clock_gettime(CLOCK_REALTIME,&t_start);
                 char tbuf[30];
                 format_timestamp(t_start,tbuf,30);
-                fprintf(stderr, "%s - Getting template PSD: %f/%f/%f\n", tbuf, tmp_min, tmp_mean, tmp_max);
+                fprintf(stderr, "%s - %d Getting template PSD: %f/%f/%f\n", tbuf, templ_count, tmp_min, tmp_mean, tmp_max);
                 memmove(psd_max, psd, nfft*sizeof(float));
             } else {
                 // detect differences between current PSD estimate and template
