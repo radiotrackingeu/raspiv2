@@ -19,7 +19,7 @@
 #include <mysql.h>
 
 #define DB_BASE     "rteu"
-#define DB_TABLE    "rteu.signals"
+#define DB_TABLE    "signals"
 
 #define BILLION     1000000000L
 
